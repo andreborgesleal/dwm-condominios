@@ -1,0 +1,177 @@
+﻿@model DWM.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DWM-Condomínios</title>
+    <!-- Bootstrap -->
+    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Site.css -->
+    <link href="../Content/Site.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
+    <script type="text/javascript" src="../scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.maskedinput.js"></script>
+    <script type="text/javascript" src="~/scripts/inputs-jquery-ui.js"></script>
+</head>
+<body style="background:#cccccc;">
+    <nav class="navbar navbar-fixed-top navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <img class="img-responsive" src="~/Content/images/PARC-PARADISO-LOGO.png" style="height: 80px"/>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><h2>&nbsp;&nbsp;Parc Paradiso Condomínio Resort</h2></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="~/Account/Login">Acesso</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <p>&nbsp;</p>
+        <div class="panel panel-primary">
+            <div class="panel panel-heading">
+                <div class="input input-group-lg">
+                    <h4>Cadastro</h4>
+                </div>
+            </div>
+            <div class="panel-body">
+                @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                {
+                    @Html.Partial("_alerts")
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    <blockquote>
+                        <p>Instruções de preenchimento:</p>
+                        <ol>
+                            <li>Informe todos os campos abaixo e clique no botão [Salvar]</li>
+                            @*<li>Em seguida você receberá um e-mail com um código de ativação.</li>
+                            <li>Anote o código e informe ao Drº Prado pelo WhatsApp no grupo dos "Malucos da Mega-Sena"</li>*@
+                            <li>A habilitação de seu cadastro será notificada por e-mail</li>
+                            <li>Ao se cadastrar você concorda com os <a href="~/Account/TermoUso" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica" class="text-info" target="_blank">Política de Privacidade</a></li>
+                        </ol>
+                        <p>Por motivo de segurança o seu cadastro estará desativado até que você confirme o registro acesando o seu e-mail.</p>
+                    </blockquote>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nome, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = 30 })
+                        </div>
+                        <div class="col-md-6">
+                            <small>Mínimo de 10 caracteres e máximo de 30.</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6">
+                            <small>Informe um e-mail válido que será utilizado como login no sistema.</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CPF, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(m => m.CPF, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Telefone, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-8">
+                            <small>Informar DDD e Número do Telefone de contato</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.senha, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.PasswordFor(m => m.senha, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-8">
+                            <small>Deve possuir no mínimo 6 dígitos (letras e/ou números)</small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.confirmacaoSenha, new { @class = "col-md-2 control-label" })
+                        <div class="col-md-2">
+                            @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" class="btn btn-success" value="Salvar" />
+                            <input type="button" onclick="window.location = '../Account/Login'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <section style="height: 300px; background-color: #272626; margin-top: 50px; color: #fff" class="text-center">
+        <div class="container">
+            <div class="row">
+                <h3><b>CONTATO</b></h3>
+                <br>
+                <div class="col-lg-4">
+                    <h3><b>Envie-nos um e-mail:</b></h3>
+                    <h3>comercial@dwmsistemas.com</h3>
+                    <br>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3><b>Telefone:</b></h3>
+                    <h3>+55 91 99985-1809</h3>
+                    <br>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3><b>Redes sociais</b></h3>
+                    <p>
+                        <a href="index.html#"><i class="fa fa-facebook fa-2x"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="index.html#"><i class="fa fa-twitter fa-2x"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="index.html#"><i class="fa fa-envelope fa-2x"></i></a>
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background-color: #000; height: 50px; color: #fff" class="text-right">
+        <div class="container">
+            <p style="margin-top:15px">
+                Criado por <a href="http://www.dwmsistemas.com" class="text-danger">DWM SISTEMAS</a>
+            </p>
+        </div>
+    </section>
+    <script type="text/javascript">
+        $("#CPF").mask("999.999.999-99");
+        $("#Telefone").mask("(99)99999-9999");
+    </script>
+</body>
+</html>

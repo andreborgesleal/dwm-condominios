@@ -1,0 +1,265 @@
+﻿@model DWM.Models.RegisterViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DWM-Condomínios</title>
+    <!-- Bootstrap -->
+    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Site.css -->
+    <link href="../Content/Site.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
+    <script type="text/javascript" src="../scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-fixed-top navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <img class="img-responsive" src="~/Content/images/Logo_DWM_Sistemas.png" style="height: 70px" />
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="~/Account/Login">Acesso</a></li>
+                    <li><button class="btn btn-sm btn-default margem-top-10" onclick="window.location = '../Account/Register'">Cadastro</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <p>&nbsp;</p>
+        <section class="Ariano">
+            <h2>POLÍTICA DE PRIVACIDADE</h2>
+            <br />
+            <h3>CONTROLADOR DE DADOS E PROPRIETÁRIO</h3>
+            <br />
+            <p>
+                DWM Sistemas – Travessa Benjamin Constant, nº 906, Belém, Pará (Brasil),
+                comercial@dwmsistemas.com
+            </p>
+            <br />
+            <h3>TIPOS DE DADOS COLETADOS</h3>
+            <br />
+            <p>Entre os tipos de dados pessoais que este Site recolhe, por si só ou por meio terceiros, são: Cookie, Dados de uso, E-mail, Nome, Sobrenome, Número de telefone e CPF.</p>
+            <br />
+            <p>Outros dados pessoais recolhidos podem ser descritos em outras seções desta política de privacidade ou pelo texto com explicação dedicado contextualmente com a coleta de dados.</p>
+            <br />
+            <p>Os dados pessoais podem ser livremente fornecidos pelo Usuário, ou coletadas automaticamente quando se utiliza este Site.</p>
+            <br />
+            <p>Qualquer uso de Cookies – ou de outras ferramentas de rastreamento – por este Site ou pelos proprietários dos serviços terceirizados utilizados por este Site salvo indicação em contrário, que servem para identificar Usuários e lembrar as suas preferências, com o único propósito de fornecer o serviço requerido pelo Usuário.</p>
+            <br />
+            <p>O não fornecimento de determinados dados pessoais pode tornar impossível para este Site prestar os seus serviços.</p>
+            <br />
+            <p>O Usuário assume a responsabilidade pelos dados pessoais de terceiros publicados ou compartilhados por meio deste Site e confirma que tem o consentimento da parte terceira para fornecer Dados para o Proprietário.</p>
+            <br />
+            <h3>MODO E LOCAL DE PROCESSAMENTO DOS DADOS</h3>
+            <br />
+            <h4>Método de processamento</h4>
+            <br />
+            <p>O controlador de dados processa os dados de usuários de forma adequada e tomará as medidas de segurança adequadas para impedir o acesso não autorizado, divulgação, alteração ou destruição não autorizada dos dados.</p>
+            <br />
+            <p>O processamento de dados é realizado utilizando computadores e /ou ferramentas de TI habilitadas, seguindo procedimentos organizacionais e meios estritamente relacionados com os fins indicados. Além do Controlador de Dados, em alguns casos, os Dados podem ser acessados por certos tipos de pessoas envolvidas com a operação do Site (administração, vendas, marketing, administração legal do sistema) ou pessoas externas (como fornecedores terceirizados de serviços técnicos, carteiros, provedores de hospedagem, empresas de TI, agências de comunicação) nomeadas, quando necessário, como processadores de dados por parte do proprietário. A lista atualizada destas partes pode ser solicitada a partir do controlador de dados a qualquer momento.</p>
+            <br />
+            <h4>Lugar</h4>
+            <br />
+            <p>Os dados são processados nas sedes de operação do Controlador de Dados, e em quaisquer outros lugares onde as partes envolvidas com o processamento estejam localizadas. Para mais informações, por favor entre em contato com o Controlador de Dados.</p>
+            <br />
+            <h4>Período de Conservação</h4>
+            <br />
+            <p>Os dados são mantidos pelo período necessário para prestar o serviço solicitado pelo Usuário, ou pelos fins descritos neste documento, e o usuário pode solicitar o Controlador de Dados para que os suspenda ou remova.</p>
+            <br />
+            <h3>O USO DOS DADOS COLETADOS</h3>
+            <br />
+            <p>Os Dados relativos ao usuário são coletados para permitir que o Proprietário forneça os serviços, bem como para os seguintes propósitos: Estatísticas, A interação com redes sociais e plataformas externos, Remarketing e Objetivo Comportamental, Contatar o Usuário, Acesso a contas de serviços de terceiros, Comentário de Conteúdo, Desempenho de conteúdo e características de teste (teste A/B), Visualizar conteúdo de plataformas externas, Interação com as plataformas de chat ao vivo, Interação com as plataformas de pesquisa online.</p>
+            <br />
+            <h3>INFORMAÇÕES DETALHADAS SOBRE O PROCESSAMENTO DE DADOS PESSOAIS</h3>
+            <br />
+            <p>Os dados pessoais são recolhidos para os seguintes fins e utilizando os seguintes serviços:</p>
+            <br />
+            <p>A interação com redes sociais e plataformas externas</p>
+            <br />
+            <p>Estes serviços permitem a interação com as redes sociais ou outras plataformas externas diretamente a partir das páginas deste Site. A interação e as informações obtidas por este Site estão sempre sujeitos às configurações de privacidade do Usuário em cada rede social.</p>
+            <br />
+            <p>Se um serviço que permite a interação com as redes sociais estiver instalado ele poderá coletar dados de tráfego para as páginas, onde o serviço esteja instalado, mesmo quando os Usuários não estiverem os utilizando.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: Botão Google Plus e widgets sociais (Google Inc.), Botão LinkedIn e widgets sociais (LinkedIn Corporation), Botão Twitter e Widgets sociais (Twitter, Inc.), Botão Curtir do Facebook e widgets sociais (Facebook, Inc.).</p>
+            <br />
+            <h4>Comentário de Conteúdo</h4>
+            <br />
+            <p>Os serviços de Comentário de Conteúdo permitem Usuários a criar e publicar comentários sobre o conteúdo deste Site.</p>
+            <br />            
+            <p>Se houver um endereço de e-mail entre os Dados Pessoais fornecidos pelo Usuário, poderá ser usado para enviar notificações de comentários sobre o mesmo conteúdo. Os Usuários são responsáveis pelo conteúdo de seus comentários.</p>
+            <br />
+            <p>Se um serviço de comentário de conteúdo prestado por terceiros estiver instalado, este ainda poderá coletar dados de tráfego da web para as páginas onde o serviço de comentário esteja instalado, mesmo quando os usuários não usam o serviço de comentário de conteúdo.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: Disqus (Big Heads Labs Inc), Facebook Comments (Facebook, Inc.).</p>
+            <br />
+            <h4>Contatar o Usuário</h4>
+            <br />
+            <p>Ao registar-se na lista de endereçamento ou no boletim informativo, o endereço de e-mail do usuário será adicionado à lista de contatos daqueles que podem receber mensagens de e-mail que contenham informações de natureza comercial ou promocional sobre este Site. O seu endereço de e-mail também poderá ser adicionado a esta lista, como resultado de sua inscrição neste Site ou após a realização de uma compra.</p>
+            <br />
+            <p>Desempenho de conteúdo e características de teste (teste A/B)</p>
+            <br />
+            <p>Os serviços contidos nesta seção permitem ao Proprietário a acompanhar e analisar a resposta do Usuário relacionado com o tráfego da web ou com o comportamento relacionado com as mudanças na estrutura, texto ou qualquer outro componente deste Site.</p>
+            <br />
+            <h4>Estatísticas</h4>
+            <br />
+            <p>Os serviços contidos nesta seção permitem ao Proprietário monitorar e analisar o tráfego da web e podem ser usados para manter rastreamento do comportamento do Usuário.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: Google Analytics (Google Inc.).</p>
+            <br />
+            <h3>Interação com as plataformas de chat ao vivo</h3>
+            <br />
+            <p>Estes serviços permitem que os Usuários interajam com as plataformas de bate-papo ao vivo de terceiros, diretamente a partir das páginas deste Site, para contactar e ser contactado pelo serviço de suporte deste Site.</p>
+            <br />
+            <p>Se um desses serviços estiver instalado, este poderá coletar Dados de Uso e de navegação nas páginas onde estejam instalados, mesmo que os Usuários não usem o serviço ativamente. Além disso, as conversas de chat ao vivo podem ser registradas.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: Zopim Widget (Zopim Technologies Pte Ltd).</p>
+            <br />
+            <h4>Interação com as plataformas de pesquisa online</h4>
+            <br />
+            <p>Estes serviços permitem que os Usuários interajam com plataformas de pesquisa on-line de terceiros diretamente a partir das páginas deste Site.</p>
+            <br />
+            <p>Se um desses serviços estiver instalado, este poderá coletar Dados de Uso e de navegação nas páginas onde estejam instalados, mesmo que os Usuários não usem o serviço ativamente.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: Formstack.</p>
+            <br />
+            <h4>Remarketing e Objetivo Comportamental</h4>
+            <br />
+            <p>Estes serviços permitem que este Site e seus parceiros possam informar, otimizar e fornecer publicidade baseada no uso passado deste Site pelo Usuário.</p>
+            <br />
+            <p>Essa atividade é realizada pelo monitoramento dos dados de utilização e usando cookies, informações que são transferidas para os parceiros que gerenciam o remarketing e atividade de segmentação comportamental.</p>
+            <br />
+            <p>Serviços como, mas não se limitando a: AdRoll (Semantic Sugar, Inc.), AdWords Remarketing (Google Inc.).</p>
+            <br />
+            <h4>POLÍTICA DE COOKIES</h4>
+            <br />
+            <p>Este Site usa Cookies. Para saber mais e para um aviso mais detalhado sobre cookies, você pode consultar a Política de Cookies.</p>
+            <br />
+            <h3>INFORMAÇÕES ADICIONAIS SOBRE A COLETA E PROCESSAMENTO DE DADOS</h3>
+            <br />
+            <h4>Ação Jurídica</h4>
+            <br />
+            <p>Os Dados Pessoais dos Usuários podem ser utilizados para fins jurídicos pelo Controlador de Dados em juízo ou nas etapas conducentes à possível ação jurídica decorrente de uso indevido deste Site ou dos serviços relacionados.</p>
+            <br />
+            <h4>Informações adicionais sobre os Dados Pessoais do Usuário</h4>
+            <br />
+            <p>Além da informação nesta política de privacidade, este Site poderá fornecer ao usuário informações contextuais sobre os serviços específicos ou a coleta de processamento de dados pessoais.</p>
+            <br />
+            <h4>Logs do Sistema e Manutenção</h4>
+            <br />
+            <p>Para fins de operação e manutenção, este Site e quaisquer serviços de terceiros poderão coletar arquivos que gravam a interação com este Site (Logs do Sistema) ou usar, para este fim, outros dados pessoais (tais como endereço IP).</p>
+            <br />
+            <h4>As informações não contidas nesta política</h4>
+            <br />
+            <p>Mais detalhes sobre a coleta ou processamento de Dados Pessoais podem ser solicitadas ao Controlador de Dados, a qualquer momento, utilizando os dados de contato.</p>
+            <br />
+            <h4>Os direitos dos Usuários</h4>
+            <br />
+            <p>Os usuários têm o direito de, a qualquer momento, saber se os seus Dados Pessoais foram armazenados e podem consultar o Controlador de Dados para saber mais sobre o conteúdo e origem podendo verificar a sua exatidão ou solicitar que sejam complementados, cancelados, atualizados ou corrigidos. Os pedidos devem ser enviados para o Controlador de Dados na informação de contato estabelecido acima.</p>
+            <br />
+            <p>Este Site não suporta pedidos de “Não rastrear”.</p>
+            <br />
+            <p>Para determinar se qualquer um dos serviços de terceiros que utilizamos honram solicitacões de “Não Rastrear”, por favor leia as políticas de privacidade dos respectivos serviços.</p>
+            <br />
+            <h4>Alterações na política de privacidade</h4>
+            <br />
+            <p>O Controlador de Dados reserva-se ao direito de fazer alterações nesta política de privacidade a qualquer momento, mediante comunicação aos seus Usuários nesta página. É altamente recomendável que esta página seja consultada várias fezes em relação a última modificação descrita na parte inferior. Se o Usuário não concorda com qualquer das alterações da Política de privacidade, o Usuário deve cessar o uso deste Site e pode solicitar ao Controlador de Dados que apague os Dados Pessoais. Salvo disposição em contrário, a atual política de privacidade se aplica a todos os Dados Pessoais que o Controlador de Dados tenha dos Usuários.</p>
+            <br />
+            <h4>Definições e referências jurídicas</h4>
+            <br />
+            <h3>Dados Pessoais (Ou de dados)</h3>
+            <br />
+            <p>Qualquer informação relativa a pessoa física, instituição ou associação, as quais serão, ou poderão ser identificadas, mesmo que indiretamente, por referência a qualquer outra informação, incluindo um número de identificação pessoal.</p>
+            <br />
+            <h4>Dados de Uso</h4>
+            <br />
+            <p>As informações coletadas automaticamente a partir deste Site (ou serviços de terceiros contratados para este Site), que podem incluir: os endereços IP ou nomes de domínio dos computadores utilizados pelos Usuários que utilizam este Site, os endereços URI ( identificador de recurso uniforme ), o tempo do pedido, o método utilizado para submeter o pedido ao servidor, o tamanho do arquivo recebido em resposta, o código numérico que indica o status do servidor de resposta (resultado positivo, erro , etc), o país de origem, as características do navegador e do sistema operacional utilizado pelo Usuário, os vários detalhes de tempo por visita (por exemplo, o tempo gasto em cada página dentro do Site) e os detalhes sobre o caminho seguido dentro da aplicação, com especial referência à seqüência de páginas visitadas e outros parâmetros sobre o sistema operacional do dispositivo e / ou ambiente de TI do Usuário.</p>
+            <br />
+            <h4>Usuário</h4>
+            <br />
+            <p>O indivíduo que usa este Site que deverá coincidir com ou ser autorizado pelo titular dos dados, a quem os Dados Pessoais referem-se.</p>
+            <br />
+            <h4>Titular dos Dados</h4>
+            <br />
+            <p>A pessoa física a quem os dados pessoais referem-se.</p>
+            <br />
+            <h4>Processador de Dados (Ou supervisor de Dados)</h4>
+            <br />
+            <p>A pessoa física, a administração pública ou qualquer outro organismo, associação ou organização autorizada pelo responsável pelo tratamento para tratar os dados pessoais em conformidade com esta política de privacidade.</p>
+            <br />
+            <h4>Controlador de Dados(Ou proprietário)</h4>
+            <br />
+            <p>A pessoa física, administração pública ou qualquer outra entidade, associação ou organização com direitos, também em conjunto com outro controlador dos dados, em tomar decisões sobre os propósitos e os métodos de processamento de dados pessoais e os meios utilizados, incluindo medidas de segurança relativas ao funcionamento e ao uso deste Site. O Controlador de Dados, a menos que seja especificado de outra forma, é o proprietário deste este Site.</p>
+            <br />
+            <h4>Este Site</h4>
+            <br />
+            <p>A ferramenta de hardware ou software pela qual os Dados Pessoais do usuário são coletados.</p>
+            <br />
+            <h4>Cookie</h4>
+            <br />
+            <p>Pequenas unidades de dados armazenados no dispositivo do Usuário.</p>
+            <br />
+            <p>Este política de privacidade é apenas sobre este Site.</p>
+            <br />
+            <h3>TERMOS DE USO</h3>
+            <br />
+            <p>
+                Os Termos e Condições de Uso dos serviços da DWM Sistemas estão descritos em: https://gerencianet.com.br/termos-de-uso/
+            </p>
+            <br />
+            <p>Última atualização: 01 de junho de 2016</p>
+            <br />
+        </section>
+    </div>
+    <section style="height: 300px; background-color: #272626; margin-top: 50px; color: #fff" class="text-center">
+        <div class="container">
+            <div class="row">
+                <h3><b>CONTATO</b></h3>
+                <br>
+                <div class="col-lg-4">
+                    <h3><b>Envie-nos um e-mail:</b></h3>
+                    <h3>comercial@dwmsistemas.com</h3>
+                    <br>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3><b>Telefone:</b></h3>
+                    <h3>+55 91 99985-1809</h3>
+                    <br>
+                </div>
+
+                <div class="col-lg-4">
+                    <h3><b>Redes sociais</b></h3>
+                    <p>
+                        <a href="index.html#"><i class="fa fa-facebook fa-2x"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="index.html#"><i class="fa fa-twitter fa-2x"></i></a>&nbsp;&nbsp;&nbsp;
+                        <a href="index.html#"><i class="fa fa-envelope fa-2x"></i></a>
+                    </p>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background-color: #000; height: 50px; color: #fff" class="text-right">
+        <div class="container">
+            <p style="margin-top:15px">
+                Criado por <a href="http://www.dwmsistemas.com" class="text-danger">DWM SISTEMAS</a>
+            </p>
+        </div>
+    </section>
+</body>
+</html>
+

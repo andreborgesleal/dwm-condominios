@@ -1,0 +1,22 @@
+﻿@using App_Dominio.Controllers
+@{
+    Layout = null;
+}
+@if (TempData.ContainsKey(Alerts.ATTENTION))
+{
+    <div class="alert alert-dismissable alert-warning">
+        <a class="close" data-dismiss="alert" href="#" aria-hidden="true">x</a>
+        <h4 class="alert-heading">Atenção!</h4>
+        @TempData[Alerts.ATTENTION]
+    </div>
+}
+@foreach (string key in Alerts.ALL.Except(new[] { Alerts.ATTENTION }))
+{
+    if (TempData.ContainsKey(key))
+    {
+        <div class="alert alert-dismissable alert-@key">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
+            @TempData[key]
+        </div>
+    }
+}
