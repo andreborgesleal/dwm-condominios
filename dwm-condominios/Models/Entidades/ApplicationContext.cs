@@ -5,8 +5,12 @@ namespace DWM.Models.Entidades
 {
     public class ApplicationContext : App_DominioContext
     {
-        public DbSet<Membro> Membros { get; set; }
-        public DbSet<ContaVirtual> ContaVirtuals { get; set; }
-        public DbSet<TipoConta> TipoContas { get; set;  }
+        public DbSet<Condominio> Condominios { get; set; }
+        public DbSet<Condomino> Condominos { get; set; }
+        public DbSet<CondominoPF> CondominoPFs { get; set; }
+        public DbSet<CondominoUnidade> CondominoUnidades { get; set; }
+        public DbSet<Unidade> Unidades { get; set;  }
+        public DbSet<Parametro> Parametros { get; set; }
+        public DbSet<Edificacao> Edificacaos { get; set; }
     }
 }

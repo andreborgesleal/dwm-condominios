@@ -35,6 +35,7 @@ namespace DWM.Models.BI
         private Validate Validate(RegisterViewModel value)
         {
             value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
+
             #region validar senha e confirmação de senha
             if (value.senha == null || value.senha == "")
             {
@@ -53,10 +54,39 @@ namespace DWM.Models.BI
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
+            #endregion
 
-            return value.mensagem;
+            #region Validar se a unidade está ocupada por outro condômino
+            if (db.CondominoUnidades.Where(info => info.CondominioID == value.UnidadeViewModel.CondominioID &&
+                                                   info.EdificacaoID == value.UnidadeViewModel.EdificacaoID &&
+                                                   info.UnidadeID == value.UnidadeViewModel.UnidadeID &&
+                                                   info.DataFim == null).Count() > 0)
+            {
+                value.mensagem.Code = 57;
+                value.mensagem.Message = MensagemPadrao.Message(57).text;
+                value.mensagem.MessageBase = "Unidade está ocupada por outro condômino. Favor entrar em contato com a administração";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+            #endregion
+
+            #region Validar código de ativação
+            if (value.UnidadeViewModel.Validador.Trim().Length > 0)
+            {
+                Unidade u = db.Unidades.Find(value.UnidadeViewModel.CondominioID, value.UnidadeViewModel.EdificacaoID, value.UnidadeViewModel.UnidadeID);
+                if (u.Validador != value.UnidadeViewModel.Validador || (u.Validador == value.UnidadeViewModel.Validador && Funcoes.Brasilia().Date > u.DataExpiracao))
+                {
+                    value.mensagem.Code = 58;
+                    value.mensagem.Message = MensagemPadrao.Message(58).text;
+                    value.mensagem.MessageBase = "Código de ativação da unidade inválido. Favor entrar em contato com a administração";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
 
             #endregion
+
+            return value.mensagem;
         }
 
         public RegisterViewModel Run(Repository value)
@@ -64,49 +94,53 @@ namespace DWM.Models.BI
             RegisterViewModel r = (RegisterViewModel)value;
             try
             {
-                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                int _empresaId = int.Parse(System.Configuration.ConfigurationManager.AppSettings["empresaId"]);
+                int _empresaId = int.Parse(db.Parametros.Find(r.CondominioID, (int)Enumeracoes.Enumeradores.Param.EMPRESA).Valor);
+                int _grupoId = int.Parse(db.Parametros.Find(r.CondominioID, (int)Enumeracoes.Enumeradores.Param.GRUPO_USUARIO).Valor);
 
-                #region validar senha
+                #region validar cadastro
                 Validate validate = Validate(r);
                 if (validate.Code > 0)
                     throw new ArgumentException(validate.MessageBase);
                 #endregion
 
-                #region Incluir o Apostador (Membro) e a sua conta corrente virtual
-                ContaVirtualViewModel contaVirtualViewModel = new ContaVirtualViewModel()
+                #region Incluir o Condômino
+                CondominoPFViewModel condominoPFViewModel = new CondominoPFViewModel()
                 {
                     uri = r.uri,
                     empresaId = _empresaId,
-                    TipoContaID = 1, // 1-Conta corrente 
-                    DataAbertura = Funcoes.Brasilia().Date,
-                    ValorSaldo = 0,
-                    MembroViewModel = new MembroViewModel()
+                    CondominoID = r.CondominoID,
+                    CondominioID = r.CondominioID,
+                    Nome = r.Nome,
+                    IndFiscal = r.IndFiscal,
+                    IndProprietario = r.IndProprietario,
+                    TelParticular1 = r.TelParticular1,
+                    TelParticular2 = r.TelParticular2,
+                    Email = r.Email,
+                    IndSituacao = r.UnidadeViewModel.Validador.Trim().Length > 0 ? "A" : "D",
+                    DataNascimento = r.DataNascimento,
+                    Sexo = r.Sexo,
+                    IndAnimal = r.IndAnimal,
+                    CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
                     {
                         uri = r.uri,
-                        empresaId = _empresaId,
-                        Nome = r.Nome,
-                        Email = r.Email,
-                        Telefone = r.Telefone,
-                        CPF = r.CPF,
-                        Banco = r.Banco,
-                        Agencia = r.Agencia,
-                        Conta = r.Conta,
-                        IndSituacao = "D"
+                        CondominioID = r.UnidadeViewModel.CondominioID,
+                        EdificacaoID = r.UnidadeViewModel.EdificacaoID,
+                        UnidadeID = r.UnidadeViewModel.UnidadeID,
+                        CondominoID = r.CondominoID,
+                        DataInicio = Funcoes.Brasilia().Date
                     }
                 };
 
-                ContaVirtualModel contaVirtualModel = new ContaVirtualModel(this.db, this.seguranca_db);
-                contaVirtualViewModel = contaVirtualModel.Insert(contaVirtualViewModel);
-                if (contaVirtualViewModel.mensagem.Code > 0)
-                    throw new App_DominioException(contaVirtualViewModel.mensagem);
+                CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
+                condominoPFViewModel = condominoPFModel.Insert(condominoPFViewModel);
+                if (condominoPFViewModel.mensagem.Code > 0)
+                    throw new App_DominioException(condominoPFViewModel.mensagem);
                 #endregion
 
-                #region Cadastrar o apostador como um usuário em DWM-Segurança
+                #region Cadastrar o condômino como um usuário em DWM-Segurança
 
                 #region Usuario 
-                Random random = new Random(DateTime.Now.Millisecond);
-                string n_aleatorio = random.Next(1000, 80000).ToString();
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
 
                 Usuario user = new Usuario()
                 {
@@ -114,19 +148,15 @@ namespace DWM.Models.BI
                     login = r.Email,
                     empresaId = _empresaId,
                     dt_cadastro = Funcoes.Brasilia(),
-                    situacao = "D",
+                    situacao = "A",
                     isAdmin = "N",
-                    senha = security.Criptografar(r.senha),
-                    keyword = n_aleatorio,
-                    dt_keyword = Funcoes.Brasilia().AddDays(1)
+                    senha = security.Criptografar(r.senha)
                 };
 
                 seguranca_db.Usuarios.Add(user);
                 #endregion
 
                 #region UsuarioGrupo
-                int _grupoId = seguranca_db.Grupos.Where(info => info.empresaId == _empresaId && info.descricao == "Apostador").Select(info => info.grupoId).FirstOrDefault();
-
                 UsuarioGrupo ug = new UsuarioGrupo()
                 {
                     Usuario = user,
@@ -139,10 +169,10 @@ namespace DWM.Models.BI
 
                 #endregion
 
-                r.MembroID = contaVirtualViewModel.MembroViewModel.MembroID;
-                r.IndSituacao = contaVirtualViewModel.MembroViewModel.IndSituacao;
-                r.Keyword = n_aleatorio;
-                r.mensagem = contaVirtualViewModel.mensagem;
+                r.CondominoID = condominoPFViewModel.CondominoID;
+                r.CondominoUnidadeViewModel.CondominioID = condominoPFViewModel.CondominoID;
+                r.IndSituacao = condominoPFViewModel.IndSituacao;
+                r.mensagem = condominoPFViewModel.mensagem;
             }
             catch (ArgumentException ex)
             {

@@ -31,41 +31,46 @@ namespace DWM.Models.BI
 
         public RegisterViewModel Run(Repository value)
         {
-            string habilitaEmail = System.Configuration.ConfigurationManager.AppSettings["HabilitaEmail"];
             RegisterViewModel rec = (RegisterViewModel)value;
-
+            string habilitaEmail = db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.HABILITA_EMAIL).Valor;
             if (habilitaEmail == "S")
             {
-                int _empresaId = int.Parse(System.Configuration.ConfigurationManager.AppSettings["empresaId"]);
-                int _sistemaId = int.Parse(System.Configuration.ConfigurationManager.AppSettings["sistemaId"]);
-                string email_admin = System.Configuration.ConfigurationManager.AppSettings["email_admin"];
+                int _empresaId = int.Parse(db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.EMPRESA).Valor);
+                int _sistemaId = int.Parse(db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+
+                Condominio condominio = db.Condominios.Find(rec.CondominioID);
+                Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
+
                 rec.empresaId = _empresaId;
 
                 SendEmail sendMail = new SendEmail();
 
-                Empresa empresa = seguranca_db.Empresas.Find(rec.empresaId);
-                Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
-
-                MailAddress sender = new MailAddress(empresa.nome + " <" + empresa.email + ">");
+                MailAddress sender = new MailAddress(condominio.RazaoSocial + " <" + condominio.Email + ">");
                 List<string> recipients = new List<string>();
 
                 recipients.Add(rec.Nome + "<" + rec.Email + ">");
 
-                string Subject = "Confirmação de cadastro no " + empresa.nome;
+                string Subject = "Confirmação de cadastro no " + condominio.RazaoSocial;
                 string Text = "<p>Confirmação de cadastro</p>";
                 string Html = "<p><span style=\"font-family: Verdana; font-size: larger; color: #656464\">" + sistema.descricao + "</span></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + rec.Nome.ToUpper() + "</span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Telefone: <b>" + Funcoes.FormataTelefone(rec.Telefone) + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Torre: <b>" + rec.UnidadeViewModel.EdificacaoDescricao + "</b></span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">CPF: <b>" + Funcoes.FormataCPF(rec.CPF) + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + rec.UnidadeViewModel.UnidadeID.ToString() + "</b></span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + empresa.nome + " foi realizado com sucesso.</span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para ativar seu cadastro:</span></p>" +
-                              "<p><a href=\"http://localhost:64972/Account/Ativar/" + rec.Keyword + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Ativação do cadastro no Sopro da Sorte</span></a></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema:</span></p>" +
+                              "<p><a href=\"http://localhost:64972/Account/Login/\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
                               "<p></p>" +
                               "<p></p>";
+
+                if (rec.UnidadeViewModel.Validador.Trim().Length < 10)
+                    Html += "<p></p>" +
+                            "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Solicitamos entrar em contato com a administração do condomínio para ativar o seu cadastro.</span></p>" +
+                            "<p></p>" +
+                            "<p></p>";
 
                 string asterisco = "";
                 for (int i = 1; i <= rec.senha.Length - 1; i++)
@@ -83,22 +88,22 @@ namespace DWM.Models.BI
 
                 Html += "<p></p>" +
                         "<p></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Através do sistema o apostador poderá:</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Através do sistema o condômino poderá:</span></p>" +
                         "<p></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar sua conta corrente virtual com os débitos e créditos realizados.</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar sua participação percentual em cada concurso nos bolões estruturados pela DWM Sistemas.</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar extrato de mensaldiades.</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Simular e comprar cotas de cada concurso.</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Atualizar seu cadastro (foto, conta corrente, etc).</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Receber mensagens e alertas personalizados.</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar o resultado dos sorteios e conferir os volantes premiados.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Realizar a inclusão dos moradores de sua unidade com credenciamento de acesso.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os documentos e comunicados oficiais do condomínio postados pelo síndico.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os comunicados específicos destinados a sua torre.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Abrir chamados à administração como por exemplo fazer o registro de uma ocorrência ou uma solicitação.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Atualizar seu cadastro (foto, dependentes, veículos, funcionários, etc).</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Receber mensagens e alertas personalizados.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar seu histórico de notificações.</ span></p>" +
                         "<hr />" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Além desses recursos, estaremos implementando outras novidades. Aguarde !</span></p>" +
                         "<p>&nbsp;</p>" +
                         "<p>&nbsp;</p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Obrigado,</span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Administração " + empresa.nome + "</span></p>";
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Administração " + condominio.RazaoSocial + "</span></p>";
 
                 Validate result = sendMail.Send(sender, recipients, Html, Subject, Text);
                 if (result.Code > 0)

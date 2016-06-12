@@ -51,8 +51,8 @@
   <Context key="54" value="Registro já existente. Existe algum campo prenchido no formulário que está violando a regra de chave única. Este campo já foi cadastrado anteriormente e não pode ser novamente incluído." type="Error"></Context>
   <Context key="55" value="Data inválida." type="Error"></Context>
   <Context key="56" value="Registro não pode ser alterado ou excluído pois pertence a um lote já fechado." type="Error"></Context>
-  <Context key="57" value="Valor da aposta informado é maior que o saldo do fundo. Favor informar um valor menor." type="Error"></Context>
-  <Context key="58" value="Valor da aposta informado é maior que o saldo disponível da matriz. Favor informar um valor menor." type="Error"></Context>
+  <Context key="57" value="A unidade informada está ocupada por outro condômino." type="Error"></Context>
+  <Context key="58" value="Código de ativação inválido." type="Error"></Context>
   <Context key="200" value="Sessão não pode ser atualizada porque não existe ou já foi encerrada" type="Error"></Context>
   <Context key="201" value="Acesso não autorizado. A sessão já está em uso. Favor tentar novamente mais tarde." type="Error"></Context>
   <Context key="202" value="Acesso negado. Suas credenciais não estão autorizadas para executar essa operação." type="Error"></Context>

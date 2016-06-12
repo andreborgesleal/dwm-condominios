@@ -46,8 +46,10 @@ namespace DWM.Models
         public bool RememberMe { get; set; }
     }
 
-    public class RegisterViewModel : MembroViewModel
+    public class RegisterViewModel : CondominoPFViewModel
     {
+        public UnidadeViewModel UnidadeViewModel { get; set; }
+
         [Required(ErrorMessage = "O campo Senha é de preenhcimento obrigatório")]
         [StringLength(20, ErrorMessage = "O campo {0} deve ter pelo menos {2} caracteres e no máximo 20 caracteres.", MinimumLength = 6)]
         [DataType(DataType.Password)]

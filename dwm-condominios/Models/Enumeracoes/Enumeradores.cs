@@ -10,11 +10,11 @@ namespace DWM.Models.Enumeracoes
     {
         public enum Param
         {
-            //GRUPO_USUARIO = 1,
-            //SISTEMA = 2,
-            //EMPRESA = 3,
-            HABILITA_EMAIL = 6,
-            FUSO_HORARIO = 7
+            GRUPO_USUARIO = 1,
+            AREA_ATENDIMENTO = 2,
+            SISTEMA = 3,
+            EMPRESA = 4,
+            HABILITA_EMAIL = 5
         }
     }
 }

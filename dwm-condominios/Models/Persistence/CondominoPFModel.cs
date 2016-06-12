@@ -8,11 +8,12 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Models;
 using DWM.Models.Entidades;
 using DWM.Models.Repositories;
+using DWM.Models.Persistence;
+using System.Web;
 
-
-namespace dwm_condominios.Models.Persistence
+namespace DWM.Models.Persistence
 {
-    public class CondominoPFModel : CrudModel<CondominoPF, CondominoPFViewModel, ApplicationContext>
+    public class CondominoPFModel : CondominoModel<CondominoPF, CondominoPFViewModel>
     {
         #region Constructor
         public CondominoPFModel() { }
@@ -32,55 +33,20 @@ namespace dwm_condominios.Models.Persistence
         #region Métodos da classe CrudModel
         public override CondominoPF MapToEntity(CondominoPFViewModel value)
         {
-            CondominoPF condomino = Find(value);
-
-            if (condomino == null)
-            {
-                condomino = new CondominoPF();
-                value.IndSituacao = "D";
-            }
-
-            condomino.CondominoID = value.CondominoID;
-            condomino.CondominioID = value.CondominioID;
-            condomino.Nome = value.Nome;
-            condomino.IndFiscal = value.IndFiscal;
-            condomino.IndProprietario = value.IndProprietario;
-            condomino.TelParticular1 = value.TelParticular1 != null ? value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular1;
-            condomino.TelParticular2 = value.TelParticular2 != null ? value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular2;
-            condomino.TelParticular3 = value.TelParticular3 != null ? value.TelParticular3.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular3;
-            condomino.TelParticular4 = value.TelParticular4 != null ? value.TelParticular4.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular4;
-            condomino.Email = value.Email;
-            condomino.UsuarioID = value.UsuarioID;
-            condomino.Observacao = value.Observacao;
-            condomino.DataCadastro = Funcoes.Brasilia();
+            CondominoPF condomino = base.MapToEntity(value);
             condomino.DataNascimento = value.DataNascimento;
             condomino.IndAnimal = value.IndAnimal;
-            condomino.Avatar = value.Avatar;
+            condomino.Sexo = value.Sexo;
 
             return condomino;
         }
 
         public override CondominoPFViewModel MapToRepository(CondominoPF entity)
         {
-            CondominoPFViewModel condominoViewModel = new CondominoPFViewModel()
-            {
-                CondominoID = entity.CondominoID,
-                Nome = entity.Nome,
-                IndFiscal = entity.IndFiscal,
-                IndProprietario = entity.IndProprietario,
-                TelParticular1 = entity.TelParticular1,
-                TelParticular2 = entity.TelParticular2,
-                TelParticular3 = entity.TelParticular3,
-                TelParticular4 = entity.TelParticular4,
-                Email = entity.Email,
-                UsuarioID = entity.UsuarioID,
-                Observacao = entity.Observacao,
-                DataCadastro = entity.DataCadastro,
-                DataNascimento = entity.DataNascimento,
-                IndAnimal = entity.IndAnimal,
-                Avatar = entity.Avatar,
-                mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
-            };
+            CondominoPFViewModel condominoViewModel = base.MapToRepository(entity);
+            condominoViewModel.DataNascimento = entity.DataNascimento;
+            condominoViewModel.Sexo = entity.Sexo;
+            condominoViewModel.IndAnimal = entity.IndAnimal;
 
             return condominoViewModel;
         }
@@ -89,85 +55,14 @@ namespace dwm_condominios.Models.Persistence
         {
             return db.CondominoPFs.Find(key.CondominoID);
         }
-
-        public override Validate Validate(CondominoPFViewModel value, Crud operation)
-        {
-            value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
-
-            if (operation == Crud.EXCLUIR || operation == Crud.ALTERAR)
-            {
-                if (value.CondominoID <= 0)
-                {
-                    value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "ID Condômino").ToString();
-                    value.mensagem.MessageBase = "ID do condômino deve ser informado";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                    return value.mensagem;
-                }
-            }
-
-            if (value.Nome == null || value.Nome == "" || value.Nome.Length < 10)
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Nome").ToString();
-                value.mensagem.MessageBase = "Nome do condômino deve ser preenchido e ter no mínimo 10 caracteres";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (value.Email == null || value.Email == "" || !Funcoes.validaEmail(value.Email))
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "E-mail").ToString();
-                value.mensagem.MessageBase = "E-mail deve ser preenchido e ter um formato válido";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            #region Valida CPF
-            if (!Funcoes.ValidaCpf(value.IndFiscal.Replace(".", "").Replace("-", "")))
-            {
-                value.mensagem.Code = 29;
-                value.mensagem.Message = MensagemPadrao.Message(29, value.IndFiscal).ToString();
-                value.mensagem.MessageBase = "IndFiscal informado está incorreto.";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-            #endregion
-
-            #region Verifica se o e-mail já existe
-            if (db.CondominoPFs.Where(info => info.Email == value.Email).Count() > 0)
-            {
-                value.mensagem.Code = 41;
-                value.mensagem.Message = MensagemPadrao.Message(41, "E-mail: " + value.Email).ToString();
-                value.mensagem.MessageBase = "E-mail já cadastrado.";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-            #endregion
-
-            #region Verifica se existe o CPF 
-            if (db.CondominoPFs.Where(info => info.IndFiscal == value.IndFiscal.Replace(".", "").Replace("-", "")).Count() > 0)
-            {
-                value.mensagem.Code = 41;
-                value.mensagem.Message = MensagemPadrao.Message(41, "IndFiscal: " + value.IndFiscal).ToString();
-                value.mensagem.MessageBase = "IndFiscal já cadastrado.";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            #endregion
-
-            return value.mensagem;
-        }
         #endregion
     }
 
-    public class ListViewMembro : ListViewModel<CondominoPFViewModel, ApplicationContext>
+    public class ListViewCondominoPF : ListViewModel<CondominoPFViewModel, ApplicationContext>
     {
         #region Constructor
-        public ListViewMembro() { }
-        public ListViewMembro(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewCondominoPF() { }
+        public ListViewCondominoPF(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             base.Create(_db, _seguranca_db);
         }
@@ -178,38 +73,41 @@ namespace dwm_condominios.Models.Persistence
         {
             string _nome = param != null && param[0] != null && param[0].ToString() != "" ? param[0].ToString() : null;
 
-            IEnumerable<CondominoPFViewModel> query = (from m in db.Membros
-                                                  where (_nome == null || m.Nome.Contains(_nome) || m.CPF == _nome || m.Email == _nome)
-                                                  select new CondominoPFViewModel()
-                                                  {
-                                                      MembroID = m.MembroID,
-                                                      Nome = m.Nome,
-                                                      Telefone = m.Telefone,
-                                                      Email = m.Email,
-                                                      CPF = m.CPF,
-                                                      Avatar = m.Avatar,
-                                                      Banco = m.Banco,
-                                                      Agencia = m.Agencia,
-                                                      Conta = m.Conta,
-                                                      IndSituacao = m.IndSituacao
-                                                  }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            IEnumerable<CondominoPFViewModel> query = (from c in db.CondominoPFs
+                                                       where c.CondominioID == sessaoCorrente.empresaId 
+                                                             && c.IndFiscal.Length == 11
+                                                             && c.IndSituacao == "A"
+                                                             && (_nome == null || c.Nome.Contains(_nome) || c.IndFiscal == _nome || c.Email == _nome)
+                                                       select new CondominoPFViewModel()
+                                                       {
+                                                          CondominioID = c.CondominioID,
+                                                          CondominoID = c.CondominoID,
+                                                          Nome = c.Nome,
+                                                          IndFiscal = c.IndFiscal,
+                                                          IndProprietario = c.IndProprietario,
+                                                          TelParticular1 = c.TelParticular1,
+                                                          TelParticular2 = c.TelParticular2,
+                                                          Email = c.Email,
+                                                          UsuarioID = c.UsuarioID,
+                                                          DataCadastro = c.DataCadastro,
+                                                          Avatar = c.Avatar,
+                                                      }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
             return query;
         }
 
         public override string action()
         {
-            return "../Home/ListMembros";
+            return "../Home/ListCondominosPF";
         }
 
         public override string DivId()
         {
-            return "div-membro";
+            return "div-condomino-pf";
         }
 
         public override Repository getRepository(Object id)
         {
-            return new MembroModel().getObject((CondominoPFViewModel)id);
-            //return new ApostaModel().getObject((ApostaViewModel)id);
+            return new CondominoPFModel().getObject((CondominoPFViewModel)id);
         }
         #endregion
     }

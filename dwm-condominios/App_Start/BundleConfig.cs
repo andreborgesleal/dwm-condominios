@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Optimization;
 
-namespace DWM
+namespace dwm_condominios
 {
     public class BundleConfig
     {

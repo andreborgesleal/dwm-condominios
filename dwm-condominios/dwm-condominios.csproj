@@ -207,7 +207,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BI\AtivarMembroBI.cs" />
+    <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
@@ -217,11 +217,9 @@
     <Compile Include="Models\Entidades\CondominoPF.cs" />
     <Compile Include="Models\Entidades\CondominoPJ.cs" />
     <Compile Include="Models\Entidades\CondominoUnidade.cs" />
-    <Compile Include="Models\Entidades\ContaVirtual.cs" />
     <Compile Include="Models\Entidades\Credenciado.cs" />
     <Compile Include="Models\Entidades\Edificacao.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
-    <Compile Include="Models\Entidades\Membro.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
@@ -236,20 +234,19 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pattern\FactoryLocalhost.cs" />
-    <Compile Include="Models\Persistence\ContaVirtualModel.cs" />
-    <Compile Include="Models\Persistence\MembroModel.cs" />
+    <Compile Include="Models\Persistence\CondominoModel.cs" />
+    <Compile Include="Models\Persistence\CondominoPFModel.cs" />
+    <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoPFViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoPJViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoViewModel.cs" />
-    <Compile Include="Models\Repositories\ContaVirtualVirewModel.cs" />
     <Compile Include="Models\Repositories\CredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\EdificacaoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
-    <Compile Include="Models\Repositories\MembroViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
@@ -3850,17 +3847,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
-    <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
-    <Content Include="Views\Account\ForgotPassword.cshtml" />
-    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
-    <Content Include="Views\Account\ResetPassword.cshtml" />
-    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
     <Content Include="Views\Account\VerifyCode.cshtml" />
     <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />

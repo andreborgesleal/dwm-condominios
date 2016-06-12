@@ -1,4 +1,3 @@
-C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\ApplicationInsights.config
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll

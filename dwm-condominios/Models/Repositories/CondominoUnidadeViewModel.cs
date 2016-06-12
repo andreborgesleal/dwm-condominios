@@ -19,7 +19,6 @@ namespace DWM.Models.Repositories
         public int UnidadeID { get; set; }
 
         [DisplayName("Condomino ID")]
-        [Required(ErrorMessage = "Informe o CondominoID")]
         public int CondominoID { get; set; }
 
         [DisplayName("Data de Início")]
@@ -28,6 +27,6 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Data Fim")]
         [Required(ErrorMessage = "Informe a Data Fim")]
-        public System.DateTime DataFim { get; set; }
+        public System.DateTime? DataFim { get; set; }
     }
 }

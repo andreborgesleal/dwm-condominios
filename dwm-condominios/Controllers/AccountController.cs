@@ -12,7 +12,7 @@ using App_Dominio.Enumeracoes;
 using DWM.Models.Entidades;
 using DWM.Models.BI;
 using DWM.Models.Pattern;
-using App_Dominio.Repositories;
+using App_Dominio.Pattern;
 
 namespace DWM.Controllers
 {
@@ -90,9 +90,34 @@ namespace DWM.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
-        public ActionResult Register()
+        public ActionResult Register(string id)
         {
-            return View(new RegisterViewModel());
+            RegisterViewModel value = new RegisterViewModel();
+            if (id != null && id != "")
+            {
+                if (id.Trim().Length > 10)
+                {
+                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    {
+                        Validador = id
+                    };
+                    Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
+                    value = factory.Execute(new CodigoAtivacaoBI(), value);
+                }
+                else
+                {
+                    value.CondominioID = int.Parse(id);
+                    value.Nome = "André Borges Leal";
+                    value.CondominoUnidadeViewModel = new Models.Repositories.CondominoUnidadeViewModel()
+                    {
+                        CondominioID = int.Parse(id)
+                    };
+                }
+            }
+            else
+                return RedirectToAction("Login", "Account");
+
+            return View(value);
         }
 
         //
@@ -121,7 +146,7 @@ namespace DWM.Controllers
                         throw new ArgumentException(value.mensagem.MessageBase);
                     #endregion
 
-                    Success("Seu cadastro foi realizado com sucesso. Acesse o seu e-mail para ativar a sua conta");
+                    Success("Seu cadastro foi realizado com sucesso.");
                     return RedirectToAction("Login", "Account");
                 }
                 catch (ArgumentException ex)
@@ -161,44 +186,6 @@ namespace DWM.Controllers
         {
             return View();
         }
-
-        [AllowAnonymous]
-        public ActionResult Ativar(string id)
-        {
-            try
-            {
-                if (id == null || id.Trim() == "")
-                    throw new ArgumentException("Parâmetro inválido.");
-
-                UsuarioRepository value = new UsuarioRepository()
-                {
-                    keyword = id,
-                    uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString()
-                };
-
-                // Aciona o pattern local do aplicativo - Pattern Localhost (e não o do App_Dominio)
-                FactoryLocalhost<UsuarioRepository, ApplicationContext> factory = new FactoryLocalhost<UsuarioRepository, ApplicationContext>();
-                value = factory.Execute(new AtivarMembroBI(), value);
-
-                if (value.mensagem.Code > 0)
-                    throw new ArgumentException(value.mensagem.MessageBase);
-
-                Success("Seu cadastro foi ativado com sucesso.");
-            }
-            catch (ArgumentException ex)
-            {
-                ModelState.AddModelError("", MensagemPadrao.Message(999).ToString()); // mensagem amigável ao usuário
-                Attention(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
-            }
-            catch (Exception ex)
-            {
-                App_DominioException.saveError(ex, GetType().FullName);
-                ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
-                Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
-            }
-            return RedirectToAction("Login", "Account");
-        }
-
 
         [AllowAnonymous]
         public ActionResult LogOff()

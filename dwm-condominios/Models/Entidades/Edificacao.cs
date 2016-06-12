@@ -11,16 +11,16 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("Tipo Edificacao ID")]
-        public int TipoEdificacao { get; set; }
+        [DisplayName("TipoEdificacaoID")]
+        public int TipoEdificacaoID { get; set; }
 
-        [DisplayName("Condomínio ID")]
+        [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
-        [DisplayName("Descrição")]
+        [DisplayName("Descricao")]
         public string Descricao { get; set; }
 
-        [DisplayName("Código")]
+        [DisplayName("Codigo")]
         public string Codigo { get; set; }
     }
 }

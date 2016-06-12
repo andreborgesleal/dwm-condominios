@@ -11,13 +11,22 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int UnidadeID { get; set; }
 
-        [DisplayName("Edificação ID")]
+        [DisplayName("EdificacaoID")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("Condomínio ID")]
+        [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
         [DisplayName("Validador")]
         public string Validador { get; set; }
+
+        [DisplayName("DataExpiracao")]
+        public System.DateTime? DataExpiracao { get; set; }
+
+        [DisplayName("NomeCondomino")]
+        public string NomeCondomino { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
     }
 }

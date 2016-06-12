@@ -2,7 +2,7 @@
 using System.Web.Optimization;
 using System.Web.Routing;
 
-namespace DWM
+namespace dwm_condominios
 {
     public class MvcApplication : System.Web.HttpApplication
     {

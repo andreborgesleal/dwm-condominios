@@ -14,13 +14,13 @@ namespace DWM.Models.Entidades
         [DisplayName("Email")]
         public string Email { get; set; }
 
-        [DisplayName("Razão Social")]
+        [DisplayName("RazaoSocial")]
         public string RazaoSocial { get; set; }
 
         [DisplayName("CNPJ")]
         public string CNPJ { get; set; }
 
-        [DisplayName("Endereço")]
+        [DisplayName("Endereco")]
         public string Endereco { get; set; }
 
         [DisplayName("Complemento")]
@@ -32,7 +32,7 @@ namespace DWM.Models.Entidades
         [DisplayName("Logo")]
         public string Logo { get; set; }
 
-        [DisplayName("Path Logo")]
+        [DisplayName("PathLogo")]
         public string PathLogo { get; set; }
 
         [DisplayName("Latitude")]
@@ -41,7 +41,7 @@ namespace DWM.Models.Entidades
         [DisplayName("Longitude")]
         public string Longitudode { get; set; }
 
-        [DisplayName("Indicador Tipo Condomino")]
+        [DisplayName("IndicadorTipoCondomino")]
         public string IndTipoCondomino { get; set; }
     }
 }

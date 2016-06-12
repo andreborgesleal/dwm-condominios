@@ -7,22 +7,26 @@ namespace DWM.Models.Entidades
     [Table("CondominoUnidade")]
     public class CondominoUnidade
     {
-        [DisplayName("Condomínio ID")]
+        [Key, Column(Order = 0)]
+        [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
-        [DisplayName("Edificação ID")]
+        [Key, Column(Order = 1)]
+        [DisplayName("EdificacaoID")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("Unidade ID")]
+        [Key, Column(Order = 2)]
+        [DisplayName("UnidadeID")]
         public int UnidadeID { get; set; }
 
-        [DisplayName("Condomino ID")]
+        [Key, Column(Order = 3)]
+        [DisplayName("CondominoID")]
         public int CondominoID { get; set; }
 
-        [DisplayName("Data Início")]
+        [DisplayName("DataInicio")]
         public System.DateTime DataInicio { get; set; }
 
-        [DisplayName("Data Fim")]
-        public System.DateTime DataFim { get; set; }
+        [DisplayName("DataFim")]
+        public System.DateTime? DataFim { get; set; }
     }
 }
