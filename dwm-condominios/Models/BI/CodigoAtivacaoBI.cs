@@ -37,32 +37,48 @@ namespace DWM.Models.BI
             RegisterViewModel r = (RegisterViewModel)value;
             try
             {
-                #region Buscar os dados da unidade pelo Validador
-                Unidade u = db.Unidades.Where(info => info.Validador == r.UnidadeViewModel.Validador).FirstOrDefault();
-
                 RegisterViewModel registerViewModel = new RegisterViewModel();
 
-                if (u != null)
+                if (r.CondominioID > 0)
                 {
-                    registerViewModel.CondominioID = u.CondominioID;
-                    registerViewModel.Nome = u.NomeCondomino;
-                    registerViewModel.Email = u.Email;
+                    registerViewModel.CondominioID = r.CondominioID;
+                    registerViewModel.CondominoUnidadeViewModel = new Models.Repositories.CondominoUnidadeViewModel()
+                    {
+                        CondominioID = r.CondominioID
+                    };
                     registerViewModel.UnidadeViewModel = new UnidadeViewModel()
                     {
-                        CondominioID = u.CondominioID,
-                        EdificacaoID = u.EdificacaoID,
-                        UnidadeID = u.UnidadeID,
-                        Validador = u.Validador,
-                        EdificacaoDescricao = db.Edificacaos.Find(u.EdificacaoID).Descricao
-                    };
-                    registerViewModel.CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
-                    {
-                        CondominioID = u.CondominioID,
-                        EdificacaoID = u.EdificacaoID,
-                        UnidadeID = u.UnidadeID
+                        CondominioID = r.CondominioID,
+                        EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID,
                     };
                 }
-                #endregion
+                else
+                {
+                    #region Buscar os dados da unidade pelo Validador
+                    Unidade u = db.Unidades.Where(info => info.Validador == r.UnidadeViewModel.Validador).FirstOrDefault();
+                    if (u != null)
+                    {
+                        registerViewModel.CondominioID = u.CondominioID;
+                        registerViewModel.Nome = u.NomeCondomino;
+                        registerViewModel.Email = u.Email;
+                        registerViewModel.UnidadeViewModel = new UnidadeViewModel()
+                        {
+                            CondominioID = u.CondominioID,
+                            EdificacaoID = u.EdificacaoID,
+                            UnidadeID = u.UnidadeID,
+                            Validador = u.Validador,
+                            EdificacaoDescricao = db.Edificacaos.Find(u.EdificacaoID).Descricao
+                        };
+                        registerViewModel.CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
+                        {
+                            CondominioID = u.CondominioID,
+                            EdificacaoID = u.EdificacaoID,
+                            UnidadeID = u.UnidadeID
+                        };
+                    }
+                    #endregion
+                }
+                r = registerViewModel;
             }
             catch (DbUpdateException ex)
             {

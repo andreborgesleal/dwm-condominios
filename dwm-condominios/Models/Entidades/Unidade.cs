@@ -7,15 +7,17 @@ namespace DWM.Models.Entidades
     [Table("Unidade")]
     public class Unidade
     {
-        [Key]
-        [DisplayName("ID")]
-        public int UnidadeID { get; set; }
+        [Key, Column(Order = 0)]
+        [DisplayName("CondominioID")]
+        public int CondominioID { get; set; }
 
+        [Key, Column(Order = 1)]
         [DisplayName("EdificacaoID")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("CondominioID")]
-        public int CondominioID { get; set; }
+        [Key, Column(Order = 2)]
+        [DisplayName("ID")]
+        public int UnidadeID { get; set; }
 
         [DisplayName("Validador")]
         public string Validador { get; set; }

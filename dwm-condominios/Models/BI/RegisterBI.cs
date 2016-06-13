@@ -103,40 +103,6 @@ namespace DWM.Models.BI
                     throw new ArgumentException(validate.MessageBase);
                 #endregion
 
-                #region Incluir o Condômino
-                CondominoPFViewModel condominoPFViewModel = new CondominoPFViewModel()
-                {
-                    uri = r.uri,
-                    empresaId = _empresaId,
-                    CondominoID = r.CondominoID,
-                    CondominioID = r.CondominioID,
-                    Nome = r.Nome,
-                    IndFiscal = r.IndFiscal,
-                    IndProprietario = r.IndProprietario,
-                    TelParticular1 = r.TelParticular1,
-                    TelParticular2 = r.TelParticular2,
-                    Email = r.Email,
-                    IndSituacao = r.UnidadeViewModel.Validador.Trim().Length > 0 ? "A" : "D",
-                    DataNascimento = r.DataNascimento,
-                    Sexo = r.Sexo,
-                    IndAnimal = r.IndAnimal,
-                    CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
-                    {
-                        uri = r.uri,
-                        CondominioID = r.UnidadeViewModel.CondominioID,
-                        EdificacaoID = r.UnidadeViewModel.EdificacaoID,
-                        UnidadeID = r.UnidadeViewModel.UnidadeID,
-                        CondominoID = r.CondominoID,
-                        DataInicio = Funcoes.Brasilia().Date
-                    }
-                };
-
-                CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
-                condominoPFViewModel = condominoPFModel.Insert(condominoPFViewModel);
-                if (condominoPFViewModel.mensagem.Code > 0)
-                    throw new App_DominioException(condominoPFViewModel.mensagem);
-                #endregion
-
                 #region Cadastrar o condômino como um usuário em DWM-Segurança
 
                 #region Usuario 
@@ -167,6 +133,42 @@ namespace DWM.Models.BI
                 seguranca_db.UsuarioGrupos.Add(ug);
                 #endregion
 
+                #endregion
+
+                #region Incluir o Condômino
+                CondominoPFViewModel condominoPFViewModel = new CondominoPFViewModel()
+                {
+                    uri = r.uri,
+                    empresaId = _empresaId,
+                    CondominoID = r.CondominoID,
+                    CondominioID = r.CondominioID,
+                    Nome = r.Nome,
+                    IndFiscal = r.IndFiscal,
+                    IndProprietario = r.IndProprietario,
+                    TelParticular1 = r.TelParticular1,
+                    TelParticular2 = r.TelParticular2,
+                    Email = r.Email,
+                    IndSituacao = r.UnidadeViewModel.Validador.Trim().Length > 0 ? "A" : "D",
+                    UsuarioID = user.usuarioId,
+                    ProfissaoID = r.ProfissaoID,
+                    DataNascimento = r.DataNascimento,
+                    Sexo = r.Sexo,
+                    IndAnimal = r.IndAnimal,
+                    CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
+                    {
+                        uri = r.uri,
+                        CondominioID = r.UnidadeViewModel.CondominioID,
+                        EdificacaoID = r.UnidadeViewModel.EdificacaoID,
+                        UnidadeID = r.UnidadeViewModel.UnidadeID,
+                        CondominoID = r.CondominoID,
+                        DataInicio = Funcoes.Brasilia().Date
+                    }
+                };
+
+                CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
+                condominoPFViewModel = condominoPFModel.Insert(condominoPFViewModel);
+                if (condominoPFViewModel.mensagem.Code > 0)
+                    throw new App_DominioException(condominoPFViewModel.mensagem);
                 #endregion
 
                 r.CondominoID = condominoPFViewModel.CondominoID;

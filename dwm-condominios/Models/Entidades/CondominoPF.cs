@@ -6,6 +6,9 @@ namespace DWM.Models.Entidades
 {
     public class CondominoPF : Condomino
     {
+        [DisplayName("ProfissaoID")]
+        public int ProfissaoID { get; set; }
+
         [DisplayName("DataNascimento")]
         public DateTime? DataNascimento { get; set; }
 

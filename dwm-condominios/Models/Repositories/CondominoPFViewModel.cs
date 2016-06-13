@@ -6,6 +6,9 @@ namespace DWM.Models.Repositories
 {
     public class CondominoPFViewModel : CondominoViewModel
     {
+        [DisplayName("ProfissaoID")]
+        public int ProfissaoID { get; set; }
+
         [DisplayName("Data de Nascimento")]
         public DateTime? DataNascimento { get; set; }
         
@@ -13,7 +16,7 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Informe o Sexo")]
         public string Sexo { get; set; }
 
-        [DisplayName("Indicador Animal")]
+        [DisplayName("Animal de estimação")]
         [Required(ErrorMessage = "Informe se o Condômino possui animal de estimação")]
         public string IndAnimal { get; set; }
     }

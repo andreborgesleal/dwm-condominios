@@ -12,5 +12,6 @@ namespace DWM.Models.Entidades
         public DbSet<Unidade> Unidades { get; set;  }
         public DbSet<Parametro> Parametros { get; set; }
         public DbSet<Edificacao> Edificacaos { get; set; }
+        public DbSet<Profissao> Profissaos { get; set; }
     }
 }

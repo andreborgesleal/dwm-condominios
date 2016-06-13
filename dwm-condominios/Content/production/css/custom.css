@@ -305,6 +305,13 @@ body .container.body .right_col {
   width: 100%;
   padding: 0
 }
+
+.container-cadastro {
+  width: 60%;
+  padding: 0
+}
+
+
 .navbar-nav>li>a, .navbar-brand, .navbar-nav>li>a {
   color: #fff !important;
 }
@@ -4697,3 +4704,6 @@ ul.notifications {
   border: 1px solid #e5e5e5;
 }
 /** /Dropzone.js **/
+
+
+

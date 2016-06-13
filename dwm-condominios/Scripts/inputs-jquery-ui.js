@@ -143,10 +143,11 @@ function Mascara(formato, keypress, objeto) {
     }
 }
 
-function GetSelectListOnCascade(thisId, nextId) {
+function GetSelectListOnCascade(thisId, nextId, tag) {
 
     var link = "GetNames";
     var _Id = "";
+    var _tag = "";
 
     // Recupera o VALUE do dropdownlist selecionado
     _Id = $("#" + thisId + " option:selected").val();
@@ -155,8 +156,14 @@ function GetSelectListOnCascade(thisId, nextId) {
         $('#' + nextId).html('<select class="form-control input-sm" id="' + nextId + '" name="' + nextId + '"><option value="">Selecione...</option></select>');
         return
     }
-
+    
     link = encodeURI(link + '?term=' + _Id);
+
+    // Recupera o campo adicional TAG
+    if (tag != '') {
+        _tag = $("#" + tag).val();
+        link = encodeURI(link + '&tag=' + _tag);
+    }
 
     CarregandoIn();
 

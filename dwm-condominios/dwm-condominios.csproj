@@ -221,6 +221,7 @@
     <Compile Include="Models\Entidades\Edificacao.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
+    <Compile Include="Models\Entidades\Profissao.cs" />
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
     <Compile Include="Models\Entidades\RamoAtividade.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
+    <Compile Include="Models\Repositories\ProfissaoViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
     <Compile Include="Models\Repositories\RamoAtividadeViewModel.cs" />

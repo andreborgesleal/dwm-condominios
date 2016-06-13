@@ -13,6 +13,7 @@ using DWM.Models.Entidades;
 using DWM.Models.BI;
 using DWM.Models.Pattern;
 using App_Dominio.Pattern;
+using System.Collections.Generic;
 
 namespace DWM.Controllers
 {
@@ -101,18 +102,18 @@ namespace DWM.Controllers
                     {
                         Validador = id
                     };
-                    Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
-                    value = factory.Execute(new CodigoAtivacaoBI(), value);
                 }
                 else
                 {
                     value.CondominioID = int.Parse(id);
-                    value.Nome = "André Borges Leal";
                     value.CondominoUnidadeViewModel = new Models.Repositories.CondominoUnidadeViewModel()
                     {
                         CondominioID = int.Parse(id)
                     };
                 }
+
+                Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
+                value = factory.Execute(new CodigoAtivacaoBI(), value);
             }
             else
                 return RedirectToAction("Login", "Account");
@@ -194,6 +195,19 @@ namespace DWM.Controllers
             new EmpresaSecurity<App_DominioContext>().EncerrarSessao(web.Session.SessionID);
 
             return RedirectToAction("Login", "Account");
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetNames(string term, int tag)
+        {
+            var results = new Models.Enumeracoes.BindDropDownList().Unidades("", "", term, tag);
+
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
         }
 
     }
