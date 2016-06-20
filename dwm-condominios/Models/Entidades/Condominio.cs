@@ -39,9 +39,9 @@ namespace DWM.Models.Entidades
         public string Latitude { get; set; }
 
         [DisplayName("Longitude")]
-        public string Longitudode { get; set; }
+        public string Longitude { get; set; }
 
         [DisplayName("IndicadorTipoCondomino")]
-        public string IndTipoCondomino { get; set; }
+        public string IndTipoCondominio { get; set; }
     }
 }

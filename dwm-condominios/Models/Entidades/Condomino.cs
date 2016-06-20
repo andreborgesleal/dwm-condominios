@@ -46,8 +46,5 @@ namespace DWM.Models.Entidades
 
         [DisplayName("IndicadorSituacao")]
         public string IndSituacao { get; set; }
-
-        public virtual CondominoUnidade CondominoUnidade { get; set; }
-
     }
 }

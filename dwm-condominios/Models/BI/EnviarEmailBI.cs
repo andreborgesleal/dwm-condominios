@@ -62,11 +62,11 @@ namespace DWM.Models.BI
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema:</span></p>" +
-                              "<p><a href=\"http://localhost:64972/Account/Login/\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
+                              "<p><a href=\"http://www.parcparadiso.com.br/Account/Login/id=3\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
                               "<p></p>" +
                               "<p></p>";
 
-                if (rec.UnidadeViewModel.Validador.Trim().Length < 10)
+                if (rec.UnidadeViewModel.Validador == null)
                     Html += "<p></p>" +
                             "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Solicitamos entrar em contato com a administração do condomínio para ativar o seu cadastro.</span></p>" +
                             "<p></p>" +
@@ -113,7 +113,7 @@ namespace DWM.Models.BI
                 }
 
             }
-            rec.mensagem = new Validate() { Code = -1, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
+            rec.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
             return rec; 
         }
 

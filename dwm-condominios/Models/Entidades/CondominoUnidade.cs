@@ -28,5 +28,7 @@ namespace DWM.Models.Entidades
 
         [DisplayName("DataFim")]
         public System.DateTime? DataFim { get; set; }
+
+        public virtual Condomino Condomino { get; set; }
     }
 }

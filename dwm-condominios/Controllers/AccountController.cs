@@ -106,10 +106,6 @@ namespace DWM.Controllers
                 else
                 {
                     value.CondominioID = int.Parse(id);
-                    value.CondominoUnidadeViewModel = new Models.Repositories.CondominoUnidadeViewModel()
-                    {
-                        CondominioID = int.Parse(id)
-                    };
                 }
 
                 Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
@@ -133,8 +129,15 @@ namespace DWM.Controllers
                 {
                     value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
 
+                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    {
+                        CondominioID = value.CondominioID,
+                        EdificacaoID = int.Parse(collection["EdificacaoID"]),
+                        UnidadeID = int.Parse(collection["UnidadeID"])
+                    };
+
                     // Aciona o pattern local do aplicativo - Pattern Localhost (e não o do App_Dominio)
-                    FactoryLocalhost<RegisterViewModel, ApplicationContext> factory = new FactoryLocalhost<RegisterViewModel, ApplicationContext>();
+                    Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                     value = factory.Execute(new RegisterBI(), value);
 
                     if (value.mensagem.Code > 0)
@@ -167,10 +170,26 @@ namespace DWM.Controllers
                 {
                     Code = 999,
                     Message = MensagemPadrao.Message(999).ToString(),
-                    MessageBase = ModelState.Values.Where(erro => erro.Errors.Count > 0).First().Errors[0].ErrorMessage
+                    MessageBase = ModelState.Values.Where(erro => erro.Errors.Count > 0).First().Errors[0].ErrorMessage == "" ? MensagemPadrao.Message(999).ToString() : ModelState.Values.Where(erro => erro.Errors.Count > 0).First().Errors[0].ErrorMessage
                 };
                 ModelState.AddModelError("", value.mensagem.Message); // mensagem amigável ao usuário
                 Attention(value.mensagem.MessageBase);
+                if (collection["UnidadeID"] != null && collection["EdificacaoID"] != null)
+                {
+                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    {
+                        CondominioID = value.CondominioID,
+                        EdificacaoID = int.Parse(collection["EdificacaoID"]),
+                        UnidadeID = int.Parse(collection["UnidadeID"])
+                    };
+                }
+                else
+                {
+                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    {
+                        CondominioID = value.CondominioID,
+                    };
+                };
             }
 
             return View(value);

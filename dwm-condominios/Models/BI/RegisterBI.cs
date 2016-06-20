@@ -71,7 +71,7 @@ namespace DWM.Models.BI
             #endregion
 
             #region Validar código de ativação
-            if (value.UnidadeViewModel.Validador.Trim().Length > 0)
+            if (value.UnidadeViewModel.Validador != null && value.UnidadeViewModel.Validador.Trim().Length > 0)
             {
                 Unidade u = db.Unidades.Find(value.UnidadeViewModel.CondominioID, value.UnidadeViewModel.EdificacaoID, value.UnidadeViewModel.UnidadeID);
                 if (u.Validador != value.UnidadeViewModel.Validador || (u.Validador == value.UnidadeViewModel.Validador && Funcoes.Brasilia().Date > u.DataExpiracao))
@@ -110,11 +110,11 @@ namespace DWM.Models.BI
 
                 Usuario user = new Usuario()
                 {
-                    nome = r.Nome,
+                    nome = r.Nome.ToUpper(),
                     login = r.Email,
                     empresaId = _empresaId,
                     dt_cadastro = Funcoes.Brasilia(),
-                    situacao = "A",
+                    situacao = r.UnidadeViewModel.Validador != null ? "A" : "D",
                     isAdmin = "N",
                     senha = security.Criptografar(r.senha)
                 };
@@ -133,6 +133,8 @@ namespace DWM.Models.BI
                 seguranca_db.UsuarioGrupos.Add(ug);
                 #endregion
 
+                seguranca_db.SaveChanges();
+
                 #endregion
 
                 #region Incluir o Condômino
@@ -148,21 +150,12 @@ namespace DWM.Models.BI
                     TelParticular1 = r.TelParticular1,
                     TelParticular2 = r.TelParticular2,
                     Email = r.Email,
-                    IndSituacao = r.UnidadeViewModel.Validador.Trim().Length > 0 ? "A" : "D",
+                    IndSituacao = r.UnidadeViewModel.Validador != null ? "A" : "D",
                     UsuarioID = user.usuarioId,
                     ProfissaoID = r.ProfissaoID,
                     DataNascimento = r.DataNascimento,
                     Sexo = r.Sexo,
-                    IndAnimal = r.IndAnimal,
-                    CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
-                    {
-                        uri = r.uri,
-                        CondominioID = r.UnidadeViewModel.CondominioID,
-                        EdificacaoID = r.UnidadeViewModel.EdificacaoID,
-                        UnidadeID = r.UnidadeViewModel.UnidadeID,
-                        CondominoID = r.CondominoID,
-                        DataInicio = Funcoes.Brasilia().Date
-                    }
+                    IndAnimal = r.IndAnimal
                 };
 
                 CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
@@ -171,10 +164,29 @@ namespace DWM.Models.BI
                     throw new App_DominioException(condominoPFViewModel.mensagem);
                 #endregion
 
+                #region Incluir o CondominoUnidade
+                CondominoUnidadeViewModel condominoUnidadeViewModel = new CondominoUnidadeViewModel()
+                {
+                    uri = r.uri,
+                    CondominioID = r.UnidadeViewModel.CondominioID,
+                    EdificacaoID = r.UnidadeViewModel.EdificacaoID,
+                    UnidadeID = r.UnidadeViewModel.UnidadeID,
+                    CondominoID = r.CondominoID,
+                    DataInicio = Funcoes.Brasilia().Date,
+                    CondominoViewModel = condominoPFViewModel
+                };
+
+                CondominoUnidadeModel condominoUnidadeModel = new CondominoUnidadeModel(this.db, this.seguranca_db);
+                condominoUnidadeViewModel = condominoUnidadeModel.Insert(condominoUnidadeViewModel);
+                if (condominoUnidadeViewModel.mensagem.Code > 0)
+                    throw new App_DominioException(condominoPFViewModel.mensagem);
+                #endregion
+
                 r.CondominoID = condominoPFViewModel.CondominoID;
-                r.CondominoUnidadeViewModel.CondominioID = condominoPFViewModel.CondominoID;
                 r.IndSituacao = condominoPFViewModel.IndSituacao;
                 r.mensagem = condominoPFViewModel.mensagem;
+                r.UnidadeViewModel.EdificacaoDescricao = db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao;
+                db.SaveChanges();
             }
             catch (ArgumentException ex)
             {

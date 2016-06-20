@@ -89,24 +89,24 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <div class="hidden-sm hidden-xs">
-                    <h4>Instruções de preenchimento</h4>
-                    <p class="font-gray-dark">
-                        - Informe todos os campos abaixo e clique no botão <strong>[Salvar]</strong>
-                    </p>
-                    <p class="font-gray-dark">
-                        - A habilitação de seu cadastro será notificada por e-mail
-                    </p>
-                    <p class="font-gray-dark">
-                        - Ao se cadastrar você concorda com os <a href="~/Account/TermoUso" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica" class="text-info" target="_blank">Política de Privacidade</a>
-                    </p>
-                </div>
                 @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
                 {
                     @Html.Partial("_alerts")
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary("", new { @class = "text-danger" })
                     @Html.HiddenFor(info => info.CondominioID)
+                    <div class="hidden-sm hidden-xs">
+                        <h4>Instruções de preenchimento</h4>
+                        <p class="font-gray-dark">
+                            - Informe todos os campos abaixo e clique no botão <strong>[Salvar]</strong>
+                        </p>
+                        <p class="font-gray-dark">
+                            - A habilitação de seu cadastro será notificada por e-mail
+                        </p>
+                        <p class="font-gray-dark">
+                            - Ao se cadastrar você concorda com os <a href="~/Account/TermoUso" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica" class="text-info" target="_blank">Política de Privacidade</a>
+                        </p>
+                    </div>
                     <div class="row">
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
@@ -125,13 +125,13 @@
                             <div class="col-md-3 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Torre</label>
-                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
                                 </div>
                             </div>
                             <div class="col-md-3 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Unidade</label>
-                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", "", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control" })
+                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-3 col-xs-12 col-sm-12">
@@ -217,7 +217,7 @@
             </div>
         </div>
     </div>
-    <section style="height: 300px; background-color: #272626; margin-top: 50px; color: #fff" class="text-center">
+    <section style="height: 300px; background-color: #272626; margin-top: 200px; color: #fff" class="text-center">
         <div class="container">
             <div class="row">
                 <h3><b>CONTATO</b></h3>
@@ -255,8 +255,8 @@
     </section>
     <script type="text/javascript">
         $("#IndFiscal").mask("999.999.999-99");
-        $("#TelParticular1").mask("(99)99999-9999");
-        $("#TelParticular2").mask("(99)99999-9999");
+        $("#TelParticular1").mask("(99)9999?9-9999");
+        $("#TelParticular2").mask("(99)9999?9-9999");
     </script>
 
     <!-- jQuery -->

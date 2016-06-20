@@ -48,27 +48,18 @@ namespace DWM.Models.Persistence
                 condomino = getEntityInstance();
 
             condomino.CondominoID = value.CondominoID;
-            condomino.Nome = value.Nome;
+            condomino.CondominioID = value.CondominioID;
+            condomino.Nome = value.Nome.ToUpper();
             condomino.IndFiscal = value.IndFiscal != null ? value.IndFiscal.Replace(".", "").Replace("-", "").Replace("/","") : value.IndFiscal;
             condomino.IndProprietario = value.IndProprietario;
             condomino.TelParticular1 = value.TelParticular1 != null ? value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular1;
-            condomino.TelParticular2 = value.TelParticular2 != null ? value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular2;
+            condomino.TelParticular2 = value.TelParticular2 != null ? value.TelParticular2.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular2;
             condomino.IndSituacao = value.IndSituacao;
             condomino.Email = value.Email.ToLower();
             condomino.UsuarioID = value.UsuarioID;
             condomino.Observacao = value.Observacao;
             condomino.DataCadastro = Funcoes.Brasilia();
             condomino.Avatar = value.Avatar;
-
-            condomino.CondominoUnidade = new CondominoUnidade()
-            {
-                CondominioID = value.CondominoUnidadeViewModel.CondominioID,
-                EdificacaoID = value.CondominoUnidadeViewModel.EdificacaoID,
-                UnidadeID = value.CondominoUnidadeViewModel.UnidadeID,
-                CondominoID = value.CondominoUnidadeViewModel.CondominoID,
-                DataInicio = value.CondominoUnidadeViewModel.DataInicio,
-                DataFim = value.CondominoUnidadeViewModel.DataFim
-            };
 
             return condomino;
         }
@@ -78,11 +69,13 @@ namespace DWM.Models.Persistence
             R condominoViewModel = getRepositoryInstance();
 
             condominoViewModel.CondominoID = entity.CondominoID;
+            condominoViewModel.CondominioID = entity.CondominioID;
             condominoViewModel.Nome = entity.Nome;
             condominoViewModel.IndFiscal = entity.IndFiscal;
             condominoViewModel.IndProprietario = entity.IndProprietario;
             condominoViewModel.TelParticular1 = entity.TelParticular1;
             condominoViewModel.TelParticular2 = entity.TelParticular2;
+            condominoViewModel.IndSituacao = entity.IndSituacao;
             condominoViewModel.Email = entity.Email.ToLower();
             condominoViewModel.UsuarioID = entity.UsuarioID;
             condominoViewModel.Observacao = entity.Observacao;
@@ -90,22 +83,21 @@ namespace DWM.Models.Persistence
             condominoViewModel.Avatar = entity.Avatar;
             condominoViewModel.mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS };
 
-            condominoViewModel.CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
-            {
-                CondominioID = entity.CondominoUnidade.CondominioID,
-                EdificacaoID = entity.CondominoUnidade.EdificacaoID,
-                UnidadeID = entity.CondominoUnidade.UnidadeID,
-                CondominoID = entity.CondominoUnidade.CondominoID,
-                DataInicio = entity.CondominoUnidade.DataInicio,
-                DataFim = entity.CondominoUnidade.DataFim
-            };
-
             return condominoViewModel;
         }
 
         public override Validate Validate(R value, Crud operation)
         {
             value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
+
+            if (value.CondominioID <= 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "ID Condomínio").ToString();
+                value.mensagem.MessageBase = "ID do condomínio deve ser informado";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
 
             if (operation == Crud.EXCLUIR || operation == Crud.ALTERAR)
             {
@@ -147,13 +139,16 @@ namespace DWM.Models.Persistence
             }
 
             #region Valida CPF/CNPJ
-            if (value.IndFiscal.Replace(".", "").Replace("-", "").Length <= 11 && !Funcoes.ValidaCpf(value.IndFiscal.Replace(".", "").Replace("-", "")))
+            if (value.IndFiscal.Replace(".", "").Replace("-", "").Length <= 11)
             {
-                value.mensagem.Code = 29;
-                value.mensagem.Message = MensagemPadrao.Message(29, value.IndFiscal).ToString();
-                value.mensagem.MessageBase = "CPF informado está incorreto.";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
+                if (!Funcoes.ValidaCpf(value.IndFiscal.Replace(".", "").Replace("-", "")))
+                {
+                    value.mensagem.Code = 29;
+                    value.mensagem.Message = MensagemPadrao.Message(29, value.IndFiscal).ToString();
+                    value.mensagem.MessageBase = "CPF informado está incorreto.";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
             }
             else if (!Funcoes.ValidaCnpj(value.IndFiscal.Replace(".", "").Replace("-", "").Replace("/", "")))
             {
@@ -187,13 +182,10 @@ namespace DWM.Models.Persistence
             }
             #endregion
 
-            CondominoUnidadeModel condominoUnidadeModel = new CondominoUnidadeModel(this.db, this.seguranca_db);
-            value.CondominoUnidadeViewModel.mensagem = condominoUnidadeModel.Validate(value.CondominoUnidadeViewModel, operation);
-            if (value.CondominoUnidadeViewModel.mensagem.Code > 0)
-                throw new App_DominioException(value.CondominoUnidadeViewModel.mensagem);
-
             return value.mensagem;
         }
         #endregion
     }
+
+
 }

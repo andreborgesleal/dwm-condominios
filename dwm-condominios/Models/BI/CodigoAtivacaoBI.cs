@@ -42,10 +42,6 @@ namespace DWM.Models.BI
                 if (r.CondominioID > 0)
                 {
                     registerViewModel.CondominioID = r.CondominioID;
-                    registerViewModel.CondominoUnidadeViewModel = new Models.Repositories.CondominoUnidadeViewModel()
-                    {
-                        CondominioID = r.CondominioID
-                    };
                     registerViewModel.UnidadeViewModel = new UnidadeViewModel()
                     {
                         CondominioID = r.CondominioID,
@@ -69,16 +65,11 @@ namespace DWM.Models.BI
                             Validador = u.Validador,
                             EdificacaoDescricao = db.Edificacaos.Find(u.EdificacaoID).Descricao
                         };
-                        registerViewModel.CondominoUnidadeViewModel = new CondominoUnidadeViewModel()
-                        {
-                            CondominioID = u.CondominioID,
-                            EdificacaoID = u.EdificacaoID,
-                            UnidadeID = u.UnidadeID
-                        };
                     }
                     #endregion
                 }
                 r = registerViewModel;
+                r.mensagem = new Validate() { Code = -1 };
             }
             catch (DbUpdateException ex)
             {

@@ -28,5 +28,7 @@ namespace DWM.Models.Repositories
         [DisplayName("Data Fim")]
         [Required(ErrorMessage = "Informe a Data Fim")]
         public System.DateTime? DataFim { get; set; }
+
+        public virtual CondominoViewModel CondominoViewModel { get; set; }
     }
 }

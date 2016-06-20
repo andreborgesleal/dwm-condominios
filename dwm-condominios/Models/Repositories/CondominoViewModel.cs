@@ -55,7 +55,5 @@ namespace DWM.Models.Repositories
 
         [DisplayName("IndicadorSituacao")]
         public string IndSituacao { get; set; }
-
-        public CondominoUnidadeViewModel CondominoUnidadeViewModel { get; set; }
     }
 }

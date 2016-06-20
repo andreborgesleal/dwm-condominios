@@ -41,7 +41,7 @@ namespace DWM.Models.Enumeracoes
                             {
                                 Value = u.UnidadeID.ToString(),
                                 Text = u.UnidadeID.ToString(),
-                                Selected = (selectedValue != "" ? u.ToString().Equals(selectedValue) : false)
+                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
                             }).ToList();
 
                 return q.AsEnumerable().ToList();
@@ -78,7 +78,7 @@ namespace DWM.Models.Enumeracoes
                             {
                                 Value = e.EdificacaoID.ToString(),
                                 Text = e.Descricao,
-                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                                Selected = (selectedValue != "" ? e.EdificacaoID.ToString() == selectedValue : false)
                             }).ToList();
 
                 return q;

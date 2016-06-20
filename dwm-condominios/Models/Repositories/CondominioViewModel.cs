@@ -51,11 +51,11 @@ namespace DWM.Models.Repositories
         
         [DisplayName("Longitude")]
         [StringLength(20, ErrorMessage = "Longitude deve ter no máximo 20 caracteres")]
-        public string Longitudode { get; set; }
+        public string Longitude { get; set; }
         
         [DisplayName("Indicador Tipo Condômino")]
         [StringLength(1, ErrorMessage = "Indicador Tipo Condômino só permite 1 caractere")]
         [Required(ErrorMessage = "Informe o Indicador Tipo Condômino")]
-        public string IndTipoCondomino { get; set; }
+        public string IndTipoCondominio { get; set; }
     }
 }
