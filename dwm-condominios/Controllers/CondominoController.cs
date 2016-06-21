@@ -48,6 +48,12 @@ namespace DWM.Controllers
 
         #endregion
 
+        #region Enviar Token
+        public ActionResult EnviarToken()
+        {
+            return View(new UnidadeViewModel());
+        }
+        #endregion
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

@@ -9,6 +9,8 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_ControllerDialogWidth>600</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
+    <ToolsVersionPromptShown>1.8</ToolsVersionPromptShown>
+    <UseIISExpress>true</UseIISExpress>
   </PropertyGroup>
   <ProjectExtensions>
     <VisualStudio>

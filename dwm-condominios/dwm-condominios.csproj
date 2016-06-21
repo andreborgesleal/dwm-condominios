@@ -26,7 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>1.7</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="App_Dominio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\App_Dominio\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
+      <HintPath>..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -3869,6 +3869,7 @@
     <Content Include="Views\Shared\_Menu.cshtml" />
     <Content Include="Views\Condomino\Browse.cshtml" />
     <Content Include="Views\Condomino\ListParam.cshtml" />
+    <Content Include="Views\Condomino\EnviarToken.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

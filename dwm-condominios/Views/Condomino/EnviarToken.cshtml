@@ -1,0 +1,79 @@
+﻿@model DWM.Models.Repositories.UnidadeViewModel
+@{
+    ViewBag.Title = "EnviarToken";
+}
+
+<div class="page-header">
+    <h2>Enviar Token de Confirmação</h2>
+</div>
+
+<div class="col-md-7 center-margin">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Formulário</h3>
+        </div>
+        @using (Html.BeginForm())
+        {
+            <div class="panel-body">
+                <div class="form-horizontal">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.EdificacaoID, "Torre *", new { @class = "control-label col-md-3" })
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.EdificacaoDescricao ?? ""), new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.UnidadeID, "Unidade *", new { @class = "control-label col-md-3" })
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", Model.UnidadeID.ToString(), Model.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.NomeCondomino, "Nome *", new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.NomeCondomino, new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, "Email *", new { @class = "control-label col-md-3" })
+                                <div class="col-md-7">
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="panel-footer">
+                <input type="submit" value="Enviar Token" class="btn btn-default" />
+                <span class="pull-right">Campos com (*) são obrigatórios</span>
+            </div>}
+    </div>
+
+</div>
+
+
