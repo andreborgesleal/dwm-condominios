@@ -89,4 +89,3 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.Microsof
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
-C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache

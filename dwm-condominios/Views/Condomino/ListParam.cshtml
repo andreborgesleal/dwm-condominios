@@ -1,0 +1,74 @@
+﻿@using DWM.Models.Repositories
+@model IEnumerable<CondominoUnidadeViewModel>
+@{
+    Layout = null;
+}
+<div class="row clearfix">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Listagem de condôminos <small>Registros encontrados</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Settings 1</a>
+                            </li>
+                            <li>
+                                <a href="#">Settings 2</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <p>Clique nos botões de <code>Ação</code> para executar a ação desejada</p>
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th class="column-title">Nome </th>
+                                <th class="column-title">Edificação </th>
+                                <th class="column-title">Unidade </th>
+                                <th class="column-title">Telefone </th>
+                                <th class="column-title">E-mail </th>
+                                <th class="column-title">Data </th>
+                                <th class="column-title no-link last">
+                                    <span class="nobr">Ação</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (CondominoUnidadeViewModel value in Model)
+                            {
+                                <tr class="even pointer">
+                                    <td class="">@value.CondominoViewModel.Nome</td>
+                                    <td class="">@value.EdificacaoDescricao </td>
+                                    <td class="">@value.UnidadeID</td>
+                                    <td class="">@value.CondominoViewModel.TelParticular1</td>
+                                    <td class="">@value.CondominoViewModel.Email</td>
+                                    <td class="">@value.CondominoViewModel.DataCadastro</td>
+                                    <td class="last">
+                                        <a href="#">Editar</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

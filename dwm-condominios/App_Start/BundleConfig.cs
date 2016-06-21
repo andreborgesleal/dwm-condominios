@@ -78,7 +78,11 @@ namespace dwm_condominios
                         "~/Content/production/js/maps/gdp-data.js"
                         ));
 
+            bundles.Add(new ScriptBundle("~/bundles/inputs-jquery-ui").Include(
+                        "~/Scripts/inputs-jquery-ui.js"
+                        ));
 
+            
             //bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
             //            "~/Scripts/jquery.validate*"));
 

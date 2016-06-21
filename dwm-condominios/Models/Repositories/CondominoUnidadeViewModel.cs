@@ -30,5 +30,7 @@ namespace DWM.Models.Repositories
         public System.DateTime? DataFim { get; set; }
 
         public virtual CondominoViewModel CondominoViewModel { get; set; }
+
+        public string EdificacaoDescricao { get; set; }
     }
 }

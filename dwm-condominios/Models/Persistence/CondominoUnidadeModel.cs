@@ -159,13 +159,13 @@ namespace DWM.Models.Persistence
         {
             int _EdificacaoID = (int)param[0];
             int _UnidadeID = (int)param[1];
-            string _nome = param != null && param[0] != null && param[0].ToString() != "" ? param[0].ToString() : null;
+            string _nome = param != null && param[2] != null && param[2].ToString() != "" ? param[2].ToString() : null;
 
             IEnumerable<CondominoUnidadeViewModel> query = null;
 
             if (_EdificacaoID > 0 && _UnidadeID > 0)
             {
-                query = (from c in db.CondominoUnidades
+                query = (from c in db.CondominoUnidades join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
                          where c.CondominioID == sessaoCorrente.empresaId
                                && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
@@ -173,6 +173,7 @@ namespace DWM.Models.Persistence
                                    && c.EdificacaoID == _EdificacaoID
                                    && c.UnidadeID == _UnidadeID)
                                && c.DataFim == null
+                         orderby c.Condomino.Nome
                          select new CondominoUnidadeViewModel()
                          {
                              CondominioID = c.CondominioID,
@@ -180,6 +181,7 @@ namespace DWM.Models.Persistence
                              UnidadeID = c.UnidadeID,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
+                             EdificacaoDescricao = e.Descricao,
                              CondominoViewModel = new CondominoPFViewModel()
                              {
                                  Nome = c.Condomino.Nome,
@@ -194,6 +196,7 @@ namespace DWM.Models.Persistence
                              },
                              PageSize = pageSize,
                              TotalCount = (from c1 in db.CondominoUnidades
+                                           join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
                                            where c1.CondominioID == sessaoCorrente.empresaId
                                                  && c1.Condomino.IndFiscal.Length == 11
                                                  && c1.Condomino.IndSituacao == "A"
@@ -201,12 +204,14 @@ namespace DWM.Models.Persistence
                                                      && c1.EdificacaoID == _EdificacaoID
                                                      && c1.UnidadeID == _UnidadeID)
                                                  && c1.DataFim == null
+                                           orderby c1.Condomino.Nome
                                            select c1).Count()
                          }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
             }
             else
             {
                 query = (from c in db.CondominoUnidades
+                         join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
                          where c.CondominioID == sessaoCorrente.empresaId
                                && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
@@ -217,6 +222,7 @@ namespace DWM.Models.Persistence
                                      ( _EdificacaoID == 0 && (_nome == null || _nome == ""))
                                   )
                                && c.DataFim == null
+                         orderby c.Condomino.Nome
                          select new CondominoUnidadeViewModel()
                          {
                              CondominioID = c.CondominioID,
@@ -224,6 +230,7 @@ namespace DWM.Models.Persistence
                              UnidadeID = c.UnidadeID,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
+                             EdificacaoDescricao = e.Descricao,
                              CondominoViewModel = new CondominoPFViewModel()
                              {
                                  Nome = c.Condomino.Nome,
@@ -238,6 +245,7 @@ namespace DWM.Models.Persistence
                              },
                              PageSize = pageSize,
                              TotalCount = (from c1 in db.CondominoUnidades
+                                           join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
                                            where c1.CondominioID == sessaoCorrente.empresaId
                                                  && c1.Condomino.IndFiscal.Length == 11
                                                  && c1.Condomino.IndSituacao == "A"
@@ -248,6 +256,7 @@ namespace DWM.Models.Persistence
                                                        (_EdificacaoID == 0 && (_nome == null || _nome == ""))
                                                     )
                                                  && c1.DataFim == null
+                                           orderby c1.Condomino.Nome
                                            select c1).Count()
                          }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
             }
