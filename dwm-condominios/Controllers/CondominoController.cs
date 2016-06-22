@@ -48,6 +48,21 @@ namespace DWM.Controllers
 
         #endregion
 
+        #region Enviar Token
+        [AuthorizeFilter]
+        public ActionResult EnviarToken()
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                ViewBag.empresaId = security.getSessaoCorrente().empresaId;
+
+                return View(new UnidadeViewModel());
+            }
+            return View();
+        }
+        #endregion
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

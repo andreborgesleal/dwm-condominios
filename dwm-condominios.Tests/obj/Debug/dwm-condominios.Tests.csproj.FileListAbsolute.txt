@@ -1,0 +1,1 @@
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios.Tests\obj\Debug\dwm-condominios.Tests.csprojResolveAssemblyReference.cache
