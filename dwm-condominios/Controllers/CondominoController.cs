@@ -28,7 +28,7 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult ListParam(int? index, int? pageSize = 50, string EdificacaoID = null, string UnidadeID = null, string descricao = null)
         {
-            ViewBag.ValidateRequest = true;
+            //ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
                 int _EdificacaoID = EdificacaoID == null || EdificacaoID == "" ? 0 : int.Parse(EdificacaoID);
@@ -53,7 +53,7 @@ namespace DWM.Controllers
         [AllowAnonymous]
         public JsonResult GetNames(string term, int tag)
         {
-            var results = new BindDropDownList().Unidades("Todas...", "", term, tag);
+            var results = new BindDropDownList().Unidades("Selecione...", "", term, tag);
 
             return new JsonResult()
             {
