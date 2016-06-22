@@ -45,13 +45,13 @@
                             <div class="col-md-3 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Torre</label>
-                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
                                 </div>
                             </div>
                             <div class="col-md-3 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Unidade</label>
-                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todas...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>

@@ -15,7 +15,6 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\dwm-condominios.dll.config
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\dwm-condominios.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\dwm-condominios.pdb
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\Antlr3.Runtime.dll
-C:\Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\EntityFramework.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\EntityFramework.SqlServer.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.AI.Agent.Intercept.dll
@@ -181,3 +180,4 @@ C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condomini
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
