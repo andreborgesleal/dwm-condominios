@@ -32,7 +32,7 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        @using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @class = "form", @id = "form000" }))
+        @using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-cad" }, new { @class = "form", @id = "form1" }))
         {
             @Html.Partial("_alerts")
             @Html.AntiForgeryToken()
@@ -188,7 +188,7 @@
             <div class="row clearfix">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-success" value="Salvar" />
+                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" />
                         <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
                     </div>
                 </div>
@@ -198,6 +198,21 @@
 </div>
 
 <script type="text/javascript">
+    $(function () {
+        $('#form1').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-condomino-cad').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
 
     $("#IndFiscal").mask("999.999.999-99");
     $("#TelParticular1").mask("(99)9999?9-9999");
@@ -215,21 +230,7 @@
 
     });
 
-    $(function () {
-        $('#form000').submit(function () {
-            if ($(this).valid()) {
-                $.ajax({
-                    url: this.action,
-                    type: this.method,
-                    data: $(this).serialize(),
-                    success: function (result) {
-                        $('#div-condomino-pf').html(result);
-                    }
-                });
-            }
-            return false;
-        });
-    });
+
 </script>
 
 <!-- bootstrap-wysiwyg -->
