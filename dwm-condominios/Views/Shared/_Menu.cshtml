@@ -16,7 +16,7 @@
                     @foreach (TransacaoRepository t1 in menuList.Where(info => info.transacaoId_pai == t.transacaoId && info.exibir == "S"))
                     {
                         <li>
-                            <a href="../@t1.url">@t1.nomeCurto </a>
+                            <a href="~/@t1.url">@t1.nomeCurto </a>
                         </li>
                     }
                 </ul>

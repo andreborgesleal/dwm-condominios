@@ -210,6 +210,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
+    <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
@@ -242,6 +243,7 @@
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
+    <Compile Include="Models\Repositories\CondominoEditViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoPFViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoPJViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoUnidadeViewModel.cs" />
@@ -3870,6 +3872,13 @@
     <Content Include="Views\Condomino\Browse.cshtml" />
     <Content Include="Views\Condomino\ListParam.cshtml" />
     <Content Include="Views\Condomino\EnviarToken.cshtml" />
+    <Content Include="Views\Shared\Paginacao.cshtml" />
+    <Content Include="Views\Shared\_AcessoNegadoModal.cshtml" />
+    <Content Include="Views\Shared\PaginacaoRegistros.cshtml" />
+    <Content Include="Views\Shared\PaginacaoRegistrosForm.cshtml" />
+    <Content Include="Views\Condomino\Edit.cshtml" />
+    <Content Include="Views\Condomino\EditCondomino.cshtml" />
+    <Content Include="Views\Condomino\_Credenciado.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

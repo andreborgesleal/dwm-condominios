@@ -7,7 +7,7 @@ namespace DWM.Models.Repositories
     public class CondominoPFViewModel : CondominoViewModel
     {
         [DisplayName("ProfissaoID")]
-        public int ProfissaoID { get; set; }
+        public int? ProfissaoID { get; set; }
 
         [DisplayName("Data de Nascimento")]
         public DateTime? DataNascimento { get; set; }

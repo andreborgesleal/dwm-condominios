@@ -53,7 +53,7 @@ namespace DWM.Models.Repositories
         [StringLength(100, ErrorMessage = "Este campo só permite até 100 caracteres")]
         public string Avatar { get; set; }
 
-        [DisplayName("IndicadorSituacao")]
+        [DisplayName("Situação")]
         public string IndSituacao { get; set; }
     }
 }

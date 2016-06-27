@@ -79,7 +79,7 @@ namespace DWM.Models.Persistence
             condominoViewModel.Email = entity.Email.ToLower();
             condominoViewModel.UsuarioID = entity.UsuarioID;
             condominoViewModel.Observacao = entity.Observacao;
-            condominoViewModel.DataCadastro = Funcoes.Brasilia();
+            condominoViewModel.DataCadastro = entity.DataCadastro;
             condominoViewModel.Avatar = entity.Avatar;
             condominoViewModel.mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS };
 
@@ -129,7 +129,7 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (value.TelParticular1 == null || value.TelParticular1 == "" || value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "").Length < 11)
+            if (value.TelParticular1 == null || value.TelParticular1 == "" || value.TelParticular1.Replace("(", "").Replace(")", "").Replace("-", "").Length < 10)
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Telefone").ToString();

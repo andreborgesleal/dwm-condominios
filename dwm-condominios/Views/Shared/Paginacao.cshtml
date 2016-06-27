@@ -1,0 +1,66 @@
+﻿@model System.Web.Mvc.IPagedList
+
+@{
+    Layout = null;
+    string PageSize = Model.PageSize == 5000 ? "50" : "5000" ;
+    string action = Model.action;
+    string DivId = Model.DivId;
+
+    int firstPage = 0;
+    int lastPage = 0;
+    int previewsPage = 0;
+    int nextPage = 0;
+    
+    if (Model.PageIndex + 5 < Model.LastPage)
+    {
+        firstPage = Model.PageIndex;
+        lastPage = Model.PageIndex + 5;
+    }
+    else
+    {
+        firstPage = Model.LastPage < 5 ? 0 : Model.LastPage - 5;
+        lastPage = Model.LastPage+1;
+    }
+
+    if (firstPage > 5)
+    {
+        previewsPage = firstPage - 5;
+    }
+    
+    nextPage = lastPage;
+}
+<div class="row" style="height: 20px">
+    <div class="col-md-12">
+    </div>
+</div>
+@if (Model.LastPage != -1)
+{
+    <div class="row" style="text-align: center">
+        <div class="col-md-12">
+            <ul class="pagination pagination-sm">
+                <li><a href="#" onclick="javascript:foward('0', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-backward"></span> </a></li>
+                <li><a href="#" onclick="javascript:foward('@previewsPage', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-step-backward"></span> </a></li>
+                @for (int i = firstPage; i < lastPage; i++)
+                {
+                    if (Model.PageIndex == i)
+                    {
+                        <li class="disabled"><a style="background-color: #dbd8d8" href="#">@(i + 1)</a></li>
+                    }
+                    else
+                    {
+                        <li><a href="#" style="background-color: #fff" onclick="javascript:Refresh('@i', '@Model.PageSize', '@action', '@DivId' )">@(i + 1)</a></li>
+                    }
+                }
+                <li><a href="#" onclick="javascript:foward('@nextPage', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-step-forward"></span> </a></li>
+                <li><a href="#" onclick="javascript:foward('@(Model.LastPage)', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-forward"></span></a></li>
+
+                @if (Model.LastPage < 20)
+                {
+                    <li><a href="#" onclick="javascript:foward('0', '@PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-list-alt"></span></a></li>
+                }
+            </ul>
+        </div>
+    </div>
+}
+
+

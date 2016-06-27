@@ -1,0 +1,63 @@
+﻿@using DWM.Models.Repositories
+@model CondominoEditViewModel
+@{
+    ViewBag.Title = "DWM-Condomínios";
+}
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Credenciados <small>Usuários credenciados pelo condômino.</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Buscar</a>
+                    </li>
+                    <li>
+                        <a href="#">Imprimir</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nome</th>
+                    <th>E-mail</th>
+                    <th>Sexo</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Editat</th>
+                    <td>Amarildo Amado Bertolomeu</td>
+                    <td>amarildo@gmail.com</td>
+                    <td>Masculino</td>
+                </tr>
+                <tr>
+                    <th scope="row">Editar</th>
+                    <td>Hernesto Guevarra</td>
+                    <td>hernestong@gmail.com</td>
+                    <td>Masculino</td>
+                </tr>
+                <tr>
+                    <th scope="row">Editar</th>
+                    <td>Zara Zorolha Ziralda</td>
+                    <td>zara@gmail.com</td>
+                    <td>Feminino</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

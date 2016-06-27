@@ -7,21 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DWM-Condomínios</title>
-    @*<!-- Bootstrap -->
-    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- iCheck -->
-    <link href="../Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-    <!-- bootstrap-progressbar -->
-    <link href="../Content/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- jVectorMap -->
-    <link href="../Content/production/css/maps/jquery-jvectormap-2.0.3.css" rel="stylesheet" />
-    <!-- Custom Theme Style -->
-    <link href="../Content/production/css/custom.css" rel="stylesheet">*@
-    <title>DWM-Jogatina</title>
+    <title>DWM-Condomínios</title>
     @Styles.Render("~/Content/css")
-    @*@Scripts.Render("~/bundles/modernizr")*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/bootstrap-daterangepicker")
+    @Scripts.Render("~/bundles/inputs-jquery-ui")
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -29,7 +21,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index" class="site_title"><i class="fa fa-building-o"></i> <span>Parc Paradiso</span></a>
+                        <a href="~/home/default" class="site_title"><i class="fa fa-building-o"></i> <span>Parc Paradiso</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
@@ -80,7 +72,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="../Content/production/images/img.jpg" alt="">André Leal
+                                    <img src="~/Content/production/images/img.jpg" alt="">André Leal
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -97,7 +89,7 @@
                                         <a href="javascript:;">Help</a>
                                     </li>
                                     <li>
-                                        <a href="login.html"><i class="fa fa-sign-out pull-right"></i> Sair</a>
+                                        <a href="../Account/LogOff"><i class="fa fa-sign-out pull-right"></i> Sair</a>
                                     </li>
                                 </ul>
                             </li>
@@ -110,7 +102,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                                <img src="../Content/production/images/img.jpg" alt="Profile Image" />
+                                                <img src="~/Content/production/images/img.jpg" alt="Profile Image" />
                                             </span>
                                             <span>
                                                 <span>John Smith</span>
@@ -124,7 +116,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                                <img src="../Content/production/images/img.jpg" alt="Profile Image" />
+                                                <img src="~/Content/production/images/img.jpg" alt="Profile Image" />
                                             </span>
                                             <span>
                                                 <span>John Smith</span>
@@ -138,7 +130,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                                <img src="../Content/production/images/img.jpg" alt="Profile Image" />
+                                                <img src="~/Content/production/images/img.jpg" alt="Profile Image" />
                                             </span>
                                             <span>
                                                 <span>John Smith</span>
@@ -152,7 +144,7 @@
                                     <li>
                                         <a>
                                             <span class="image">
-                                                <img src="../Content/production/images/img.jpg" alt="Profile Image" />
+                                                <img src="~/Content/production/images/img.jpg" alt="Profile Image" />
                                             </span>
                                             <span>
                                                 <span>John Smith</span>
@@ -195,7 +187,7 @@
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    DWM-Jogatina by <a href="http://www.dwmsistemas.com">DWM Sistemas</a>
+                    DWM-Condomínios by <a href="http://www.dwmsistemas.com">DWM Sistemas</a>
                 </div>
                 <div class="clearfix"></div>
             </footer>
@@ -203,60 +195,17 @@
         </div>
     </div>
     <!-- jQuery -->
-    @Scripts.Render("~/bundles/jquery")
-    @*<script src="../Content/vendors/jquery/dist/jquery.min.js"></script>*@
-    <!-- Bootstrap -->
-    @Scripts.Render("~/bundles/bootstrap")
-    @*<script src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>*@
-    <!-- FastClick -->
     @Scripts.Render("~/bundles/fastclick")
-    @*<script src="../Content/vendors/fastclick/lib/fastclick.js"></script>*@
-    <!-- NProgress -->
     @Scripts.Render("~/bundles/nprogress")
-    @*<script src="../Content/vendors/nprogress/nprogress.js"></script>*@
-    <!-- Chart.js -->
     @Scripts.Render("~/bundles/Chart")
-    @*<script src="../Content/vendors/Chart.js/dist/Chart.min.js"></script>*@
-    <!-- gauge.js -->
     @Scripts.Render("~/bundles/gauge")
-    @*<script src="../Content/vendors/bernii/gauge.js/dist/gauge.min.js"></script>*@
-    <!-- bootstrap-progressbar -->
     @Scripts.Render("~/bundles/bootstrap-progressbar")
-    @*<script src="../Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>*@
-    <!-- iCheck -->
     @Scripts.Render("~/bundles/icheck")
-    @*<script src="../Content/vendors/iCheck/icheck.min.js"></script>*@
-    <!-- Skycons -->
     @Scripts.Render("~/bundles/skycons")
-    @*<script src="../Content/vendors/skycons/skycons.js"></script>*@
-    <!-- Flot -->
     @Scripts.Render("~/bundles/flot")
-    @*<script src="../Content/vendors/Flot/jquery.flot.js"></script>
-    <script src="../Content/vendors/Flot/jquery.flot.pie.js"></script>
-    <script src="../Content/vendors/Flot/jquery.flot.time.js"></script>
-    <script src="../Content/vendors/Flot/jquery.flot.stack.js"></script>
-    <script src="../Content/vendors/Flot/jquery.flot.resize.js"></script>*@
-    <!-- Flot plugins -->
     @Scripts.Render("~/bundles/flot-plugins")
-    @*<script src="../Content/production/js/flot/jquery.flot.orderBars.js"></script>
-    <script src="../Content/production/js/flot/date.js"></script>
-    <script src="../Content/production/js/flot/jquery.flot.spline.js"></script>
-    <script src="../Content/production/js/flot/curvedLines.js"></script>*@
-    <!-- jVectorMap -->
     @Scripts.Render("~/bundles/jVectorMap")
-    @*<script src="../Content/production/js/maps/jquery-jvectormap-2.0.3.min.js"></script>*@
-    <!-- bootstrap-daterangepicker -->
-    @Scripts.Render("~/bundles/bootstrap-daterangepicker")
-    @*<script src="../Content/production/js/moment/moment.min.js"></script>
-    <script src="../Content/production/js/datepicker/daterangepicker.js"></script>*@
-    <!-- Custom Theme Scripts -->
     @Scripts.Render("~/bundles/custom")
-    @*<script src="../Content/production/js/custom.js"></script>*@
-    <!-- Flot -->
-
-    @Scripts.Render("~/bundles/inputs-jquery-ui")
-    @*<script type="text/javascript" src="~/scripts/inputs-jquery-ui.js"></script>*@
-
     <script>
       $(document).ready(function() {
         var data1 = [
@@ -516,6 +465,9 @@
       gauge.set(3200);
       gauge.setTextField(document.getElementById("gauge-text"));
     </script>
+
+
+
     <!-- /gauge.js -->
 </body>
 </html>

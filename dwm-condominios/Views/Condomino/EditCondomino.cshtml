@@ -1,0 +1,305 @@
+﻿@using DWM.Models.Repositories
+@model CondominoPFViewModel
+@{
+    ViewBag.Title = "DWM-Condomínios";
+}
+
+<!-- bootstrap-wysiwyg -->
+@Scripts.Render("~/bundles/bootstrap-wysiwyg")
+
+<div class="x_panel">
+    <div class="x_title">
+        <h2>Cadastro <small>Edição do cadastro do condômino.</small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+            <li>
+                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+            </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="#">Buscar</a>
+                    </li>
+                    <li>
+                        <a href="#">Imprimir</a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+            </li>
+        </ul>
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        @using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @class = "form", @id = "form000" }))
+        {
+            @Html.Partial("_alerts")
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.HiddenFor(info => info.CondominioID)
+            @Html.HiddenFor(info => info.CondominoID)
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Nome, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "40" })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IndSituacao, new { @class = "control-label" })
+                        @Html.DropDownList("IndSituacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao("A", Model.IndSituacao), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TelParticular1, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.TelParticular1, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.TelParticular2, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.TelParticular2, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="control-group">
+                        <div class="controls">
+                            <div class="xdisplay_inputx form-group has-feedback">
+                                @Html.LabelFor(m => m.DataNascimento, new { @class = "control-label" })
+                                <input type="text" class="form-control has-feedback-left" id="DataNascimento" name="DataNascimento" aria-describedby="inputSuccess2Status4">
+                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Sexo, new { @class = "control-label" })
+                        @Html.DropDownList("Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo("M", ""), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
+                        @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.IndAnimal, new { @class = "control-label" })
+                        @Html.DropDownList("IndAnimal", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("N", ""), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Profissão/Ocupação</label>
+                        @Html.DropDownList("ProfissaoID", new DWM.Models.Enumeracoes.BindDropDownList().Profissoes("", ""), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="ln_solid"></div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Observação</h4>
+                    <div class="btn-toolbar editor" data-role="editor-toolbar" data-target="#editor">
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="caret"></b></a>
+                            <ul class="dropdown-menu"></ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a data-edit="fontSize 5">
+                                        <p style="font-size:17px">Huge</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-edit="fontSize 3">
+                                        <p style="font-size:14px">Normal</p>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-edit="fontSize 1">
+                                        <p style="font-size:11px">Small</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+                            <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+                            <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+                            <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+                            <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+                            <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-dedent"></i></a>
+                            <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+                            <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+                            <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+                            <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+                            <div class="dropdown-menu input-append">
+                                <input class="span2" placeholder="URL" type="text" data-edit="createLink" />
+                                <button class="btn" type="button">Add</button>
+                            </div>
+                            <a class="btn" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-cut"></i></a>
+                        </div>
+                        <div class="btn-group">
+                            <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-picture-o"></i></a>
+                            <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+                        </div>
+                    </div>
+                    <div id="editor">
+                    </div>
+                    <textarea name="Observacao" id="Observacao" value="@Model.Observacao" style="display:none;"></textarea>
+                    <br />
+                </div>
+            </div>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Salvar" />
+                        <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $("#IndFiscal").mask("999.999.999-99");
+    $("#TelParticular1").mask("(99)9999?9-9999");
+    $("#TelParticular2").mask("(99)9999?9-9999");
+
+    $(document).ready(function() {
+
+        $('#DataNascimento').daterangepicker({
+            singleDatePicker: true,
+            calender_style: "picker_4",
+            countries: "br"
+        }, function (start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+    });
+
+    $(function () {
+        $('#form000').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-condomino-pf').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+
+<!-- bootstrap-wysiwyg -->
+<script>
+      $(document).ready(function() {
+        $('.xcxc').click(function() {
+        $('#Observacao').val($('#editor').html());
+        });
+      });
+
+      $(document).ready(function() {
+        function initToolbarBootstrapBindings() {
+          var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+              'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+              'Times New Roman', 'Verdana'
+            ],
+            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+          $.each(fonts, function(idx, fontName) {
+            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+          });
+          $('a[title]').tooltip({
+            container: 'body'
+          });
+          $('.dropdown-menu input').click(function() {
+              return false;
+            })
+            .change(function() {
+              $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+            })
+            .keydown('esc', function() {
+              this.value = '';
+              $(this).change();
+            });
+
+          $('[data-role=magic-overlay]').each(function() {
+            var overlay = $(this),
+              target = $(overlay.data('target'));
+            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+          });
+
+          if ("onwebkitspeechchange" in document.createElement("input")) {
+            var editorOffset = $('#editor').offset();
+
+            $('.voiceBtn').css('position', 'absolute').offset({
+              top: editorOffset.top,
+              left: editorOffset.left + $('#editor').innerWidth() - 35
+            });
+          } else {
+            $('.voiceBtn').hide();
+          }
+        }
+
+        function showErrorAlert(reason, detail) {
+          var msg = '';
+          if (reason === 'unsupported-file-type') {
+            msg = "Unsupported format " + detail;
+          } else {
+            console.log("error uploading file", reason, detail);
+          }
+          $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+        }
+
+        initToolbarBootstrapBindings();
+
+        $('#editor').wysiwyg({
+          fileUploadError: showErrorAlert
+        });
+
+        window.prettyPrint && prettyPrint();
+      });
+</script>
+<!-- /bootstrap-wysiwyg -->

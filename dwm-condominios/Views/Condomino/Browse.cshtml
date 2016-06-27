@@ -4,7 +4,7 @@
     ViewBag.Title = "DWM-Condomínios";
 }
 <div class="container-fluid">
-    @using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form000" }))
+    @using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form0" }))
     {
         <div class="x_panel">
             <div class="x_title">
@@ -24,39 +24,41 @@
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <a class="close-link" onclick="window.location = '../Home/Default'"><i class="fa fa-close"></i></a>
+                    </li>
                 </ul>
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                <div class="x_content">
-                    @Html.Partial("_alerts")
-                    @Html.ValidationSummary("", new { @class = "text-danger" })
-                    @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
-                    <div class="form">
-                        <div class="row">
-                            <div class="col-md-6 col-xs-12 col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Nome</label>
-                                    <div class="input-group col-md-12">
-                                        <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar nome ou cpf ou e-mail" />
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-12 col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Torre</label>
-                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
-                                </div>
-                            </div>
-                            <div class="col-md-3 col-xs-12 col-sm-12">
-                                <div class="form-group">
-                                    <label class="control-label">Unidade</label>
-                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                @Html.Partial("_alerts")
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
+                <div class="form">
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Nome</label>
+                                <div class="input-group col-md-12">
+                                    <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar nome ou cpf ou e-mail" />
                                 </div>
                             </div>
                         </div>
-                        <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, getPageSize(), '@Model.action', '@Model.DivId')" />
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Torre</label>
+                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>
+                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                            </div>
+                        </div>
                     </div>
+                    <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, 25, '@Model.action', '@Model.DivId')" />
+                    <input type="button" onclick="window.location = '../Home/Default'" class="btn btn-default" value="Cancelar" />
                 </div>
             </div>
         </div>
@@ -71,7 +73,7 @@
 
 <script>
     $(function () {
-        $('#form000').submit(function () {
+        $('#form0').submit(function () {
             if ($(this).valid()) {
                 $.ajax({
                     url: this.action,

@@ -155,7 +155,7 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe ListViewRepository
-        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
         {
             int _EdificacaoID = (int)param[0];
             int _UnidadeID = (int)param[1];
@@ -260,13 +260,12 @@ namespace DWM.Models.Persistence
                                            select c1).Count()
                          }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
             }
-
             return query;
         }
 
         public override string action()
         {
-            return "../CondominoUnidade/ListCondominosPF";
+            return "../Condomino/ListParam";
         }
 
         public override string DivId()
