@@ -52,9 +52,9 @@ namespace DWM.Controllers
 
         #endregion
 
-        #region Edit
+        #region Index
         /*[AuthorizeFilter]*/
-        public ActionResult Edit(int id, int EdificacaoID, int UnidadeID)
+        public ActionResult Index(int id, int EdificacaoID, int UnidadeID)
         {
             ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
@@ -70,7 +70,7 @@ namespace DWM.Controllers
                     },
                     CondominoPFViewModel = new CondominoPFViewModel()
                     {
-                        CondominoID = id
+                        CondominoID = id,
                     }
                 };
                 CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), value);
@@ -79,12 +79,11 @@ namespace DWM.Controllers
             return View();
         }
 
-        //[AuthorizeFilter]
+        [AuthorizeFilter]
         public ActionResult EditCondomino(int CondominioID, int CondominoID, string Nome, string Email, string IndFiscal, 
                                             string IndSituacao, string TelParticular1, string TelParticular2, string DataNascimento,
                                             string Sexo, string IndProprietario, string IndAnimal, string ProfissaoID, string Observacao)
         {
-            ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
                 CondominoPFViewModel result = null;

@@ -1,0 +1,28 @@
+﻿@model Nullable<System.Decimal>
+
+@{
+    string _label = (string)ViewData["label"] ?? ViewData.ModelMetadata.DisplayName;
+}
+
+@if (ViewData["form"] == null)
+{
+    <div class="form-group">
+        <label class="control-label col-lg-offset-8" for="descricao">@_label</label>
+        @Html.TextBox(String.Empty + "1", ViewData.TemplateInfo.FormattedModelValue, "{0:###,###,##0.00}", ViewData["htmlAttributes"])
+        @Html.Hidden(String.Empty, ViewData.TemplateInfo.FormattedModelValue)
+    </div>
+}
+else
+{
+    <div class="form-group">
+        <label class="col-md-6">@_label</label>
+        <div class="col-md-6">
+            @Html.TextBox(String.Empty + "1", ViewData.TemplateInfo.FormattedModelValue, "{0:###,###,##0.00}", ViewData["htmlAttributes"])
+            @Html.Hidden(String.Empty, ViewData.TemplateInfo.FormattedModelValue)
+        </div>
+    </div>
+}
+
+
+
+

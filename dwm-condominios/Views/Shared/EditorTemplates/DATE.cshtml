@@ -1,0 +1,29 @@
+﻿@using App_Dominio.Repositories
+@using App_Dominio.Enumeracoes
+@model Nullable<System.DateTime>
+
+@{
+    string value = "";
+    if (@ViewData["value"] != null)
+    {
+        value = ((DateTime)@ViewData["value"]).ToString("dd/MM/yyyy");
+    }
+    else
+    {
+        value = Model.HasValue ? @Model.Value.ToString("dd/MM/yyyy") : "";
+    }
+        
+}
+
+<div class="input-group date" data-date-format="dd/MM/yyyy">
+    @if (ViewData["readonly"] == "true")
+    { 
+        <input class="form-control" style="width: 97px" id="@ViewData["identificador"]" name="@ViewData["identificador"]" type="text" readonly value="@value">
+    }
+    else
+    {
+        <input class="form-control" style="width: 97px" id="@ViewData["identificador"]" name="@ViewData["identificador"]" type="text" value="@value" onfocus="datepickerShow(this)" onkeypress="Mascara('DATA', window.event.keyCode,this)" /><button class="btn btn-primary" type="button" onclick="datepickerShow('#@ViewData["identificador"]')"><i class="glyphicon glyphicon-th"></i></button>
+    }
+    
+</div>
+

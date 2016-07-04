@@ -3831,6 +3831,8 @@
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.maskedinput.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -3876,9 +3878,9 @@
     <Content Include="Views\Shared\_AcessoNegadoModal.cshtml" />
     <Content Include="Views\Shared\PaginacaoRegistros.cshtml" />
     <Content Include="Views\Shared\PaginacaoRegistrosForm.cshtml" />
-    <Content Include="Views\Condomino\Edit.cshtml" />
     <Content Include="Views\Condomino\EditCondomino.cshtml" />
     <Content Include="Views\Condomino\_Credenciado.cshtml" />
+    <Content Include="Views\Condomino\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

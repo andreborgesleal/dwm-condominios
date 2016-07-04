@@ -45,7 +45,10 @@ namespace DWM.Models.Persistence
             E condomino = (E)Find(value);
 
             if (condomino == null)
+            {
                 condomino = getEntityInstance();
+                condomino.DataCadastro = Funcoes.Brasilia();
+            }
 
             condomino.CondominoID = value.CondominoID;
             condomino.CondominioID = value.CondominioID;
@@ -58,7 +61,7 @@ namespace DWM.Models.Persistence
             condomino.Email = value.Email.ToLower();
             condomino.UsuarioID = value.UsuarioID;
             condomino.Observacao = value.Observacao;
-            condomino.DataCadastro = Funcoes.Brasilia();
+            
             condomino.Avatar = value.Avatar;
 
             return condomino;

@@ -1,0 +1,12 @@
+﻿@model System.String
+@{
+    string text = ViewData["text"].ToString();
+    int width = (int)ViewData["width"];
+    string print = text.Length <= width ? text : text.Substring(0, width);
+}
+
+<span>@print</span>
+
+
+
+

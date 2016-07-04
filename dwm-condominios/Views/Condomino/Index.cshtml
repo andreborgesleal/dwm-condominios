@@ -1,18 +1,15 @@
 ﻿@using DWM.Models.Repositories
 @model CondominoEditViewModel
-@{
-    ViewBag.Title = "DWM-Condomínios";
-}
 <div class="container-fluid">
     <div class="page-title">
         <div class="title_left">
-            <h3>
+            <h4>
                 @Model.CondominoPFViewModel.Nome
                 <small>
                     @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
                 </small>
                 <span class="pull-right">@Model.CondominoPFViewModel.DataCadastro.ToString("dd/MM/yyyy")</span>
-            </h3>
+            </h4>
         </div>
     </div>
     <div class="clearfix"></div>
@@ -30,4 +27,3 @@
         </div>
     </div>
 </div>
-

@@ -1,0 +1,118 @@
+﻿@model Nullable<System.Decimal>
+@{
+
+    @*  string label,
+        string id,
+        string text,
+        string lovModal,
+        string crudModal,
+        string controller,
+        string descricao,
+        string filedId,
+        System.Web.Mvc.SelectListItem values = null,
+        bool disableButtons = false)*@
+
+    App_Dominio.Repositories.TypeaheadRepository t = (App_Dominio.Repositories.TypeaheadRepository)ViewData["typeahead"];
+
+    string _value = "";
+    string _text = "";
+    if (t.values != null)
+    {
+        if (t.values.Value != null)
+        {
+            _value = t.values.Value;
+        }
+        if (t.values.Text != null)
+        {
+            _text = t.values.Text;
+        }
+    }
+    string temp = t.text + "1";
+    if (t.readOnly == null)
+    {
+        t.readOnly = true;
+    }
+}
+<div id="div-lov"></div>
+<input type="hidden" id="@t.id" name="@t.id" value="@_value" />
+<input type="hidden" id="@temp" name="@temp" value="@t.values.Text" />
+@Html.Label(@t.label, new { @class = "control-label" })
+<div class="input-group">
+    @if (t.crudModal == null && t.readOnly)
+    {
+        <input type="text" id="@t.text" name="@t.text" value="@_text" class="form-control input-sm" onblur="validateTypeahead('@t.text', '@temp', '@t.id');" />
+    }
+    else
+    {
+        <input type="text" id="@t.text" name="@t.text" value="@_text" class="form-control input-sm" disabled />
+    }
+    <div class="input-group-btn">
+        @if (!t.disableButtons)
+        {
+            if (t.javaScriptFunction == null)
+            {
+                <button class="btn btn-sm" type="button" onclick="showLookup('@t.lovModal');" onfocus="$('#@t.nextField').focus();"><i class="glyphicon glyphicon-search"></i></button>
+            }
+            else
+            {
+                <button class="btn btn-sm" type="button" onclick="@t.javaScriptFunction" onfocus="$('#@t.nextField').focus();"><i class="glyphicon glyphicon-search"></i></button>
+            }
+            if (t.crudModal != null)
+            {
+                <button id="btnIns" class="btn btn-sm" type="button" onclick="InsertModal('../' + '@t.controller' + '/' + '@t.crudModal',
+                        '@t.descricao' ,
+                        '@t.id' ,
+                        '@temp' ,
+                        '@t.text' ,
+                        '@t.nextField' );">
+                    <i class="glyphicon glyphicon-plus"></i>
+                </button>
+            }
+
+            if (t.MiniCrudAdd != null)
+            {
+                string div_miniCrud = "div-mini-crud" + t.id;
+                <button class="btn btn-sm" type="button" onclick="AddMiniCrud('@t.id', '@t.text', '@t.controller', '@t.MiniCrudAdd', '@div_miniCrud');"><i class="glyphicon glyphicon-th-list"></i></button>
+                <button class="btn btn-sm" type="button" onclick="CleanMiniCrud('@t.id', '@t.text', '@t.controller', '@t.MiniCrudClearAll', '@div_miniCrud');"><i class="glyphicon glyphicon-remove"></i></button>
+                <div id="@div_miniCrud">
+                    <div class="row" style="font-weight: bold; font-family: Verdana; font-size: 11px; padding-top: 0px;  border-bottom: 1px solid #808080;">
+                        <div class="col-md-4" style="padding: 2px">
+                            Código
+                        </div>
+                        <div class="col-md-7" style="padding: 2px">
+                            Descrição
+                        </div>
+                        <div class="col-md-1" style="padding: 2px">
+                            &nbsp;
+                        </div>
+                    </div>
+                    <div class="row" style="height: 60px; overflow-y: auto">
+                        <div class="col-md-12">
+                            @if (t.MiniCrud != null && t.MiniCrud.Count() > 0)
+                            {
+                                foreach (System.Web.Mvc.SelectListItem item in t.MiniCrud)
+                                {
+                                    <div class="row" style="color: #808080; font-size: 11px; font-family: Verdana">
+                                        <div class="col-md-4" style="padding: 2px; margin-bottom: -16px">
+                                            @item.Value
+                                        </div>
+                                        <div class="col-md-7" style="padding: 2px; margin-bottom: -16px">
+                                            @item.Text
+                                        </div>
+                                        <div class="col-md-1" style="padding: 2px; margin-bottom: -16px">
+                                            <a href="#" onclick="DelMiniCrud('@item.Value', '@item.Text', '@t.controller', '@t.MiniCrudDel', '@div_miniCrud')"><i class="glyphicon glyphicon-trash"></i></a>
+                                        </div>
+                                    </div>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <button class="btn btn-sm" type="button" onclick="clean('@t.id','@t.text');"><i class="glyphicon glyphicon-remove"></i></button>
+            }
+        }
+    </div>
+</div>
