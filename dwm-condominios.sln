@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dwm-condominios", "dwm-condominios\dwm-condominios.csproj", "{51BE12C1-087D-4059-ACDE-5CBA23355ABC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_Dominio", "..\App_Dominio\app_dominio\App_Dominio\App_Dominio\App_Dominio.csproj", "{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_Dominio", "..\..\app_dominio\App_Dominio\App_Dominio\App_Dominio.csproj", "{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
