@@ -211,6 +211,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
+    <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />

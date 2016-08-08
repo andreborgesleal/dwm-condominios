@@ -14,21 +14,21 @@ using System.Data.Entity.Infrastructure;
 
 namespace DWM.Models.BI
 {
-    public class EditarCondominoBI : DWMContext<ApplicationContext>, IProcess<CondominoEditViewModel, ApplicationContext>
+    public class EditarCredenciadoBI : DWMContext<ApplicationContext>, IProcess<CredenciadoViewModel, ApplicationContext>
     {
         #region Constructor
-        public EditarCondominoBI() { }
+        public EditarCredenciadoBI() { }
 
-        public EditarCondominoBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EditarCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
         }
         #endregion
 
-        public CondominoEditViewModel Run(Repository value)
+        public CredenciadoViewModel Run(Repository value)
         {
-            CondominoEditViewModel r = (CondominoEditViewModel)value;
-            CondominoEditViewModel result = new CondominoEditViewModel()
+            CredenciadoViewModel r = (CredenciadoViewModel)value;
+            CredenciadoViewModel result = new CredenciadoViewModel()
             {
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
@@ -36,24 +36,11 @@ namespace DWM.Models.BI
             {
                 int _empresaId = sessaoCorrente.empresaId;
 
-                CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
-                result.CondominoPFViewModel = condominoPFModel.getObject(r.CondominoPFViewModel);
-
                 CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
-                result.CredenciadoViewModel = CredenciadoModel.CreateRepository();
-                result.CredenciadoViewModel.CondominoID = result.CondominoPFViewModel.CondominoID;
-
-                ListViewCredenciados ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
-                result.Credenciados = ListCredenciados.Bind(0, 50, result.CondominoPFViewModel.CondominoID);
-
-                result.UnidadeViewModel = new UnidadeViewModel()
-                {
-                    CondominioID = _empresaId,
-                    EdificacaoID = r.UnidadeViewModel.EdificacaoID,
-                    EdificacaoDescricao = db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao,
-                    UnidadeID = r.UnidadeViewModel.UnidadeID
-                };
-
+                if (r.CredenciadoID == 0)
+                    result = CredenciadoModel.Insert(r);
+                else
+                    result = CredenciadoModel.Update(r);
             }
             catch (ArgumentException ex)
             {
@@ -119,7 +106,7 @@ namespace DWM.Models.BI
             return result;
         }
 
-        public IEnumerable<CondominoEditViewModel> List(params object[] param)
+        public IEnumerable<CredenciadoViewModel> List(params object[] param)
         {
             throw new NotImplementedException();
         }

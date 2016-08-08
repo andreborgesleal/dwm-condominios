@@ -4,9 +4,64 @@
     Layout = null;
 }
 
+@if (Model.Credenciados.Count() > 0)
+{
+    <div class="x_panel">
+        <div class="x_title">
+            <h2>Credenciados <small>Lstagem de usuários incluídos pelo condômino.</small></h2>
+            <ul class="nav navbar-right panel_toolbox">
+                <li>
+                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#">Buscar</a>
+                        </li>
+                        <li>
+                            <a href="#">Imprimir</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+                </li>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="x_content">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Sexo</th>
+                        <th>Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (CredenciadoViewModel cre in Model.Credenciados)
+                {
+                        <tr>
+                            <td>@cre.Nome</td>
+                            <td>@cre.Email</td>
+                            <td>@cre.Sexo</td>
+                            <th scope="row">
+                                <a href="~/Condomino/EditCredenciado?id=@(cre.CredenciadoID)">Editar</a>
+                                <a href="~/Condomino/DelCredenciado?id=@(cre.CredenciadoID)">Excluir</a>
+                            </th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+
 <div class="x_panel">
     <div class="x_title">
-        <h2>Credenciados <small>Usuários credenciados pelo condômino.</small></h2>
+        <h2 id="header-credenciado">Novo credenciado <small>Inclusão de novo usuário.</small></h2>
         <ul class="nav navbar-right panel_toolbox">
             <li>
                 <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -29,35 +84,75 @@
         <div class="clearfix"></div>
     </div>
     <div class="x_content">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nome</th>
-                    <th>E-mail</th>
-                    <th>Sexo</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">Editat</th>
-                    <td>Amarildo Amado Bertolomeu</td>
-                    <td>amarildo@gmail.com</td>
-                    <td>Masculino</td>
-                </tr>
-                <tr>
-                    <th scope="row">Editar</th>
-                    <td>Hernesto Guevarra</td>
-                    <td>hernestong@gmail.com</td>
-                    <td>Masculino</td>
-                </tr>
-                <tr>
-                    <th scope="row">Editar</th>
-                    <td>Zara Zorolha Ziralda</td>
-                    <td>zara@gmail.com</td>
-                    <td>Feminino</td>
-                </tr>
-            </tbody>
-        </table>
+        @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
+        {
+            @Html.Partial("_alerts")
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.HiddenFor(info => info.CredenciadoViewModel.CondominoID)
+            @Html.HiddenFor(info => info.CredenciadoViewModel.CredenciadoID)
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CredenciadoViewModel.Nome, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CredenciadoViewModel.Nome, new { @class = "form-control", @maxlength = "30" })
+                    </div>
+                </div>
+                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CredenciadoViewModel.Email, new { @class = "control-label" })
+                        @Html.TextBoxFor(m => m.CredenciadoViewModel.Email, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CredenciadoViewModel.Observacao, new { @class = "control-label" })
+                        @Html.TextAreaFor(m => m.CredenciadoViewModel.Observacao, 4, 0, new { @class = "form-control", @maxlength = "30" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.CredenciadoViewModel.Sexo, new { @class = "control-label" })
+                        @Html.DropDownList("Credenciado.Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.CredenciadoViewModel.Sexo, ""), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <p>&nbsp;</p>
+            <div class="row clearfix">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-credenciado" id="btn-salvar-credenciado" />
+                        <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $('#form002').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-credenciado').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    $("#IndFiscal").mask("999.999.999-99");
+    $("#TelParticular1").mask("(99)9999?9-9999");
+    $("#TelParticular2").mask("(99)9999?9-9999");
+
+</script>

@@ -10,6 +10,7 @@ using App_Dominio.Pattern;
 using DWM.Models.BI;
 using System;
 using App_Dominio.Enumeracoes;
+using DWM.Models.Pattern;
 
 namespace DWM.Controllers
 {
@@ -71,6 +72,10 @@ namespace DWM.Controllers
                     CondominoPFViewModel = new CondominoPFViewModel()
                     {
                         CondominoID = id,
+                    },
+                    CredenciadoViewModel = new CredenciadoViewModel()
+                    {
+                        CondominoID = id,
                     }
                 };
                 CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), value);
@@ -128,6 +133,47 @@ namespace DWM.Controllers
                 return View();
         }
 
+        [AuthorizeFilter]
+        public ActionResult EditCredenciado(int CredenciadoViewModel_CondominoID, int CredenciadoViewModel_CredenciadoID, string CredenciadoViewModel_Nome, string CredenciadoViewModel_Email, 
+                                            string CredenciadoViewModel_Observacao, string CredenciadoViewModel_Sexo)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                CredenciadoViewModel result = null;
+                try
+                {
+                    CredenciadoViewModel value = new CredenciadoViewModel()
+                    {
+                        CredenciadoID = CredenciadoViewModel_CredenciadoID,
+                        CondominoID = CredenciadoViewModel_CondominoID,
+                        Nome = CredenciadoViewModel_Nome,
+                        Email = CredenciadoViewModel_Email,
+                        Sexo = CredenciadoViewModel_Sexo,
+                        Observacao = CredenciadoViewModel_Observacao
+                    };
+
+                    value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                    FactoryLocalhost<CredenciadoViewModel, ApplicationContext> facade = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
+                    result = facade.Execute(value, value);
+
+                    if (result.mensagem.Code > 0)
+                        throw new Exception(result.mensagem.MessageBase);
+
+                    Success("Condômino alterado com sucesso");
+                }
+                catch (Exception ex)
+                {
+                    App_DominioException.saveError(ex, GetType().FullName);
+                    ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
+
+                return View(result);
+            }
+            else
+                return View();
+
+        }
         #endregion
 
         #region Enviar Token

@@ -8,6 +8,7 @@ namespace DWM.Models.Entidades
         public DbSet<Condominio> Condominios { get; set; }
         public DbSet<Condomino> Condominos { get; set; }
         public DbSet<CondominoPF> CondominoPFs { get; set; }
+        public DbSet<Credenciado> Credenciados { get; set; }
         public DbSet<CondominoUnidade> CondominoUnidades { get; set; }
         public DbSet<Unidade> Unidades { get; set;  }
         public DbSet<Parametro> Parametros { get; set; }
