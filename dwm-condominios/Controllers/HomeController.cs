@@ -7,6 +7,7 @@ using App_Dominio.Security;
 using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Repositories;
+using dwm_condominios.Models.BI;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -39,13 +40,18 @@ namespace DWM.Controllers
         {
             if (ViewBag.ValidateRequest)
             {
+                // Obter todos os Informativos
+
+
                 #region ListPanorama
                 HomeViewModel home = new HomeViewModel()
                 {
                     concursoId = concursoId,
-                    data_ini = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1)
+                    data_ini = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
                 };
+
                 return View();
+
                 //Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();
                 //return View(factory.Execute(new HomeBI(), home));
                 #endregion

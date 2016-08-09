@@ -10,7 +10,7 @@ namespace DWM.Models.Repositories
         public int CidadeID { get; set; }
 
         [DisplayName("Nome")]
-        [Required(ErrorMessage ="Nome da cidade deve ser informada")]
+        [Required(ErrorMessage ="Nome da cidade deve ser informado")]
         [StringLength(30, ErrorMessage = "Nome da cidade deve ter no máximo 30 caracteres")]
         public string Nome { get; set; }
 

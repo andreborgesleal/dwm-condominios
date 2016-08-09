@@ -204,6 +204,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,6 +213,7 @@
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
+    <Compile Include="Models\BI\HomeBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
     <Compile Include="Models\Entidades\Cidade.cs" />
@@ -223,6 +225,7 @@
     <Compile Include="Models\Entidades\Credenciado.cs" />
     <Compile Include="Models\Entidades\Edificacao.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
+    <Compile Include="Models\Entidades\Informativo.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
     <Compile Include="Models\Entidades\Profissao.cs" />
     <Compile Include="Models\Entidades\Proprietario.cs" />
@@ -241,6 +244,7 @@
     <Compile Include="Models\Persistence\CondominoModel.cs" />
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
+    <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoEditViewModel.cs" />
@@ -252,6 +256,7 @@
     <Compile Include="Models\Repositories\EdificacaoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
+    <Compile Include="Models\Repositories\InformativoViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
     <Compile Include="Models\Repositories\ProfissaoViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
@@ -3881,6 +3886,11 @@
     <Content Include="Views\Condomino\EditCondomino.cshtml" />
     <Content Include="Views\Condomino\_Credenciado.cshtml" />
     <Content Include="Views\Condomino\Index.cshtml" />
+    <Content Include="Views\Informativo\Create.cshtml" />
+    <Content Include="Views\Informativo\Delete.cshtml" />
+    <Content Include="Views\Informativo\Edit.cshtml" />
+    <Content Include="Views\Informativo\Browse.cshtml" />
+    <Content Include="Views\Informativo\List.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
