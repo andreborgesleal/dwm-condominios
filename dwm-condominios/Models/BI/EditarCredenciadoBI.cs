@@ -11,6 +11,8 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Security;
 using System.Linq;
 using System.Data.Entity.Infrastructure;
+using App_Dominio.Models;
+using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
@@ -30,6 +32,15 @@ namespace DWM.Models.BI
             CredenciadoViewModel r = (CredenciadoViewModel)value;
             CredenciadoViewModel result = new CredenciadoViewModel()
             {
+                uri = r.uri,
+                empresaId = r.empresaId,
+                CredenciadoID = r.CredenciadoID,
+                CondominoID = r.CondominoID,
+                Nome = r.Nome,
+                Email = r.Email,
+                Sexo = r.Sexo,
+                Observacao = r.Observacao,
+                UsuarioID = r.UsuarioID,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
             try
@@ -37,71 +48,135 @@ namespace DWM.Models.BI
                 int _empresaId = sessaoCorrente.empresaId;
 
                 CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
-                if (r.CredenciadoID == 0)
+                if (r.CredenciadoID == 0) // Incluir credenciado
+                {
+                    #region Cadastrar o credenciado como um usuário em DWM-Segurança
+
+                    Random random = new Random();
+                    string _senha = random.Next(9999, 999999).ToString();
+                    int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
+
+                    #region Usuario 
+                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+                    Usuario user = new Usuario()
+                    {
+                        nome = r.Nome.ToUpper(),
+                        login = r.Email,
+                        empresaId = _empresaId,
+                        dt_cadastro = Funcoes.Brasilia(),
+                        situacao = "A",
+                        isAdmin = "N",
+                        senha = security.Criptografar(_senha)
+                    };
+
+                    seguranca_db.Usuarios.Add(user);
+                    #endregion
+
+                    #region UsuarioGrupo
+                    UsuarioGrupo ug = new UsuarioGrupo()
+                    {
+                        Usuario = user,
+                        grupoId = _grupoId,
+                        situacao = "A"
+                    };
+
+                    seguranca_db.UsuarioGrupos.Add(ug);
+                    #endregion
+
+                    seguranca_db.SaveChanges();
+
+                    #endregion
+
+                    #region Incluir o credenciado
+                    result.UsuarioID = user.usuarioId;
                     result = CredenciadoModel.Insert(r);
+                    result.mensagem.Field = _senha;
+                    #endregion
+                }
                 else
-                    result = CredenciadoModel.Update(r);
+                {
+                    #region Atualiza o cadastro do usuário
+                    Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
+
+                    user.login = result.Email;
+                    user.nome = result.Nome.ToUpper();
+                    user.dt_cadastro = Funcoes.Brasilia();
+
+                    seguranca_db.Entry(user).State = EntityState.Modified;
+
+                    seguranca_db.SaveChanges();
+                    #endregion
+
+                    #region Alterar credenciado
+                    result = CredenciadoModel.Update(result);
+                    #endregion
+                }
+
+                if (result.mensagem.Code > 0)
+                    throw new App_DominioException(result.mensagem);
+
             }
             catch (ArgumentException ex)
             {
-                result.CondominoPFViewModel.mensagem = new Validate() { Code = 999, Message = MensagemPadrao.Message(999).ToString(), MessageBase = ex.Message };
+                result.mensagem = new Validate() { Code = 999, Message = MensagemPadrao.Message(999).ToString(), MessageBase = ex.Message };
             }
             catch (App_DominioException ex)
             {
-                result.CondominoPFViewModel.mensagem = ex.Result;
+                result.mensagem = ex.Result;
 
                 if (ex.InnerException != null)
-                    result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.InnerException.Message ?? ex.Message, GetType().FullName).Message;
+                    result.mensagem.MessageBase = new App_DominioException(ex.InnerException.Message ?? ex.Message, GetType().FullName).Message;
                 else
-                    result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.Result.Message, GetType().FullName).Message;
+                    result.mensagem.MessageBase = new App_DominioException(ex.Result.Message, GetType().FullName).Message;
             }
             catch (DbUpdateException ex)
             {
-                result.CondominoPFViewModel.mensagem.MessageBase = ex.InnerException.InnerException.Message ?? ex.Message;
-                if (result.CondominoPFViewModel.mensagem.MessageBase.ToUpper().Contains("REFERENCE"))
+                result.mensagem.MessageBase = ex.InnerException.InnerException.Message ?? ex.Message;
+                if (result.mensagem.MessageBase.ToUpper().Contains("REFERENCE"))
                 {
-                    if (result.CondominoPFViewModel.mensagem.MessageBase.ToUpper().Contains("DELETE"))
+                    if (result.mensagem.MessageBase.ToUpper().Contains("DELETE"))
                     {
-                        result.CondominoPFViewModel.mensagem.Code = 16;
-                        result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(16).ToString();
-                        result.CondominoPFViewModel.mensagem.MessageType = MsgType.ERROR;
+                        result.mensagem.Code = 16;
+                        result.mensagem.Message = MensagemPadrao.Message(16).ToString();
+                        result.mensagem.MessageType = MsgType.ERROR;
                     }
                     else
                     {
-                        result.CondominoPFViewModel.mensagem.Code = 28;
-                        result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(28).ToString();
-                        result.CondominoPFViewModel.mensagem.MessageType = MsgType.ERROR;
+                        result.mensagem.Code = 28;
+                        result.mensagem.Message = MensagemPadrao.Message(28).ToString();
+                        result.mensagem.MessageType = MsgType.ERROR;
                     }
                 }
-                else if (result.CondominoPFViewModel.mensagem.MessageBase.ToUpper().Contains("PRIMARY"))
+                else if (result.mensagem.MessageBase.ToUpper().Contains("PRIMARY"))
                 {
-                    result.CondominoPFViewModel.mensagem.Code = 37;
-                    result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(37).ToString();
-                    result.CondominoPFViewModel.mensagem.MessageType = MsgType.WARNING;
+                    result.mensagem.Code = 37;
+                    result.mensagem.Message = MensagemPadrao.Message(37).ToString();
+                    result.mensagem.MessageType = MsgType.WARNING;
                 }
-                else if (result.CondominoPFViewModel.mensagem.MessageBase.ToUpper().Contains("UNIQUE KEY"))
+                else if (result.mensagem.MessageBase.ToUpper().Contains("UNIQUE KEY"))
                 {
-                    result.CondominoPFViewModel.mensagem.Code = 54;
-                    result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(54).ToString();
-                    result.CondominoPFViewModel.mensagem.MessageType = MsgType.WARNING;
+                    result.mensagem.Code = 54;
+                    result.mensagem.Message = MensagemPadrao.Message(54).ToString();
+                    result.mensagem.MessageType = MsgType.WARNING;
                 }
                 else
                 {
-                    result.CondominoPFViewModel.mensagem.Code = 44;
-                    result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(44).ToString();
-                    result.CondominoPFViewModel.mensagem.MessageType = MsgType.ERROR;
+                    result.mensagem.Code = 44;
+                    result.mensagem.Message = MensagemPadrao.Message(44).ToString();
+                    result.mensagem.MessageType = MsgType.ERROR;
                 }
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
-                result.CondominoPFViewModel.mensagem = new Validate() { Code = 42, Message = MensagemPadrao.Message(42).ToString(), MessageBase = ex.EntityValidationErrors.Select(m => m.ValidationErrors.First().ErrorMessage).First() };
+                result.mensagem = new Validate() { Code = 42, Message = MensagemPadrao.Message(42).ToString(), MessageBase = ex.EntityValidationErrors.Select(m => m.ValidationErrors.First().ErrorMessage).First() };
             }
             catch (Exception ex)
             {
-                result.CondominoPFViewModel.mensagem.Code = 17;
-                result.CondominoPFViewModel.mensagem.Message = MensagemPadrao.Message(17).ToString();
-                result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.InnerException.InnerException.Message ?? ex.Message, GetType().FullName).Message;
-                result.CondominoPFViewModel.mensagem.MessageType = MsgType.ERROR;
+                result.mensagem.Code = 17;
+                result.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                result.mensagem.MessageBase = new App_DominioException(ex.InnerException.InnerException.Message ?? ex.Message, GetType().FullName).Message;
+                result.mensagem.MessageType = MsgType.ERROR;
             }
             return result;
         }

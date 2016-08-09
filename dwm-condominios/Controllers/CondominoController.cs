@@ -11,6 +11,7 @@ using DWM.Models.BI;
 using System;
 using App_Dominio.Enumeracoes;
 using DWM.Models.Pattern;
+using System.Collections.Generic;
 
 namespace DWM.Controllers
 {
@@ -135,7 +136,7 @@ namespace DWM.Controllers
 
         [AuthorizeFilter]
         public ActionResult EditCredenciado(int CredenciadoViewModel_CondominoID, int CredenciadoViewModel_CredenciadoID, string CredenciadoViewModel_Nome, string CredenciadoViewModel_Email, 
-                                            string CredenciadoViewModel_Observacao, string CredenciadoViewModel_Sexo)
+                                            string CredenciadoViewModel_Observacao, string CredenciadoViewModel_Sexo, string CredenciadoViewModel_UsuarioID)
         {
             if (ViewBag.ValidateRequest)
             {
@@ -149,12 +150,13 @@ namespace DWM.Controllers
                         Nome = CredenciadoViewModel_Nome,
                         Email = CredenciadoViewModel_Email,
                         Sexo = CredenciadoViewModel_Sexo,
-                        Observacao = CredenciadoViewModel_Observacao
+                        Observacao = CredenciadoViewModel_Observacao,
+                        UsuarioID = CredenciadoViewModel_UsuarioID != null && CredenciadoViewModel_UsuarioID != "" ? int.Parse(CredenciadoViewModel_UsuarioID) : 0
                     };
 
                     value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
                     FactoryLocalhost<CredenciadoViewModel, ApplicationContext> facade = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
-                    result = facade.Execute(value, value);
+                    IEnumerable<CredenciadoViewModel> ListCredenciado = facade.Execute(new EditarCredenciadoBI(), value, CredenciadoViewModel_CondominoID);
 
                     if (result.mensagem.Code > 0)
                         throw new Exception(result.mensagem.MessageBase);
