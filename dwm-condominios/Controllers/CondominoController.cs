@@ -154,12 +154,14 @@ namespace DWM.Controllers
                         UsuarioID = CredenciadoViewModel_UsuarioID != null && CredenciadoViewModel_UsuarioID != "" ? int.Parse(CredenciadoViewModel_UsuarioID) : 0
                     };
 
+                    #region Incluir/Editar Credenciado
                     value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
-                    FactoryLocalhost<CredenciadoViewModel, ApplicationContext> facade = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
-                    IEnumerable<CredenciadoViewModel> ListCredenciado = facade.Execute(new EditarCredenciadoBI(), value, CredenciadoViewModel_CondominoID);
-
+                    FactoryLocalhost<CredenciadoViewModel, ApplicationContext> factory = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
+                    IEnumerable<CredenciadoViewModel> ListCredenciado = factory.Execute(new EditarCredenciadoBI(), value, CredenciadoViewModel_CondominoID);
                     if (result.mensagem.Code > 0)
                         throw new Exception(result.mensagem.MessageBase);
+                    #endregion
+
 
                     Success("Condômino alterado com sucesso");
                 }

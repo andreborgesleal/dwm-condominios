@@ -272,3 +272,9 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Thread
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
+C:\sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.Pdf.dll
+C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.dll
+C:\sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.mshtml.dll
+C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.Pdf.xml
+C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.xml
