@@ -135,48 +135,91 @@ namespace DWM.Controllers
         }
 
         [AuthorizeFilter]
-        public ActionResult EditCredenciado(int CredenciadoViewModel_CondominoID, int CredenciadoViewModel_CredenciadoID, string CredenciadoViewModel_Nome, string CredenciadoViewModel_Email, 
-                                            string CredenciadoViewModel_Observacao, string CredenciadoViewModel_Sexo, string CredenciadoViewModel_UsuarioID)
+        public ActionResult EditCredenciado(CredenciadoViewModel CredenciadoViewModel)
         {
-            if (ViewBag.ValidateRequest)
+            if (ModelState.IsValid)
             {
-                CredenciadoViewModel result = null;
-                try
+                int CredenciadoViewModel_CondominoID = CredenciadoViewModel.CondominoID;
+                int CredenciadoViewModel_CredenciadoID = CredenciadoViewModel.CredenciadoID;
+                int CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
+                string CredenciadoViewModel_Nome = CredenciadoViewModel.Nome;
+                string CredenciadoViewModel_Email = CredenciadoViewModel.Email;
+                string CredenciadoViewModel_Observacao = CredenciadoViewModel.Observacao;
+                string CredenciadoViewModel_Sexo = CredenciadoViewModel.Sexo;
+
+                if (ViewBag.ValidateRequest)
                 {
-                    CredenciadoViewModel value = new CredenciadoViewModel()
+                    CondominoEditViewModel result = null;
+                    try
                     {
-                        CredenciadoID = CredenciadoViewModel_CredenciadoID,
-                        CondominoID = CredenciadoViewModel_CondominoID,
-                        Nome = CredenciadoViewModel_Nome,
-                        Email = CredenciadoViewModel_Email,
-                        Sexo = CredenciadoViewModel_Sexo,
-                        Observacao = CredenciadoViewModel_Observacao,
-                        UsuarioID = CredenciadoViewModel_UsuarioID != null && CredenciadoViewModel_UsuarioID != "" ? int.Parse(CredenciadoViewModel_UsuarioID) : 0
-                    };
+                        #region Incluir/Editar Credenciado
+                        result = new CondominoEditViewModel()
+                        {
+                            UnidadeViewModel = new UnidadeViewModel(),
+                            CondominoPFViewModel = new CondominoPFViewModel(),
+                            CredenciadoViewModel = new CredenciadoViewModel()
+                            {
+                                CredenciadoID = CredenciadoViewModel_CredenciadoID,
+                                CondominoID = CredenciadoViewModel_CondominoID,
+                                Nome = CredenciadoViewModel_Nome,
+                                Email = CredenciadoViewModel_Email,
+                                Sexo = CredenciadoViewModel_Sexo,
+                                Observacao = CredenciadoViewModel_Observacao,
+                                UsuarioID = CredenciadoViewModel_UsuarioID,
+                                mensagem = new App_Dominio.Contratos.Validate() { Code = 0 }
+                            },
+                            mensagem = new App_Dominio.Contratos.Validate() {  Code = 0}
+                        };
 
-                    #region Incluir/Editar Credenciado
-                    value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
-                    FactoryLocalhost<CredenciadoViewModel, ApplicationContext> factory = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
-                    IEnumerable<CredenciadoViewModel> ListCredenciado = factory.Execute(new EditarCredenciadoBI(), value, CredenciadoViewModel_CondominoID);
-                    if (result.mensagem.Code > 0)
-                        throw new Exception(result.mensagem.MessageBase);
-                    #endregion
+                        result.CredenciadoViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                        FactoryLocalhost<CredenciadoViewModel, ApplicationContext> factory = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
+                        result.Credenciados = factory.Execute(new EditarCredenciadoBI(), result.CredenciadoViewModel, CredenciadoViewModel_CondominoID);
+                        if (factory.Mensagem.Code > 0)
+                            throw new Exception(factory.Mensagem.MessageBase);
 
+                        if (CredenciadoViewModel_CredenciadoID == 0)
+                        {
+                            CredenciadoModel CredenciadoModel = new CredenciadoModel();
+                            result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);
+                        }
+                        #endregion
 
-                    Success("Condômino alterado com sucesso");
+                        Success("Registro processado com sucesso");
+                    }
+                    catch (Exception ex)
+                    {
+                        App_DominioException.saveError(ex, GetType().FullName);
+                        ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+
+                    return View("_Credenciado", result);
                 }
-                catch (Exception ex)
+                else
                 {
-                    App_DominioException.saveError(ex, GetType().FullName);
-                    ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
-                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    return View();
                 }
-
-                return View(result);
             }
             else
-                return View();
+            {
+                CondominoEditViewModel result = new CondominoEditViewModel()
+                {
+                    UnidadeViewModel = new UnidadeViewModel(),
+                    CondominoPFViewModel = new CondominoPFViewModel()
+                    {
+                        CondominoID = CredenciadoViewModel.CondominoID
+                    },
+                    CredenciadoViewModel = CredenciadoViewModel
+                };
 
+                Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
+                CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), result);
+                result.Credenciados = obj.Credenciados;
+
+                Error("Erro de preenhcimento em campos");
+
+                return View("_Credenciado", result);
+            }
         }
         #endregion
 

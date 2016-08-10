@@ -3902,6 +3902,7 @@
     <Content Include="Views\Informativo\Edit.cshtml" />
     <Content Include="Views\Informativo\Browse.cshtml" />
     <Content Include="Views\Informativo\List.cshtml" />
+    <Content Include="Views\Shared\_AcessoNegado.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

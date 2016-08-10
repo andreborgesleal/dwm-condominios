@@ -33,7 +33,7 @@ namespace DWM.Models.BI
             CredenciadoViewModel result = new CredenciadoViewModel()
             {
                 uri = r.uri,
-                empresaId = r.empresaId,
+                empresaId = sessaoCorrente.empresaId,
                 CredenciadoID = r.CredenciadoID,
                 CondominoID = r.CondominoID,
                 Nome = r.Nome,
@@ -43,13 +43,20 @@ namespace DWM.Models.BI
                 UsuarioID = r.UsuarioID,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
+
             try
             {
                 int _empresaId = sessaoCorrente.empresaId;
 
                 CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
+
                 if (r.CredenciadoID == 0) // Incluir credenciado
                 {
+                    #region Validar Credenciado
+                    if (CredenciadoModel.Validate(result, Crud.INCLUIR).Code > 0)
+                        throw new App_DominioException(result.mensagem);
+                    #endregion
+
                     #region Cadastrar o credenciado como um usuário em DWM-Segurança
 
                     Random random = new Random();
@@ -69,6 +76,10 @@ namespace DWM.Models.BI
                         isAdmin = "N",
                         senha = security.Criptografar(_senha)
                     };
+
+                    // Verifica se o E-mail do usuário já não existe para a empresa
+                    if (seguranca_db.Usuarios.Where(info => info.empresaId == _empresaId && info.login == r.Email).Count() > 0)
+                        throw new ArgumentException("E-mail já cadastrado");
 
                     seguranca_db.Usuarios.Add(user);
                     #endregion
@@ -90,12 +101,17 @@ namespace DWM.Models.BI
 
                     #region Incluir o credenciado
                     result.UsuarioID = user.usuarioId;
-                    result = CredenciadoModel.Insert(r);
+                    result = CredenciadoModel.Insert(result);
                     result.mensagem.Field = _senha;
                     #endregion
                 }
                 else
                 {
+                    #region Validar Credenciado
+                    if (CredenciadoModel.Validate(result, Crud.ALTERAR).Code > 0)
+                        throw new App_DominioException(result.mensagem);
+                    #endregion
+
                     #region Atualiza o cadastro do usuário
                     Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
 

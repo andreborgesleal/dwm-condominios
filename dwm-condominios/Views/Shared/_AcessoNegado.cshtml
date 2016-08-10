@@ -1,0 +1,13 @@
+﻿@model System.Web.Mvc.HandleErrorInfo
+
+@{
+    ViewBag.Title = "Error";
+}
+
+@*<h1 class="text-danger">Error.</h1>
+<h2 class="text-danger">Erro na tentativa de acessar a página solicitada. Favor entrar em contato com o administrador do sistema.</h2>*@
+
+<script type="text/javascript">
+    ShowMessageAlert("O acesso à requisição solicitada não foi autorizado. Favor entrar em contato com o administrador do sistema.", "danger")
+</script>
+

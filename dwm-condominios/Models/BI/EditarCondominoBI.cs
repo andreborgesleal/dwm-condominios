@@ -50,7 +50,7 @@ namespace DWM.Models.BI
                 {
                     CondominioID = _empresaId,
                     EdificacaoID = r.UnidadeViewModel.EdificacaoID,
-                    EdificacaoDescricao = db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao,
+                    EdificacaoDescricao = r.UnidadeViewModel.EdificacaoID > 0 ? db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao : "",
                     UnidadeID = r.UnidadeViewModel.UnidadeID
                 };
 

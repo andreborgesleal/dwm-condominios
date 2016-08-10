@@ -10,12 +10,12 @@ namespace DWM.Models.Repositories
         public int CredenciadoID { get; set; }
 
         [DisplayName("Condomino ID")]
-        [Required(ErrorMessage = "Inform o Condômino ID")]
+        [Required(ErrorMessage = "Informe o Condômino ID")]
         public int CondominoID { get; set; }
 
         [DisplayName("Nome")]
         [StringLength(30, ErrorMessage = "Este campo só permite até 30 caracteres")]
-        [Required(ErrorMessage = "Inform o Nome")]
+        [Required(ErrorMessage = "Informe o Nome do credenciado")]
         public string Nome { get; set; }
 
         [DisplayName("E-mail")]
@@ -26,8 +26,6 @@ namespace DWM.Models.Repositories
         public string Email { get; set; }
         
         [DisplayName("Sexo")]
-        [Required(ErrorMessage = "Inform o Sexo")]
-        [StringLength(1, ErrorMessage = "Este campo só permite até 1 caracteres")]
         public string Sexo { get; set; }
 
         [DisplayName("Observação")]

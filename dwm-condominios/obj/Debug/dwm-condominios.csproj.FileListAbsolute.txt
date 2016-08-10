@@ -231,14 +231,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.WebPa
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.WebPages.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.WebPages.Razor.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\WebGrease.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.WebForms.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\SendGridMail.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.Common.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Smtpapi.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.SqlServer.Types.dll
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.pdb
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.AI.DependencyCollector.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.AI.ServerTelemetryChannel.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.AI.Web.xml
@@ -268,8 +260,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.S
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.Google.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.Twitter.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
 C:\sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
