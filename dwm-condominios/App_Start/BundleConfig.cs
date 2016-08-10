@@ -15,7 +15,8 @@ namespace dwm_condominios
                       "~/Content/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css",
                       "~/Content/production/css/maps/jquery-jvectormap-2.0.3.css",
                       "~/Content/production/css/custom.css",
-                      "~/Scripts/css/datepicker.css"));
+                      "~/Scripts/css/datepicker.css",
+                      "~/Content/vendors/summernote/css/summernote.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/vendors/jquery/dist/jquery.min.js"));
@@ -83,6 +84,10 @@ namespace dwm_condominios
                         "~/Content/vendors/jquery.hotkeys/jquery.hotkeys.js",
                         "~/Content/vendors/google-code-prettify/src/prettify.js"
                         ));
+
+            bundles.Add(new ScriptBundle("~/bundles/summernote").Include(
+                        "~/Content/vendors/summernote/js/summernote.min.js",
+                        "~/Content/vendors/summernote/js/summernote-pt-BR.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/inputs-jquery-ui").Include(
                         "~/Scripts/jquery.unobtrusive-ajax.js", // serve para renderizar a página dentro do DIV

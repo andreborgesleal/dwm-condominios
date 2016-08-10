@@ -33,7 +33,7 @@ namespace DWM.Models.Repositories
         [DisplayName("Telefone 2")]
         public string TelParticular2 { get; set; }
         
-        [DisplayName("Email")]
+        [DisplayName("E-mail")]
         [StringLength(100, ErrorMessage = "E-mail deve ter no máximo 100 caracteres")]
         [Required(ErrorMessage = "E-mail deve ser informado")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Informe um e-mail válido")]

@@ -46,7 +46,6 @@ namespace dwm_condominios.Models.BI
                 #region Informativo
                 ListViewInformativo listViewInformativo = new ListViewInformativo(this.db, this.seguranca_db);
                 Facade<InformativoViewModel, InformativoModel, ApplicationContext> facadeCob = new Facade<InformativoViewModel, InformativoModel, ApplicationContext>();
-                home.Informativo = listViewInformativo.Bind(0, 50, );
                 #endregion
             }
             catch (Exception ex)

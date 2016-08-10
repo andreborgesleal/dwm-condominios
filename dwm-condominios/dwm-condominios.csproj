@@ -212,6 +212,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
+    <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
+    <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoEditViewModel.cs" />
@@ -2845,6 +2847,10 @@
     <Content Include="Content\vendors\starrr\dist\starrr.css" />
     <Content Include="Content\vendors\starrr\dist\starrr.js" />
     <Content Include="Content\vendors\starrr\index.html" />
+    <Content Include="Content\vendors\summernote\css\summernote.css" />
+    <Content Include="Content\vendors\summernote\js\summernote-pt-BR.js" />
+    <Content Include="Content\vendors\summernote\js\summernote.js" />
+    <Content Include="Content\vendors\summernote\js\summernote.min.js" />
     <Content Include="Content\vendors\switchery\dist\switchery.css" />
     <Content Include="Content\vendors\switchery\dist\switchery.js" />
     <Content Include="Content\vendors\switchery\dist\switchery.min.css" />
@@ -3830,6 +3836,9 @@
     <Content Include="Content\vendors\validator\.bower.json" />
     <Content Include="Content\vendors\validator\README.md" />
     <Content Include="Content\vendors\validator\validator.jquery.json" />
+    <Content Include="Content\vendors\summernote\css\font\summernote.eot" />
+    <Content Include="Content\vendors\summernote\css\font\summernote.ttf" />
+    <Content Include="Content\vendors\summernote\css\font\summernote.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\inputs-jquery-ui.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -3847,7 +3856,9 @@
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Users_Data\Empresas\3\Avatar\1.png" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

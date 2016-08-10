@@ -11,7 +11,6 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Security;
 using System.Linq;
 using System.Data.Entity.Infrastructure;
-using App_Dominio.Models;
 
 namespace DWM.Models.BI
 {
@@ -40,6 +39,13 @@ namespace DWM.Models.BI
                 CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
                 result.CondominoPFViewModel = condominoPFModel.getObject(r.CondominoPFViewModel);
 
+                CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
+                result.CredenciadoViewModel = CredenciadoModel.CreateRepository();
+                result.CredenciadoViewModel.CondominoID = result.CondominoPFViewModel.CondominoID;
+
+                ListViewCredenciados ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
+                result.Credenciados = ListCredenciados.Bind(0, 50, result.CondominoPFViewModel.CondominoID);
+
                 result.UnidadeViewModel = new UnidadeViewModel()
                 {
                     CondominioID = _empresaId,
@@ -47,6 +53,7 @@ namespace DWM.Models.BI
                     EdificacaoDescricao = db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao,
                     UnidadeID = r.UnidadeViewModel.UnidadeID
                 };
+
             }
             catch (ArgumentException ex)
             {

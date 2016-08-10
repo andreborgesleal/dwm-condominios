@@ -14,7 +14,8 @@ namespace DWM.Models.Enumeracoes
             AREA_ATENDIMENTO = 2,
             SISTEMA = 3,
             EMPRESA = 4,
-            HABILITA_EMAIL = 5
+            HABILITA_EMAIL = 5,
+            GRUPO_CREDENCIADO = 6
         }
     }
 }

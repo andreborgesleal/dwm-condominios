@@ -8,5 +8,6 @@ namespace DWM.Models.Repositories
         public CondominoPFViewModel CondominoPFViewModel { get; set; }
         public UnidadeViewModel UnidadeViewModel { get; set; }
         public IEnumerable<CredenciadoViewModel> Credenciados{ get; set; }
+        public CredenciadoViewModel CredenciadoViewModel { get; set; }
     }
 }
