@@ -113,8 +113,12 @@ namespace DWM.Models.BI
                     #endregion
                 }
 
+                db.SaveChanges();
+
                 if (result.mensagem.Code > 0)
                     throw new App_DominioException(result.mensagem);
+
+                result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
 
             }
             catch (ArgumentException ex)
@@ -183,7 +187,8 @@ namespace DWM.Models.BI
 
         public IEnumerable<CredenciadoViewModel> List(params object[] param)
         {
-            throw new NotImplementedException();
+            ListViewCredenciados ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
+            return ListCredenciados.Bind(0, 50, param);
         }
 
         public IPagedList PagedList(int? index, int pageSize = 50, params object[] param)
