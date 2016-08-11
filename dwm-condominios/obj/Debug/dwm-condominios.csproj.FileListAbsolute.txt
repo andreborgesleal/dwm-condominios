@@ -268,3 +268,14 @@ C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.dll
 C:\sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.mshtml.dll
 C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.Pdf.xml
 C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.xml
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.WebForms.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\SendGridMail.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.Common.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Smtpapi.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.ProcessingObjectModel.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.SqlServer.Types.dll
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.pdb
+C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml

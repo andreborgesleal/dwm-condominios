@@ -33,7 +33,8 @@ namespace DWM.Models.Persistence
             entity.CredenciadoID = value.CredenciadoID;
             entity.CondominoID = value.CondominoID;
             entity.Nome = value.Nome;
-            entity.Email = value.Email;
+            entity.Email = value.Email.ToLower();
+            entity.TipoCredenciadoID = value.TipoCredenciadoID;
             entity.Sexo = value.Sexo;
             entity.Observacao = value.Observacao;
             entity.UsuarioID = value.UsuarioID;
@@ -49,6 +50,7 @@ namespace DWM.Models.Persistence
                 CondominoID = entity.CondominoID,
                 Nome = entity.Nome,
                 Email = entity.Email,
+                TipoCredenciadoID = entity.TipoCredenciadoID,
                 Sexo = entity.Sexo,
                 Observacao = entity.Observacao,
                 UsuarioID = entity.UsuarioID,
@@ -101,6 +103,15 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+            if (value.TipoCredenciadoID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Tipo Credenciado").ToString();
+                value.mensagem.MessageBase = "Tipo de Credenciado deve ser informado";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
             if (operation == Crud.INCLUIR || operation == Crud.ALTERAR)
             {
                 int descricaoCredenciado = (from c in db.Credenciados
@@ -124,6 +135,7 @@ namespace DWM.Models.Persistence
         {
             CredenciadoViewModel value = base.CreateRepository(Request);
             value.Sexo = "M";
+            value.TipoCredenciadoID = 0;
             return value;
         }
         #endregion
@@ -144,7 +156,7 @@ namespace DWM.Models.Persistence
         {
             int _CondominoID = param != null && param.Count() > 0 && param[0] != null ? int.Parse(param[0].ToString()) : 0;
 
-            return (from c in db.Credenciados
+            return (from c in db.Credenciados join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
                     where c.CondominoID == _CondominoID
                     orderby c.Nome
                     select new CredenciadoViewModel
@@ -154,6 +166,8 @@ namespace DWM.Models.Persistence
                         CondominoID = c.CondominoID,
                         Nome = c.Nome,
                         Email = c.Email,
+                        TipoCredenciadoID = c.TipoCredenciadoID,
+                        DescricaoTipoCredenciado = t.Descricao,
                         Sexo = c.Sexo,
                         Observacao = c.Observacao,
                         UsuarioID = c.UsuarioID,

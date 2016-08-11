@@ -38,6 +38,7 @@ namespace DWM.Models.BI
                 CondominoID = r.CondominoID,
                 Nome = r.Nome,
                 Email = r.Email,
+                TipoCredenciadoID = r.TipoCredenciadoID,
                 Sexo = r.Sexo,
                 Observacao = r.Observacao,
                 UsuarioID = r.UsuarioID,
@@ -61,6 +62,7 @@ namespace DWM.Models.BI
 
                     Random random = new Random();
                     string _senha = random.Next(9999, 999999).ToString();
+                    string _keyword = random.Next(9999, 99999999).ToString();
                     int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
 
                     #region Usuario 
@@ -72,9 +74,11 @@ namespace DWM.Models.BI
                         login = r.Email,
                         empresaId = _empresaId,
                         dt_cadastro = Funcoes.Brasilia(),
-                        situacao = "A",
+                        situacao = "D",
                         isAdmin = "N",
-                        senha = security.Criptografar(_senha)
+                        senha = security.Criptografar(_senha),
+                        keyword = _keyword,
+                        dt_keyword = Funcoes.Brasilia().AddDays(1)
                     };
 
                     // Verifica se o E-mail do usuário já não existe para a empresa
@@ -102,7 +106,7 @@ namespace DWM.Models.BI
                     #region Incluir o credenciado
                     result.UsuarioID = user.usuarioId;
                     result = CredenciadoModel.Insert(result);
-                    result.mensagem.Field = _senha;
+                    result.mensagem.Field = _keyword;
                     #endregion
                 }
                 else
@@ -139,7 +143,7 @@ namespace DWM.Models.BI
             }
             catch (ArgumentException ex)
             {
-                result.mensagem = new Validate() { Code = 999, Message = MensagemPadrao.Message(999).ToString(), MessageBase = ex.Message };
+                result.mensagem = new Validate() { Code = 997, Message = MensagemPadrao.Message(997).ToString(), MessageBase = ex.Message };
             }
             catch (App_DominioException ex)
             {

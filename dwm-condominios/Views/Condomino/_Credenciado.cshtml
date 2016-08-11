@@ -38,7 +38,7 @@
                         <tr>
                             <th>Nome</th>
                             <th>E-mail</th>
-                            <th class="text-center">Sexo</th>
+                            <th>Tipo</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -46,12 +46,12 @@
                         @foreach (CredenciadoViewModel cre in Model.Credenciados)
                         {
                             <tr>
-                                <td>@cre.Nome</td>
-                                <td>@cre.Email</td>
-                                <td class="text-center">@cre.Sexo</td>
+                                <td><small>@cre.Nome</small></td>
+                                <td><small>@cre.Email</small></td>
+                                <td><small>@cre.DescricaoTipoCredenciado</small></td>
                                 <th scope="row">
-                                    <a href="~/Condomino/EditCredenciado?id=@(cre.CredenciadoID)">Editar</a>
-                                    <a href="~/Condomino/DelCredenciado?id=@(cre.CredenciadoID)">Excluir</a>
+                                    <a href="~/Condomino/EditCredenciado?id=@(cre.CredenciadoID)"><i class="fa fa-edit"></i></a>
+                                    <a href="~/Condomino/DelCredenciado?id=@(cre.CredenciadoID)"><i class="fa fa-trash"></i></a>
                                 </th>
                             </tr>
                         }
@@ -97,13 +97,27 @@
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Nome, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.CredenciadoViewModel.Nome, new { @class = "form-control", @maxlength = "30" })
+                            <input type="text" class="form-control" name="CredenciadoViewModel.Nome" value="@Model.CredenciadoViewModel.Nome" maxlength="30" />
                         </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Email, new { @class = "control-label" })
-                            @Html.TextBoxFor(m => m.CredenciadoViewModel.Email, new { @class = "form-control" })
+                            <input type="text" class="form-control" name="CredenciadoViewModel.Email" value="@Model.CredenciadoViewModel.Email" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CredenciadoViewModel.TipoCredenciadoID, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.CredenciadoViewModel.TipoCredenciadoID, new DWM.Models.Enumeracoes.BindDropDownList().TipoCredenciados("", Model.CredenciadoViewModel.TipoCredenciadoID.ToString()), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CredenciadoViewModel.Sexo, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.CredenciadoViewModel.Sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.CredenciadoViewModel.Sexo, ""), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -111,15 +125,8 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Observacao, new { @class = "control-label" })
-                            @Html.TextAreaFor(m => m.CredenciadoViewModel.Observacao, 4, 0, new { @class = "form-control", @maxlength = "30" })
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                        <div class="form-group">
-                            @Html.LabelFor(m => m.CredenciadoViewModel.Sexo, new { @class = "control-label" })
-                            @Html.DropDownListFor(m => m.CredenciadoViewModel.Sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.CredenciadoViewModel.Sexo, ""), new { @class = "form-control" })
+                            <textarea class="form-control" cols="0" rows="4" name="CredenciadoViewModel.Observacao" value="@Model.CredenciadoViewModel.Observacao"></textarea>
+                            @*@Html.TextAreaFor(m => m.CredenciadoViewModel.Observacao, 4, 0, new { @class = "form-control", @maxlength = "30" })*@
                         </div>
                     </div>
                 </div>

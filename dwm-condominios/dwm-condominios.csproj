@@ -48,7 +48,7 @@
   <ItemGroup>
     <Reference Include="App_Dominio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
+      <HintPath>..\..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -233,6 +233,7 @@
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
     <Compile Include="Models\Entidades\RamoAtividade.cs" />
     <Compile Include="Models\Entidades\TipoConta.cs" />
+    <Compile Include="Models\Entidades\TipoCredenciado.cs" />
     <Compile Include="Models\Entidades\TipoEdificacao.cs" />
     <Compile Include="Models\Entidades\Unidade.cs" />
     <Compile Include="Models\Entidades\Veiculo.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
     <Compile Include="Models\Repositories\RamoAtividadeViewModel.cs" />
     <Compile Include="Models\Repositories\TipoContaViewModel.cs" />
+    <Compile Include="Models\Repositories\TipoCredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\TipoEdificacaoViewModel.cs" />
     <Compile Include="Models\Repositories\UnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\VeiculoViewModel.cs" />

@@ -144,6 +144,7 @@ namespace DWM.Controllers
                 int CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
                 string CredenciadoViewModel_Nome = CredenciadoViewModel.Nome;
                 string CredenciadoViewModel_Email = CredenciadoViewModel.Email;
+                int CredenciadoViewModel_TipoCredenciadoID = CredenciadoViewModel.TipoCredenciadoID;
                 string CredenciadoViewModel_Observacao = CredenciadoViewModel.Observacao;
                 string CredenciadoViewModel_Sexo = CredenciadoViewModel.Sexo;
 
@@ -163,6 +164,7 @@ namespace DWM.Controllers
                                 CondominoID = CredenciadoViewModel_CondominoID,
                                 Nome = CredenciadoViewModel_Nome,
                                 Email = CredenciadoViewModel_Email,
+                                TipoCredenciadoID = CredenciadoViewModel_TipoCredenciadoID,
                                 Sexo = CredenciadoViewModel_Sexo,
                                 Observacao = CredenciadoViewModel_Observacao,
                                 UsuarioID = CredenciadoViewModel_UsuarioID,
@@ -175,7 +177,15 @@ namespace DWM.Controllers
                         FactoryLocalhost<CredenciadoViewModel, ApplicationContext> factory = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
                         result.Credenciados = factory.Execute(new EditarCredenciadoBI(), result.CredenciadoViewModel, CredenciadoViewModel_CondominoID);
                         if (factory.Mensagem.Code > 0)
-                            throw new Exception(factory.Mensagem.MessageBase);
+                            throw new App_DominioException(factory.Mensagem);
+
+                        #region envio de e-mail ao credenciado com a sua senha
+                        result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
+                        CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
+                        if (repository.mensagem.Code > 0)
+                            throw new ArgumentException(repository.mensagem.MessageBase);
+                        #endregion
+
 
                         if (CredenciadoViewModel_CredenciadoID == 0)
                         {
@@ -185,6 +195,11 @@ namespace DWM.Controllers
                         #endregion
 
                         Success("Registro processado com sucesso");
+                    }
+                    catch (App_DominioException ex)
+                    {
+                        ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                     }
                     catch (Exception ex)
                     {

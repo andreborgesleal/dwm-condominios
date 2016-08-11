@@ -22,6 +22,9 @@ namespace DWM.Models.Entidades
         [DisplayName("Email")]
         public string Email { get; set; }
 
+        [DisplayName("TipoCredenciadoID")]
+        public int TipoCredenciadoID { get; set; }
+
         [StringLength(1, ErrorMessage = "Este campo só permite até 1 caracteres")]
         [DisplayName("Sexo")]
         public string Sexo { get; set; }

@@ -24,7 +24,12 @@ namespace DWM.Models.Repositories
         [DataType(DataType.EmailAddress, ErrorMessage = "Informe um e-mail válido")]
         [EmailAddress(ErrorMessage = "Informe o E-mail com um formato válido")]
         public string Email { get; set; }
-        
+
+        [DisplayName("Tipo Credenciado")]
+        public int TipoCredenciadoID { get; set; }
+
+        public string DescricaoTipoCredenciado { get; set; }
+
         [DisplayName("Sexo")]
         public string Sexo { get; set; }
 

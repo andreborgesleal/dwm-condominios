@@ -56,6 +56,7 @@
   <Context key="200" value="Sessão não pode ser atualizada porque não existe ou já foi encerrada" type="Error"></Context>
   <Context key="201" value="Acesso não autorizado. A sessão já está em uso. Favor tentar novamente mais tarde." type="Error"></Context>
   <Context key="202" value="Acesso negado. Suas credenciais não estão autorizadas para executar essa operação." type="Error"></Context>
+  <Context key="997" value="Dado(s) incorretos." type="Error"></Context>
   <Context key="998" value="Se o problema persistir entre em contato com o administrador do sistema." type="Error"></Context>
   <Context key="999" value="A operação não foi concluída. Foram identificadas algumas inconsistências no preenchimento do formulário. Favor corrigir e tentar a operação novamente." type="Error"></Context>
 </Mensagem>
