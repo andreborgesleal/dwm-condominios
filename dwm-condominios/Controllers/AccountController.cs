@@ -14,6 +14,7 @@ using DWM.Models.BI;
 using DWM.Models.Pattern;
 using App_Dominio.Pattern;
 using System.Collections.Generic;
+using App_Dominio.Repositories;
 
 namespace DWM.Controllers
 {
@@ -88,8 +89,6 @@ namespace DWM.Controllers
 
         }
 
-        //
-        // GET: /Account/Register
         [AllowAnonymous]
         public ActionResult Register(string id)
         {
@@ -191,6 +190,42 @@ namespace DWM.Controllers
                     };
                 };
             }
+
+            return View(value);
+        }
+
+        [AllowAnonymous]
+        public ActionResult AtivarCredenciado(string id, string key)
+        {
+            UsuarioRepository value = new UsuarioRepository();
+            if (id != null && id != "")
+            {
+                value.usuarioId = int.Parse(id);
+                value.keyword = key;
+                Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
+                value = factory.Execute(new CodigoValidacaoCredenciadoBI(), value);
+            }
+            else
+                return RedirectToAction("Login", "Account");
+
+            return View(value);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public ActionResult AtivarCredenciado(string id, string key, string senha, string confirmarSenha)
+        {
+            UsuarioRepository value = new UsuarioRepository();
+            if (id != null && id != "")
+            {
+                value.usuarioId = int.Parse(id);
+                value.keyword = key;
+                value.senha = senha;
+                Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
+                value = factory.Execute(new CodigoAtivacaoCredenciadoBI(), value);
+            }
+            else
+                return RedirectToAction("Login", "Account");
 
             return View(value);
         }

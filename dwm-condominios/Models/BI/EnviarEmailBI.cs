@@ -19,12 +19,6 @@ namespace DWM.Models.BI
         #region Constructor
         public EnviarEmailBI() { }
 
-        public void Create(ApplicationContext _db, SecurityContext _seguranca_db)
-        {
-            this.db = _db;
-            this.seguranca_db = _seguranca_db;
-        }
-
         public EnviarEmailBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
