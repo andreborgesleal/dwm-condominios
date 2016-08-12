@@ -178,7 +178,7 @@ namespace DWM.Models.BI
                         "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + rec.Email + "</span></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para ativar o seu cadastro e acessar o sistema:</span></p>" +
-                        "<p><a href=\"http://www.parcparadiso.com.br/Account/AtivarCredenciado/id=" + Credenciado.UsuarioID.ToString() + "&key=" + rec.mensagem.Field +"\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
+                        "<p><a href=\"http://www.parcparadiso.com.br/Account/AtivarCredenciado?id=" + Credenciado.UsuarioID.ToString() + "&key=" + rec.mensagem.Field +"\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Observação: este link estará disponível para ativação por 24 h</span></p>" +
                         "<hr />";

@@ -280,6 +280,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
     <Content Include="Content\images\PARC-PARADISO-LOGO.png" />
+    <Content Include="Content\images\parcparadiso.png" />
     <Content Include="Content\production\css\custom.css" />
     <Content Include="Content\production\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\production\images\1.png" />
@@ -3905,6 +3906,7 @@
     <Content Include="Views\Informativo\Browse.cshtml" />
     <Content Include="Views\Informativo\List.cshtml" />
     <Content Include="Views\Shared\_AcessoNegado.cshtml" />
+    <Content Include="Views\Account\AtivarCredenciado.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

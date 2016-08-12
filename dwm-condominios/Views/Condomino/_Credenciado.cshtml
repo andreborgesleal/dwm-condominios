@@ -43,17 +43,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (CredenciadoViewModel cre in Model.Credenciados)
-                        {
-                            <tr>
-                                <td><small>@cre.Nome</small></td>
-                                <td><small>@cre.Email</small></td>
-                                <td><small>@cre.DescricaoTipoCredenciado</small></td>
-                                <th scope="row">
-                                    <a href="~/Condomino/EditCredenciado?id=@(cre.CredenciadoID)"><i class="fa fa-edit"></i></a>
-                                    <a href="~/Condomino/DelCredenciado?id=@(cre.CredenciadoID)"><i class="fa fa-trash"></i></a>
-                                </th>
-                            </tr>
+                        @{
+                            int contador = 0;
+                            foreach (CredenciadoViewModel cre in Model.Credenciados)
+                            {
+                                <tr>
+                                    @Html.Hidden("obs" + contador.ToString(), cre.Observacao)
+                                    <td><small>@cre.Nome</small></td>
+                                    <td><small>@cre.Email</small></td>
+                                    <td><small>@cre.DescricaoTipoCredenciado</small></td>
+                                    <th scope="row">
+                                        <a href="#" title="Editar" onclick="Edit('@cre.CondominoID', '@cre.CredenciadoID', '@cre.UsuarioID', '@cre.Nome', '@cre.Email', '@cre.TipoCredenciadoID', '@cre.Sexo', '@contador')"><i class="fa fa-edit"></i></a>
+                                        <a href="#" title="Excluir" onclick="Del(@cre.CondominoID, @cre.CredenciadoID)"><i class="fa fa-trash"></i></a>
+                                    </th>
+                                </tr>
+                                contador++;
+                            }
                         }
                     </tbody>
                 </table>
@@ -97,13 +102,13 @@
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Nome, new { @class = "control-label" })
-                            <input type="text" class="form-control" name="CredenciadoViewModel.Nome" value="@Model.CredenciadoViewModel.Nome" maxlength="30" />
+                            <input type="text" class="form-control" name="CredenciadoViewModel.Nome" id="CredenciadoViewModel_Nome" value="@Model.CredenciadoViewModel.Nome" maxlength="30" />
                         </div>
                     </div>
                     <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Email, new { @class = "control-label" })
-                            <input type="text" class="form-control" name="CredenciadoViewModel.Email" value="@Model.CredenciadoViewModel.Email" />
+                            <input type="text" class="form-control" name="CredenciadoViewModel.Email" id="CredenciadoViewModel_Email" value="@Model.CredenciadoViewModel.Email" />
                         </div>
                     </div>
                 </div>
@@ -125,7 +130,7 @@
                     <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Observacao, new { @class = "control-label" })
-                            <textarea class="form-control" cols="0" rows="4" name="CredenciadoViewModel.Observacao" value="@Model.CredenciadoViewModel.Observacao"></textarea>
+                            <textarea class="form-control" cols="0" rows="4" name="CredenciadoViewModel.Observacao" id="CredenciadoViewModel_Observacao" value="@Model.CredenciadoViewModel.Observacao"></textarea>
                             @*@Html.TextAreaFor(m => m.CredenciadoViewModel.Observacao, 4, 0, new { @class = "form-control", @maxlength = "30" })*@
                         </div>
                     </div>
@@ -165,5 +170,18 @@ else
             return false;
         });
     });
+
+    function Edit(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador) {
+        var obs = $("#obs" + contador).val();
+
+        $("#CredenciadoViewModel_Nome").val(Nome);
+        $("#CredenciadoViewModel_Email").val(Email);
+        $("#CredenciadoViewModel_TipoCredenciadoID").val(TipoCredenciadoID);
+        $("#CredenciadoViewModel_Sexo").val(Sexo);
+        $("#CredenciadoViewModel_Observacao").val(obs);
+        $("#CredenciadoViewModel_UsuarioID").val(UsuarioID);
+        $("#CredenciadoViewModel_CredenciadoID").val(CredenciadoID);
+        $("#CredenciadoViewModel_CondominoID").val(CondominoID);
+    }
 
 </script>

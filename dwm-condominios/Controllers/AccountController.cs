@@ -35,6 +35,7 @@ namespace DWM.Controllers
         }
         #endregion
 
+        #region Login
         [AllowAnonymous]
         public async Task<ActionResult> Login(string returnUrl)
         {
@@ -42,8 +43,6 @@ namespace DWM.Controllers
             return View(); // RedirectToAction("Default", "Home");
         }
 
-        //
-        // POST: /Account/Login
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -88,7 +87,9 @@ namespace DWM.Controllers
             return View(model);
 
         }
+        #endregion
 
+        #region Register (Cadastre-se)
         [AllowAnonymous]
         public ActionResult Register(string id)
         {
@@ -116,8 +117,6 @@ namespace DWM.Controllers
             return View(value);
         }
 
-        //
-        // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -193,7 +192,9 @@ namespace DWM.Controllers
 
             return View(value);
         }
+        #endregion
 
+        #region Ativar credenciado
         [AllowAnonymous]
         public ActionResult AtivarCredenciado(string id, string key)
         {
@@ -204,32 +205,55 @@ namespace DWM.Controllers
                 value.keyword = key;
                 Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
                 value = factory.Execute(new CodigoValidacaoCredenciadoBI(), value);
+                if (value.mensagem.Code == -1)
+                    return View(value);
+                else
+                {
+                    ModelState.AddModelError("", value.mensagem.MessageBase); // mensagem amigável ao usuário
+                    Error(value.mensagem.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
             }
-            else
-                return RedirectToAction("Login", "Account");
-
-            return View(value);
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
         [AllowAnonymous]
-        public ActionResult AtivarCredenciado(string id, string key, string senha, string confirmarSenha)
+        public ActionResult AtivarCredenciado(UsuarioRepository value)
         {
-            UsuarioRepository value = new UsuarioRepository();
-            if (id != null && id != "")
+            if (ModelState.IsValid)
             {
-                value.usuarioId = int.Parse(id);
-                value.keyword = key;
-                value.senha = senha;
-                Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
-                value = factory.Execute(new CodigoAtivacaoCredenciadoBI(), value);
+                try
+                {
+                    if (value.usuarioId != 0)
+                    {
+                        Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
+                        value = factory.Execute(new CodigoAtivacaoCredenciadoBI(), value);
+                        if (value.mensagem.Code > 0)
+                            throw new App_DominioException(value.mensagem);
+                        Success("Credenciado ativado com sucesso. Faça seu login para acessar o sistema");
+                        return RedirectToAction("Login", "Account");
+                    };
+                }
+                catch (App_DominioException ex)
+                {
+                    ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                    Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
+                catch (Exception ex)
+                {
+                    App_DominioException.saveError(ex, GetType().FullName);
+                    ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
             }
             else
-                return RedirectToAction("Login", "Account");
+                Error("Dados incorretos");
 
             return View(value);
         }
+        #endregion
 
+        #region Termo de Uso e Política de Privacidade
         [AllowAnonymous]
         public ActionResult TermoUso()
         {
@@ -241,6 +265,7 @@ namespace DWM.Controllers
         {
             return View();
         }
+        #endregion
 
         [AllowAnonymous]
         public ActionResult LogOff()

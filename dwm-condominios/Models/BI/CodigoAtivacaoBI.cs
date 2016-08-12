@@ -22,6 +22,12 @@ namespace DWM.Models.BI
         #region Constructor
         public CodigoAtivacaoBI() { }
 
+        public void Create(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.db = _db;
+            this.seguranca_db = _seguranca_db;
+        }
+
         public CodigoAtivacaoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
@@ -134,6 +140,12 @@ namespace DWM.Models.BI
         #region Constructor
         public CodigoAtivacaoCredenciadoBI() { }
 
+        public void Create(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.db = _db;
+            this.seguranca_db = _seguranca_db;
+        }
+
         public CodigoAtivacaoCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
@@ -156,10 +168,19 @@ namespace DWM.Models.BI
                 if (u.keyword != r.keyword)
                     throw new ArgumentException("Chave de ativação inválida");
 
+                if (r.senha == null || r.senha.Trim() == "")
+                    throw new ArgumentException("Senha deve ser informada");
+
+                if (r.senha != r.confirmacaoSenha)
+                    throw new ArgumentException("Senha e confirmação de senha não conferem");
+
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
                 // Ativar o usuário
                 u.keyword = null;
                 u.dt_keyword = null;
                 u.situacao = "A";
+                u.senha = security.Criptografar(r.senha);
 
                 seguranca_db.Entry(u).State = EntityState.Modified;
 
@@ -206,7 +227,8 @@ namespace DWM.Models.BI
             }
             catch (ArgumentException ex)
             {
-                r.mensagem = new Validate() { Code = 20, Message = MensagemPadrao.Message(20).ToString(), MessageBase = ex.Message };
+                App_DominioException.saveError(ex, "ERROR");
+                r.mensagem = new Validate() { Code = 997, Message = MensagemPadrao.Message(997).ToString(), MessageBase = ex.Message };
             }
             catch (System.Data.Entity.Validation.DbEntityValidationException ex)
             {
@@ -238,6 +260,12 @@ namespace DWM.Models.BI
         #region Constructor
         public CodigoValidacaoCredenciadoBI() { }
 
+        public void Create(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.db = _db;
+            this.seguranca_db = _seguranca_db;
+        }
+
         public CodigoValidacaoCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
@@ -259,6 +287,11 @@ namespace DWM.Models.BI
 
                 if (u.keyword != r.keyword)
                     throw new ArgumentException("Chave de ativação inválida");
+
+                r.nome = u.nome;
+                r.login = u.login;
+                r.isAdmin = "N";
+                r.situacao = "D";
 
                 r.mensagem = new Validate() { Code = -1 };
             }

@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="80922322" Data="12/08/2016 12:13:11">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; account/ativarcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 202</StackTrace>
+  </LOG>
+  <LOG ID="1026863533" Data="12/08/2016 12:14:19">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; account/ativarcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 202</StackTrace>
+  </LOG>
+  <LOG ID="1740307630" Data="12/08/2016 13:03:30">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="QEzdYuKIXyOXSR44q1yZWAdqRhhPBZDmhBcIwrp5_vRVpASAmpmYAw30w-DAb1udNhStnoL_aObR7l9fnAn-1UJWtsEKfntTlEP6FVJm_W81",usuarioId="15089",keyword="96371859",login="borgeslealandre@gmail.com",nome="MUSTAFA LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 166</StackTrace>
+  </LOG>
+  <LOG ID="142948887" Data="12/08/2016 13:04:39">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="X3SqDnBpAyIA4a4kC7PpizmYREuZoE_fTFt49zjeeAwdJxfmRWNA5LMgdCvgAwTlosdHcS3HaskrE8kp6vqmnNfK5iWqt42vpvTySa0JfR01",usuarioId="15089",keyword="96371859",login="borgeslealandre@gmail.com",nome="MUSTAFA LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 166</StackTrace>
+  </LOG>
+  <LOG ID="1026483358" Data="12/08/2016 13:10:03">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="d9hQE48ZKGTPi7n6OJamIZL2MRByhrtOsrBX48dfIJD7Up-P9K5oR4h5hfGZp-9CNc1z7RLAZpAkWYi_p-wbHJXRyuD9dtWwVRPCag-7Ox01",usuarioId="15089",keyword="96371859",login="borgeslealandre@gmail.com",nome="MUSTAFA LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 166</StackTrace>
+  </LOG>
+  <LOG ID="785559749" Data="12/08/2016 13:10:15">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="E06SXiW4cjoLS-4ECVVhMDodkP4y9mUKffLLb8CGEu8ecGXywF2Ltfm48A-8sJf9aYRAPYucMGo6suTSR9oHItdI4RhiGAvJ1chV_swSWJA1",usuarioId="15089",keyword="96371859",login="borgeslealandre@gmail.com",nome="MUSTAFA LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 166</StackTrace>
+  </LOG>
+  <LOG ID="1564997666" Data="12/08/2016 13:11:19">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="2k4xWzWibITh1imnthJz9SKOk6YSCeUXpCyP-9qLqRu0H-QIWoYfWDH0LrBwNhSAboLEC5xyseMFdP9fKHnqd-qKVHFYTgZELR5SWsv8fi01",usuarioId="15089",keyword="96371859",login="borgeslealandre@gmail.com",nome="MUSTAFA LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 166</StackTrace>
+  </LOG>
+  <LOG ID="527096336" Data="12/08/2016 17:54:24">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="763993822" Data="12/08/2016 17:55:51">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="1681284650" Data="12/08/2016 17:56:46">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="569501798" Data="12/08/2016 17:57:07">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="13570491" Data="12/08/2016 17:57:50">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="1442516323" Data="12/08/2016 17:58:04">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="1326548289" Data="12/08/2016 17:59:59">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 202
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 183</StackTrace>
+  </LOG>
+  <LOG ID="797099074" Data="12/08/2016 18:04:55">
+    <Sessao>1f1b4lbzwo2tzbyeamwmkur2</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="P9N2h9P4dTDckEIcRM-k4Z9ldlC-1L2_ILR0MnW6OoJ7WJ8s1XPVjmQsAz-lHKFo-s2Xsw7-5dtAkI_ICw2pIjwoEglX4DR79BsMlSqIbmA1",usuarioId="15090",keyword="28031200",login="borgeslealandre@gmail.com",nome="MARIANA PRADO",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 172</StackTrace>
+  </LOG>
+</LOG>

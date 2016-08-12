@@ -117,9 +117,14 @@ namespace DWM.Controllers
                     result = facade.Save(value, Crud.ALTERAR);
 
                     if (result.mensagem.Code > 0)
-                        throw new Exception(result.mensagem.MessageBase);
+                        throw new App_DominioException(result.mensagem);
 
                     Success("Condômino alterado com sucesso");
+                }
+                catch (App_DominioException ex)
+                {
+                    ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                 }
                 catch (Exception ex)
                 {
@@ -179,19 +184,18 @@ namespace DWM.Controllers
                         if (factory.Mensagem.Code > 0)
                             throw new App_DominioException(factory.Mensagem);
 
-                        #region envio de e-mail ao credenciado com a sua senha
-                        result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
-                        CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
-                        if (repository.mensagem.Code > 0)
-                            throw new ArgumentException(repository.mensagem.MessageBase);
-                        #endregion
-
-
-                        if (CredenciadoViewModel_CredenciadoID == 0)
+                        if (result.CredenciadoViewModel.CredenciadoID == 0)
                         {
-                            CredenciadoModel CredenciadoModel = new CredenciadoModel();
-                            result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);
+                            #region envio de e-mail ao credenciado para ativação
+                            result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
+                            CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
+                            if (repository.mensagem.Code > 0)
+                                throw new ArgumentException(repository.mensagem.MessageBase);
+                            #endregion
                         }
+
+                        CredenciadoModel CredenciadoModel = new CredenciadoModel();
+                        result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);
                         #endregion
 
                         Success("Registro processado com sucesso");
