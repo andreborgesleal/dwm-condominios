@@ -140,7 +140,7 @@ namespace DWM.Controllers
         }
 
         [AuthorizeFilter]
-        public ActionResult EditCredenciado(CredenciadoViewModel CredenciadoViewModel)
+        public ActionResult EditCredenciado(CredenciadoViewModel CredenciadoViewModel, string Operacao)
         {
             if (ModelState.IsValid)
             {
@@ -180,7 +180,7 @@ namespace DWM.Controllers
 
                         result.CredenciadoViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
                         FactoryLocalhost<CredenciadoViewModel, ApplicationContext> factory = new FactoryLocalhost<CredenciadoViewModel, ApplicationContext>();
-                        result.Credenciados = factory.Execute(new EditarCredenciadoBI(), result.CredenciadoViewModel, CredenciadoViewModel_CondominoID);
+                        result.Credenciados = factory.Execute(new EditarCredenciadoBI(Operacao), result.CredenciadoViewModel, CredenciadoViewModel_CondominoID, Operacao);
                         if (factory.Mensagem.Code > 0)
                             throw new App_DominioException(factory.Mensagem);
 
@@ -196,6 +196,7 @@ namespace DWM.Controllers
 
                         CredenciadoModel CredenciadoModel = new CredenciadoModel();
                         result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);
+                        result.CredenciadoViewModel.CondominoID = CredenciadoViewModel_CondominoID;
                         #endregion
 
                         Success("Registro processado com sucesso");

@@ -67,58 +67,67 @@ namespace DWM.Models.Persistence
         {
             value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
 
-            if (value.empresaId == 0)
-            {
-                value.mensagem.Code = 35;
-                value.mensagem.Message = MensagemPadrao.Message(35).ToString();
-                value.mensagem.MessageBase = "Sua sessão expirou. Faça um novo login no sistema";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (value.CondominoID == 0)
+            if (operation != Crud.INCLUIR && value.CredenciadoID == 0)
             {
                 value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Condômino").ToString();
-                value.mensagem.MessageBase = "Condômino deve ser informado";
+                value.mensagem.Message = MensagemPadrao.Message(5, "Credenciado").ToString();
+                value.mensagem.MessageBase = "Credenciado deve ser informado";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
 
-            if (value.Nome.Trim().Length == 0)
+            if (operation != Crud.EXCLUIR)
             {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Nome do credenciado").ToString();
-                value.mensagem.MessageBase = "Nome do credenciado deve ser informado";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
+                if (value.empresaId == 0)
+                {
+                    value.mensagem.Code = 35;
+                    value.mensagem.Message = MensagemPadrao.Message(35).ToString();
+                    value.mensagem.MessageBase = "Sua sessão expirou. Faça um novo login no sistema";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
 
-            if (!Funcoes.validaEmail(value.Email))
-            {
-                value.mensagem.Code = 4;
-                value.mensagem.Message = MensagemPadrao.Message(4, "E-mail", value.Email).ToString();
-                value.mensagem.MessageBase = "E-mail inválido";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
+                if (value.CondominoID == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Condômino").ToString();
+                    value.mensagem.MessageBase = "Condômino deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
 
-            if (value.TipoCredenciadoID == 0)
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Tipo Credenciado").ToString();
-                value.mensagem.MessageBase = "Tipo de Credenciado deve ser informado";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
+                if (value.Nome.Trim().Length == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Nome do credenciado").ToString();
+                    value.mensagem.MessageBase = "Nome do credenciado deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
 
-            if (operation == Crud.INCLUIR || operation == Crud.ALTERAR)
-            {
+                if (!Funcoes.validaEmail(value.Email))
+                {
+                    value.mensagem.Code = 4;
+                    value.mensagem.Message = MensagemPadrao.Message(4, "E-mail", value.Email).ToString();
+                    value.mensagem.MessageBase = "E-mail inválido";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                if (value.TipoCredenciadoID == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Tipo Credenciado").ToString();
+                    value.mensagem.MessageBase = "Tipo de Credenciado deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
                 int descricaoCredenciado = (from c in db.Credenciados
-                                              where c.CondominoID == value.CondominoID
-                                                    && c.CredenciadoID != value.CredenciadoID
-                                                    && c.Nome.Equals(value.Nome)
-                                              select c.Nome).Count();
+                                            where c.CondominoID == value.CondominoID
+                                                  && c.CredenciadoID != value.CredenciadoID
+                                                  && c.Nome.Equals(value.Nome)
+                                            select c.Nome).Count();
                 if (descricaoCredenciado > 0)
                 {
                     value.mensagem.Code = 19;
@@ -128,6 +137,8 @@ namespace DWM.Models.Persistence
                     return value.mensagem;
                 }
             }
+
+
             return value.mensagem;
         }
 

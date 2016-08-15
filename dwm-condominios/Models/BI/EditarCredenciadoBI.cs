@@ -18,8 +18,13 @@ namespace DWM.Models.BI
 {
     public class EditarCredenciadoBI : DWMContext<ApplicationContext>, IProcess<CredenciadoViewModel, ApplicationContext>
     {
+        private string Operacao { get; set; }
+
         #region Constructor
-        public EditarCredenciadoBI() { }
+        public EditarCredenciadoBI(string operacao)
+        {
+            this.Operacao = operacao;
+        }
 
         public EditarCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
@@ -109,7 +114,7 @@ namespace DWM.Models.BI
                     result.mensagem.Field = _keyword;
                     #endregion
                 }
-                else
+                else if (Operacao == "S") // Alterar credenciado
                 {
                     #region Validar Credenciado
                     if (CredenciadoModel.Validate(result, Crud.ALTERAR).Code > 0)
@@ -130,6 +135,31 @@ namespace DWM.Models.BI
 
                     #region Alterar credenciado
                     result = CredenciadoModel.Update(result);
+                    #endregion
+                }
+                else // Excluir credenciado
+                {
+                    #region Validar Credenciado
+                    if (CredenciadoModel.Validate(result, Crud.EXCLUIR).Code > 0)
+                        throw new App_DominioException(result.mensagem);
+                    #endregion
+
+                    #region Exclui o cadastro do usuário
+                    int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
+                    
+                    // Exclui o usuário do Grupo
+                    UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
+                    seguranca_db.Set<UsuarioGrupo>().Remove(ug);
+
+                    // Exclui o usuário 
+                    Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
+                    seguranca_db.Set<Usuario>().Remove(user);
+
+                    seguranca_db.SaveChanges();
+                    #endregion
+
+                    #region Alterar credenciado
+                    result = CredenciadoModel.Delete(result);
                     #endregion
                 }
 
