@@ -36,15 +36,43 @@ namespace DWM.Models.BI
             {
                 int _empresaId = sessaoCorrente.empresaId;
 
+                #region CondominoPF
                 CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
                 result.CondominoPFViewModel = condominoPFModel.getObject(r.CondominoPFViewModel);
+                #endregion
 
+                #region Credenciado
                 CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
                 result.CredenciadoViewModel = CredenciadoModel.CreateRepository();
                 result.CredenciadoViewModel.CondominoID = result.CondominoPFViewModel.CondominoID;
 
                 ListViewCredenciados ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
                 result.Credenciados = ListCredenciados.Bind(0, 50, result.CondominoPFViewModel.CondominoID);
+                #endregion
+
+                #region Veículos
+                VeiculoModel VeiculoModel = new VeiculoModel(this.db, this.seguranca_db);
+                result.VeiculoViewModel = VeiculoModel.CreateRepository();
+                result.VeiculoViewModel.CondominioID = sessaoCorrente.empresaId;
+                result.VeiculoViewModel.EdificacaoID = r.UnidadeViewModel.EdificacaoID;
+                result.VeiculoViewModel.UnidadeID = r.UnidadeViewModel.UnidadeID;
+                result.VeiculoViewModel.CondominoID = result.CondominoPFViewModel.CondominoID;
+
+                ListViewVeiculos ListVeiculos = new ListViewVeiculos(this.db, this.seguranca_db);
+                result.Veiculos = ListVeiculos.Bind(0, 50, result.VeiculoViewModel.CondominioID, result.VeiculoViewModel.EdificacaoID, result.VeiculoViewModel.UnidadeID, result.VeiculoViewModel.CondominoID);
+                #endregion
+
+                #region Funcionários
+                FuncionarioModel FuncionarioModel = new FuncionarioModel(this.db, this.seguranca_db);
+                result.FuncionarioViewModel = FuncionarioModel.CreateRepository();
+                result.FuncionarioViewModel.CondominioID = sessaoCorrente.empresaId;
+                result.FuncionarioViewModel.EdificacaoID = r.UnidadeViewModel.EdificacaoID;
+                result.FuncionarioViewModel.UnidadeID = r.UnidadeViewModel.UnidadeID;
+                result.FuncionarioViewModel.CondominoID = result.CondominoPFViewModel.CondominoID;
+
+                ListViewFuncionarios ListFuncionarios = new ListViewFuncionarios(this.db, this.seguranca_db);
+                result.Funcionarios = ListFuncionarios.Bind(0, 50, result.FuncionarioViewModel.CondominioID, result.FuncionarioViewModel.EdificacaoID, result.FuncionarioViewModel.UnidadeID, result.FuncionarioViewModel.CondominoID);
+                #endregion
 
                 result.UnidadeViewModel = new UnidadeViewModel()
                 {

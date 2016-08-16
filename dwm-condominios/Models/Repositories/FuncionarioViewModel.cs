@@ -9,21 +9,24 @@ namespace DWM.Models.Repositories
         [DisplayName("ID")]
         public int FuncionarioID { get; set; }
 
-        [DisplayName("Condomínio ID")]
-        [Required(ErrorMessage = "Informe o Condomínio ID")]
+        [DisplayName("Condomínio")]
+        [Required(ErrorMessage = "Condomínio deve ser informado")]
         public int CondominioID { get; set; }
 
-        [DisplayName("Edificação ID")]
+        [DisplayName("Edificação")]
+        [Required(ErrorMessage = "Edificação deve ser informada")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("Unidade ID")]
+        [DisplayName("Unidade")]
+        [Required(ErrorMessage = "Unidade deve ser informada")]
         public int UnidadeID { get; set; }
 
-        [DisplayName("Condômino ID")]
+        [DisplayName("Condôminio")]
+        [Required(ErrorMessage = "Condômino deve ser informado")]
         public int CondominoID { get; set; }
 
         [DisplayName("Nome")]
-        [Required(ErrorMessage = "Informe o Nome")]
+        [Required(ErrorMessage = "Informe o Nome do funcionário")]
         [StringLength(40, ErrorMessage = "Nome deve ter no máximo 40 caracteres")]
         public string Nome { get; set; }
 
@@ -33,20 +36,16 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Sexo")]
         [Required(ErrorMessage = "Informe o Sexo")]
-        [StringLength(1, ErrorMessage = "Sexo deve ter no máximo 1 caractere")]
         public string Sexo { get; set; }
 
         [DisplayName("Dia")]
         [Required(ErrorMessage = "Informe o Dia")]
-        [StringLength(7, ErrorMessage = "Dia deve ter no máximo 7 caracteres")]
         public string Dia { get; set; }
 
         [DisplayName("Hora Inicial")]
-        [StringLength(5, ErrorMessage = "Hora Inicial deve ter no máximo 5 caracteres")]
         public string HoraInicial { get; set; }
 
         [DisplayName("Hora Final")]
-        [StringLength(5, ErrorMessage = "Hora Final deve ter no máximo 5 caracteres")]
         public string HoraFinal { get; set; }
 
         [DisplayName("RG")]

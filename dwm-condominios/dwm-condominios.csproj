@@ -213,6 +213,7 @@
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
+    <Compile Include="Models\BI\EditarVeiculoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
@@ -248,6 +249,7 @@
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
+    <Compile Include="Models\Persistence\VeiculoModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoEditViewModel.cs" />
@@ -3907,6 +3909,7 @@
     <Content Include="Views\Informativo\List.cshtml" />
     <Content Include="Views\Shared\_AcessoNegado.cshtml" />
     <Content Include="Views\Account\AtivarCredenciado.cshtml" />
+    <Content Include="Views\Condomino\_Veiculos.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

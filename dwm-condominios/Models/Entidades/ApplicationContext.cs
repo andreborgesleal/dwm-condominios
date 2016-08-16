@@ -16,5 +16,7 @@ namespace DWM.Models.Entidades
         public DbSet<Profissao> Profissaos { get; set; }
         public DbSet<Informativo> Informativos { get; set; }
         public DbSet<TipoCredenciado> TipoCredenciados { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<Funcionario> Funcionarios { get; set; }
     }
 }

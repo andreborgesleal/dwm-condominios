@@ -1,0 +1,218 @@
+﻿@using DWM.Models.Repositories
+@model CondominoEditViewModel
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    if (Model.Veiculos.Count() > 0)
+    {
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Veículos <small>Lstagem de veículos do condômino.</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#cad-veiculo" onclick="insVei('@Model.VeiculoViewModel.CondominioID', '@Model.VeiculoViewModel.EdificacaoID', '@Model.VeiculoViewModel.UnidadeID','@Model.VeiculoViewModel.CondominoID')">Incluir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Placa</th>
+                            <th>Descrição</th>
+                            <th>Marca</th>
+                            <th>Cor</th>
+                            <th>Condutor</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (VeiculoViewModel vei in Model.Veiculos)
+                            {
+                                <tr>
+                                    <td><small>@vei.Placa</small></td>
+                                    <td><small>@vei.Descricao</small></td>
+                                    <td><small>@vei.Marca</small></td>
+                                    <td><small>@vei.Cor</small></td>
+                                    <td><small>@vei.Condutor</small></td>
+                                    <th scope="row">
+                                        <a href="#cad-veiculo" title="Editar" onclick="editVei('@vei.CondominioID', '@vei.EdificacaoID', '@vei.UnidadeID','@vei.CondominoID','@vei.Placa', '@vei.Descricao', '@vei.Marca', '@vei.Cor', '@vei.Condutor')"><i class="fa fa-edit"></i></a>
+                                        <a href="#cad-veiculo" title="Excluir" onclick="delVei('@vei.CondominioID', '@vei.EdificacaoID', '@vei.UnidadeID','@vei.CondominoID','@vei.Placa', '@vei.Descricao', '@vei.Marca', '@vei.Cor', '@vei.Condutor')"><i class="fa fa-trash"></i></a>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    using (Ajax.BeginForm("EditVeiculo", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-veiculos" }, new { @class = "form", @id = "form003", @name = "form003" }))
+    {
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="header-veiculo">Novo veículo <small>O novo veículo será habilitado pela admministração para acesso ao condomínio.</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#cad-veiculo" onclick="insVei('@Model.VeiculoViewModel.CondominioID', '@Model.VeiculoViewModel.EdificacaoID', '@Model.VeiculoViewModel.UnidadeID', '@Model.VeiculoViewModel.CondominoID')">Incluir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" id="cad-veiculo">
+                @Html.Partial("_alerts")
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.VeiculoViewModel.CondominioID)
+                @Html.HiddenFor(info => info.VeiculoViewModel.EdificacaoID)
+                @Html.HiddenFor(info => info.VeiculoViewModel.UnidadeID)
+                @Html.HiddenFor(info => info.VeiculoViewModel.CondominoID)
+                @Html.Hidden("OperacaoVei", "I")
+                <div class="row">
+                    <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VeiculoViewModel.Placa, new { @class = "control-label" })
+                            <input type="text" class="form-control text-uppercase" name="VeiculoViewModel.Placa" id="VeiculoViewModel_Placa" value="@Model.VeiculoViewModel.Placa" maxlength="7" />
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 col-lg-7">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VeiculoViewModel.Descricao, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="VeiculoViewModel.Descricao" id="VeiculoViewModel_Descricao" value="@Model.VeiculoViewModel.Descricao" maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VeiculoViewModel.Marca, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="VeiculoViewModel.Marca" id="VeiculoViewModel_Marca" value="@Model.VeiculoViewModel.Marca" maxlength="20" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VeiculoViewModel.Cor, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="VeiculoViewModel.Cor" id="VeiculoViewModel_Cor" value="@Model.VeiculoViewModel.Cor" maxlength="15" />
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-xs-12 col-sm-12 col-lg-7">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.VeiculoViewModel.Condutor, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="VeiculoViewModel.Condutor" id="VeiculoViewModel_Condutor" value="@Model.VeiculoViewModel.Condutor" maxlength="40" />
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-veiculo" id="btn-salvar-veiculo" />
+                            <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<script type="text/javascript">
+    $("#OperacaoVei").val("I");
+    $("#VeiculoViewModel_Placa").attr('readonly', false);
+
+    $(function () {
+        $('#form003').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-veiculos').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    function fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
+        $("#VeiculoViewModel_CondominioID").val(CondominioID);
+        $("#VeiculoViewModel_EdificacaoID").val(EdificacaoID);
+        $("#VeiculoViewModel_UnidadeID").val(UnidadeID);
+        $("#VeiculoViewModel_CondominoID").val(CondominoID);
+        $("#VeiculoViewModel_Placa").val(Placa);
+        $("#VeiculoViewModel_Descricao").val(Descricao);
+        $("#VeiculoViewModel_Marca").val(Marca);
+        $("#VeiculoViewModel_Cor").val(Cor);
+        $("#VeiculoViewModel_Condutor").val(Condutor);
+    }
+
+    function changeBtnClass(oldClas, newClass, oper) {
+        $("#OperacaoVei").val(oper); // I-Incluir, S-Salvar (alterar) ou D-Deletar
+        if (oper == 'S') {
+            $('#header-veiculo').html('Alterar veículo <small>Alteração de veículos do condômino.</small>');
+            $("#btn-salvar-veiculo").val("Salvar");
+        }
+        else if (oper == 'I') {
+            $('#header-veiculo').html('Novo veículo <small>O novo veículo será habilitado pela admministração para acesso ao condomínio.</small>');
+            $("#btn-salvar-veiculo").val("Salvar");
+        }
+        else {
+            $('#header-veiculo').html('Excluir veículo <small>Exclusão do veículo.</small>');
+            $("#btn-salvar-veiculo").val("Excluir");
+        }
+        $("#btn-salvar-veiculo").removeClass(oldClas);
+        $("#btn-salvar-veiculo").addClass(newClass);
+    }
+
+    function insVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
+        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', '', '', '');
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+        $("#VeiculoViewModel_Placa").attr('readonly', false);
+    }
+
+    function editVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
+        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'S')
+        $("#VeiculoViewModel_Placa").attr('readonly', true);
+    }
+
+    function delVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
+        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
+        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+        $("#VeiculoViewModel_Placa").attr('readonly', true);
+    }
+</script>

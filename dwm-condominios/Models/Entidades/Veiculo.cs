@@ -7,18 +7,25 @@ namespace DWM.Models.Entidades
     [Table("Veiculo")]
     public class Veiculo
     {
-        [DisplayName("Condomínio ID")]
+        [Key, Column(Order = 0)]
+        [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
-        [Key]
-        [DisplayName("Placa")]
-        public int Placa { get; set; }
+        [Key, Column(Order = 1)]
+        [DisplayName("EdificacaoID")]
+        public int EdificacaoID { get; set; }
 
+        [Key, Column(Order = 2)]
         [DisplayName("UnidadeID")]
         public int UnidadeID { get; set; }
 
-        [DisplayName("Condômino ID")]
+        [Key, Column(Order = 3)]
+        [DisplayName("Condomino ID")]
         public int CondominoID { get; set; }
+
+        [Key, Column(Order = 4)]
+        [DisplayName("Placa")]
+        public string Placa { get; set; }
 
         [DisplayName("Cor")]
         public string Cor { get; set; }

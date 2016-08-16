@@ -163,10 +163,10 @@ namespace DWM.Models.BI
                     #endregion
                 }
 
-                db.SaveChanges();
-
                 if (result.mensagem.Code > 0)
                     throw new App_DominioException(result.mensagem);
+
+                db.SaveChanges();
 
                 result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
 

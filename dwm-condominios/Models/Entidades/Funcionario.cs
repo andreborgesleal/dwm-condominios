@@ -11,22 +11,22 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int FuncionarioID { get; set; }
 
-        [DisplayName("Condomínio ID")]
+        [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
-        [DisplayName("Edificação ID")]
+        [DisplayName("EdificacaoID")]
         public int EdificacaoID { get; set; }
 
-        [DisplayName("Unidade ID")]
+        [DisplayName("UnidadeID")]
         public int UnidadeID { get; set; }
 
-        [DisplayName("Condômino ID")]
+        [DisplayName("Condomino ID")]
         public int CondominoID { get; set; }
 
         [DisplayName("Nome")]
         public string Nome { get; set; }
 
-        [DisplayName("Função")]
+        [DisplayName("Funcao")]
         public string Funcao { get; set; }
 
         [DisplayName("Sexo")]
@@ -35,10 +35,10 @@ namespace DWM.Models.Entidades
         [DisplayName("Dia")]
         public string Dia { get; set; }
 
-        [DisplayName("Hora Inicial")]
+        [DisplayName("HoraInicial")]
         public string HoraInicial { get; set; }
 
-        [DisplayName("Hora Final")]
+        [DisplayName("HoraFinal")]
         public string HoraFinal { get; set; }
 
         [DisplayName("RG")]
