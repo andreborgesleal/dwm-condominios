@@ -1,0 +1,443 @@
+﻿@using DWM.Models.Repositories
+@model CondominoEditViewModel
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    if (Model.Funcionarios.Count() > 0)
+    {
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Funcionários <small>Lstagem de empregados do condômino.</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#cad-funcionario" onclick="insFunc('@Model.FuncionarioViewModel.CondominioID', '@Model.FuncionarioViewModel.EdificacaoID', '@Model.FuncionarioViewModel.UnidadeID','@Model.FuncionarioViewModel.CondominoID')">Incluir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Função</th>
+                            <th>Dom</th>
+                            <th>Seg</th>
+                            <th>Ter</th>
+                            <th>Qua</th>
+                            <th>Qui</th>
+                            <th>Sex</th>
+                            <th>Sáb</th>
+                            <th>Início</th>
+                            <th>Fim</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (FuncionarioViewModel fun in Model.Funcionarios)
+                            {
+                                <tr>
+                                    <td><small>@fun.Nome</small></td>
+                                    <td><small>@fun.Funcao</small></td>
+                                    <td>
+                                        @if(fun.Dia.Substring(0,1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(1, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(2, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(3, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(4, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(5, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (fun.Dia.Substring(6, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </td>
+                                    <td><small>@fun.HoraInicial</small></td>
+                                    <td><small>@fun.HoraFinal</small></td>
+                                    <th scope="row">
+                                        <a href="#cad-veiculo" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
+                                        <a href="#cad-veiculo" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
+                                    </th>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+    using (Ajax.BeginForm("EditFuncionario", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-funcionarios" }, new { @class = "form", @id = "form004", @name = "form004" }))
+    {
+        <div class="x_panel">
+            <div class="x_title">
+                <h2 id="header-funcionario">Novo funcionário <small>O funcionário será habilitado p/ acesso pela admministração.</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#cad-funcionario" onclick="insFunc('@Model.FuncionarioViewModel.CondominioID', '@Model.FuncionarioViewModel.EdificacaoID', '@Model.FuncionarioViewModel.UnidadeID', '@Model.FuncionarioViewModel.CondominoID')">Incluir</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" id="cad-funcionario">
+                @Html.Partial("_alerts")
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.FuncionarioViewModel.FuncionarioID)
+                @Html.HiddenFor(info => info.FuncionarioViewModel.CondominioID)
+                @Html.HiddenFor(info => info.FuncionarioViewModel.EdificacaoID)
+                @Html.HiddenFor(info => info.FuncionarioViewModel.UnidadeID)
+                @Html.HiddenFor(info => info.FuncionarioViewModel.CondominoID)
+                @Html.HiddenFor(info => info.FuncionarioViewModel.Dia)
+                @Html.Hidden("OperacaoFun", "I")
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FuncionarioViewModel.Nome, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="FuncionarioViewModel.Nome" id="FuncionarioViewModel_Nome" value="@Model.FuncionarioViewModel.Nome" maxlength="40" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FuncionarioViewModel.Funcao, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="FuncionarioViewModel.Funcao" id="FuncionarioViewModel_Funcao" value="@Model.FuncionarioViewModel.Funcao" maxlength="30" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FuncionarioViewModel.Sexo, new { @class = "control-label" })
+                            @Html.DropDownList("FuncionarioViewModel.Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.FuncionarioViewModel.Sexo, ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th><small>DOM</small></th>
+                                    <th><small>SEG</small></th>
+                                    <th><small>TER</small></th>
+                                    <th><small>QUA</small></th>
+                                    <th><small>QUI</small></th>
+                                    <th><small>SEX</small></th>
+                                    <th><small>SÁB</small></th>
+                                    <th><small>Início</small></th>
+                                    <th><small>Fim</small></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(0, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia1" name="Dia1" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia1" name="Dia1" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(1, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia2" name="Dia2" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia2" name="Dia2" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(2, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia3" name="Dia3" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia3" name="Dia3" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(3, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia4" name="Dia4" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia4" name="Dia4" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(4, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia5" name="Dia5" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia5" name="Dia5" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(5, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia6" name="Dia6" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia6" name="Dia6" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="checkbox">
+                                            <label>
+                                                @if (Model.FuncionarioViewModel.Dia.Substring(6, 1) == "S")
+                                                {
+                                                    <input type="checkbox" id="Dia7" name="Dia7" class="icheckbox_flat-green" checked="checked">
+                                                }
+                                                else
+                                                {
+                                                    <input type="checkbox" id="Dia7" name="Dia7" class="icheckbox_flat-green">
+                                                }
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <p>
+                                                <input type="text" class="form-control" name="FuncionarioViewModel.HoraInicial" id="FuncionarioViewModel_HoraInicial" value="@Model.FuncionarioViewModel.HoraInicial" />
+                                            </p>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <p>
+                                                <input type="text" class="form-control" name="FuncionarioViewModel.HoraFinal" id="FuncionarioViewModel_HoraFinal" value="@Model.FuncionarioViewModel.HoraFinal" />
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FuncionarioViewModel.RG, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="FuncionarioViewModel.RG" id="FuncionarioViewModel_RG" value="@Model.FuncionarioViewModel.RG" maxlength="20" />
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun()"/>
+                            <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script type="text/javascript">
+    $("#OperacaoFun").val("I");
+    $("#FuncionarioViewModel_HoraInicial").mask("99:99");
+    $("#FuncionarioViewModel_HoraFinal").mask("99:99");
+
+    $(function () {
+        $('#form004').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-funcionarios').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    function ValidaFun() {
+        var _Dia;
+
+        if ($("#Dia1").is(':checked') == false)
+            _Dia = 'N';
+        else
+            _Dia = 'S';
+
+        if ($("#Dia2").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        if ($("#Dia3").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        if ($("#Dia4").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        if ($("#Dia5").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        if ($("#Dia6").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        if ($("#Dia7").is(':checked') == false)
+            _Dia += "N";
+        else
+            _Dia += "S";
+
+        $("#FuncionarioViewModel_Dia").val(_Dia);
+
+        alert($("#FuncionarioViewModel_Dia").val());
+
+        return false;
+    }
+
+    function fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
+        $("#FuncionarioViewModel_FuncionarioID").val(FuncionarioID);
+        $("#FuncionarioViewModel_CondominioID").val(CondominioID);
+        $("#FuncionarioViewModel_EdificacaoID").val(EdificacaoID);
+        $("#FuncionarioViewModel_UnidadeID").val(UnidadeID);
+        $("#FuncionarioViewModel_CondominoID").val(CondominoID);
+        $("#FuncionarioViewModel_Nome").val(Nome);
+        $("#FuncionarioViewModel_Funcao").val(Funcao);
+        $("#FuncionarioViewModel_Sexo").val(Sexo);
+        $("#FuncionarioViewModel_Dia").val(Dia);
+        $("#FuncionarioViewModel_HoraInicial").val(HoraInicial);
+        $("#FuncionarioViewModel_HoraFinal").val(HoraFinal);
+        $("#FuncionarioViewModel_RG").val(RG);
+    }
+
+    function changeBtnClass(oldClas, newClass, oper) {
+        $("#OperacaoFun").val(oper); // I-Incluir, S-Salvar (alterar) ou D-Deletar
+        if (oper == 'S') {
+            $('#header-funcionario').html('Alterar funcionário');
+            $("#btn-salvar-veiculo").val("Salvar");
+        }
+        else if (oper == 'I') {
+            $('#header-veiculo').html('Novo funcionário <small>O funcionário será habilitado pela admministração para acesso ao condomínio.</small>');
+            $("#btn-salvar-veiculo").val("Salvar");
+        }
+        else {
+            $('#header-veiculo').html('Excluir funcionário <small>Após exclusão o funcionário estará impossibilitado de acessar o condomínio.</small>');
+            $("#btn-salvar-veiculo").val("Excluir");
+        }
+        $("#btn-salvar-veiculo").removeClass(oldClas);
+        $("#btn-salvar-veiculo").addClass(newClass);
+    }
+
+    function insFunc(CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
+        fill('0', CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', 'M', '', '08:00', '18:00','');
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+    }
+
+    function editFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
+        fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'S')
+    }
+
+    function delFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
+        fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
+        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+    }
+</script>
+

@@ -42,10 +42,10 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Informe o Dia")]
         public string Dia { get; set; }
 
-        [DisplayName("Hora Inicial")]
+        [DisplayName("Início")]
         public string HoraInicial { get; set; }
 
-        [DisplayName("Hora Final")]
+        [DisplayName("Fim")]
         public string HoraFinal { get; set; }
 
         [DisplayName("RG")]

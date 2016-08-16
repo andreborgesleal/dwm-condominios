@@ -164,6 +164,7 @@ namespace DWM.Models.Persistence
             value.Sexo = "M";
             value.HoraInicial = "08:00";
             value.HoraFinal = "18:00";
+            value.Dia = "NSSSSSN";
             return value;
         }
         #endregion
