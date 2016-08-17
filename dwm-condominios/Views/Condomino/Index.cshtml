@@ -19,15 +19,6 @@
             <div id="div-condomino-cad">
                 @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
             </div>
-        </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <div id="div-credenciado">
-                @Html.Partial("_Credenciado", Model)
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12 col-xs-12">
             <div id="div-condomino-automovel">
                 <div class="x_panel">
                     <div class="x_title">
@@ -70,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                                    <div>
+                                    <div id="div-funcionarios">
                                         @Html.Partial("_Funcionarios", Model)
                                     </div>
                                 </div>
@@ -78,11 +69,11 @@
                         </div>
                     </div>
                 </div>
-                @*@Html.Partial("EditCondomino", Model.CondominoPFViewModel)*@
             </div>
         </div>
         <div class="col-md-6 col-sm-12 col-xs-12">
             <div id="div-credenciado">
+                @Html.Partial("_Credenciado", Model)
             </div>
         </div>
     </div>

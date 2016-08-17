@@ -153,6 +153,24 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                if (!Funcoes.ValidaHora(value.HoraInicial))
+                {
+                    value.mensagem.Code = 4;
+                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Início", value.HoraInicial).ToString();
+                    value.mensagem.MessageBase = "Hora inválida";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                if (!Funcoes.ValidaHora(value.HoraFinal))
+                {
+                    value.mensagem.Code = 4;
+                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Final", value.HoraFinal).ToString();
+                    value.mensagem.MessageBase = "Hora inválida";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
             }
 
             return value.mensagem;
