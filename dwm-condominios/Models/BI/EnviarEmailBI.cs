@@ -224,5 +224,99 @@ namespace DWM.Models.BI
 
     }
 
+    public class EnviarEmailTokenBI : DWMContext<ApplicationContext>, IProcess<UnidadeViewModel, ApplicationContext>
+    {
+        #region Constructor
+        public EnviarEmailTokenBI() { }
 
+        public EnviarEmailTokenBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        public UnidadeViewModel Run(Repository value)
+        {
+            UnidadeViewModel r = (UnidadeViewModel)value;
+            string habilitaEmail = db.Parametros.Find(sessaoCorrente.empresaId, (int)Enumeracoes.Enumeradores.Param.HABILITA_EMAIL).Valor;
+            if (habilitaEmail == "S")
+            {
+                int _empresaId = sessaoCorrente.empresaId;
+                int _sistemaId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+
+                Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
+                Condominio condominio = db.Condominios.Find(sessaoCorrente.empresaId);
+
+                r.empresaId = _empresaId;
+
+                SendEmail sendMail = new SendEmail();
+
+                MailAddress sender = new MailAddress(condominio.RazaoSocial + " <" + condominio.Email + ">");
+                List<string> recipients = new List<string>();
+
+                recipients.Add(r.NomeCondomino + "<" + r.Email + ">");
+
+                string Subject = "Autorização de cadastro no " + condominio.RazaoSocial;
+                string Text = "<p>Autorizção de cadastro</p>";
+                string Html = "<p><span style=\"font-family: Verdana; font-size: larger; color: #656464\">" + sistema.descricao + "</span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + r.NomeCondomino + "</span></p>" +
+                              "<p></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Torre: <b>" + r.EdificacaoDescricao + "</b></span></p>" +
+                              "<p></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + r.UnidadeID.ToString() + "</b></span></p>" +
+                              "<p></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de autorização de cadastro no Sistema Administrativo do " + condominio.RazaoSocial + ".</span></p>" +
+                              "<p></p>";
+
+                Html += "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Seu Login de acesso é: </span></p>" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + r.Email + "</span></p>" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema e realizar o seu cadastro:</span></p>" +
+                        "<p><a href=\"http://www.parcparadiso.com.br/Account/Register/" + r.Validador + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Registre-se no " + sistema.descricao + "</span></a></p>" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Observação: este link estará disponível para ativação por 48 h</span></p>" +
+                        "<hr />";
+
+                Html += "<p></p>" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Através do sistema o credenciado poderá:</span></p>" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os documentos e comunicados oficiais do condomínio postados pelo síndico.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os comunicados específicos destinados a sua torre.</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Abrir chamados à administração como por exemplo fazer o registro de uma ocorrência ou uma solicitação.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Receber mensagens e alertas personalizados.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar o histórico de notificações.</ span></p>" +
+                        "<hr />" +
+                        "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Além desses recursos, estaremos implementando outras novidades. Aguarde !</span></p>" +
+                        "<p>&nbsp;</p>" +
+                        "<p>&nbsp;</p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Obrigado,</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Administração " + condominio.RazaoSocial + "</span></p>";
+
+                Validate result = sendMail.Send(sender, recipients, Html, Subject, Text);
+                if (result.Code > 0)
+                {
+                    result.MessageBase = "Hocorreram falhas de comunicação e não foi possível enviar o e-mail de autorização para o condômino. ";
+                    throw new App_DominioException(result);
+                }
+
+            }
+            r.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
+            return r;
+        }
+
+        public IEnumerable<UnidadeViewModel> List(params object[] param)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IPagedList PagedList(int? index, int pageSize = 50, params object[] param)
+        {
+            throw new NotImplementedException();
+        }
+
+    }
 }

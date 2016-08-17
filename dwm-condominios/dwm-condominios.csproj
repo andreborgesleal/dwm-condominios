@@ -216,6 +216,7 @@
     <Compile Include="Models\BI\EditarFuncionarioBI.cs" />
     <Compile Include="Models\BI\EditarVeiculoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
+    <Compile Include="Models\BI\GerarTokenBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
@@ -251,6 +252,7 @@
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
+    <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />

@@ -68,7 +68,7 @@
     {
         <div class="x_panel">
             <div class="x_title">
-                <h2 id="header-veiculo">Novo veículo <small>O novo veículo será habilitado pela admministração para acesso ao condomínio.</small></h2>
+                <h2 id="header-veiculo">Novo veículo <small>O novo veículo será habilitado pela admministração p/acesso ao condomínio.</small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -96,13 +96,13 @@
                 @Html.HiddenFor(info => info.VeiculoViewModel.CondominoID)
                 @Html.Hidden("OperacaoVei", "I")
                 <div class="row">
-                    <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="form-group">
                             @Html.LabelFor(m => m.VeiculoViewModel.Placa, new { @class = "control-label" })
                             <input type="text" class="form-control text-uppercase" name="VeiculoViewModel.Placa" id="VeiculoViewModel_Placa" value="@Model.VeiculoViewModel.Placa" maxlength="7" />
                         </div>
                     </div>
-                    <div class="col-md-7 col-xs-12 col-sm-12 col-lg-7">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.VeiculoViewModel.Descricao, new { @class = "control-label" })
                             <input type="text" class="form-control" name="VeiculoViewModel.Descricao" id="VeiculoViewModel_Descricao" value="@Model.VeiculoViewModel.Descricao" maxlength="20" />
@@ -116,13 +116,13 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-2 col-xs-12 col-sm-12 col-lg-2">
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="form-group">
                             @Html.LabelFor(m => m.VeiculoViewModel.Cor, new { @class = "control-label" })
                             <input type="text" class="form-control" name="VeiculoViewModel.Cor" id="VeiculoViewModel_Cor" value="@Model.VeiculoViewModel.Cor" maxlength="15" />
                         </div>
                     </div>
-                    <div class="col-md-7 col-xs-12 col-sm-12 col-lg-7">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.VeiculoViewModel.Condutor, new { @class = "control-label" })
                             <input type="text" class="form-control" name="VeiculoViewModel.Condutor" id="VeiculoViewModel_Condutor" value="@Model.VeiculoViewModel.Condutor" maxlength="40" />
@@ -187,7 +187,7 @@ else
             $("#btn-salvar-veiculo").val("Salvar");
         }
         else if (oper == 'I') {
-            $('#header-veiculo').html('Novo veículo <small>O novo veículo será habilitado pela admministração para acesso ao condomínio.</small>');
+            $('#header-veiculo').html('Novo veículo <small>O novo veículo será habilitado pela admministração p/acesso ao condomínio.</small>');
             $("#btn-salvar-veiculo").val("Salvar");
         }
         else {

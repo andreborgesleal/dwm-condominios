@@ -1,82 +1,77 @@
-﻿@model DWM.Models.Repositories.UnidadeViewModel
+﻿@using DWM.Models.Repositories
+@model UnidadeViewModel
 @{
-    ViewBag.Title = "EnviarToken";
+    ViewBag.Title = "DWM-Condomínios";
 }
-
-<div class="page-header">
-    <h2>Enviar Token de Confirmação</h2>
-</div>
-
-<div class="col-md-7 center-margin">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Formulário</h3>
-        </div>
-        @using (Html.BeginForm())
-        {
-            @Html.Partial("_alerts")
-            @Html.ValidationSummary("", new { @class = "text-danger" })
-            @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
-            <div class="panel-body">
-                <div class="form-horizontal">
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+<div class="container-fluid">
+    @using (Html.BeginForm("EnviarToken", "Condomino", FormMethod.Post, new { @class = "form" }))
+    {
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Enviar Token <small>Envia e-mail para o condômino com o token de cadastro. Observação: O Token estará disponível por 48 horas.</small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Política de privacidade</a>
+                            </li>
+                            <li>
+                                <a href="#">Termos de Uso</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a class="close-link" onclick="window.location = '../Home/Default'"><i class="fa fa-close"></i></a>
+                    </li>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @Html.Partial("_alerts")
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.CondominioID)
+                <div class="form">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.EdificacaoID, "Torre *", new { @class = "control-label col-md-3" })
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
-                                    </div>
+                                <label class="control-label">Nome</label>
+                                <div class="input-group col-md-12">
+                                    <input type="text" name="NomeCondomino" id="NomeCondomino" value="@Model.NomeCondomino" maxlength="60" class="form-control" placeholder="Informar nome completo do condômino" />
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
+                        <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.UnidadeID, "Unidade *", new { @class = "control-label col-md-3" })
-                                <div class="col-md-6">
-                                    <div class="input-group">
-                                        @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
-                                    </div>
+                                <label class="control-label">E-mail</label>
+                                <div class="input-group col-md-12">
+                                    <input type="text" name="Email" id="Email" value="@Model.Email" class="form-control" placeholder="Informar e-mail do condômino" />
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Edificação</label>
+                                @Html.DropDownListFor(info => info.EdificacaoID, new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>
+                                @Html.DropDownListFor(info => info.UnidadeID, new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, Model.CondominioID), new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.NomeCondomino, "Nome *", new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.NomeCondomino, new { @class = "form-control input-sm" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Email, "Email *", new { @class = "control-label col-md-3" })
-                                <div class="col-md-7">
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-sm" })
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    <p>
+                        <input type="submit" class="btn btn-success" value="Enviar" name="btn-enviar-token" id="btn-enviar-token" />
+                        <input type="button" onclick="window.location = '../Home/Default'" class="btn btn-default" value="Cancelar" />
+                    </p>
                 </div>
             </div>
-            <div class="panel-footer">
-                <input type="submit" value="Enviar Token" class="btn btn-default" />
-                <span class="pull-right">Campos com (*) são obrigatórios</span>
-            </div>}
-    </div>
-
+        </div>
+    }
 </div>
-
 

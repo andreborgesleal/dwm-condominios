@@ -123,7 +123,7 @@ namespace DWM.Controllers
                 catch (App_DominioException ex)
                 {
                     ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
-                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                 }
                 catch (Exception ex)
                 {
@@ -203,7 +203,7 @@ namespace DWM.Controllers
                     catch (App_DominioException ex)
                     {
                         ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
-                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                     }
                     catch (Exception ex)
                     {
@@ -291,7 +291,7 @@ namespace DWM.Controllers
                     catch (App_DominioException ex)
                     {
                         ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
-                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                     }
                     catch (Exception ex)
                     {
@@ -388,7 +388,7 @@ namespace DWM.Controllers
                     catch (App_DominioException ex)
                     {
                         ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
-                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                     }
                     catch (Exception ex)
                     {
@@ -438,15 +438,55 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult EnviarToken()
         {
-            ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
-                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                ViewBag.empresaId = security.getSessaoCorrente().empresaId;
-
-                return View(new UnidadeViewModel());
+                UnidadeModel UnidadeModel = new UnidadeModel();
+                UnidadeViewModel UnidadeViewModel = UnidadeModel.CreateRepository(Request);
+                return View(UnidadeViewModel);
             }
             return View();
+        }
+
+        [HttpPost]
+        [AuthorizeFilter]
+        public ActionResult EnviarToken(UnidadeViewModel UnidadeViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ViewBag.ValidateRequest)
+                {
+                    try
+                    {
+                        #region Procesar envio do token
+                        UnidadeViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                        UnidadeViewModel.mensagem = new App_Dominio.Contratos.Validate() { Code = 0 };
+
+                        FactoryLocalhost<UnidadeViewModel, ApplicationContext> factory = new FactoryLocalhost<UnidadeViewModel, ApplicationContext>();
+                        UnidadeViewModel = factory.Execute(new GerarTokenBI(), UnidadeViewModel);
+                        if (factory.Mensagem.Code > 0)
+                            throw new App_DominioException(factory.Mensagem);
+
+                        #endregion
+
+                        Success("Token enviado com sucesso para o e-mail do condômino.");
+                    }
+                    catch (App_DominioException ex)
+                    {
+                        ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+                    catch (Exception ex)
+                    {
+                        App_DominioException.saveError(ex, GetType().FullName);
+                        ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+
+                    UnidadeModel model = new UnidadeModel();
+                    UnidadeViewModel = model.CreateRepository(Request);
+                }
+            }
+            return View(UnidadeViewModel);
         }
         #endregion
 
