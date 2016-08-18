@@ -388,7 +388,7 @@ else
         return true;
     }
 
-    function fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
+    function fillFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
         $("#FuncionarioViewModel_FuncionarioID").val(FuncionarioID);
         $("#FuncionarioViewModel_CondominioID").val(CondominioID);
         $("#FuncionarioViewModel_EdificacaoID").val(EdificacaoID);
@@ -438,7 +438,7 @@ else
             $("#Dia7").prop("checked", false);
     }
 
-    function changeBtnClass(oldClas, newClass, oper) {
+    function changeBtnClassFun(oldClas, newClass, oper) {
         $("#OperacaoFunc").val(oper); // I-Incluir, S-Salvar (alterar) ou D-Deletar
         if (oper == 'S') {
             $('#header-funcionario').html('Alterar funcionário');
@@ -457,18 +457,18 @@ else
     }
 
     function insFunc(CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
-        fill('0', CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', 'M', 'NSSSSSN', '08:00', '18:00','');
-        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+        fillFun('0', CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', 'M', 'NSSSSSN', '08:00', '18:00', '');
+        changeBtnClassFun('btn btn-danger', 'btn btn-success', 'I');
     }
 
     function editFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
-        fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
-        changeBtnClass('btn btn-danger', 'btn btn-success', 'S')
+        fillFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
+        changeBtnClassFun('btn btn-danger', 'btn btn-success', 'S')
     }
 
     function delFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG) {
-        fill(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
-        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+        fillFun(FuncionarioID, CondominioID, EdificacaoID, UnidadeID, CondominoID, Nome, Funcao, Sexo, Dia, HoraInicial, HoraFinal, RG)
+        changeBtnClassFun('btn btn-success', 'btn btn-danger', 'D')
     }
 </script>
 

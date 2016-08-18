@@ -112,4 +112,13 @@
     <Context>CondominioID="3",NomeCondomino="Clarinha",Email="",EdificacaoID="4",UnidadeID="401",btn-enviar-token="Enviar"</Context>
     <StackTrace />
   </LOG>
+  <LOG ID="1554461619" Data="17/08/2016 18:50:25">
+    <Sessao>cfnqq1ofxwugzt04rkebqnvs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-K3RDLHQ\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Nome do Condômino</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="",Email="",EdificacaoID="3",UnidadeID="401",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
 </LOG>

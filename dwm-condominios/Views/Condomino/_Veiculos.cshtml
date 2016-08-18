@@ -168,7 +168,7 @@ else
         });
     });
 
-    function fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
+    function fillVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
         $("#VeiculoViewModel_CondominioID").val(CondominioID);
         $("#VeiculoViewModel_EdificacaoID").val(EdificacaoID);
         $("#VeiculoViewModel_UnidadeID").val(UnidadeID);
@@ -180,7 +180,7 @@ else
         $("#VeiculoViewModel_Condutor").val(Condutor);
     }
 
-    function changeBtnClass(oldClas, newClass, oper) {
+    function changeBtnClassVei(oldClas, newClass, oper) {
         $("#OperacaoVei").val(oper); // I-Incluir, S-Salvar (alterar) ou D-Deletar
         if (oper == 'S') {
             $('#header-veiculo').html('Alterar veículo <small>Alteração de veículos do condômino.</small>');
@@ -199,20 +199,20 @@ else
     }
 
     function insVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
-        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', '', '', '');
-        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+        fillVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, '', '', '', '', '');
+        changeBtnClassVei('btn btn-danger', 'btn btn-success', 'I');
         $("#VeiculoViewModel_Placa").attr('readonly', false);
     }
 
     function editVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
-        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
-        changeBtnClass('btn btn-danger', 'btn btn-success', 'S')
+        fillVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
+        changeBtnClassVei('btn btn-danger', 'btn btn-success', 'S')
         $("#VeiculoViewModel_Placa").attr('readonly', true);
     }
 
     function delVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor) {
-        fill(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
-        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+        fillVei(CondominioID, EdificacaoID, UnidadeID, CondominoID, Placa, Descricao, Marca, Cor, Condutor)
+        changeBtnClassVei('btn btn-success', 'btn btn-danger', 'D')
         $("#VeiculoViewModel_Placa").attr('readonly', true);
     }
 </script>
