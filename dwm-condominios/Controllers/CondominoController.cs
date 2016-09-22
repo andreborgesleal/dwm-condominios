@@ -22,7 +22,7 @@ namespace DWM.Controllers
 
         public override string getListName()
         {
-            return "Condômino";
+            return "Listar";
         }
 
         #region List
@@ -61,6 +61,10 @@ namespace DWM.Controllers
             ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
+                //BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
+
+                BindBreadCrumb(getBreadCrumbText("Condômino", null));
+
                 Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
                 CondominoEditViewModel value = new CondominoEditViewModel()
                 {

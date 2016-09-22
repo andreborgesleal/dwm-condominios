@@ -10,15 +10,27 @@ namespace DWM.Models.Repositories
         [DisplayName("ID")]
         public int InformativoID { get; set; }
 
-        [DisplayName("Data Informativo")]
-        [Required(ErrorMessage = "Informe a Data do Informativo")]
+        [DisplayName("Condomínio")]
+        public System.Nullable<int> CondominioID { get; set; }
+
+        [DisplayName("Edificação")]
+        public System.Nullable<int> EdificacaoID { get; set; }
+
+        public string descricao_edificacao { get; set; }
+
+        [DisplayName("Grupo")]
+        public System.Nullable<int> GrupoCondominoID { get; set; }
+
+        public string descricao_GrupoCondomino { get; set; }
+
         public DateTime DataInformativo { get; set; }
 
-        [DisplayName("Data Publicacao")]
+        [DisplayName("Publicação")]
+        [Required(ErrorMessage = "Informe a data de publicação do informativo")]
         public DateTime DataPublicacao { get; set; }
 
-        [DisplayName("Data Expiracao")]
-        public DateTime DataExpiracao { get; set; }
+        [DisplayName("Expiracao")]
+        public System.Nullable<DateTime> DataExpiracao { get; set; }
 
         [DisplayName("Cabeçalho")]
         [Required(ErrorMessage = "Informe o Cabeçalho")]
@@ -31,7 +43,15 @@ namespace DWM.Models.Repositories
         public string Resumo { get; set; }
 
         [DisplayName("Mensagem Detalhada")]
-        [StringLength(4000, ErrorMessage = "Mensagem Detalhada deve ter no máximo 4000 caracteres")]
         public string MensagemDetalhada { get; set; }
+
+        [DisplayName("Mídia1")]
+        public string Midia1 { get; set; }
+
+        [DisplayName("Mídia2")]
+        public string Midia2 { get; set; }
+
+        public string InformativoAnuncio { get; set; }
+
     }
 }

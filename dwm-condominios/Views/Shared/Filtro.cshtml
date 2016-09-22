@@ -1,0 +1,16 @@
+﻿@model System.Web.Mvc.IPagedList
+@{
+    Layout = null;
+}   
+
+@using (Html.BeginForm("List", "", FormMethod.Post, new { @class = "form-horizontal", @id = "form0" }))
+{
+    <div class="input-group">
+        <input type="text" name="descricao" id="descricao" class="form-control" placeholder="Buscar" maxlength="30" size="25" />
+        <span class="input-group-btn">
+            <button type="button" class="btn btn-default" title="Buscar" id="buscar-btn" onclick="RefreshAll(0, getPageSize(), '@Model.action', '@Model.DivId');"><i class="glyphicon glyphicon-search"></i></button>
+        </span>
+    </div>
+}
+
+

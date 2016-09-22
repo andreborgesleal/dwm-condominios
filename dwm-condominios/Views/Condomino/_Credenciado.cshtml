@@ -1,34 +1,22 @@
 ﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
 @model CondominoEditViewModel
 @{
     Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
 }
 
-@if(Model != null)
+@if (Model != null)
 {
     if (Model.Credenciados.Count() > 0)
     {
         <div class="x_panel">
-            <div class="x_title">
-                <h2>Credenciados <small>Lstagem de usuários incluídos pelo condômino.</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#" onclick="ins('@Model.CredenciadoViewModel.CondominoID')">Incluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Credenciados", Descricao = "Usuários incluídos pelo condômino", Transacao = t })
             <div class="x_content">
                 <table class="table table-striped">
                     <thead>
@@ -62,31 +50,11 @@
             </div>
         </div>
     }
-
-    using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
-    {
-        <div class="x_panel">
-            <div class="x_title">
-                <h2 id="header-credenciado">Novo credenciado <small>O novo credenciado receberá um convite por e-mail para ativação da conta.</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#" onclick="ins('@Model.CredenciadoViewModel.CondominoID')">Incluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo credenciado", Descricao = "O novo credenciado receberá um convite por e-mail para ativação da conta", Transacao = t })
+        <div class="x_content">
+            @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
+            {
                 @Html.Partial("_alerts")
                 @Html.ValidationSummary("", new { @class = "text-danger" })
                 @Html.HiddenFor(info => info.CredenciadoViewModel.CondominoID)
@@ -126,7 +94,6 @@
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Observacao, new { @class = "control-label" })
                             <textarea class="form-control" cols="0" rows="4" name="CredenciadoViewModel.Observacao" id="CredenciadoViewModel_Observacao" value="@Model.CredenciadoViewModel.Observacao"></textarea>
-                            @*@Html.TextAreaFor(m => m.CredenciadoViewModel.Observacao, 4, 0, new { @class = "form-control", @maxlength = "30" })*@
                         </div>
                     </div>
                 </div>
@@ -139,9 +106,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
-    }
+    </div>
 }
 else
 {

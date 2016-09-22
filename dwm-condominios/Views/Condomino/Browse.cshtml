@@ -1,75 +1,57 @@
-﻿@using DWM.Models.Repositories
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
 @model PagedList<CondominoUnidadeViewModel>
-@{
-    ViewBag.Title = "DWM-Condomínios";
+@{ 
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
 }
-<div class="container-fluid">
-    @using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form0" }))
-    {
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Cadastro de Condôminos <small>Preencha os filtro de busca para localizar o condômino desejado.</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Política de privacidade</a>
-                            </li>
-                            <li>
-                                <a href="#">Termos de Uso</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link" onclick="window.location = '../Home/Default'"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                @Html.Partial("_alerts")
-                @Html.ValidationSummary("", new { @class = "text-danger" })
-                @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
-                <div class="form">
-                    <div class="row">
-                        <div class="col-md-6 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Nome</label>
-                                <div class="input-group col-md-12">
-                                    <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar nome ou cpf ou e-mail" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Torre</label>
-                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Unidade</label>
-                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
-                            </div>
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro de Condôminos", Descricao = "", Transacao = t })
+    <div class="x_content">
+        @using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form0" }))
+        {
+            @Html.Partial("_alerts")
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Nome</label>
+                        <div class="input-group col-md-12">
+                            <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar nome ou cpf ou e-mail" />
                         </div>
                     </div>
-                    <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, 25, '@Model.action', '@Model.DivId')" />
-                    <input type="button" onclick="window.location = '../Home/Default'" class="btn btn-default" value="Cancelar" />
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Torre</label>
+                        @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Unidade</label>
+                        @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                    </div>
                 </div>
             </div>
-        </div>
+            <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, 25, '@Model.action', '@Model.DivId')" />
+            <input type="button" onclick="window.location = '../Home/Default'" class="btn btn-default" value="Cancelar" />
+            <br />
+        }
         <div id="div-condomino-pf">
             @if (Model != null)
             {
                 @Html.Partial("ListParam", Model)
             }
         </div>
-    }
+    </div>
 </div>
+
 
 <script>
     $(function () {

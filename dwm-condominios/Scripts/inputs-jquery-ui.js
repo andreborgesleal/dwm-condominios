@@ -64,7 +64,7 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
 
             if (data.result.mensagem != "Sucesso") {
                 $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
-                ShowMessageAlert(data.result.mensagem, "danger");
+                ShowMessageAjaxAlert(data.result.mensagem, "danger");
                 $('#' + _arq).hide();
                 $('#' + _trash).hide();
                 return;
@@ -73,11 +73,11 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
             $('#' + _fileUpload).hide(); // esconde o componente para forçar a exclusão do arquivo para poder enviar outro arquivo
 
             if (data.result.type == 'image/jpeg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
-                $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 600px">');
+                $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
                 $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
             }
             else if (data.result.type == 'application/pdf') {
-                $('#' + _myModal + '-body').html('<iframe style="height: 600px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
+                $('#' + _myModal + '-body').html('<iframe style="height: 480px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
                 $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
             }
             $('.modal-title').html(data.result.nome_original);
@@ -213,7 +213,27 @@ function BuscaCep(_cep, _logradouro, _bairro, _cidade, _uf) {
     });
 }
 
+
 function BuscaCep2(_cep, _logradouro, _bairro, _cidade, _uf) {
+    CarregandoIn();
+    var cep = $("#" + _cep).val();
+    cep = cep.replace(/\D/g, "");
+    var link = encodeURI("http://apps.widenet.com.br/busca-cep/api/cep/" + cep + ".json");
+
+    $.getJSON(link, function (data) {
+        $("#" + _logradouro).val(data.address);
+        $("#" + _bairro).val(data.district);
+        $("#" + _cidade).val(data.city);
+        $("#" + _uf).val(data.state);
+    });
+    $('#carregando').css("visibility", "hidden");
+    $('#carregando').css("height", "0px");
+    $('#carregando').css("margin-top", "0%");
+    $('#carregando').css("margin-left", "0%");
+
+}
+
+function BuscaCep3(_cep, _logradouro, _bairro, _cidade, _uf) {
     CarregandoIn();
     var cep = $("#" + _cep).val();
     cep = cep.replace(/\D/g, "");
@@ -231,6 +251,8 @@ function BuscaCep2(_cep, _logradouro, _bairro, _cidade, _uf) {
     $('#carregando').css("margin-left", "0%");
 
 }
+
+
 
 function ReadAlert(id) {
     var link = "../Home/ReadAlert?alertaId=" + id;
@@ -290,6 +312,45 @@ function Refresh(index, pagesize, action, DivId) {
 
     $('#' + DivId).load(link);
     $( document ).ajaxSuccess(function (event, xhr, settings) {
+        $('#carregando').css("visibility", "hidden");
+        $('#carregando').css("height", "0px");
+        $('#carregando').css("margin-top", "0%");
+        $('#carregando').css("margin-left", "0%");
+    }).error(function () {
+        $('#carregando').css("visibility", "hidden");
+        $('#carregando').css("height", "0px");
+        $('#carregando').css("margin-top", "0%");
+        $('#carregando').css("margin-left", "0%");
+    })
+}
+
+function RefreshAll(index, pagesize, action, DivId) {
+    var link = action;
+    link = encodeURI(link + '?index=' + index + '&pageSize=' + pagesize);
+
+    var $inputs = $('.form-horizontal :input');
+
+    // not sure if you wanted this, but I thought I'd add it.
+    // get an associative array of just the values.
+    $inputs.each(function () {
+        if (this.id != '' && this.id != null)
+            link += '&' + this.id + '=' + $(this).val()
+    });
+
+    $('#carregando').css("visibility", "visible");
+    $('#carregando').css("width", "100%");
+    $('#carregando').css("height", "100%");
+    $('#carregando').css("position", "absolute");
+    $('#carregando').css("background-color", "black");
+    $('#carregando').css("filter", "alpha(opacity=60)");
+    $('#carregando').css("opacity", "0.6");
+    $('#carregando').css("left", "0%");
+    $('#carregando').css("top", "0%");
+
+    link = encodeURI(link + '&noCahce=' + new Date());
+
+    $('#' + DivId).load(link);
+    $(document).ajaxSuccess(function (event, xhr, settings) {
         $('#carregando').css("visibility", "hidden");
         $('#carregando').css("height", "0px");
         $('#carregando').css("margin-top", "0%");

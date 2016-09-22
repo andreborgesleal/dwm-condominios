@@ -1,0 +1,70 @@
+﻿@using App_Dominio.Repositories
+@model IEnumerable<ButtonRepository>
+
+@if (Model.Where(info => info.buttonType == "ListModal").Count() > 0)
+{
+    <div class="btn-group dropup">
+        <button class="btn">Consultar</button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown">
+            <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            @foreach (ButtonRepository b in Model.Where(info => info.buttonType == "ListModal"))
+            {
+                if (b.javaScriptFunction != null && b.javaScriptFunction != "")
+                {
+                    <li><a href="#" onclick="@b.javaScriptFunction"><i class="@b.icon"></i> @b.linkText</a></li>
+                }
+                else
+                {
+                    <li class="divider"></li>
+                    <li><a href="#" onclick="showLookup('../@b.controllerName/@b.actionName');"><i class="@b.icon"></i> @b.linkText</a></li>
+                }
+            }
+
+        </ul>
+    </div>
+
+}
+@foreach (ButtonRepository b in Model.Where(info => info.buttonType != "ListModal"))
+{
+    string name = "btn" + b.linkText;
+    if (b.buttonType.Equals("submit") && b.javaScriptFunction != null && b.javaScriptFunction != "")
+    {
+        <button id="@name" type="submit" class="btn btn-success" onclick="return @b.javaScriptFunction">@b.linkText</button><span>&nbsp;</span>
+    }
+    else if (b.buttonType.Equals("submit"))
+    {
+        <button id="@name" type="submit" class="btn btn-success">@b.linkText</button><span>&nbsp;</span>
+    }
+    else if (b.buttonType.Equals("link"))
+    {
+        string classe = "btn btn-default " + b.size ?? "" ;
+        @Html.ActionLink(b.linkText, b.actionName, b.controllerName, null, new { @class = @classe })<span>&nbsp;</span>
+    }
+    else if (b.buttonType.Equals("primary"))
+    {
+        @Html.ActionLink(b.linkText, b.actionName, b.controllerName, null, new { @class = "btn btn-primary" })<span>&nbsp;</span>
+    }    
+    else if (b.buttonType.Equals("modal"))
+    {
+        <button id="@name" class="btn btn-small btn-primary" type="button" onclick="showLookup('../@b.controllerName/@b.actionName');">@b.linkText</button>
+    }
+    else if (b.buttonType.Equals("export"))
+    {
+        <div class="btn-group dropup">
+            <button class="btn btn-default">Exportar</button>
+            <button class="btn dropdown-toggle" data-toggle="dropdown">
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#" onclick="selecionaPdf('pdf', '@b.controllerName', '@b.actionName', '@b.javaScriptFunction')"><i class="cus-sprite-page_white_acrobat"></i> Pdf</a></li>
+                <li><a href="#" onclick="selecionaPdf('word', '@b.controllerName', '@b.actionName', '@b.javaScriptFunction')"><i class="cus-sprite-page_word"></i> Word</a></li>
+                <li><a href="#" onclick="selecionaPdf('excel', '@b.controllerName', '@b.actionName', '@b.javaScriptFunction')"><i class="cus-sprite-page_excel"></i> Excel</a></li>
+                <li><a href="#" onclick="selecionaPdf('png', '@b.controllerName', '@b.actionName', '@b.javaScriptFunction')"><i class="cus-sprite-folder_page_white"></i> Imagem</a></li>
+                <li class="divider"></li>
+                <li><a href="#" onclick="selecionaPdf('view', '@b.controllerName', '@b.actionName','@b.javaScriptFunction')"><i class="cus-sprite-application_form_magnify"></i> Visualizar Pdf</a></li>
+            </ul>
+        </div>
+    }
+}

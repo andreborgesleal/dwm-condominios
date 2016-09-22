@@ -1,32 +1,399 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 0px;
+﻿
+fundoModal
+{
+    background-color: Black;
+    filter:alpha(opacity=60);
+    opacity:0.6;
+    position: absolute; left: 0%; top: 0%;
+    width: 100%;
+    height: 100%;
+    _height: 800px;
+    _width: 110%;
+    
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+.modalPopupCarregando
+{
+    background-color: #FFFFFF;
+    border: none;
+    padding: 2px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    margin-top: 15%;
+    margin-left: 25%;
+    margin-right: auto;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.modalPopupReport
+{
+    background-color: #FFFFFF;
+    border-width: 2px;
+    border-style: none;
+    border-color: #fff;
+    padding: 2px;
+    width: auto%;
+    height: 100%;
+    overflow: auto;
+    position: absolute; left: 0%; top: 0%; right: 0%; 
+    text-align: center;
 }
 
 /* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 680px;
+@media (max-width: 1980px) {
+    input,
+    select,
+    textarea {
+        max-width: 1080px;
+    }
+
+    .Scroll {
+        overflow-y: scroll;
+        height: 500px;
+    }
+
+    .Listagem {
+        margin-left: 10px;
+        margin-top: 10px;
+        max-height: 570px;
+        overflow-y: auto;
+    }
+
+    #footer {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
+
+@media (max-height: 768px) {
+    .modal-content {
+        max-height: 680px;
+    }
+
+   .Scroll {
+        overflow-y: scroll;
+        height: 320px;
+    }
+
+}
+
+@media (max-width: 800px) {
+    input,
+    select,
+    textarea {
+        max-width: 580px;
+    }
+
+    .Scroll {
+        overflow-y: scroll;
+        height: 300px;
+    }
+
+    .Listagem {
+        margin-left: 10px;
+        margin-top: 10px;
+        max-height: 400px;
+        overflow-y: auto;
+    }
+
+    #footer {
+        margin-left: 0px;
+        margin-right: 0px;
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+}
+
+@media (max-width:290px) {
+    input,
+    select,
+    textarea {
+        max-width: 280px;
+    }
+
+    .Scroll {
+        overflow-y: scroll;
+        height: 150px;
+    }
+}
+
+/* Classes definida pelo usuário DWM Sistemas */
+
+.margem-top-10 {
+    margin-top: 10px;
+}
+
+.margem-topo-sm{
+    margin-top: 4px
+}
+
+.margem-topo-7{
+    margin-top: 7px
+}
+
+.margem-topo{
+    margin-top: 20px
+}
+
+.margem-topo-10{
+    margin-top: 10px 
+}
+
+.margem-topo-20{
+    margin-top: 20px !important
+}
+
+.margem-topo-30{
+    margin-top: 30px
+}
+
+.margem-topo-40{
+    margin-top: 40px
+}
+
+.margem-topo-45{
+    margin-top: 45px
+}
+
+.margem-topo-50{
+    margin-top: 50px
+}
+
+.margem-topo-60{
+    margin-top: 60px
+}
+
+.margem-topo-90{
+    margin-top: 90px
+}
+
+.margem-topo-100{
+    margin-top: 100px
+}
+
+.margem-topo-300{
+    margin-top: 300px
+}
+
+.margem-topo-400{
+    margin-top: 400px
+}
+
+.altura-50{
+    height: 50px;
+}
+
+.altura-35{
+    height: 35px;
+}
+
+.margem-interna{
+    padding: 5px !important;
+}
+
+.margem-interna-10{
+    padding: 10px !important;
+}
+
+.margem-esquerda-20 {
+    margin-left: 50px !important;
+}
+
+.margem-negativa{
+    margin-top: -9px
+}
+
+.gelo{
+    background-color: #dedede !important;
+    padding: 20px;
+}
+
+.gelo-no-padding{
+    background-color: #dedede;
+    padding: 0px;
+}
+
+.clean
+{
+    background-color: #dbe4ed;
+    padding: 20px;
+}
+
+.omo{
+    background-color: #d0d0d0 !important;
+    padding: 20px;
+}
+
+
+/*.info
+{
+    background-color: #3399F3;
+    padding: 20px;
+}*/
+
+.areia
+{
+    background-color: #e9dada !important;
+    padding: 20px;
+}
+
+.destaque
+{
+    background-color: #d8ac9d !important;
+    padding: 0px;
+}
+
+.enfase
+{
+    background-color: #a78f87 !important; 
+    padding: 20px;
+}
+
+.neve
+{
+    background-color: #fff;
+    padding: 20px;
+}
+
 
 .Ariano {
     background-color: white
 }
 
-.margem-top-10 {
-    margin-top: 10px;
+.urubu
+{
+    background-color: #000 !important;
+    padding: 20px;
+}
+
+.corvo{
+    background-color: #464646;
+    padding: 20px;
+}
+
+.leao
+{
+    background-color: #7a889d;
+    padding: 20px;
+}
+
+.leao-top
+{
+    background-color: #7a889d;
+    padding: 20px 0px 0px 0px;
+}
+
+.tangerina{
+    background-color: #f65922;
+    padding: 20px;
+}
+
+.text-white{
+    color: #fff;
+}
+
+.text-dark{
+    color: #353535;
+}
+
+.text-mama-africa{
+    color: Black !important;
+}
+
+.text-enfatico{
+    color: #ffa789;
+}
+
+.text-prateado {
+    color: #bfbfbf ;
+}
+.no-padding {
+    padding: 0px !important;
+}
+
+.list-group-item-success {
+  position: relative;
+  display: block;
+  padding: 10px 15px;
+  margin-bottom: -1px;
+  background-color: #dbe4ed;
+  border: 1px solid #dddddd;
+  text-decoration: none !important;
+}
+
+.link-default {
+    text-decoration: none; 
+    color: #fff;
+}
+
+.moldura-box {
+    margin-top: -10%; 
+    z-index: 10 !important; 
+    padding-top: 1%; 
+    padding-bottom: 20px
+}
+
+.moldura-basic {
+    border: 1px solid #aeadad;
+    border-radius: 5px;
+}
+
+.espacamento-sm{
+    padding: 5px !important;
+}
+
+.disabledTab{
+    pointer-events: none;
+}
+
+.ModalMax {
+    width: 90%;
+}
+
+.altura-maxima {
+    max-height: 750px;
+}
+
+a.list-group-item:hover,
+a.list-group-item:focus {
+  color: #fff;
+  text-decoration: none;
+  background-color: #a1a1a1;
+}
+.dedo-indicador {
+    cursor: pointer !important;
+}
+
+.barra-rolagem{
+    overflow: auto;
+}
+
+.vertical-midle {
+    vertical-align: middle
+}
+
+.font-25 {
+    font-size: 25px
+}
+
+.font-27 {
+    font-size: 27px
+}
+
+.font-30 {
+    font-size: 30px
+}
+
+.font-8 {
+    font-size: 15px;
+}
+
+.riscado {
+    text-decoration: line-through; 
+}
+
+.text-bold {
+    font-weight: bold;
 }

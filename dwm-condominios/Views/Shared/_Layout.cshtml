@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using App_Dominio.Security;
+@using App_Dominio.Entidades;
+@{ 
+    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+    Sessao sessao = security.getSessaoCorrente();
+    Empresa empresa = security.getEmpresa();
+    Usuario usuario = security.getUsuario();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -7,12 +15,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DWM-Condomínios</title>
-    @Styles.Render("~/Content/css")
+
+    @Styles.Render("~/Content-z/css")
+    <link href="~/Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/bootstrap-daterangepicker")
+    @Scripts.Render("~/bundles/autocomplete")
     @Scripts.Render("~/bundles/inputs-jquery-ui")
     @Scripts.Render("~/bundles/summernote")
+
+
+    @*@Scripts.Render("~/bundles/autocomplete.js")*@
+
+
+    <!-- jQuery autocomplete -->
+    @*<script src="~/Content/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>*@
+
 </head>
 <body class="nav-md">
     <div class="container body">
@@ -20,7 +39,7 @@
             <div class="col-md-3 left_col">
                 <div class="left_col scroll-view">
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="~/home/default" class="site_title"><i class="fa fa-building-o"></i> <span>Parc Paradiso</span></a>
+                        <a href="~/home/default" class="site_title"><i class="fa fa-money"></i> <span>@empresa.nome</span></a>
                     </div>
                     <div class="clearfix"></div>
                     <!-- menu profile quick info -->
@@ -29,8 +48,8 @@
                             <img src="~/Users_Data/Empresas/3/Avatar/1.png" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            <span>Condômino,</span>
-                            <h2>André Leal</h2>
+                            <span>Usuário,</span>
+                            <h2>@(usuario.nome.Trim().Length > 17 ? usuario.nome.Trim().Substring(0,17) : usuario.nome)</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -71,7 +90,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="~/Content/production/images/img.jpg" alt="">André Leal
+                                    <img src="~/Users_Data/Empresas/3/Avatar/1.png" alt="">André Leal
                                     <span class="fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -172,14 +191,14 @@
 
             <!-- pagen content -->
             <div class="right_col" role="main">
-                @*@BreadCrumbPage.Trace((App_Dominio.Component.BreadCrumb)ViewBag.BreadCrumb)
-                @Html.Partial("_alerts")
-                <div class="alert alert-dismissable alert-warning" id="alerta" style="visibility: hidden">
-                    <a class="close" href="#" aria-hidden="true" onclick="$('#alerta').hide()">x</a>
-                    <h4 class="alert-heading" id="alerta-heading">Atenção!</h4>
-                    <div id="MsgAlert"></div>
-                </div>*@
+                @BreadCrumbPage.Trace((App_Dominio.Component.BreadCrumb)ViewBag.BreadCrumb)
+                <div class="container-cadastro">
+                    @Html.Partial("_alerts")
+                </div>
                 @RenderBody()
+                <div style="height: 570px">
+                </div>
+
             </div>
             <!-- /page content -->
 
@@ -279,6 +298,17 @@
         }
       });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $('input').keypress(function (e) {
+                var code = null;
+                code = (e.keyCode ? e.keyCode : e.which);
+                return (code == 13) ? false : true;
+            });
+        });
+    </script>
+
     <!-- /Flot -->
     <!-- jVectorMap -->
     @Scripts.Render("~/bundles/jVectorMap2")

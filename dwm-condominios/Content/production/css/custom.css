@@ -307,8 +307,26 @@ body .container.body .right_col {
 }
 
 .container-cadastro {
-  width: 60%;
-  padding: 0
+  width: 70%;
+  padding: 0;
+  /*float: left;*/
+}
+
+@media (max-width: 1680px) {
+    .container-cadastro {
+      width: 78%;
+      padding: 0;
+      /*float: left;*/
+    }
+}
+
+
+@media (max-width: 1366px) {
+    .container-cadastro {
+      width: 100%;
+      padding: 0;
+      /*float: left;*/
+    }
 }
 
 

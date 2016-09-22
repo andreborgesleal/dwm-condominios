@@ -1,36 +1,20 @@
-﻿@using DWM.Models.Repositories
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
 @model CondominoPFViewModel
 @{
     Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
 }
-@using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-condomino-cad" }, new { @class = "form", @id = "form001" }))
-{
-    <!-- bootstrap-wysiwyg -->
-    <div class="x_panel">
-        <div class="x_title">
-            <h2>Cadastro <small>Edição do cadastro do condômino.</small></h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#">Buscar</a>
-                        </li>
-                        <li>
-                            <a href="#">Imprimir</a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
-        </div>
-        <div class="x_content">
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro", Descricao = Model.DataCadastro.ToString("dd/MM/yyyy"), Transacao = t })
+    <div class="x_content">
+        @using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-condomino-cad" }, new { @class = "form", @id = "form001" }))
+        {
             @Html.Partial("_alerts")
             @Html.ValidationSummary("", new { @class = "text-danger" })
             @Html.HiddenFor(info => info.CondominioID)
@@ -129,9 +113,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
-}
+</div>
 
 <script type="text/javascript">
     $(function () {

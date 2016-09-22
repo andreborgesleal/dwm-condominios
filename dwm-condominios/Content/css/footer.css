@@ -1,0 +1,113 @@
+﻿/* Testimonials
+---------------------------------- */
+.testimonial .media-left {
+	width: 60px;
+}
+
+.translucent-bg {
+	color: #ffffff;
+}
+.default-bg h1,
+.default-bg h2,
+.default-bg h3,
+.default-bg h4,
+.default-bg h5,
+.default-bg h6,
+.translucent-bg h1,
+.translucent-bg h2,
+.translucent-bg h3,
+.translucent-bg h4,
+.translucent-bg h5,
+.translucent-bg h6 {
+	color: #ffffff;
+}
+.default-bg blockquote footer,
+.translucent-bg blockquote footer {
+	color: #cccccc;
+}
+.default-bg a,
+.translucent-bg a {
+	color: #ffffff;
+	text-decoration: underline;
+}
+.default-bg a:hover,
+.translucent-bg a:hover {
+	text-decoration: none;
+}
+.translucent-bg {
+	-webkit-background-size: cover !important;
+	-moz-background-size: cover !important;
+	-o-background-size: cover !important;
+	background-size: cover !important;
+	background-position: 50% 0;
+	background-repeat: no-repeat;
+	z-index: 1;
+	position: relative;
+}
+.translucent-bg .translucent-bg {
+	margin-top: 80px;
+	z-index: 3;
+}
+.translucent-bg:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.7);
+}
+.translucent-bg.blue:after {
+	background-color: rgba(85, 172, 238, 0.7);
+}
+.translucent-bg .container {
+	z-index: 3;
+	position: relative;
+}
+
+.bg-image-1 {
+	background: url("../../Content/images/bg-image-1.jpg") 50% 0px no-repeat;
+}
+.bg-image-2 {
+	background: url("../../Content/images/bg-image-2.jpg") 50% 0px no-repeat;
+}
+.bg-image-3 {
+	background: url("../../Content/images/bg-image-3.jpg") 50% 0px no-repeat;
+}
+
+/* Misc
+----------------------------------------------------------------------------- */
+.object-non-visible {
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.object-visible,
+.touch .object-non-visible {
+	opacity: 1 !important;
+	filter: alpha(opacity=100) !important;
+}
+.pb-clear {
+	padding-bottom: 0;
+}
+
+.space {
+	padding: 20px 0;
+}
+
+.list-horizontal {
+	padding: 15px 0;
+}
+.list-horizontal-item img {
+	display: block;
+	margin: 0 auto;
+}
+.list-icons {
+	padding: 0;
+	margin: 20px 0;
+	list-style: none;
+	font-size: 18px;
+}
+.list-icons li {
+	padding: 0 0 15px 0;
+}

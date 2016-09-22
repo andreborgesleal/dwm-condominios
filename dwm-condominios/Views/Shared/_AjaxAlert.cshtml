@@ -1,0 +1,11 @@
+﻿@model string 
+@{
+    Layout = null;
+}
+<div class="well-sm" hidden id="AjaxAlert">
+    <div class="alert alert-warning" id="div-alert">
+        <a class="close" href="#@Model" aria-hidden="true" onclick="$('#AjaxAlert').hide()">x</a>
+        <div id="MsgAjaxAlert"></div>
+    </div>
+</div>
+

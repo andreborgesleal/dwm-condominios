@@ -1,69 +1,47 @@
-﻿@using DWM.Models.Repositories
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
 @model CondominoEditViewModel
-<div class="container-fluid">
-    <div class="page-title">
-        <div class="title_left">
-            <h4>
-                @Model.CondominoPFViewModel.Nome
-                <small>
-                    @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
-                </small>
-                <span class="pull-right">@Model.CondominoPFViewModel.DataCadastro.ToString("dd/MM/yyyy")</span>
-            </h4>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<h4>
+    @Model.CondominoPFViewModel.Nome
+    <small>
+        @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
+    </small>
+</h4>
+<div class="row">
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div id="div-condomino-cad">
+            @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
         </div>
-    </div>
-    <div class="clearfix"></div>
-    <br />
-    <div class="row">
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <div id="div-condomino-cad">
-                @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
-            </div>
-            <div id="div-condomino-automovel">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2><i class="fa fa-bars"></i> Cadastro complementar <small>Dados necessários para acesso ao condomínio</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        <div id="div-condomino-automovel">
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro complementar", Descricao = "", Transacao = t })
+                <div class="x_content">
+                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                            <li role="presentation" class="active">
+                                <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Veículos</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">Incluir novo veículo</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Incluir novo funcionário</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
+                            <li role="presentation" class="">
+                                <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Funcionários</a>
                             </li>
                         </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                                <li role="presentation" class="active">
-                                    <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Veículos</a>
-                                </li>
-                                <li role="presentation" class="">
-                                    <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Funcionários</a>
-                                </li>
-                            </ul>
-                            <div id="myTabContent" class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                                    <div id="div-veiculos">
-                                        @Html.Partial("_Veiculos", Model)
-                                    </div>
+                        <div id="myTabContent" class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                <div id="div-veiculos">
+                                    @Html.Partial("_Veiculos", Model)
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                                    <div id="div-funcionarios">
-                                        @Html.Partial("_Funcionarios", Model)
-                                    </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                <div id="div-funcionarios">
+                                    @Html.Partial("_Funcionarios", Model)
                                 </div>
                             </div>
                         </div>
@@ -71,10 +49,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <div id="div-credenciado">
-                @Html.Partial("_Credenciado", Model)
-            </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12">
+        <div id="div-credenciado">
+            @Html.Partial("_Credenciado", Model)
         </div>
     </div>
 </div>

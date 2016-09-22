@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
+    <Compile Include="Controllers\GrupoCondominoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -229,6 +230,7 @@
     <Compile Include="Models\Entidades\Credenciado.cs" />
     <Compile Include="Models\Entidades\Edificacao.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
+    <Compile Include="Models\Entidades\GrupoCondomino.cs" />
     <Compile Include="Models\Entidades\Informativo.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
     <Compile Include="Models\Entidades\Profissao.cs" />
@@ -250,6 +252,7 @@
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
+    <Compile Include="Models\Persistence\GrupoCondominoModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
@@ -264,6 +267,7 @@
     <Compile Include="Models\Repositories\CredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\EdificacaoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
+    <Compile Include="Models\Repositories\GrupoCondominoViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
     <Compile Include="Models\Repositories\InformativoViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
@@ -282,11 +286,50 @@
   <ItemGroup>
     <Content Include="App_Data\logs\log-01062016.xml" />
     <Content Include="App_Data\MensagemPadrao.xml" />
+    <Content Include="Content\autocomplete\autocomplete.css" />
+    <Content Include="Content\autocomplete\jquery.ui.autocomplete.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.css" />
+    <Content Include="Content\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\fileUpload\bootstrap-theme.css" />
+    <Content Include="Content\bootstrap\css\fileUpload\bootstrap.min.css" />
+    <Content Include="Content\bootstrap\css\fileUpload\jquery.fileupload.css" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\bootstrap\js\npm.js" />
+    <Content Include="Content\css\all.min.css" />
+    <Content Include="Content\css\animate.css" />
+    <Content Include="Content\css\animate.old.css" />
+    <Content Include="Content\css\animations.css" />
+    <Content Include="Content\css\animations.old.css" />
+    <Content Include="Content\css\custom.css" />
+    <Content Include="Content\css\custom.old.css" />
+    <Content Include="Content\css\footer.css" />
+    <Content Include="Content\css\jquery.fileupload.css" />
+    <Content Include="Content\css\jquery.typeahead.css" />
+    <Content Include="Content\css\SideBarMenu.css" />
+    <Content Include="Content\css\simple-sidebar.css" />
+    <Content Include="Content\css\style.css" />
+    <Content Include="Content\css\style.old.css" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
     <Content Include="Content\images\PARC-PARADISO-LOGO.png" />
     <Content Include="Content\images\parcparadiso.png" />
+    <Content Include="Content\js\custom.js" />
+    <Content Include="Content\js\shieldui-all.min.js" />
+    <Content Include="Content\js\template.js" />
+    <Content Include="Content\plugins\isotope\isotope.pkgd.js" />
+    <Content Include="Content\plugins\isotope\isotope.pkgd.min.js" />
+    <Content Include="Content\plugins\jquery.appear.js" />
+    <Content Include="Content\plugins\jquery.backstretch.min.js" />
+    <Content Include="Content\plugins\jquery.js" />
+    <Content Include="Content\plugins\jquery.min.js" />
+    <Content Include="Content\plugins\modernizr.js" />
+    <Content Include="Content\plugins\modernizr.old.js" />
     <Content Include="Content\production\css\custom.css" />
     <Content Include="Content\production\css\maps\jquery-jvectormap-2.0.3.css" />
     <Content Include="Content\production\images\1.png" />
@@ -3848,6 +3891,15 @@
     <Content Include="Content\vendors\summernote\css\font\summernote.eot" />
     <Content Include="Content\vendors\summernote\css\font\summernote.ttf" />
     <Content Include="Content\vendors\summernote\css\font\summernote.woff" />
+    <Content Include="Content\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Content\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\plugins\jquery-1.11.1.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\inputs-jquery-ui.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -3864,6 +3916,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Temp\teste.txt" />
     <Content Include="Users_Data\Empresas\3\Avatar\1.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -3915,8 +3968,28 @@
     <Content Include="Views\Account\AtivarCredenciado.cshtml" />
     <Content Include="Views\Condomino\_Veiculos.cshtml" />
     <Content Include="Views\Condomino\_Funcionarios.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DATE.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DECIMAL.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DECIMAL2.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\FORMULARIO.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\LOV.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TRUNC.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\TYPEAHEAD.cshtml" />
+    <Content Include="Views\Shared\_AjaxAlert.cshtml" />
+    <Content Include="Views\Shared\_alerts.cshtml" />
+    <Content Include="Views\Shared\_Filter.cshtml" />
+    <Content Include="Views\Shared\Filtro.cshtml" />
+    <Content Include="Views\GrupoCondomino\Browse.cshtml" />
+    <Content Include="Views\GrupoCondomino\List.cshtml" />
+    <Content Include="Views\GrupoCondomino\Create.cshtml" />
+    <Content Include="Views\GrupoCondomino\Edit.cshtml" />
+    <Content Include="Views\GrupoCondomino\Delete.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\fonts\font-awesome\" />
+    <Folder Include="Users_Data\Empresas\3\Documentos\" />
+    <Folder Include="Users_Data\Empresas\3\Informativos\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />

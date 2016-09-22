@@ -1,0 +1,63 @@
+﻿@using App_Dominio.Repositories
+@{
+    TransacaoRepository[] t = (TransacaoRepository[])ViewData["Transacao"];
+}
+<div class="x_title">
+    @if (@t.Where(info => info.exibir == "S").Count() > 0)
+    {
+        <h2>
+            @ViewData["Brand"]
+            @foreach (TransacaoRepository trans in t.Where(info => info.exibir == "S"))
+            {
+                if (trans.url != null && trans.url.Trim() != "")
+                {
+                    <a href="@trans.url" onclick="@trans.referencia"><small><i class="@trans.glyph"></i> @trans.nomeCurto</small></a>
+                }
+                else if (trans.uri != null && trans.uri.Trim() != "")
+                {
+                    <a href="#@trans.uri" onclick="@trans.referencia"><small><i class="@trans.glyph"></i> @trans.nomeCurto</small></a>
+                }
+            }
+        </h2>
+    }
+    else
+    {
+        <h2>@ViewData["Brand"] <small>@ViewData["Descricao"]</small></h2>
+    }
+    <ul class="nav navbar-right panel_toolbox">
+        <li>
+            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+            <ul class="dropdown-menu" role="menu">
+                @{
+                    for (int i = 0; i <= t.Length - 2; i++)
+                    {
+                        if (t[i].url != null && t[i].url.Trim() != "")
+                        {
+                            <li>
+                                <a href="@t[i].url" onclick="@t[i].referencia">@t[i].nomeCurto</a>
+                            </li>
+                        }
+                        else if (t[i].uri != null && t[i].uri.Trim() != "")
+                        {
+                            <li>
+                                <a href="#@t[i].uri" onclick="@t[i].referencia">@t[i].nomeCurto</a>
+                            </li>
+                        }
+                    }
+                }
+                @if (ViewData.Model is System.Web.Mvc.IPagedList)
+                {
+                    @Html.Partial("PaginacaoRegistros", (System.Web.Mvc.IPagedList)ViewData.Model)
+                }
+            </ul>
+        </li>
+        <li>
+            <a href="@t[t.Length-1].url" class="close-link"><i class="fa fa-close"></i></a>
+        </li>
+    </ul>
+    <div class="clearfix"></div>
+</div>
+

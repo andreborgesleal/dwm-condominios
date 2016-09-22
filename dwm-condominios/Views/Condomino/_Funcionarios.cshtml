@@ -1,139 +1,102 @@
 ﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
 @model CondominoEditViewModel
 @{
     Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
 }
 @if (Model != null)
 {
     if (Model.Funcionarios.Count() > 0)
     {
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Funcionários <small>Lstagem de empregados do condômino.</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#cad-funcionario" onclick="insFunc('@Model.FuncionarioViewModel.CondominioID', '@Model.FuncionarioViewModel.EdificacaoID', '@Model.FuncionarioViewModel.UnidadeID','@Model.FuncionarioViewModel.CondominoID')">Incluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <table class="table table-striped">
-                    <thead>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Função</th>
+                    <th>Dom</th>
+                    <th>Seg</th>
+                    <th>Ter</th>
+                    <th>Qua</th>
+                    <th>Qui</th>
+                    <th>Sex</th>
+                    <th>Sáb</th>
+                    <th>Início</th>
+                    <th>Fim</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (FuncionarioViewModel fun in Model.Funcionarios)
+                    {
                         <tr>
-                            <th>Nome</th>
-                            <th>Função</th>
-                            <th>Dom</th>
-                            <th>Seg</th>
-                            <th>Ter</th>
-                            <th>Qua</th>
-                            <th>Qui</th>
-                            <th>Sex</th>
-                            <th>Sáb</th>
-                            <th>Início</th>
-                            <th>Fim</th>
-                            <th>Ação</th>
+                            <td><small>@fun.Nome</small></td>
+                            <td><small>@fun.Funcao</small></td>
+                            <td>
+                                @if (fun.Dia.Substring(0, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(1, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(2, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(3, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(4, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(5, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td>
+                                @if (fun.Dia.Substring(6, 1) == "S")
+                                {
+                                    <span class="badge bg-green">&nbsp;</span>
+                                }
+                            </td>
+                            <td><small>@fun.HoraInicial</small></td>
+                            <td><small>@fun.HoraFinal</small></td>
+                            <th scope="row">
+                                <a href="#cad-veiculo" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
+                                <a href="#cad-veiculo" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
+                            </th>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @{
-                            foreach (FuncionarioViewModel fun in Model.Funcionarios)
-                            {
-                                <tr>
-                                    <td><small>@fun.Nome</small></td>
-                                    <td><small>@fun.Funcao</small></td>
-                                    <td>
-                                        @if(fun.Dia.Substring(0,1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(1, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(2, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(3, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(4, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(5, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        @if (fun.Dia.Substring(6, 1) == "S")
-                                        {
-                                            <span class="badge bg-green">&nbsp;</span>
-                                        }
-                                    </td>
-                                    <td><small>@fun.HoraInicial</small></td>
-                                    <td><small>@fun.HoraFinal</small></td>
-                                    <th scope="row">
-                                        <a href="#cad-veiculo" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
-                                        <a href="#cad-veiculo" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
-                                    </th>
-                                </tr>
-                            }
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                    }
+                }
+            </tbody>
+        </table>
     }
-
-    using (Ajax.BeginForm("EditFuncionario", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-funcionarios" }, new { @class = "form", @id = "form004", @name = "form004" }))
-    {
-        <div class="x_panel">
-            <div class="x_title">
-                <h2 id="header-funcionario">Novo funcionário <small>O funcionário será habilitado p/ acesso pela admministração.</small></h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#cad-funcionario" onclick="insFunc('@Model.FuncionarioViewModel.CondominioID', '@Model.FuncionarioViewModel.EdificacaoID', '@Model.FuncionarioViewModel.UnidadeID', '@Model.FuncionarioViewModel.CondominoID')">Incluir</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="~/Condomino/Browse" class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content" id="cad-funcionario">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo funcionário", Descricao = "", Transacao = t })
+        <div class="x_content" id="cad-funcionario">
+            @using (Ajax.BeginForm("EditFuncionario", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-funcionarios" }, new { @class = "form", @id = "form004", @name = "form004" }))
+            {
                 @Html.Partial("_alerts")
                 @Html.ValidationSummary("", new { @class = "text-danger" })
                 @Html.HiddenFor(info => info.FuncionarioViewModel.FuncionarioID)
@@ -312,14 +275,14 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun()"/>
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun()" />
                             <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
-    }
+    </div>
 }
 else
 {

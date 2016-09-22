@@ -1,0 +1,50 @@
+﻿@using App_Dominio.Repositories
+@model DWM.Models.Repositories.GrupoCondominoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../GrupoCondomino/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupo de Condômino", Descricao = "Incluir GrupoCondomino. Ex: Academia, Tênis, etc", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Delete", "GrupoCondomino", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.GrupoCondominoID)
+                @Html.HiddenFor(info => info.empresaId)
+                <div class="well well-sm">Atenção: Não será permitido excluir um grupo se houver usuários vinculados a ele.</div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Descricao, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="30" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Objetivo, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="Objetivo" id="Objetivo" value="@Model.Objetivo" maxlength="100" disabled />
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-danger" value="Excluir" name="btn-excluir" id="btn-salvar" />
+                            <input type="button" onclick="window.location = '../GrupoCondomino/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
