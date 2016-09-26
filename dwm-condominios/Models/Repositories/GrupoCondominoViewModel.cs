@@ -21,5 +21,8 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Objetivo")]
         public string Objetivo { get; set; }
+
+        [DisplayName("Privativo Adimnistração")]
+        public string PrivativoAdmin { get; set; }
     }
 }

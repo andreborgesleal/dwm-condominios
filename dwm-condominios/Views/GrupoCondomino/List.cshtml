@@ -22,6 +22,7 @@
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Descrição</th>
                         <th class="column-title">Objetivo</th>
+                        <th class="column-title text-center">Privativo da Administração</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,17 @@
                             </td>
                             <td>
                                 <span>@gru.Objetivo</span>
+                            </td>
+                            <td class="text-center">
+                                @if (gru.PrivativoAdmin == "S")
+                                {
+                                    <span class="label label-default">Sim</span>
+                                }
+                                else
+                                {
+                                    <span>Não</span>
+                                }
+                                
                             </td>
                         </tr>
                     }

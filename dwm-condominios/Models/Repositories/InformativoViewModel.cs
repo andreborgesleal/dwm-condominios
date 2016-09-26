@@ -1,4 +1,6 @@
 ﻿using App_Dominio.Component;
+using App_Dominio.Entidades;
+using App_Dominio.Security;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -53,5 +55,13 @@ namespace DWM.Models.Repositories
 
         public string InformativoAnuncio { get; set; }
 
+        public string PathArquivos
+        {
+            get
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Informativos/";
+            }
+        }
     }
 }

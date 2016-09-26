@@ -7,7 +7,12 @@
     t[0].referencia = "";
 
     t[1].url = "../Home/Default";
+
+    string _checked = Model.PrivativoAdmin == "S" ? "checked" : "";
 }
+<!-- Switchery -->
+<link href="../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
 <div class="container-cadastro">
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupo de Condômino", Descricao = "Incluir GrupoCondomino. Ex: Academia, Tênis, etc", Transacao = t })
@@ -18,13 +23,13 @@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.GrupoCondominoID)
                 <div class="row">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Descricao, new { @class = "control-label" })
                             <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="30" />
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="col-md-5 col-xs-12 col-sm-12 col-lg-5">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Objetivo, new { @class = "control-label" })
                             <input type="text" class="form-control" name="Objetivo" id="Objetivo" value="@Model.Objetivo" maxlength="100" />
@@ -32,6 +37,17 @@
                     </div>
                 </div>
                 <p>&nbsp;</p>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Privativo da administração</label>
+                            <label>
+                                <input type="checkbox" class="js-switch" id="PrivativoAdmin" name="PrivativoAdmin" @_checked /> Sim
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -45,3 +61,5 @@
     </div>
 </div>
 
+<!-- Switchery -->
+<script src="../Content/vendors/switchery/dist/switchery.min.js"></script>

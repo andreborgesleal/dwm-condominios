@@ -31,6 +31,7 @@ namespace DWM.Models.Persistence
             entity.CondominioID = value.CondominioID;
             entity.Descricao = value.Descricao;
             entity.Objetivo = value.Objetivo;
+            entity.PrivativoAdmin = value.PrivativoAdmin;
 
             return entity;
         }
@@ -43,6 +44,7 @@ namespace DWM.Models.Persistence
                 CondominioID = entity.CondominioID,
                 Descricao = entity.Descricao,
                 Objetivo = entity.Objetivo,
+                PrivativoAdmin = entity.PrivativoAdmin,
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
         }
@@ -93,6 +95,15 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                if (value.PrivativoAdmin == null || value.PrivativoAdmin.Trim().Length == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Privativo Administração").ToString();
+                    value.mensagem.MessageBase = "Atributo Privativo da Administração deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
             }
             return value.mensagem;
         }
@@ -102,11 +113,10 @@ namespace DWM.Models.Persistence
             GrupoCondominoViewModel value = base.CreateRepository(Request);
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
             value.CondominioID = security.getSessaoCorrente().empresaId;
+            value.PrivativoAdmin = "N";
             return value;
         }
         #endregion
-
-
     }
 
     public class ListViewGrupoCondominos : ListViewModel<GrupoCondominoViewModel, ApplicationContext>
@@ -130,6 +140,7 @@ namespace DWM.Models.Persistence
                         GrupoCondominoID = gru.GrupoCondominoID,
                         CondominioID = gru.CondominioID,
                         Descricao = gru.Descricao,
+                        PrivativoAdmin = gru.PrivativoAdmin,
                         Objetivo = gru.Objetivo,
                         PageSize = pageSize,
                         TotalCount = ((from gru1 in db.GrupoCondominos

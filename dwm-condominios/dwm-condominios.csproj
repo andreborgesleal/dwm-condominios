@@ -3901,6 +3901,10 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\plugins\jquery-1.11.1.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\fileUpload\bootstrap.min.js" />
+    <Content Include="Scripts\fileUpload\jquery-1.9.1.min.js" />
+    <Content Include="Scripts\fileUpload\jquery.fileupload.js" />
+    <Content Include="Scripts\fileUpload\jquery.ui.widget.js" />
     <Content Include="Scripts\inputs-jquery-ui.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -3963,7 +3967,7 @@
     <Content Include="Views\Informativo\Delete.cshtml" />
     <Content Include="Views\Informativo\Edit.cshtml" />
     <Content Include="Views\Informativo\Browse.cshtml" />
-    <Content Include="Views\Informativo\List.cshtml" />
+    <Content Include="Views\Informativo\ListParam.cshtml" />
     <Content Include="Views\Shared\_AcessoNegado.cshtml" />
     <Content Include="Views\Account\AtivarCredenciado.cshtml" />
     <Content Include="Views\Condomino\_Veiculos.cshtml" />

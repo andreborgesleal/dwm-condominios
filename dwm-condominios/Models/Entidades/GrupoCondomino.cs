@@ -19,5 +19,8 @@ namespace DWM.Models.Entidades
 
         [DisplayName("Objetivo")]
         public string Objetivo { get; set; }
+
+        [DisplayName("PrivativoAdmin")]
+        public string PrivativoAdmin { get; set; }
     }
 }

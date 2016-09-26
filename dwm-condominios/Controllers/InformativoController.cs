@@ -1,4 +1,5 @@
 ﻿using App_Dominio.Controllers;
+using App_Dominio.Models;
 using App_Dominio.Security;
 using DWM.Models.Entidades;
 using DWM.Models.Persistence;
@@ -18,7 +19,7 @@ namespace DWM.Controllers
 
         public override string getListName()
         {
-            return "Informativo";
+            return "Listar";
         }
         #endregion
 
@@ -26,25 +27,25 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public override ActionResult List(int? index, int? pageSize = 50, string descricao = null)
         {
-            throw new NotImplementedException();
+            return ListParam(index, PageSize);
         }
 
-        //[AuthorizeFilter]
-        //public ActionResult ListParam(int? index, int? pageSize = 50, string data1 = "", string data2 = "")
-        //{
-        //    if (ViewBag.ValidateRequest)
-        //    {
-        //        if (data1 == "")
-        //        {
-        //            data1 = DateTime.Today.ToString("yyyy-MM-") + "01";
-        //            data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("yyyy-MM-dd");
-        //        }
-
-        //        return this._List(index, pageSize, "Browse", l, data1, data2);
-        //    }
-        //    else
-        //        return View();
-        //}
+        [AuthorizeFilter]
+        public ActionResult ListParam(int? index, int? pageSize = 50, string data1 = "", string data2 = "")
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                if (data1 == null || data1 == "")
+                {
+                    data1 = "01" + DateTime.Today.AddMonths(-1).ToString("/MM/yyyy");
+                    data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("dd/MM/yyyy");
+                }
+                ListViewInformativo l = new ListViewInformativo();
+                return this._List(index, pageSize, "Browse", l, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data1).Value);
+            }
+            else
+                return View();
+        }
         #endregion
 
         #region Edit

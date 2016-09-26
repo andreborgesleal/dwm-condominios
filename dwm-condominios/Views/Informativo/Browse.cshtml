@@ -1,5 +1,65 @@
-﻿<h2>
-    Informativos
-</h2><br />
+﻿@using App_Dominio.Repositories
+@model PagedList<DWM.Models.Repositories.InformativoViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Informativo/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
 
-@Html.ActionLink("Incluir Informativo", "Create", "Informativo", new { @class = "btn btn-primary" })
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Informativos", Descricao = "", Transacao = t })
+        <div class="x_content">
+            @using (Ajax.BeginForm("Listparam", "Informativo", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
+            {
+                <div class="container-cadastro">
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label" for="data1">Período</label>
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        @Html.Editor("__data1", "DATE", new { identificador = "data1", readOnly = "false", value = Convert.ToDateTime(DateTime.Today.AddMonths(-2).ToString("yyyy-MM-dd")) })
+                                    </div>
+                                    <div class="col-md-1">
+                                        à
+                                    </div>
+                                    <div class="col-md-8">
+                                        @Html.Editor("__data2", "DATE", new { identificador = "data2", readOnly = "false", value = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1) })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Buscar" />
+                </div>
+            }
+            <br />
+            <div id="div-list">
+                @Html.Partial("ListParam", Model)
+            </div>
+            <div class="altura-35">
+                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Informativo", buttonType = "link" } })
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#form000').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-list').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

@@ -7,7 +7,12 @@
     t[0].referencia = "";
 
     t[1].url = "../Home/Default";
+
+    string _checked = Model.PrivativoAdmin == "S" ? "checked" : "";
 }
+<!-- Switchery -->
+<link href="../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
 <div class="container-cadastro">
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupo de Condômino", Descricao = "Incluir GrupoCondomino. Ex: Academia, Tênis, etc", Transacao = t })
@@ -31,6 +36,17 @@
                     </div>
                 </div>
                 <p>&nbsp;</p>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Privativo da administração</label>
+                            <label>
+                                <input type="checkbox" class="js-switch" id="PrivativoAdmin" name="PrivativoAdmin" @_checked /> Sim
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
@@ -43,3 +59,6 @@
         </div>
     </div>
 </div>
+
+<!-- Switchery -->
+<script src="../Content/vendors/switchery/dist/switchery.min.js"></script>

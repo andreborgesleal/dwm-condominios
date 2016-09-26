@@ -29,11 +29,25 @@ namespace DWM.Controllers
         }
         #endregion
 
+        #region Create
+        public override void BeforeCreate(ref GrupoCondominoViewModel value, FormCollection collection)
+        {
+            base.BeforeCreate(ref value, collection);
+            value.PrivativoAdmin = collection["PrivativoAdmin"] == "on" ? "S" : "N";
+        }
+
+        #endregion
+
         #region Edit
         [AuthorizeFilter]
         public ActionResult Edit(int GrupoCondominoID)
         {
             return _Edit(new GrupoCondominoViewModel() { GrupoCondominoID = GrupoCondominoID });
+        }
+
+        public override void BeforeEdit(ref GrupoCondominoViewModel value, FormCollection collection)
+        {
+            BeforeCreate(ref value, collection);
         }
         #endregion
 
@@ -42,6 +56,11 @@ namespace DWM.Controllers
         public ActionResult Delete(int GrupoCondominoID)
         {
             return Edit(GrupoCondominoID);
+        }
+
+        public override void BeforeDelete(ref GrupoCondominoViewModel value, FormCollection collection)
+        {
+            BeforeCreate(ref value, collection);
         }
         #endregion
 

@@ -199,11 +199,31 @@ namespace DWM.Models.Persistence
             }
             return value.mensagem;
         }
+
+        public override InformativoViewModel CreateRepository(HttpRequestBase Request = null)
+        {
+            InformativoViewModel value = base.CreateRepository(Request);
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            value.CondominioID = security.getSessaoCorrente().empresaId;
+            value.Resumo = "";
+            value.Cabecalho = "";
+            value.DataPublicacao = Funcoes.Brasilia().Date;
+            value.DataExpiracao = Funcoes.Brasilia().AddDays(20);
+            if (!value.CondominioID.HasValue || value.CondominioID.Value == 0)
+                throw new App_DominioException("Sessão expirada", "Warning");
+            value.empresaId = value.CondominioID.Value;
+            return value;
+        }
+
         #endregion
     }
 
     public class ListViewInformativo : ListViewModel<InformativoViewModel, ApplicationContext>
     {
+        public ListViewInformativo()
+        {
+        }
+
         public ListViewInformativo(ApplicationContext _db, SecurityContext _seguranca_db) : base(_db, _seguranca_db)
         {
         }
@@ -211,8 +231,6 @@ namespace DWM.Models.Persistence
         #region Métodos da classe ListViewRepository
         public override IEnumerable<InformativoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
-            string _nome = param != null && param.Count() > 0 && param[0] != null ? param[0].ToString() : null;
-
             DateTime data1 = param.Count() > 0 && param[0] != null ? (DateTime)param[0] : new DateTime(1980, 1, 1);
             DateTime data2 = param.Count() > 1 && param[1] != null ? (DateTime)param[1] : Funcoes.Brasilia().Date.AddDays(30);
 

@@ -85,6 +85,43 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> GrupoCondominos(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int _CondominioID = 0;
+
+            if (param.Count() > 2)
+                _CondominioID = (int)param[2];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from g in db.GrupoCondominos.AsEnumerable()
+                            where g.CondominioID == _CondominioID
+                            orderby g.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = g.GrupoCondominoID.ToString(),
+                                Text = g.Descricao,
+                                Selected = (selectedValue != "" ? g.GrupoCondominoID.ToString() == selectedValue : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Profissoes(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

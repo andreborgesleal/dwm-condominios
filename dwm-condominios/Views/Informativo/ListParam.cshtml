@@ -1,0 +1,84 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.InformativoViewModel>
+
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    string Path = "";
+    if (Model.Count() > 0)
+    {
+        Path = Model[0].PathArquivos;
+    }
+    <div class="dashboard-widget-content">
+        <div class="col-md-5">
+            Clique nos botões de <code>Ação</code> para executar a ação desejada
+        </div>
+        <div class="col-md-1">
+            <a href="../Informativo/Create" class="text-primary">Incluir</a>
+        </div>
+        <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
+            @Html.Partial("Filtro")
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Informativo</th>
+                        <th class="column-title">Data</th>
+                        <th class="column-title">Expiração</th>
+                        <th class="column-title">Edificação</th>
+                        <th class="column-title">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.InformativoViewModel inf in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <a href="Edit?GrupoCondominoID=@inf.InformativoID" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+                                <a href="Delete?GrupoCondominoID=@inf.InformativoID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                            <td>
+                                <div class="media">
+                                    <div class="media-left">
+                                        <a href="#">
+                                            <img class="media-object" src="@(Path + inf.Midia1)" alt="...">
+                                        </a>
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">@inf.Cabecalho</h4>
+                                        @inf.Resumo
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span>@inf.DataPublicacao.ToString("dd/MM/yyyy")</span>
+                            </td>
+                            <td>
+                                <span>@(inf.DataExpiracao.HasValue ? inf.DataExpiracao.Value.ToString("dd/MM/yyyy") : "")</span>
+                            </td>
+                            <td>
+                                <span>@inf.descricao_edificacao</span>
+                            </td>
+                            <td>
+                                <span>@inf.descricao_GrupoCondomino</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.Partial("Paginacao", Model)
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+
+
+
