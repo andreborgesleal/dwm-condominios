@@ -45,7 +45,7 @@ function CarregandoIn() {
 }
 
 function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _arq, _trash) {
-
+    
     // _fileupload = fileUpload
 
     if (_arq == '' || _arq == '')
@@ -74,11 +74,12 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
 
             if (data.result.type == 'image/jpeg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
                 $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
-                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
+            alert(_fileupload);
+                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
             }
             else if (data.result.type == 'application/pdf') {
                 $('#' + _myModal + '-body').html('<iframe style="height: 480px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
-                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
+                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
             }
             $('.modal-title').html(data.result.nome_original);
             //_fileHidden = fileBoleto
@@ -98,7 +99,7 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
     });
 }
 
-function DelFile(_file, _fileupload, _arq, _trash) {
+function DelFile(_file, _fileupload, _arq, _trash, _fileHidden) {
     var link = encodeURI('DeleteFile?fileName=' + _file);
     CarregandoIn();
 
@@ -118,6 +119,7 @@ function DelFile(_file, _fileupload, _arq, _trash) {
             $('#' + _arq).hide();
             $('#' + _trash).hide();
             $('#' + _fileupload).show();
+            $('#' + _fileHidden).val('');
             $('#carregando').css("visibility", "hidden");
             $('#carregando').css("height", "0px");
             $('#carregando').css("margin-top", "0%");

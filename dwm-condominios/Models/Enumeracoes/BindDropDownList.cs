@@ -122,6 +122,43 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> EmailTipos(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int _CondominioID = 0;
+
+            if (param.Count() > 2)
+                _CondominioID = (int)param[2];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from t in db.EmailTipos.AsEnumerable()
+                            where t.CondominioID == _CondominioID
+                            orderby t.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = t.EmailTipoID.ToString(),
+                                Text = t.Descricao,
+                                Selected = (selectedValue != "" ? t.EmailTipoID.ToString() == selectedValue : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Profissoes(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

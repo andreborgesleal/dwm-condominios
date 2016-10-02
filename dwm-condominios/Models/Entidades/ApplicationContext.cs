@@ -19,5 +19,7 @@ namespace DWM.Models.Entidades
         public DbSet<Veiculo> Veiculos { get; set; }
         public DbSet<Funcionario> Funcionarios { get; set; }
         public DbSet<GrupoCondomino> GrupoCondominos { get; set; }
+        public DbSet<EmailTipo> EmailTipos { get; set; }
+        public DbSet<EmailTemplate> EmailTemplates { get; set; }
     }
 }

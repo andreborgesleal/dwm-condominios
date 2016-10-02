@@ -203,6 +203,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
+    <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\GrupoCondominoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
@@ -229,6 +230,8 @@
     <Compile Include="Models\Entidades\CondominoUnidade.cs" />
     <Compile Include="Models\Entidades\Credenciado.cs" />
     <Compile Include="Models\Entidades\Edificacao.cs" />
+    <Compile Include="Models\Entidades\EmailTemplate.cs" />
+    <Compile Include="Models\Entidades\EmailTipo.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
     <Compile Include="Models\Entidades\GrupoCondomino.cs" />
     <Compile Include="Models\Entidades\Informativo.cs" />
@@ -251,6 +254,7 @@
     <Compile Include="Models\Persistence\CondominoModel.cs" />
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
+    <Compile Include="Models\Persistence\EmailTemplateModel.cs" />
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
@@ -266,6 +270,8 @@
     <Compile Include="Models\Repositories\CondominoViewModel.cs" />
     <Compile Include="Models\Repositories\CredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\EdificacaoViewModel.cs" />
+    <Compile Include="Models\Repositories\EmailTemplateViewModel.cs" />
+    <Compile Include="Models\Repositories\EmailTipoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
     <Compile Include="Models\Repositories\GrupoCondominoViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
@@ -3988,6 +3994,9 @@
     <Content Include="Views\GrupoCondomino\Create.cshtml" />
     <Content Include="Views\GrupoCondomino\Edit.cshtml" />
     <Content Include="Views\GrupoCondomino\Delete.cshtml" />
+    <Content Include="Views\EmailTemplate\Browse.cshtml" />
+    <Content Include="Views\EmailTemplate\List.cshtml" />
+    <Content Include="Views\EmailTemplate\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

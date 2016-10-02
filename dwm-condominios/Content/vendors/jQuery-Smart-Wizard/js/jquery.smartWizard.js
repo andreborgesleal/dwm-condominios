@@ -429,7 +429,7 @@ $.fn.smartWizard = function(method) {
 // Default Properties and Events
 $.fn.smartWizard.defaults = {
     selected: 0,  // Selected Step, 0 = first step
-    keyNavigation: true, // Enable/Disable key navigation(left and right keys are used if enabled)
+    keyNavigation: false, // Enable/Disable key navigation(left and right keys are used if enabled)
     enableAllSteps: false,
     transitionEffect: 'fade', // Effect on navigation, none/fade/slide/slideleft
     contentURL:null, // content url, Enables Ajax content loading

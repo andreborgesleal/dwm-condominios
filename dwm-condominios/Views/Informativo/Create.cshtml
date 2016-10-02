@@ -37,7 +37,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="#step-3">
+                        <a href="#step-3" onclick="Preview();">
                             <span class="step_no">3</span>
                             <span class="step_descr">
                                 Passo 3<br />
@@ -94,32 +94,33 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label">Título (até 30 caracteres)</label>
-                                    <input type="text" class="form-control" name="Cabecalho" id="Cabecalho" value="@Model.Cabecalho" maxlength="30" onchange="contaCharCabec();" onkeyup="contaCharCabec();" />
-                                    <span id="contadorCabec" class="label label-default">@Model.Cabecalho.Length / 30</span>
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Título (até 30 caracteres)</label>
+                                            <input type="text" class="form-control" name="Cabecalho" id="Cabecalho" value="@Model.Cabecalho" maxlength="30" onchange="contaCharCabec();" onkeyup="contaCharCabec();" />
+                                            <span id="contadorCabec" class="label label-default">@Model.Cabecalho.Length / 30</span>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label">Resumo (até 500 caracteres)</label>
-                                    <input type="text" class="form-control" name="Resumo" id="Resumo" value="@Model.Resumo" />
-                                    @*<span id="contadorResumo" class="badge pull-right alert-success">@Model.Resumo.Length / 500</span>*@
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Resumo do Informativo (até 500 caracteres)</label>
+                                            <input type="hidden" name="Resumo" id="Resumo" value="@Model.Resumo" />
+                                            <div id="summernote1">@Model.Resumo</div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label">Mensagem Detalhada</label>
-                                    <input type="text" class="form-control" name="MensagemDetalhada" id="MensagemDetalhada" value="@Model.MensagemDetalhada" />
+                                <div class="row">
+                                    <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                        <div class="form-group">
+                                            <label class="control-label">Texto detalhado do informativo</label>
+                                            <input type="hidden" name="MensagemDetalhada" id="MensagemDetalhada" value="@Model.MensagemDetalhada" />
+                                            <div id="summernote2">@Model.MensagemDetalhada</div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
                     }
                 </div>
                 <div id="step-2" class="margem-topo-30">
@@ -128,7 +129,7 @@
                         Para dar maior ênfase ao informativo, você pode enviar uma imagem e formata-la de maneira que possa melhor se adaptar no enquadramento do texto.
                     </p>
                     <div class="row margem-topo-50">
-                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12"">
+                        <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" ">
                             <div class="panel panel-primary">
                                 <div class="panel-heading">
                                     <h2 class="panel-title">
@@ -171,7 +172,7 @@
                             </div>
                         </div>
                     </div>
-                    <div >
+                    <div>
                         <div class="col-md-12 col-lg-12">
                             <!-- image cropping -->
                             <div class="container cropper">
@@ -624,18 +625,83 @@
                     </div>
                 </div>
                 <div id="step-3">
-                    <h2 class="StepTitle">Step 3 Content</h2>
-                    <p>
-                        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore
-                        eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
-                    <p>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-                        in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                    </p>
+                    <h2 class="StepTitle">Passo 3 - Visualizar Informativo</h2>
+                    <p>&nbsp;</p>
+                    <div class="dashboard-widget-content">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                <ul class="list-unstyled timeline widget">
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a id="_PreviewTitle">Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span id="_PreviewDate">15/10/2016</span>
+                                                </div>
+                                                <p id="_PreviewMidia1"></p>
+                                                <p class="excerpt" id="_PreviewSummary">
+                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                </p>
+                                                <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#myModalPreview">Leia mais...</code></p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="block">
+                                            <div class="block_content">
+                                                <h2 class="title">
+                                                    <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                </h2>
+                                                <div class="byline">
+                                                    <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                </div>
+                                                <p class="excerpt">
+                                                    Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p id="calibrador" style="height: 300px"></p>
+                    </div>
                 </div>
                 <div id="step-4">
                     <h2 class="StepTitle">Step 4 Content</h2>
+
                     <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
                         Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
@@ -652,7 +718,7 @@
                     <div class="row clearfix">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" /> 
+                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" />
                                 <input type="button" onclick="window.location = '../Informativo/Browse'" class="btn btn-default" value="Cancelar" />
                             </div>
                         </div>
@@ -698,6 +764,23 @@
     </div>
 </div>
 <!-- /.modal -->
+<div id="myModalPreview" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content hidden-xs">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                <h3 class="modal-title" id="myModalLabelPreview"></h3>
+            </div>
+            <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / modal preview-->
 
 <link href="~/Content/css/jquery.fileupload.css" rel="stylesheet" />
 <script src="~/Scripts/fileUpload/jquery.ui.widget.js"></script>
@@ -742,13 +825,13 @@
 
                 if (data.result.type == 'image/jpeg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
                     $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
-                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
+                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
                     $('#caralho').html('<img src="../Temp/' + data.result.name + '" id="image" alt="Picture">');
                     coco();
                 }
                 else if (data.result.type == 'application/pdf') {
                     $('#' + _myModal + '-body').html('<iframe style="height: 480px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
-                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\')"></span>');
+                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
                 }
                 $('.modal-title').html(data.result.nome_original);
                 //_fileHidden = fileBoleto
@@ -767,10 +850,7 @@
             $('#' + _progress + ' #' + _progress + '-bar').css('width', progress + '%');
         });
     }
-
-
 </script>
-
 
 <!-- FileUpload-->
 <script type="text/javascript">
@@ -783,41 +863,38 @@
 <!--Summernote-->
 <script>
     $(document).ready(function () {
-        $('#MensagemDetalhada').summernote({
+        $('#summernote1').summernote({
             lang: 'pt-BR',
-            height: 200,
-            toolbar: [
-               // [groupName, [list of button]]
-               ['style', ['bold', 'italic', 'underline', 'clear']],
-               ['font', ['strikethrough', 'superscript', 'subscript']],
-               ['fontsize', ['fontsize']],
-               ['color', ['color']],
-               ['para', ['ul', 'ol', 'paragraph']],
-               ['height', ['height']]
-            ]
+            height: 100,
+            //toolbar: [
+            //   // [groupName, [list of button]]
+            //   ['style', ['bold', 'italic', 'underline', 'clear']],
+            //   ['font', ['strikethrough', 'superscript', 'subscript']],
+            //   ['fontsize', ['fontsize']],
+            //   ['color', ['color']],
+            //   ['para', ['ul', 'ol', 'paragraph']],
+            //   ['height', ['height']]
+            //]
         });
+        $('#Resumo').html('@Model.Resumo');
+        $('#summernote1').summernote('code', $('#Resumo').val());
 
-        $('#Resumo').summernote({
+        $('#summernote2').summernote({
             lang: 'pt-BR',
-            height: 70, 
-            toolbar: [
-               // [groupName, [list of button]]
-               ['style', ['bold', 'italic', 'underline', 'clear']],
-               ['font', ['strikethrough', 'superscript', 'subscript']],
-               ['fontsize', ['fontsize']],
-               ['color', ['color']],
-               ['para', ['ul', 'ol', 'paragraph']],
-               ['height', ['height']]
-            ]
+            height: 450,
+            //toolbar: [
+            //   // [groupName, [list of button]]
+            //   ['style', ['bold', 'italic', 'underline', 'clear']],
+            //   ['font', ['strikethrough', 'superscript', 'subscript']],
+            //   ['fontsize', ['fontsize']],
+            //   ['color', ['color']],
+            //   ['para', ['ul', 'ol', 'paragraph']],
+            //   ['height', ['height']]
+            //]
         });
+        $('#MensagemDetalhada').html('@Model.MensagemDetalhada');
+        $('#summernote2').summernote('code', $('#MensagemDetalhada').val());
     });
-
-    function contaChar() {
-        var text = $("#Resumo").val();
-        alert(text);
-        var count = text.length;
-        $("#contadorResumo").text(count + ' / 500');
-    }
 
     function contaCharCabec() {
         var text = $("#Cabecalho").val();
@@ -825,8 +902,11 @@
         $("#contadorCabec").text(count + ' / 30');
     }
 
-
-
+    function Valida() {
+        $('#Resumo').val($('#summernote1').summernote('code'));
+        $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
+        return true;
+    }
 </script>
 
 <!-- jQuery Smart Wizard -->
@@ -841,6 +921,10 @@
         $('.buttonNext').addClass('btn btn-default');
         $('.buttonPrevious').addClass('btn btn-default');
         $('.buttonFinish').addClass('btn btn-success');
+
+        $('.buttonNext').click(function() {
+            Preview();
+        });
       });
 </script>
 <!-- /jQuery Smart Wizard -->
@@ -1013,27 +1097,27 @@
                 return;
             }
 
-            switch (e.which) {
-                case 37:
-                    e.preventDefault();
-                    $image.cropper('move', -1, 0);
-                    break;
+            //switch (e.which) {
+            //    case 37:
+            //        e.preventDefault();
+            //        $image.cropper('move', -1, 0);
+            //        break;
 
-                case 38:
-                    e.preventDefault();
-                    $image.cropper('move', 0, -1);
-                    break;
+            //    case 38:
+            //        e.preventDefault();
+            //        $image.cropper('move', 0, -1);
+            //        break;
 
-                case 39:
-                    e.preventDefault();
-                    $image.cropper('move', 1, 0);
-                    break;
+            //    case 39:
+            //        e.preventDefault();
+            //        $image.cropper('move', 1, 0);
+            //        break;
 
-                case 40:
-                    e.preventDefault();
-                    $image.cropper('move', 0, 1);
-                    break;
-            }
+            //    case 40:
+            //        e.preventDefault();
+            //        $image.cropper('move', 0, 1);
+            //        break;
+            //}
         });
 
         // Import image
@@ -1076,4 +1160,33 @@
 </script>
 <!-- /Cropper -->
 
+<!-- Preview -->
+<script>
+    function Preview() {
+        var path_fileMidia1 = '<img src="../Temp/' + $('#fileMidia1').val() + '" class="img-responsive" alt="Responsive image" />';
+        var path_fileMidia2 = '<img src="../Temp/' + $('#fileMidia2').val() + '" class="img-responsive" alt="Responsive image" />';
 
+        $('#Resumo').val($('#summernote1').summernote('code'));
+        $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
+
+        $("#_PreviewTitle").html($('#Cabecalho').val())
+        $("#_PreviewDate").html($('#DataPublicacao').val())
+        $("#_PreviewSummary").html($('#Resumo').val().substr(0, 500) + "...")
+
+        $("#myModalLabelPreview").html($('#Cabecalho').val())
+        if ($('#fileMidia2').val() != '')
+        {
+            $('#myModal1-body-preview').html("<p>" + path_fileMidia2 + "</p>" + $('#MensagemDetalhada').val());
+            $('#readmore').show();
+        }
+        else
+        {
+            $('#myModal1-body-preview').html($('#MensagemDetalhada').val());
+            $('#readmore').hide();
+        }
+        $('#_PreviewMidia1').html('');
+        if ($('#fileMidia1').val() != '') {
+            $('#_PreviewMidia1').html(path_fileMidia1);
+        }
+    }
+</script>

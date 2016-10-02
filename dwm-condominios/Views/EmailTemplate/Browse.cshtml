@@ -1,0 +1,24 @@
+﻿@using App_Dominio.Repositories
+@model PagedList<DWM.Models.Repositories.EmailTemplateViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../EmailTemplate/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Modelos de E-mail", Descricao = "modelos de mensagens para envio de e-mail", Transacao = t })
+        <div class="x_content">
+            <div id="div-email-template">
+                @Html.Partial("List", Model)
+            </div>
+            <div class="altura-35">
+                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "EmailTemplate", buttonType = "link" } })
+            </div>
+        </div>
+    </div>
+</div>
+
