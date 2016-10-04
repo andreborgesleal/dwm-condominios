@@ -159,6 +159,49 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> EmailTemplates(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            // params[2] -> Condominio
+            // params[3] -> EmailTipo (Informativo, Cadastro, etc.)
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int _CondominioID = 0;
+            int _EmailTipoID = 0;
+
+            if (param.Count() > 2)
+                _CondominioID = (int)param[2];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            if (param.Count() > 3)
+                _EmailTipoID = (int)param[3];
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from t in db.EmailTemplates.AsEnumerable()
+                            where t.CondominioID == _CondominioID && (_EmailTipoID == 0 || t.EmailTipoID == _EmailTipoID)
+                            orderby t.Nome
+                            select new SelectListItem()
+                            {
+                                Value = t.EmailTemplateID.ToString(),
+                                Text = t.Nome,
+                                Selected = (selectedValue != "" ? t.EmailTemplateID.ToString() == selectedValue : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Profissoes(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

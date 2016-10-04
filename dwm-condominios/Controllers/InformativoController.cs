@@ -1,7 +1,9 @@
 ﻿using App_Dominio.Controllers;
 using App_Dominio.Models;
+using App_Dominio.Pattern;
 using App_Dominio.Security;
 using DWM.Models.Entidades;
+using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
 using System;
@@ -61,6 +63,22 @@ namespace DWM.Controllers
         public ActionResult Delete(int informativoID)
         {
             return Edit(informativoID);
+        }
+        #endregion
+
+        #region Retorna o modelo do template
+        [AllowAnonymous]
+        public JsonResult GetNames(int EmailTemplateID)
+        {
+            Facade<EmailTemplateViewModel, EmailTemplateModel, ApplicationContext> facade = new Facade<EmailTemplateViewModel, EmailTemplateModel, ApplicationContext>();
+            var results = facade.getObject(new EmailTemplateViewModel() { EmailTemplateID = EmailTemplateID });
+
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
         }
         #endregion
     }

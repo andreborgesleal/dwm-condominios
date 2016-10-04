@@ -55,6 +55,8 @@ namespace DWM.Models.Repositories
 
         public string InformativoAnuncio { get; set; }
 
+        public string EmailMensagem { get; set; }
+
         public string PathArquivos
         {
             get
