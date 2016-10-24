@@ -22,5 +22,6 @@ namespace DWM.Models.Entidades
         public DbSet<EmailTipo> EmailTipos { get; set; }
         public DbSet<EmailTemplate> EmailTemplates { get; set; }
         public DbSet<EmailLog> EmailLogs { get; set; }
+        public DbSet<GrupoCondominoUsuario> GrupoCondominoUsuarios { get; set; }
     }
 }

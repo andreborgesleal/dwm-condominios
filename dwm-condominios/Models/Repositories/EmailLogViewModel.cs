@@ -37,5 +37,9 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Mensagem do E-mail")]
         public string EmailMensagem { get; set; }
+
+        public string Nome { get; set; }
+
+        public string Email { get; set; }
     }
 }

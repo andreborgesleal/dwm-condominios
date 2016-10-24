@@ -16,6 +16,9 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Descrição deve ser informada")]
         public string Descricao { get; set; }
 
+        [DisplayName("Assunto")]
+        public string Assunto { get; set; }
+
         [DisplayName("IndTipoFixo")]
         public string IndTipoFixo { get; set; }
     }

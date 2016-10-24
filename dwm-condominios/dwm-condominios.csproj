@@ -217,6 +217,7 @@
     <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
     <Compile Include="Models\BI\EditarFuncionarioBI.cs" />
     <Compile Include="Models\BI\EditarVeiculoBI.cs" />
+    <Compile Include="Models\BI\EmailNotificacaoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\GerarTokenBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Models\Entidades\EmailTipo.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
     <Compile Include="Models\Entidades\GrupoCondomino.cs" />
+    <Compile Include="Models\Entidades\GrupoCondominoUsuario.cs" />
     <Compile Include="Models\Entidades\Informativo.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
     <Compile Include="Models\Entidades\Profissao.cs" />
@@ -260,6 +262,7 @@
     <Compile Include="Models\Persistence\EmailTemplateModel.cs" />
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoModel.cs" />
+    <Compile Include="Models\Persistence\GrupoCondominoUsuarioModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
@@ -277,6 +280,7 @@
     <Compile Include="Models\Repositories\EmailTemplateViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTipoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
+    <Compile Include="Models\Repositories\GrupoCondominoUsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\GrupoCondominoViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
     <Compile Include="Models\Repositories\InformativoViewModel.cs" />

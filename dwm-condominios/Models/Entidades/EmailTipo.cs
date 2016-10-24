@@ -18,6 +18,9 @@ namespace DWM.Models.Entidades
         [DisplayName("Descricao")]
         public string Descricao { get; set; }
 
+        [DisplayName("Assunto")]
+        public string Assunto { get; set; }
+
         [DisplayName("IndTipoFixo")]
         public string IndTipoFixo { get; set; }
     }

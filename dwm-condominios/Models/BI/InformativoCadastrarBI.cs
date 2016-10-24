@@ -33,6 +33,7 @@ namespace DWM.Models.BI
 
         public InformativoViewModel Run(Repository value)
         {
+            int EmailTipoID = int.Parse(Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO.ToString());
             InformativoViewModel r = (InformativoViewModel)value;
             InformativoViewModel result = new InformativoViewModel()
             {
@@ -53,28 +54,36 @@ namespace DWM.Models.BI
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
 
+            EmailLogViewModel EmailLogViewModel = new EmailLogViewModel()
+            {
+                uri = r.uri,
+                empresaId = sessaoCorrente.empresaId,
+                EmailTipoID = 1, // "Informativo"
+                CondominioID = sessaoCorrente.empresaId,
+                EdificacaoID = r.EdificacaoID,
+                GrupoCondominoID = r.GrupoCondominoID,
+                DataEmail = Funcoes.Brasilia(),
+                Assunto = db.EmailTipos.Find(EmailTipoID, sessaoCorrente.empresaId).Assunto,
+                EmailMensagem = r.MensagemDetalhada
+            };
 
             try
             {
-                int _empresaId = sessaoCorrente.empresaId;
-
-                VeiculoModel VeiculoModel = new VeiculoModel(this.db, this.seguranca_db);
-
-                if (Operacao == "I") // Incluir veículo
-                    result = VeiculoModel.Insert(result);
-                else if (Operacao == "S")
-                    result = VeiculoModel.Update(result);
-                else
-                    result = VeiculoModel.Delete(result);
-
+                #region Passo 1: Incluir o informativo
+                InformativoModel InformativoModel = new InformativoModel(this.db, this.seguranca_db);
+                result = InformativoModel.Insert(result);
                 if (result.mensagem.Code > 0)
                     throw new App_DominioException(result.mensagem);
+                #endregion
 
-                db.SaveChanges();
-                seguranca_db.SaveChanges();
+                #region Passo 2: Enviar o e-mail de notificação
+                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
+                EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
+                if (EmailLogViewModel.mensagem.Code > 0)
+                    throw new App_DominioException(EmailLogViewModel.mensagem);
+                #endregion
 
-                result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
-
+                result.mensagem.Code = 0; 
             }
             catch (ArgumentException ex)
             {
@@ -142,8 +151,7 @@ namespace DWM.Models.BI
 
         public IEnumerable<InformativoViewModel> List(params object[] param)
         {
-            ListViewVeiculos ListVeiculos = new ListViewVeiculos(this.db, this.seguranca_db);
-            return ListVeiculos.Bind(0, 50, param);
+            throw new NotImplementedException();
         }
 
         public IPagedList PagedList(int? index, int pageSize = 50, params object[] param)

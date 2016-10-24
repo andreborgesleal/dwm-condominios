@@ -6,7 +6,7 @@ using System.Web;
 
 namespace DWM.Models.Enumeracoes
 {
-    public class Enumeradores
+    public static class Enumeradores
     {
         public enum Param
         {
@@ -17,6 +17,34 @@ namespace DWM.Models.Enumeracoes
             HABILITA_EMAIL = 5,
             GRUPO_CREDENCIADO = 6
         }
+
+        public enum EmailTipo
+        {
+            [StringDescription("Informativo")]
+            [StringValue("1")]
+            INFORMATIVO,
+
+            [StringDescription("Cadastro Condômino")]
+            [StringValue("2")]
+            CADASTRO_CONDOMINO,
+
+            [StringDescription("Cadastro Convite (token)")]
+            [StringValue("3")]
+            CADASTRO_CONVITE,
+
+            [StringDescription("Cadastro Proprietário")]
+            [StringValue("4")]
+            CADASTRO_PROPRIETARIO,
+
+            [StringDescription("Cadastro Credenciado")]
+            [StringValue("5")]
+            CADASTRO_CREDENCIADO,
+
+            [StringDescription("Chamado")]
+            [StringValue("6")]
+            CHAMADO,
+        }
+
     }
 }
 
