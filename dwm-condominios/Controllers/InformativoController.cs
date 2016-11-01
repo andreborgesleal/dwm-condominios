@@ -2,6 +2,7 @@
 using App_Dominio.Models;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
+using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
@@ -24,6 +25,12 @@ namespace DWM.Controllers
             return "Listar";
         }
         #endregion
+
+        public override InformativoViewModel Insert(InformativoViewModel value)
+        {
+            Factory<InformativoViewModel, ApplicationContext> facade = new Factory<InformativoViewModel, ApplicationContext>();
+            return facade.Execute(new InformativoCadastrarBI(), value);
+        }
 
         #region List
         [AuthorizeFilter]

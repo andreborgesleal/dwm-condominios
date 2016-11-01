@@ -22,27 +22,27 @@ namespace DWM.Models.Enumeracoes
         {
             [StringDescription("Informativo")]
             [StringValue("1")]
-            INFORMATIVO,
+            INFORMATIVO = 1,
 
             [StringDescription("Cadastro Condômino")]
             [StringValue("2")]
-            CADASTRO_CONDOMINO,
+            CADASTRO_CONDOMINO = 2,
 
             [StringDescription("Cadastro Convite (token)")]
             [StringValue("3")]
-            CADASTRO_CONVITE,
+            CADASTRO_CONVITE = 3,
 
             [StringDescription("Cadastro Proprietário")]
             [StringValue("4")]
-            CADASTRO_PROPRIETARIO,
+            CADASTRO_PROPRIETARIO = 4,
 
             [StringDescription("Cadastro Credenciado")]
             [StringValue("5")]
-            CADASTRO_CREDENCIADO,
+            CADASTRO_CREDENCIADO = 5,
 
             [StringDescription("Chamado")]
             [StringValue("6")]
-            CHAMADO,
+            CHAMADO = 6,
         }
 
     }

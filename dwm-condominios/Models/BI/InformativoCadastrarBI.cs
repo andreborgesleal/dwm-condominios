@@ -17,13 +17,8 @@ namespace DWM.Models.BI
 {
     public class InformativoCadastrarBI : DWMContext<ApplicationContext>, IProcess<InformativoViewModel, ApplicationContext>
     {
-        private string Operacao { get; set; }
-
         #region Constructor
-        public InformativoCadastrarBI(string operacao)
-        {
-            this.Operacao = operacao;
-        }
+        public InformativoCadastrarBI() { }
 
         public InformativoCadastrarBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
@@ -33,7 +28,7 @@ namespace DWM.Models.BI
 
         public InformativoViewModel Run(Repository value)
         {
-            int EmailTipoID = int.Parse(Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO.ToString());
+            int EmailTipoID = (int)Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO;
             InformativoViewModel r = (InformativoViewModel)value;
             InformativoViewModel result = new InformativoViewModel()
             {
@@ -58,7 +53,7 @@ namespace DWM.Models.BI
             {
                 uri = r.uri,
                 empresaId = sessaoCorrente.empresaId,
-                EmailTipoID = 1, // "Informativo"
+                EmailTipoID = EmailTipoID, // "Informativo"
                 CondominioID = sessaoCorrente.empresaId,
                 EdificacaoID = r.EdificacaoID,
                 GrupoCondominoID = r.GrupoCondominoID,
@@ -82,6 +77,9 @@ namespace DWM.Models.BI
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
                 #endregion
+
+                db.SaveChanges();
+                seguranca_db.SaveChanges();
 
                 result.mensagem.Code = 0; 
             }

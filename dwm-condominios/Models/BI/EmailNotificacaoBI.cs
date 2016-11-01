@@ -30,6 +30,7 @@ namespace DWM.Models.BI
         public EmailLogViewModel Run(Repository value)
         {
             EmailLogViewModel log = (EmailLogViewModel)value;
+            log.mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso" };
             string habilitaEmail = db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.HABILITA_EMAIL).Valor;
             if (habilitaEmail == "S")
             {
