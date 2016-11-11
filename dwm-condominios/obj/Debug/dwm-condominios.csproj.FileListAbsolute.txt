@@ -179,7 +179,6 @@ C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condomini
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
-C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\ApplicationInsights.config
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe
@@ -279,3 +278,17 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.SqlSer
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.pdb
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.rsp
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csi.exe
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csi.rsp
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.AppContext.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp

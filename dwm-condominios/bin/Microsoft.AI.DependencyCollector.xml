@@ -4,9 +4,105 @@
         <name>Microsoft.AI.DependencyCollector</name>
     </assembly>
     <members>
+        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.PretendProfilerIsAttached">
+            <summary>
+            Gets or sets a value indicating whether pretending the profiler is attached or not.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.BeginTracking(Microsoft.ApplicationInsights.TelemetryClient)">
+            <summary>
+            The function that needs to be called before sending a request to the server. Creates and initializes dependency telemetry item.
+            </summary>
+            <param name="telemetryClient">Telemetry client object to initialize the context of the telemetry item.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.EndTracking(Microsoft.ApplicationInsights.TelemetryClient,Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry)">
+            <summary>
+            Function that needs to be invoked after the request call to the sever. Computes the duration of the request and tracks the dependency telemetry
+            item.
+            </summary>
+            <param name="telemetryClient">Telemetry client object to track the telemetry item.</param>
+            <param name="telemetry">Telemetry item to compute the duration and track.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.GetTupleForWebDependencies(System.Net.WebRequest)">
+            <summary>
+            Gets the tuple from either conditional weak table or cache (based on the framework for the input web request).
+            </summary>
+            <param name="webRequest">Target web request.</param>
+            <returns>Tuple of dependency telemetry and a boolean that tells if the tuple is custom created or not.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.AddTupleForWebDependencies(System.Net.WebRequest,Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Boolean)">
+            <summary>
+            Adds the tuple to either conditional weak table or cache (based on the framework for the input web request).
+            </summary>
+            <param name="webRequest">Target web request.</param>
+            <param name="telemetry">Dependency telemetry item to add to the table for the corresponding web request.</param>
+            <param name="isCustomCreated">Boolean value that tells if the current telemetry item is being added by the customer or not.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.GetTupleForSqlDependencies(System.Data.SqlClient.SqlCommand)">
+            <summary>
+            Gets the tuple from either conditional weak table or cache (based on the framework for the input SQL request).
+            </summary>
+            <param name="sqlRequest">Target SQL request.</param>
+            <returns>Tuple of dependency telemetry and a boolean that tells if the tuple is custom created or not.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.AddTupleForSqlDependencies(System.Data.SqlClient.SqlCommand,Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Boolean)">
+            <summary>
+            Adds the tuple to either conditional weak table or cache (based on the framework for the input SQL request).
+            </summary>
+            <param name="sqlRequest">Target SQL request.</param>
+            <param name="telemetry">Dependency telemetry item to add to the table for the corresponding SQL request.</param>
+            <param name="isCustomCreated">Boolean value that tells if the current telemetry item is being added by the customer or not.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.WebRequestDependencyTrackingHelpers">
+            <summary>
+            Client-Server dependency tracking.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.WebRequestDependencyTrackingHelpers.SetUserAndSessionContextForWebRequest(Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Net.WebRequest)">
+            <summary>
+            Populates WebRequest using the user, session initialized in telemetry item.
+            </summary>
+            <param name="dependencyTelemetry">Dependency telemetry item.</param>
+            <param name="webRequest">Http web request.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.WebRequestDependencyTrackingHelpers.SetCorrelationContextForWebRequest(Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Net.WebRequest)">
+            <summary>
+            Populates WebRequest using the operation context in telemetry item.
+            </summary>
+            <param name="dependencyTelemetry">Dependency telemetry item.</param>
+            <param name="webRequest">Http web request.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.WebRequestDependencyTrackingHelpers.CreateAndAddCookie(System.Net.WebRequest,System.String,System.String)">
+            <summary>
+            Creates and adds cookie to the web request.
+            </summary>
+            <param name="webRequest">Web request object.</param>
+            <param name="key">Cookie key.</param>
+            <param name="value">Cookie value.</param>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource">
             <summary>
             ETW EventSource tracing class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource.DependencyTelemetryItemIsNullWarning(System.String)">
+            <summary>
+            Logs the information when the DependencyTelemetry item is null as warning.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource.WebRequestIsNullWarning(System.String)">
+            <summary>
+            Logs the information when the HttpWebRequest is null as warning.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource.TrackingAnExistingTelemetryItemVerbose(System.String)">
+            <summary>
+            Logs the information when a telemetry item that is already existing in the tables (that is currently being tracked) is tracked again.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource.TelemetryToTrackIsNullWarning(System.String)">
+            <summary>
+            Logs the information when the telemetry item to track is null.
             </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.DependencyCollectorEventSource.Keywords">
@@ -27,6 +123,11 @@
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener">
             <summary>
             Provides methods for listening to events from FrameworkEventSource for HTTP.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener.HttpProcessingFramework">
+            <summary>
+            The Http processor.
             </summary>
         </member>
         <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener.FrameworkEventSourceName">
@@ -52,11 +153,6 @@
         <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener.EndGetRequestStreamEventId">
             <summary>
             EndGetRequestStream Event ID.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener.httpProcessingFramework">
-            <summary>
-            The Http processor.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpEventListener.Dispose">
@@ -96,18 +192,19 @@
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpProcessing.OnBeginHttpCallback(System.Int64,System.String)">
             <summary>
-            On begin callback from FX.
+            On begin callback from Framework event source.
             </summary>
             <param name="id">This object.</param>
             <param name="resourceName">URI of the web request.</param>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpProcessing.OnEndHttpCallback(System.Int64,System.Nullable{System.Boolean},System.Boolean)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpProcessing.OnEndHttpCallback(System.Int64,System.Nullable{System.Boolean},System.Boolean,System.Nullable{System.Int32})">
             <summary>
-            On end callback from FX.
+            On end callback from Framework event source.
             </summary>
             <param name="id">The id.</param>
             <param name="success">The success to indicate if the dependency call completed successfully or not.</param>
             <param name="synchronous">The synchronous flag to indicate if the dependency call was synchronous or not.</param>
+            <param name="statusCode">The HTTP status code of the response.</param>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkHttpProcessing.Dispose">
             <summary>
@@ -117,10 +214,10 @@
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing">
             <summary>
             Concrete class with all processing logic to generate RDD data from the calls backs
-            received from Profiler instrumentation for HTTP.   
+            received from Profiler instrumentation for HTTP .   
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,System.String)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,System.String,Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ObjectInstanceBasedOperationHolder)">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing"/> class.
             </summary>
@@ -215,12 +312,12 @@
             <param name="asyncResult">The asyncResult parameter.</param>
             <param name="transportContext">The transportContext parameter.</param>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.GetResourceName(System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.GetUrl(System.Net.WebRequest)">
             <summary>
-            Gets HTTP request resource name.
+            Gets HTTP request url.
             </summary>
-            <param name="thisObj">Represents web request.</param>
-            <returns>The resource name if possible otherwise empty string.</returns>
+            <param name="webRequest">Represents web request.</param>
+            <returns>The url if possible otherwise empty string.</returns>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.OnBegin(System.Object,System.Boolean)">
             <summary>
@@ -230,51 +327,19 @@
             <param name="isAsyncCall">Indicates if the method used is async or not.</param>        
             <returns>Null object as all context is maintained in this class via weak tables.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.OnEnd(System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerHttpProcessing.OnEnd(System.Object,System.Object,System.Object)">
             <summary>
             Common helper for all End Callbacks.
             </summary>        
             <param name="exception">The exception object if any.</param>
             <param name="thisObj">This object.</param>                
+            <param name="returnValue">Return value of the function if any.</param>
         </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1">
             <summary>
             The implementation of cache provider for Windows Phone and Windows Store as MemoryCache is not available there.
             </summary>
             <typeparam name="TValue">Type of items to store in the cache.</typeparam>
-        </member>
-        <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1">
-            <summary>
-            Represents an object cache and provides the base methods and properties for accessing the object cache.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Contains(System.Int64)">
-            <summary>
-            Checks whether the cache entry already exists in the cache.
-            </summary>
-            <param name="key">A unique identifier for the cache entry.</param>
-            <returns>true if the cache contains a cache entry with the same key value as key; otherwise, false.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Get(System.Int64)">
-            <summary>
-            Gets the specified cache entry from the cache.
-            </summary>
-            <param name="key">A unique identifier for the cache entry.</param>
-            <returns>A reference to the cache entry identified by key if the entry exists; otherwise, null.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Set(System.Int64,`0)">
-            <summary>
-            Inserts a cache entry into the cache.
-            </summary>
-            <param name="key">A unique identifier for the cache entry.</param>
-            <param name="value">The object to insert.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Remove(System.Int64)">
-            <summary>
-            Removes the cache entry from the cache.
-            </summary>
-            <param name="key">A unique identifier for the cache entry.</param>
-            <returns>True if the element is successfully found and removed; otherwise, false. This method returns false if key is not found.</returns>
         </member>
         <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1.readerWriterLock">
             <summary>
@@ -308,7 +373,7 @@
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1.#ctor(System.Int32,System.Int32,System.Boolean)">
             <summary>
-             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1"/> class.
+             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1" /> class.
             </summary>
             <param name="expirationMilliseconds">Expiration timeout in milliseconds for an object to live in the cache.</param>
             <param name="maxSize">Maximum number of entries to cache (adjustable at runtime with MaxSize property).</param>
@@ -368,7 +433,7 @@
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1.MemoryCacheEntry.#ctor(System.Int64,`0)">
             <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1.MemoryCacheEntry"/> class.
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheProvider`1.MemoryCacheEntry" /> class.
             </summary>
             <param name="key">The key of the element.</param>
             <param name="value">The value of the element.</param>
@@ -401,6 +466,39 @@
             <param name="y">The second object to compare.</param>
             <returns>A signed integer that indicates the relative values of x and y, as shown in the following table.</returns>
         </member>
+        <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1">
+            <summary>
+            Represents an object cache and provides the base methods and properties for accessing the object cache.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Contains(System.Int64)">
+            <summary>
+            Checks whether the cache entry already exists in the cache.
+            </summary>
+            <param name="key">A unique identifier for the cache entry.</param>
+            <returns>true if the cache contains a cache entry with the same key value as key; otherwise, false.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Get(System.Int64)">
+            <summary>
+            Gets the specified cache entry from the cache.
+            </summary>
+            <param name="key">A unique identifier for the cache entry.</param>
+            <returns>A reference to the cache entry identified by key if the entry exists; otherwise, null.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Set(System.Int64,`0)">
+            <summary>
+            Inserts a cache entry into the cache.
+            </summary>
+            <param name="key">A unique identifier for the cache entry.</param>
+            <param name="value">The object to insert.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ICacheProvider`1.Remove(System.Int64)">
+            <summary>
+            Removes the cache entry from the cache.
+            </summary>
+            <param name="key">A unique identifier for the cache entry.</param>
+            <returns>True if the element is successfully found and removed; otherwise, false. This method returns false if key is not found.</returns>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.OperationWatch">
             <summary>
             Single high precision clock used by operations.
@@ -421,6 +519,11 @@
             The time clock started.
             </summary>
         </member>
+        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.OperationWatch.ElapsedTicks">
+            <summary>
+            Gets number of ticks elapsed on the clock since the start.
+            </summary>
+        </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.OperationWatch.Duration(System.Int64,System.Int64)">
             <summary>
             Calculates time between two clock readings.
@@ -435,11 +538,6 @@
             </summary>
             <param name="elapsedTicks">Ticks elapsed according to operation watch.</param>
             <returns>Date time structure representing the date and time that corresponds to the operation clock reading.</returns>
-        </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.OperationWatch.ElapsedTicks">
-            <summary>
-            Gets number of ticks elapsed on the clock since the start.
-            </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1">
             <summary>
@@ -462,6 +560,18 @@
             Initializes a new instance of the SortedList class that is empty.
             </summary>
             <param name="comparer">The IComparer implementation to use when comparing elements.</param>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1.Count">
+            <summary>
+            Gets the number of elements contained in a SortedList object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1.Item(System.Int32)">
+            <summary>
+            Gets the element at a specified index in a sequence.
+            </summary>
+            <param name="index">The zero-based index of the element to get.</param>
+            <returns>The element at the specified position in the source sequence.</returns>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1.GetEnumerator">
             <summary>
@@ -501,18 +611,6 @@
             <param name="found">True if value is found in the list, otherwise false.</param>
             <returns>The index of value if found in the list; otherwise, the index of value where it needs to be inserted.</returns>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1.Count">
-            <summary>
-            Gets the number of elements contained in a SortedList object.
-            </summary>
-        </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.SortedList`1.Item(System.Int32)">
-            <summary>
-            Gets the element at a specified index in a sequence.
-            </summary>
-            <param name="index">The zero-based index of the element to get.</param>
-            <returns>The element at the specified position in the source sequence.</returns>
-        </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ApplicationInsightsUrlFilter.IsApplicationInsightsUrl(System.String)">
             <summary>
             Determines whether an URL is application insights URL.
@@ -523,6 +621,11 @@
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener">
             <summary>
             Provides methods for listening to events from FrameworkEventSource for SQL.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener.SqlProcessingFramework">
+            <summary>
+            The SQL processor.
             </summary>
         </member>
         <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener.AdoNetEventSourceName">
@@ -538,11 +641,6 @@
         <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener.EndExecuteEventId">
             <summary>
             EndExecute Event ID.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener.sqlProcessingFramework">
-            <summary>
-            The SQL processor.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlEventListener.Dispose">
@@ -574,27 +672,28 @@
             </summary>
             <param name="eventData">The event arguments that describe the event.</param>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.CacheBasedOperationHolder)">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing"/> class.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.OnBeginExecuteCallback(System.Int64,System.String,System.String,System.String)">
             <summary>
-            On begin callback from FX.
+            On begin callback from Framework event source.
             </summary>
             <param name="id">Identifier of SQL connection object.</param>
             <param name="dataSource">Data source name.</param>
             <param name="database">Database name.</param>
             <param name="commandText">Command text.</param>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.OnEndExecuteCallback(System.Int64,System.Boolean,System.Boolean)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.OnEndExecuteCallback(System.Int64,System.Boolean,System.Boolean,System.Int32)">
             <summary>
-            On end callback from FX.
+            On end callback from Framework event source.
             </summary>        
             <param name="id">Identifier of SQL connection object.</param>
             <param name="success">Indicate whether operation completed successfully.</param>
             <param name="synchronous">Indicates whether operation was called synchronously or asynchronously.</param>
+            <param name="sqlExceptionNumber">SQL exception number.</param>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.FrameworkSqlProcessing.GetResourceName(System.String,System.String,System.String)">
             <summary>
@@ -611,7 +710,7 @@
             received from Profiler instrumentation for SQL.    
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,System.String)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.#ctor(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration,System.String,Microsoft.ApplicationInsights.DependencyCollector.Implementation.Operation.ObjectInstanceBasedOperationHolder)">
             <summary>
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing"/> class.
             </summary>
@@ -760,20 +859,26 @@
             Remote dependency monitoring.
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.#ctor">
+        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.DisableRuntimeInstrumentation">
             <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule"/> class.
+            Gets or sets a value indicating whether to disable runtime instrumentation.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.Dispose">
             <summary>
-            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            IDisposable implementation.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
             <summary>
             Initialize method is called after all configuration properties have been loaded from the configuration.
             </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.Dispose(System.Boolean)">
+            <summary>
+            IDisposable implementation.
+            </summary>
+            <param name="disposing">The method has been called directly or indirectly by a user's code.</param>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.InitializeForFrameworkEventSource">
             <summary>
@@ -785,20 +890,30 @@
             Initialize for runtime instrumentation or framework event source.
             </summary>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.SamplingRatio">
+        <member name="T:Microsoft.ApplicationInsights.DependencyCollector.TelemetryExtensionsForDependencyCollector">
             <summary>
-            Gets or sets sampling ratio. This property is obsolete and will not have any effect of data collection.
+            Dependency Telemetry extension methods to associate with request objects and to store in conditional/cache tables to avoid duplicate tracking.
             </summary>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.DisableRuntimeInstrumentation">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.TelemetryExtensionsForDependencyCollector.AssociateTelemetryWithWebRequest(Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Net.WebRequest,System.Boolean,System.Boolean)">
             <summary>
-            Gets or sets a value indicating whether to disable runtime instrumentation.
+            Associates telemetry item to a web request to avoid duplicate tracking, and populates cookies with data from initialized telemetry item if setCookies is set to true.
+            When there is an existing telemetry item in the corresponding to the given WEB REQUEST, we return the existing telemetry and associate the same with the WEB REQUEST.
             </summary>
+            <param name="telemetry">Telemetry object that needs to be associated with the web request.</param>
+            <param name="webRequest">Web request object which we use to populate from the information obtained from the initialized telemetry.</param>
+            <param name="setCookies">Set cookies enables the process of setting the cookies to the web request. By default it is set to false.</param>
+            <param name="setCorrelationContext">Set request headers to correlate dependency telemetry item with the request telemetry item that will process this http request.</param>
+            <returns>Dependency telemetry item with an associated dependency telemetry item.</returns>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule.PretendProfilerIsAttached">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.TelemetryExtensionsForDependencyCollector.AssociateTelemetryWithSqlRequest(Microsoft.ApplicationInsights.DataContracts.DependencyTelemetry,System.Data.SqlClient.SqlCommand)">
             <summary>
-            Gets or sets a value indicating whether pretending the profiler is attached or not.
+            Associates telemetry item to a SQL command object to to avoid duplicate tracking.
+            When there is an existing telemetry item in the corresponding to the given SQL REQUEST, we return the existing telemetry and associate the same with the SQL REQUEST.
             </summary>
+            <param name="telemetry">Telemetry object that needs to be associated with the web request.</param>
+            <param name="sqlRequest">SQL request object which is used as a key to store in the tables.</param>
+            <returns>Dependency telemetry item with an associated dependency telemetry item.</returns>
         </member>
     </members>
 </doc>

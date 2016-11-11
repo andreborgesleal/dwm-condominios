@@ -4,75 +4,12 @@
         <name>Microsoft.AI.Web</name>
     </assembly>
     <members>
-        <member name="T:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule">
+        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.HttpRequestExtensions">
             <summary>
-            Platform agnostic module for web application instrumentation.
+            HttpRequest Extensions.
             </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.platformAdapter">
             <summary>
-            Web platform adapter instance.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.isEnabled">
-            <summary>
-            Indicates if module initialized successfully.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule"/> class.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.Init(System.Web.HttpApplication)">
-            <summary>
-            Initializes module for a given application.
-            </summary>
-            <param name="context">HttpApplication instance.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.Dispose">
-            <summary>
-            Required IDisposable implementation.
-            </summary>
-        </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch">
-            <summary>
-            Single high precision clock used by operations.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.Watch">
-            <summary>
-            High precision stopwatch.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.HundredNanosecondsPerTick">
-            <summary>
-            Number of 100 nanoseconds per high-precision clock tick.
-            </summary>
-        </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.StartTime">
-            <summary>
-            The time clock started.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.Duration(System.Int64,System.Int64)">
-            <summary>
-            Calculates time between two clock readings.
-            </summary>
-            <param name="fromTicks">Start time in ticks.</param>
-            <param name="toTicks">End time in ticks.</param>
-            <returns>Time between two clock readings.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.Timestamp(System.Int64)">
-            <summary>
-            Converts time on the operation clock (in ticks) to date and time structure.
-            </summary>
-            <param name="elapsedTicks">Ticks elapsed according to operation watch.</param>
-            <returns>Date time structure representing the date and time that corresponds to the operation clock reading.</returns>
-        </member>
-        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.OperationWatch.ElapsedTicks">
-            <summary>
-            Gets number of ticks elapsed on the clock since the start.
+            HttpRequest Extensions.
             </summary>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.Implementation.RequestTrackingConstants">
@@ -91,46 +28,31 @@
             and it produces extra request, which should not be counted.
             </summary>
         </member>
+        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.RequestTrackingConstants.WebAuthenticatedUserCookieName">
+            <summary>
+            The name of the cookie which holds authenticated user context information.
+            </summary>
+        </member>
         <member name="M:Microsoft.ApplicationInsights.Web.Implementation.RequestTrackingExtensions.CreateRequestNamePrivate(System.Web.HttpContext)">
             <summary>
             Creates request name on the base of HttpContext.
             </summary>
             <returns>Controller/Action for MVC or path for other cases.</returns>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager">
+        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.SyntheticUserAgentFilter">
             <summary>
-            Helper class that validates requests and gets information about the request source.
+            Allows configuration of patterns for synthetic traffic filters.
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager.IsSynthetic(System.Web.HttpContext)">
+        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.SyntheticUserAgentFilter.Pattern">
             <summary>
-            Determines if the request is from a synthetic source.
+            Gets or sets the regular expression pattern applied to the user agent string to determine whether traffic is synthetic.
             </summary>
-            <returns>True if request is synthetic.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager.GetSessionId(System.Web.HttpContext)">
+        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.SyntheticUserAgentFilter.SourceName">
             <summary>
-            Returns synthetic session id.
+            Gets or sets the readable name for the synthetic traffic source. If not provided, defaults to the pattern match.
             </summary>
-            <returns>Synthetic session id.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager.GetUserId(System.Web.HttpContext)">
-            <summary>
-            The method returns synthetic user id.
-            </summary>
-            <returns>Returns synthetic user id.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager.GetSyntheticSource(System.Web.HttpContext)">
-            <summary>
-            Returns request SyntheticSource or null if the request is not synthetic.
-            </summary>
-            <returns>Request SyntheticSource or null if the request is not synthetic.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.SyntheticTrafficManager.GetHeaderFromPlatformContext(System.Web.HttpContext,System.String)">
-            <summary>
-            Gets header from platform context by header name.
-            </summary>
-            <returns>Header value or null.</returns>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource">
             <summary>
@@ -141,46 +63,6 @@
             <summary>
             Instance of the PlatformEventSource class.
             </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.WebModuleInitializationExceptionEvent(System.String,System.String)">
-            <summary>
-            Trace exception event from ApplicationInsightsHttpModule initialization.
-            </summary>
-            <param name="excMessage">Exception message.</param>
-            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.WebModuleOnCallbackFailure(System.String,System.String,System.String)">
-            <summary>
-            Trace exception event from ApplicationInsightsHttpModule OnBegin request.
-            </summary>
-            <param name="callbackName">Callback name.</param>
-            <param name="excMessage">Exception message.</param>
-            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.WebTelemetryModuleStageExecutionStarted(System.String,System.String,System.String)">
-            <summary>
-            Stop executing web telemetry module stage.
-            </summary>
-            <param name="type">Module type.</param>
-            <param name="stageName">Stage name.</param>
-            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.WebTelemetryModuleStageExecutionStopped(System.String,System.String,System.String)">
-            <summary>
-            Stop executing web telemetry module stage.
-            </summary>
-            <param name="type">Module type.</param>
-            <param name="stageName">Stage name.</param>
-            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.WebTelemetryModuleStageExecutionFailure(System.String,System.String,System.String,System.String)">
-            <summary>
-            Error on executing web telemetry module stage.
-            </summary>
-            <param name="type">Module type.</param>
-            <param name="stageName">Stage name.</param>
-            <param name="excMsg">Exception message.</param>
-            <param name="appDomainName">Parameter is not used. Added to comply EventSource rules.</param>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords">
             <summary>
@@ -202,46 +84,54 @@
             Keyword for errors that trace at Verbose level.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords.WebModule">
+        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher">
             <summary>
-            Key word for Web Request Module initialization failures.
+            Class provides methods to post event about Web event like begin or end of the request.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords.RequestTelemetry">
+        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher.Instance">
             <summary>
-            Request telemetry keyword.
+            WebEventsPublisher static instance.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords.ExceptionTelemetry">
+        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher.Log">
             <summary>
-            Exception telemetry keyword.
+            Gets the instance of WebEventsPublisher type.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords.UserTelemetry">
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher.OnBegin">
             <summary>
-            User tracking keyword.
+            Method generates event about begin of the request.
             </summary>
         </member>
-        <member name="F:Microsoft.ApplicationInsights.Web.Implementation.WebEventSource.Keywords.SessionTelemetry">
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher.OnEnd">
             <summary>
-            Session tracking keyword.
+            Method generates event about end of the request.
             </summary>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebRequestTrackingBuilder">
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebEventsPublisher.OnError">
             <summary>
-            SDK telemetry module mapping builder and post initializer.
+            Method generates event in case if request failed.
             </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebRequestTrackingBuilder.BuildUpModules">
-            <summary>
-            Builds up request telemetry related modules and produces a list of them.
-            </summary>
-            <returns>A readonly list of initialized request tracking telemetry modules.</returns>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryInitializerBase">
             <summary>
             Base class for WebOperationTelemetryInitializers.
             </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryInitializerBase.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Base implementation of the initialization method.
+            </summary>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryInitializerBase.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryInitializerBase.ResolvePlatformContext">
             <summary>
@@ -252,6 +142,16 @@
         <member name="T:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase">
             <summary>
             Base web telemetry module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase.ModuleName">
+            <summary>
+            Gets the module name which is added to be used for internal tracing instead of GetType on each request to improve performance.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase.OnBeginRequest(Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,System.Web.HttpContext)">
@@ -275,9 +175,96 @@
             <param name="requestTelemetry">An instance of request telemetry context.</param>
             <param name="platformContext">Platform specific context.</param>
         </member>
-        <member name="P:Microsoft.ApplicationInsights.Web.Implementation.WebTelemetryModuleBase.ModuleName">
+        <member name="T:Microsoft.ApplicationInsights.Web.AccountIdTelemetryInitializer">
             <summary>
-            Gets the module name which is added to be used for internal tracing instead of GetType on each request to improve performance.
+            A telemetry initializer that will set the User properties of Context corresponding to a RequestTelemetry object.
+            User.AccountId is updated with properties derived from the RequestTelemetry.RequestTelemetry.Context.User.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.AccountIdTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule">
+            <summary>
+            Platform agnostic module for web application instrumentation.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.isEnabled">
+            <summary>
+            Indicates if module initialized successfully.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.Init(System.Web.HttpApplication)">
+            <summary>
+            Initializes module for a given application.
+            </summary>
+            <param name="context">HttpApplication instance.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule.Dispose">
+            <summary>
+            Required IDisposable implementation.
+            </summary>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.AuthenticatedUserIdTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the User properties of Context corresponding to a RequestTelemetry object.
+            User.AuthenticatedUserId is updated with properties derived from the RequestTelemetry.RequestTelemetry.Context.User.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.AuthenticatedUserIdTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will set the correlation context for all telemetry items in web application.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer"/> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer.ParentOperationIdHeaderName">
+            <summary>
+            Gets or sets the name of the header to get parent operation Id from.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer.RootOperationIdHeaderName">
+            <summary>
+            Gets or sets the name of the header to get root operation Id from.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.OperationCorrelationTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.ClientIpHeaderTelemetryInitializer">
+            <summary>
+            Telemetry initializer populates client IP address for the current request.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ClientIpHeaderTelemetryInitializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.ClientIpHeaderTelemetryInitializer"/> class.
             </summary>
         </member>
         <member name="P:Microsoft.ApplicationInsights.Web.ClientIpHeaderTelemetryInitializer.HeaderNames">
@@ -295,11 +282,45 @@
             Gets or sets a value indicating whether the first or the last IP should be used from the lists of IPs in the header.
             </summary>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.OperationIdTelemetryInitializer">
+        <member name="M:Microsoft.ApplicationInsights.Web.ClientIpHeaderTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
             <summary>
-            A telemetry initializer that will set the ID property of OperationContext corresponding to a RequestTelemetry object.
-            Operation.Id is updated with the name derived from the RequestTelemetry.RequestTelemetry.
+            Implements initialization logic.
             </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule">
+            <summary>
+            Telemetry module to collect unhandled exceptions caught by http module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule" /> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule.OnError(System.Diagnostics.Tracing.EventWrittenEventArgs)">
+            <summary>
+            Implements on error callback of http module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initializes the telemetry module.
+            </summary>
+            <param name="configuration">Telemetry configuration to use for initialization.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule.Dispose">
+            <summary>
+            Dispose method.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.ExceptionTrackingTelemetryModule.ResolvePlatformContext">
+            <summary>
+            Returns current HttpContext.
+            </summary>
+            <returns>Current HttpContext.</returns>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.OperationNameTelemetryInitializer">
             <summary>
@@ -308,12 +329,50 @@
             Operation.Name is updated with the name derived from the HttpContext.
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.IsTransferHandler(System.Web.IHttpHandler)">
+        <member name="M:Microsoft.ApplicationInsights.Web.OperationNameTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
             <summary>
-            Checks whether or not handler is a transfer handler.
+            Implements initialization logic.
             </summary>
-            <param name="handler">An instance of handler to validate.</param>
-            <returns>True if handler is a transfer handler, otherwise - False.</returns>
+            <param name="platformContext">Http context.</param>
+            <param name="rootRequestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule">
+            <summary>
+            Telemetry module tracking requests using http module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule" /> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.Handlers">
+            <summary>
+            Gets the list of handler types for which requests telemetry will not be collected
+            if request was successful.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.OnBeginRequest(System.Diagnostics.Tracing.EventWrittenEventArgs)">
+            <summary>
+            Implements on begin callback of http module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.OnEndRequest(System.Diagnostics.Tracing.EventWrittenEventArgs)">
+            <summary>
+            Implements on end callback of http module.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.Initialize(Microsoft.ApplicationInsights.Extensibility.TelemetryConfiguration)">
+            <summary>
+            Initializes the telemetry module.
+            </summary>
+            <param name="configuration">Telemetry configuration to use for initialization.</param>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.Dispose">
+            <summary>
+            Dispose method.
+            </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.NeedProcessRequest(System.Web.HttpContext)">
             <summary>
@@ -322,27 +381,94 @@
             <param name="httpContext">Current http context.</param>
             <returns>True if request needs to be processed, otherwise - False.</returns>
         </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.ResolvePlatformContext">
+            <summary>
+            Returns current HttpContext.
+            </summary>
+            <returns>Current HttpContext.</returns>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.RequestTrackingTelemetryModule.IsHandlerToFilter(System.Web.IHttpHandler)">
+            <summary>
+            Checks whether or not handler is a transfer handler.
+            </summary>
+            <param name="handler">An instance of handler to validate.</param>
+            <returns>True if handler is a transfer handler, otherwise - False.</returns>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.Web.SessionTelemetryInitializer">
             <summary>
             A telemetry initializer that will set the Session properties of Context corresponding to a RequestTelemetry object.
             Session is updated with properties derived from the RequestTelemetry.RequestTelemetry.Context.Session.
             </summary>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.SyntheticTelemetryInitializer">
+        <member name="M:Microsoft.ApplicationInsights.Web.SessionTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
             <summary>
-            A telemetry initializer that will update the User, Session and Operation contexts if request is synthetic.
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.WebTestTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will update the User, Session and Operation contexts if request originates from a web test.
             </summary>
         </member>
-        <member name="T:Microsoft.ApplicationInsights.Web.UserAgentTelemetryInitializer">
+        <member name="M:Microsoft.ApplicationInsights.Web.WebTestTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
             <summary>
-            WebUserAgentTelemetryInitializer sets Context.User.UserAgent to HttpContext.Current.Request.UserAgent string.
+            Implements initialization logic.
             </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:Microsoft.ApplicationInsights.Web.SyntheticUserAgentTelemetryInitializer">
+            <summary>
+            A telemetry initializer that determines if the request came from a synthetic source based on the user agent string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.SyntheticUserAgentTelemetryInitializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.Web.SyntheticUserAgentTelemetryInitializer" /> class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.ApplicationInsights.Web.SyntheticUserAgentTelemetryInitializer.Filters">
+            <summary>
+            Gets the configured patterns for matching synthetic traffic filters through user agent string.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.SyntheticUserAgentTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
         </member>
         <member name="T:Microsoft.ApplicationInsights.Web.UserTelemetryInitializer">
             <summary>
             A telemetry initializer that will set the User properties of Context corresponding to a RequestTelemetry object.
-            User.Id and User.AcquisitionDate are updated with properties derived from the RequestTelemetry.RequestTelemetry.Context.User.
+            User.Id are updated with properties derived from the RequestTelemetry.RequestTelemetry.Context.User.
             </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.Web.UserTelemetryInitializer.OnInitializeTelemetry(System.Web.HttpContext,Microsoft.ApplicationInsights.DataContracts.RequestTelemetry,Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Implements initialization logic.
+            </summary>
+            <param name="platformContext">Http context.</param>
+            <param name="requestTelemetry">Request telemetry object associated with the current request.</param>
+            <param name="telemetry">Telemetry item to initialize.</param>
+        </member>
+        <member name="T:System.Web.HttpContextExtension">
+            <summary>
+            HttpContextExtension class provides extensions methods for accessing Web Application Insights objects.
+            </summary>
+        </member>
+        <member name="M:System.Web.HttpContextExtension.GetRequestTelemetry(System.Web.HttpContext)">
+            <summary>
+            Provide access to request generated by Web Application Insights SDK.
+            </summary>
+            <param name="context">HttpContext instance.</param>
+            <returns>Request telemetry instance or null.</returns>
         </member>
     </members>
 </doc>
