@@ -32,6 +32,12 @@ namespace DWM.Controllers
             return facade.Execute(new InformativoCadastrarBI(), value);
         }
 
+        public override void OnCreateError(ref InformativoViewModel value, FormCollection collection)
+        {
+            base.OnCreateError(ref value, collection);
+            value.Cabecalho = collection["cabecalho"] ?? "";
+        }
+
         #region List
         [AuthorizeFilter]
         public override ActionResult List(int? index, int? pageSize = 50, string descricao = null)
