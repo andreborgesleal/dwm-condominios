@@ -149,12 +149,48 @@ namespace DWM.Models.BI
 
         public IEnumerable<InformativoViewModel> List(params object[] param)
         {
-            throw new NotImplementedException();
+            var q = (from inf in db.Informativos
+                     join cond in db.Condominios on inf.CondominioID equals cond.CondominioID
+                     join ed in db.Edificacaos on inf.EdificacaoID equals ed.EdificacaoID
+                     join gc in db.GrupoCondominos on inf.GrupoCondominoID equals gc.GrupoCondominoID
+                     //where (inf.DataInformativo <= )
+                     select new InformativoViewModel
+                     {
+                         Cabecalho = inf.Cabecalho,
+                         CondominioID = inf.CondominioID,
+                     }).ToList();
+
+            return q;
         }
 
         public IPagedList PagedList(int? index, int pageSize = 50, params object[] param)
         {
-            throw new NotImplementedException();
+
+            //throw new NotImplementedException();
+
+            int pageIndex = index ?? 0;
+
+            #region LINQ
+            var q = (from inf in db.Informativos
+                     //where (inf.DataInformativo <= )
+                     select new InformativoViewModel
+                     {
+                         Cabecalho = inf.Cabecalho,
+                         CondominioID = inf.CondominioID,
+                         GrupoCondominoID = inf.GrupoCondominoID,
+                         DataInformativo = inf.DataInformativo,
+                         DataPublicacao = inf.DataPublicacao,
+                         DataExpiracao = inf.DataExpiracao,
+                         Resumo = inf.Resumo,
+                         MensagemDetalhada = inf.MensagemDetalhada,
+                         InformativoAnuncio = inf.InformativoAnuncio,
+                         PageSize = pageSize,
+                         TotalCount = (from inf1 in db.Informativos
+                                       select inf1).Count()
+                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+
+            return new PagedList<InformativoViewModel>(q.ToList(), pageIndex, pageSize, q.Count() > 0 ? q.First().TotalCount : 0, "ListOperacaoParam", null, "div-list-static");
+            #endregion
         }
 
     }

@@ -26,6 +26,7 @@ namespace DWM.Controllers
         }
         #endregion
 
+        #region Create
         public override InformativoViewModel Insert(InformativoViewModel value)
         {
             Factory<InformativoViewModel, ApplicationContext> facade = new Factory<InformativoViewModel, ApplicationContext>();
@@ -37,7 +38,8 @@ namespace DWM.Controllers
             base.OnCreateError(ref value, collection);
             value.Cabecalho = collection["cabecalho"] ?? "";
         }
-
+        #endregion
+        
         #region List
         [AuthorizeFilter]
         public override ActionResult List(int? index, int? pageSize = 50, string descricao = null)
@@ -55,8 +57,10 @@ namespace DWM.Controllers
                     data1 = "01" + DateTime.Today.AddMonths(-1).ToString("/MM/yyyy");
                     data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("dd/MM/yyyy");
                 }
-                ListViewInformativo l = new ListViewInformativo();
-                return this._List(index, pageSize, "Browse", l, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data1).Value);
+
+                //InformativoCadastrarBI list = new InformativoCadastrarBI();
+                ListViewInformativo list = new ListViewInformativo();
+                return this._List(index, pageSize, "Browse", list, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data2).Value);
             }
             else
                 return View();
