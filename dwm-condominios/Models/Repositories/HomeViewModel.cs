@@ -12,7 +12,7 @@ namespace DWM.Models.Repositories
         public int membroId { get; set; }
         public string isAdmin { get; set; }
         public string nome { get; set; }
-        public IEnumerable<InformativoViewModel> Informativo { get; set; }
+        public IEnumerable<InformativoViewModel> Informativos { get; set; }
 
         //public IEnumerable<PanoramaViewModel> Panorama { get; set; }
         //public IEnumerable<MovimentoViewModel> Movimento { get; set; }

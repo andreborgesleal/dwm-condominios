@@ -233,6 +233,15 @@ namespace DWM.Models.Persistence
         {
             DateTime data1 = param.Count() > 0 && param[0] != null ? (DateTime)param[0] : new DateTime(1980, 1, 1);
             DateTime data2 = param.Count() > 1 && param[1] != null ? (DateTime)param[1] : Funcoes.Brasilia().Date.AddDays(30);
+            int? EdificacaoID = null;
+            int? GrupoCondominoID = null;
+
+            if (param.Count() > 2)
+            {
+                EdificacaoID = (int)param[2];
+                GrupoCondominoID = (int)param[3];
+            }
+
 
             return (from info in db.Informativos
                     join gru in db.GrupoCondominos on info.GrupoCondominoID equals gru.GrupoCondominoID into GRU
@@ -241,6 +250,8 @@ namespace DWM.Models.Persistence
                     from edi in EDI.DefaultIfEmpty()
                     where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
                             && info.CondominioID == sessaoCorrente.empresaId
+                            && (!EdificacaoID.HasValue || info.EdificacaoID == EdificacaoID)
+                            && (!GrupoCondominoID.HasValue || info.GrupoCondominoID == EdificacaoID)
                     orderby info.DataPublicacao
                     select new InformativoViewModel
                     {
