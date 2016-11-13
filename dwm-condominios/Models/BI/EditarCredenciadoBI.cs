@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class EditarCredenciadoBI : DWMContext<ApplicationContext>, IProcess<CredenciadoViewModel, ApplicationContext>
+    public class EditarCredenciadoBI : DWMContextLocal, IProcess<CredenciadoViewModel, ApplicationContext>
     {
         private string Operacao { get; set; }
 
@@ -26,10 +26,11 @@ namespace DWM.Models.BI
             this.Operacao = operacao;
         }
 
-        public EditarCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EditarCredenciadoBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            Create(_db, _seguranca_db);
+            this.Create(_db, _segurancaDb);
         }
+
         #endregion
 
         public CredenciadoViewModel Run(Repository value)

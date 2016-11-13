@@ -15,15 +15,16 @@ using App_Dominio.Models;
 
 namespace DWM.Models.BI
 {
-    public class InformativoCadastrarBI : DWMContext<ApplicationContext>, IProcess<InformativoViewModel, ApplicationContext>
+    public class InformativoCadastrarBI : DWMContextLocal, IProcess<InformativoViewModel, ApplicationContext>
     {
         #region Constructor
         public InformativoCadastrarBI() { }
 
-        public InformativoCadastrarBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public InformativoCadastrarBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            Create(_db, _seguranca_db);
+            this.Create(_db, _segurancaDb);
         }
+
         #endregion
 
         public InformativoViewModel Run(Repository value)

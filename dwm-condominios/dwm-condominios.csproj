@@ -232,6 +232,7 @@
     <Compile Include="Models\Entidades\CondominoPJ.cs" />
     <Compile Include="Models\Entidades\CondominoUnidade.cs" />
     <Compile Include="Models\Entidades\Credenciado.cs" />
+    <Compile Include="Models\Entidades\DWMContextLocal.cs" />
     <Compile Include="Models\Entidades\Edificacao.cs" />
     <Compile Include="Models\Entidades\EmailLog.cs" />
     <Compile Include="Models\Entidades\EmailTemplate.cs" />
@@ -245,6 +246,7 @@
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
     <Compile Include="Models\Entidades\RamoAtividade.cs" />
+    <Compile Include="Models\Entidades\SessaoLocal.cs" />
     <Compile Include="Models\Entidades\TipoConta.cs" />
     <Compile Include="Models\Entidades\TipoCredenciado.cs" />
     <Compile Include="Models\Entidades\TipoEdificacao.cs" />

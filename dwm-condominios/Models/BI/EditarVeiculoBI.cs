@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class EditarVeiculoBI : DWMContext<ApplicationContext>, IProcess<VeiculoViewModel, ApplicationContext>
+    public class EditarVeiculoBI : DWMContextLocal, IProcess<VeiculoViewModel, ApplicationContext>
     {
         private string Operacao { get; set; }
 

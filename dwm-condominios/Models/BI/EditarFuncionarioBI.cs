@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class EditarFuncionarioBI : DWMContext<ApplicationContext>, IProcess<FuncionarioViewModel, ApplicationContext>
+    public class EditarFuncionarioBI : DWMContextLocal, IProcess<FuncionarioViewModel, ApplicationContext>
     {
         private string Operacao { get; set; }
 
@@ -26,10 +26,11 @@ namespace DWM.Models.BI
             this.Operacao = operacao;
         }
 
-        public EditarFuncionarioBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EditarFuncionarioBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            Create(_db, _seguranca_db);
+            this.Create(_db, _segurancaDb);
         }
+
         #endregion
 
         public FuncionarioViewModel Run(Repository value)

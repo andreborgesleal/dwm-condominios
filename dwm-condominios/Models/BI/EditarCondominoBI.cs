@@ -14,7 +14,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace DWM.Models.BI
 {
-    public class EditarCondominoBI : DWMContext<ApplicationContext>, IProcess<CondominoEditViewModel, ApplicationContext>
+    public class EditarCondominoBI : DWMContextLocal, IProcess<CondominoEditViewModel, ApplicationContext>
     {
         #region Constructor
         public EditarCondominoBI() { }
@@ -23,6 +23,7 @@ namespace DWM.Models.BI
         {
             Create(_db, _seguranca_db);
         }
+
         #endregion
 
         public CondominoEditViewModel Run(Repository value)

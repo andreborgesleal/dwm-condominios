@@ -17,7 +17,7 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class CodigoAtivacaoBI : DWMContext<ApplicationContext>, IProcess<RegisterViewModel, ApplicationContext>
+    public class CodigoAtivacaoBI : DWMContextLocal, IProcess<RegisterViewModel, ApplicationContext>
     {
         #region Constructor
         public CodigoAtivacaoBI() { }
@@ -135,7 +135,7 @@ namespace DWM.Models.BI
         }
     }
 
-    public class CodigoAtivacaoCredenciadoBI : DWMContext<ApplicationContext>, IProcess<UsuarioRepository, ApplicationContext>
+    public class CodigoAtivacaoCredenciadoBI : DWMContextLocal, IProcess<UsuarioRepository, ApplicationContext>
     {
         #region Constructor
         public CodigoAtivacaoCredenciadoBI() { }
@@ -255,7 +255,7 @@ namespace DWM.Models.BI
         }
     }
 
-    public class CodigoValidacaoCredenciadoBI : DWMContext<ApplicationContext>, IProcess<UsuarioRepository, ApplicationContext>
+    public class CodigoValidacaoCredenciadoBI : DWMContextLocal, IProcess<UsuarioRepository, ApplicationContext>
     {
         #region Constructor
         public CodigoValidacaoCredenciadoBI() { }
