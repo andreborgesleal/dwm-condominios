@@ -14,15 +14,16 @@ using System.Linq;
 
 namespace DWM.Models.BI
 {
-    public class EnviarEmailBI : DWMContext<ApplicationContext>, IProcess<RegisterViewModel, ApplicationContext>
+    public class EnviarEmailBI : DWMContextLocal, IProcess<RegisterViewModel, ApplicationContext>
     {
         #region Constructor
         public EnviarEmailBI() { }
 
-        public EnviarEmailBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EnviarEmailBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            Create(_db, _seguranca_db);
+            this.Create(_db, _segurancaDb);
         }
+
         #endregion
 
         public RegisterViewModel Run(Repository value)
@@ -224,7 +225,7 @@ namespace DWM.Models.BI
 
     }
 
-    public class EnviarEmailTokenBI : DWMContext<ApplicationContext>, IProcess<UnidadeViewModel, ApplicationContext>
+    public class EnviarEmailTokenBI : DWMContextLocal, IProcess<UnidadeViewModel, ApplicationContext>
     {
         #region Constructor
         public EnviarEmailTokenBI() { }

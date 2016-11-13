@@ -16,7 +16,7 @@ using App_Dominio.Pattern;
 
 namespace dwm_condominios.Models.BI
 {
-    public class HomeBI : DWMContext<ApplicationContext>, IProcess<HomeViewModel, ApplicationContext>
+    public class HomeBI : DWMContextLocal, IProcess<HomeViewModel, ApplicationContext>
     {
         #region Constructor
         public HomeBI() { }

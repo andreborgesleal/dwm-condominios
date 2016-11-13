@@ -16,7 +16,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace DWM.Models.BI
 {
-    public class EmailNotificacaoBI : DWMContext<ApplicationContext>, IProcess<EmailLogViewModel, ApplicationContext>
+    public class EmailNotificacaoBI : DWMContextLocal, IProcess<EmailLogViewModel, ApplicationContext>
     {
         #region Constructor
         public EmailNotificacaoBI() { }

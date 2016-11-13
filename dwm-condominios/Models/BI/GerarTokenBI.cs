@@ -18,15 +18,16 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class GerarTokenBI : DWMContext<ApplicationContext>, IProcess<UnidadeViewModel, ApplicationContext>
+    public class GerarTokenBI : DWMContextLocal, IProcess<UnidadeViewModel, ApplicationContext>
     {
         #region Constructor
         public GerarTokenBI() { }
 
-        public GerarTokenBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public GerarTokenBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            Create(_db, _seguranca_db);
+            this.Create(_db, _segurancaDb);
         }
+
         #endregion
 
         public UnidadeViewModel Run(Repository value)

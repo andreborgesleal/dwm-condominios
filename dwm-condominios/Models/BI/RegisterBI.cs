@@ -15,21 +15,17 @@ using App_Dominio.Models;
 
 namespace DWM.Models.BI
 {
-    public class RegisterBI : DWMContext<ApplicationContext>, IProcess<RegisterViewModel, ApplicationContext>
+    public class RegisterBI : DWMContextLocal, IProcess<RegisterViewModel, ApplicationContext>
     {
         #region Constructor
         public RegisterBI() { }
 
-        public void Create(ApplicationContext _db, SecurityContext _seguranca_db)
+        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             this.db = _db;
             this.seguranca_db = _seguranca_db;
         }
 
-        public RegisterBI(ApplicationContext _db, SecurityContext _seguranca_db)
-        {
-            Create(_db, _seguranca_db);
-        }
         #endregion
 
         private Validate Validate(RegisterViewModel value)

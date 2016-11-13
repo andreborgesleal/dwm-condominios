@@ -262,11 +262,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.S
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
 C:\sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
-C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.Pdf.dll
-C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.dll
-C:\sistemas\dwm-condominios\dwm-condominios\bin\Microsoft.mshtml.dll
-C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.Pdf.xml
-C:\sistemas\dwm-condominios\dwm-condominios\bin\Spire.License.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.WebForms.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\SendGridMail.dll
@@ -292,3 +287,17 @@ C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condomini
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Primitives.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe.config
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csi.exe
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csi.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.AppContext.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp
