@@ -12,13 +12,13 @@ using System.Web;
 
 namespace DWM.Models.Persistence
 {
-    public class VeiculoModel : CrudModel<Veiculo, VeiculoViewModel, ApplicationContext>
+    public class VeiculoModel : CrudModelLocal<Veiculo, VeiculoViewModel>
     {
         #region Constructor
         public VeiculoModel() { }
         public VeiculoModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
@@ -162,13 +162,13 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewVeiculos : ListViewModel<VeiculoViewModel, ApplicationContext>
+    public class ListViewVeiculos : ListViewModelLocal<VeiculoViewModel>
     {
         #region Constructor
         public ListViewVeiculos() { }
         public ListViewVeiculos(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 

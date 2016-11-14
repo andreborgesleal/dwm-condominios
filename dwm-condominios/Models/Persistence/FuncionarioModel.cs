@@ -12,13 +12,13 @@ using System.Web;
 
 namespace DWM.Models.Persistence
 {
-    public class FuncionarioModel : CrudModel<Funcionario, FuncionarioViewModel, ApplicationContext>
+    public class FuncionarioModel : CrudModelLocal<Funcionario, FuncionarioViewModel>
     {
         #region Constructor
         public FuncionarioModel() { }
         public FuncionarioModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
@@ -188,13 +188,13 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewFuncionarios : ListViewModel<FuncionarioViewModel, ApplicationContext>
+    public class ListViewFuncionarios : ListViewModelLocal<FuncionarioViewModel>
     {
         #region Constructor
         public ListViewFuncionarios() { }
         public ListViewFuncionarios(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 

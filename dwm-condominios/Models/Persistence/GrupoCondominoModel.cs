@@ -13,7 +13,7 @@ using App_Dominio.Security;
 
 namespace DWM.Models.Persistence
 {
-    public class GrupoCondominoModel : CrudModel<GrupoCondomino, GrupoCondominoViewModel, ApplicationContext>
+    public class GrupoCondominoModel : CrudModelLocal<GrupoCondomino, GrupoCondominoViewModel>
     {
         #region Constructor
         public GrupoCondominoModel() { }
@@ -119,10 +119,16 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewGrupoCondominos : ListViewModel<GrupoCondominoViewModel, ApplicationContext>
+    public class ListViewGrupoCondominos : ListViewModelLocal<GrupoCondominoViewModel>
     {
         #region Constructor
         public ListViewGrupoCondominos() { }
+
+        public ListViewGrupoCondominos(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+
         #endregion
 
         #region Métodos da classe ListViewRepository

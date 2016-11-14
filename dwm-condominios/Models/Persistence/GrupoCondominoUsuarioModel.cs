@@ -6,13 +6,13 @@ using App_Dominio.Enumeracoes;
 
 namespace dwm_condominios.Models.Persistence
 {
-    public class GrupoCondominoUsuarioModel : CrudModel<GrupoCondominoUsuario, GrupoCondominoUsuarioViewModel, ApplicationContext>
+    public class GrupoCondominoUsuarioModel : CrudModelLocal<GrupoCondominoUsuario, GrupoCondominoUsuarioViewModel>
     {
         #region Constructor
         public GrupoCondominoUsuarioModel() { }
         public GrupoCondominoUsuarioModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
