@@ -14,13 +14,13 @@ using App_Dominio.Security;
 
 namespace DWM.Models.Persistence
 {
-    public class InformativoModel : CrudModel<Informativo, InformativoViewModel, ApplicationContext>
+    public class InformativoModel : CrudModelLocal<Informativo, InformativoViewModel>
     {
         #region Constructor
         public InformativoModel() { }
         public InformativoModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
@@ -218,14 +218,15 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewInformativo : ListViewModel<InformativoViewModel, ApplicationContext>
+    public class ListViewInformativo : ListViewModelLocal<InformativoViewModel>
     {
         public ListViewInformativo()
         {
         }
 
-        public ListViewInformativo(ApplicationContext _db, SecurityContext _seguranca_db) : base(_db, _seguranca_db)
+        public ListViewInformativo(ApplicationContext _db, SecurityContext _seguranca_db) 
         {
+            this.Create(_db, _seguranca_db);
         }
 
         #region Métodos da classe ListViewRepository
@@ -240,7 +241,7 @@ namespace DWM.Models.Persistence
                     join edi in db.Edificacaos on info.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
                     where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
-                            && info.CondominioID == sessaoCorrente.empresaId
+                            && info.CondominioID == SessaoLocal.empresaId
                     orderby info.DataPublicacao
                     select new InformativoViewModel
                     {

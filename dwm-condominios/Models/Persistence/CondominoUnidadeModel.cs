@@ -11,7 +11,7 @@ using DWM.Models.Repositories;
 
 namespace DWM.Models.Persistence
 {
-    public class CondominoUnidadeModel : CrudModel<CondominoUnidade, CondominoUnidadeViewModel, ApplicationContext>
+    public class CondominoUnidadeModel : CrudModelLocal<CondominoUnidade, CondominoUnidadeViewModel>
     {
         #region Constructor
         public CondominoUnidadeModel() { }
@@ -144,13 +144,13 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewCondominoUnidade : ListViewModel<CondominoUnidadeViewModel, ApplicationContext>
+    public class ListViewCondominoUnidade : ListViewModelLocal<CondominoUnidadeViewModel>
     {
         #region Constructor
         public ListViewCondominoUnidade() { }
         public ListViewCondominoUnidade(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 

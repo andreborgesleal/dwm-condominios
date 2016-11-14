@@ -12,7 +12,7 @@ using System;
 
 namespace DWM.Models.Persistence
 {
-    public class EmailTemplateModel : CrudModel<EmailTemplate, EmailTemplateViewModel, ApplicationContext>
+    public class EmailTemplateModel : CrudModelLocal<EmailTemplate, EmailTemplateViewModel>
     {
         #region Constructor
         public EmailTemplateModel() { }
@@ -118,7 +118,7 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewEmailTemplates : ListViewModel<EmailTemplateViewModel, ApplicationContext>
+    public class ListViewEmailTemplates : ListViewModelLocal<EmailTemplateViewModel>
     {
         #region Constructor
         public ListViewEmailTemplates() { }

@@ -1,5 +1,5 @@
-﻿using App_Dominio.Entidades;
-using App_Dominio.Security;
+﻿using App_Dominio.Component;
+using App_Dominio.Entidades;
 using DWM.Models.Entidades;
 using System;
 using System.Collections.Generic;
@@ -8,7 +8,8 @@ using System.Web;
 
 namespace DWM.Models.Entidades
 {
-    public class DWMContextLocal : DWMContext<ApplicationContext>
+    public abstract class ListViewModelLocal<R> : ListViewModel<R, ApplicationContext>
+        where R : Repository
     {
         protected SessaoLocal SessaoLocal { get; set; }
 

@@ -13,13 +13,13 @@ using App_Dominio.Security;
 
 namespace DWM.Models.Persistence
 {
-    public class UnidadeModel : CrudModel<Unidade, UnidadeViewModel, ApplicationContext>
+    public class UnidadeModel : CrudModelLocal<Unidade, UnidadeViewModel>
     {
         #region Constructor
         public UnidadeModel() { }
         public UnidadeModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
@@ -164,13 +164,13 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewUnidades : ListViewModel<UnidadeViewModel, ApplicationContext>
+    public class ListViewUnidades : ListViewModelLocal<UnidadeViewModel>
     {
         #region Constructor
         public ListViewUnidades() { }
         public ListViewUnidades(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 

@@ -12,13 +12,13 @@ using System.Web;
 
 namespace DWM.Models.Persistence
 {
-    public class CredenciadoModel : CrudModel<Credenciado, CredenciadoViewModel, ApplicationContext>
+    public class CredenciadoModel : CrudModelLocal<Credenciado, CredenciadoViewModel>
     {
         #region Constructor
         public CredenciadoModel() { }
         public CredenciadoModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
@@ -151,14 +151,13 @@ namespace DWM.Models.Persistence
         }
         #endregion
     }
-
-    public class ListViewCredenciados : ListViewModel<CredenciadoViewModel, ApplicationContext>
+    public class ListViewCredenciados : ListViewModelLocal<CredenciadoViewModel>
     {
         #region Constructor
         public ListViewCredenciados() { }
         public ListViewCredenciados(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 

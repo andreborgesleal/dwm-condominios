@@ -7,13 +7,13 @@ using App_Dominio.Models;
 
 namespace DWM.Models.Persistence
 {
-    public class EmailLogModel : CrudModel<EmailLog, EmailLogViewModel, ApplicationContext>
+    public class EmailLogModel : CrudModelLocal<EmailLog, EmailLogViewModel>
     {
         #region Constructor
         public EmailLogModel() { }
         public EmailLogModel(ApplicationContext _db, SecurityContext _seguranca_db)
         {
-            base.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db);
         }
         #endregion
 
