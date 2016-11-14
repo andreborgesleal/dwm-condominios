@@ -233,13 +233,24 @@ namespace DWM.Models.Persistence
         {
             DateTime data1 = param.Count() > 0 && param[0] != null ? (DateTime)param[0] : new DateTime(1980, 1, 1);
             DateTime data2 = param.Count() > 1 && param[1] != null ? (DateTime)param[1] : Funcoes.Brasilia().Date.AddDays(30);
-            int? EdificacaoID = null;
-            int? GrupoCondominoID = null;
+            string EdificacaoID = null;
+            string GrupoCondominoID = "";
 
             if (param.Count() > 2)
             {
-                EdificacaoID = (int)param[2];
-                GrupoCondominoID = (int)param[3];
+
+                if (param[2] != null)
+                {
+                    int[] GrupoCondomino = (int[])param[2];
+                    for(int i = 0; i <= GrupoCondomino.Count() - 1; i++)
+                    {
+                        GrupoCondominoID += GrupoCondominoID[i].ToString() + ";";
+                    }
+                }
+
+                IEnumerable<Unidade> Unidades = (IEnumerable<Unidade>) param[3];
+                    
+                     
             }
 
 
@@ -250,8 +261,7 @@ namespace DWM.Models.Persistence
                     from edi in EDI.DefaultIfEmpty()
                     where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
                             && info.CondominioID == sessaoCorrente.empresaId
-                            && (!EdificacaoID.HasValue || info.EdificacaoID == EdificacaoID)
-                            && (!GrupoCondominoID.HasValue || info.GrupoCondominoID == EdificacaoID)
+                            && (GrupoCondominoID == "" || GrupoCondominoID.Contains(info.GrupoCondominoID.ToString()))
                     orderby info.DataPublicacao
                     select new InformativoViewModel
                     {
