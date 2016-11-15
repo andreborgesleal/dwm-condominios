@@ -8,17 +8,14 @@
 
     t[1].url = "../Home/Default";
 }
-
-<link href="../Content/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
-
 <div class="container-cadastro">
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Informativo", Descricao = "Inclusão", Transacao = t })
         <div class="x_content">
             <!-- Smart Wizard -->
-            @using (Html.BeginForm("Create", "Informativo", FormMethod.Post, new { @class = "form-horizontal margem-topo-50" }))
+            @using (Html.BeginForm("Create", "Informativo", FormMethod.Post, new { @class = "form-horizontal margem-topo-20" }))
             {
-                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
                 <div id="wizard" class="form_wizard wizard_horizontal">
                     <ul class="wizard_steps">
@@ -50,16 +47,16 @@
                             </a>
                         </li>
                     </ul>
-                    <div id="step-1" class="margem-topo-30">
+                    <div id="step-1" class="margem-topo-50">
                         <h2 class="StepTitle">Passo 1 - Dados do informativo</h2>
                         <p>
                             Preencher abaixo o dados do infomativo que será exibido para os condôminos. O informativo será exibido na <strong>Data de publicação</strong> informada e deixará de ser mostrado na <strong>Data de Expiração</strong>.
-                            O informativo consiste de um <strong>Título</strong> (texto de até 30 caracteres) bem como de um pequeno <strong>Resumo</strong> de até 3 linhas sobre o assunto abordado.
+                            O informativo consiste de um <strong>Título</strong> (texto de até 60 caracteres) bem como de um pequeno <strong>Resumo</strong> de até 3 linhas sobre o assunto abordado.
                         </p>
                         <p>
                             Na página inicial do site, quando o condômino clicar no link <code>Leia Mais >></code> será exibido um formulário suspenso contendo a <strong>Mensagem Detalhada</strong>
                         </p>
-                        <div class="row">
+                        <div class="row margem-topo-40">
                             <div class="col-md-2 col-sm-6 col-lg-2 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label">Data Publicação</label>
@@ -75,29 +72,29 @@
                             <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Edificação</label>
-                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.empresaId), new { @class = "form-control" })
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.CondominioID), new { @class = "form-control" })
                                 </div>
                             </div>
                             <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Grupo/Condômino</label>
-                                    @Html.DropDownList("GrupoCondominoID", new DWM.Models.Enumeracoes.BindDropDownList().GrupoCondominos("Todos...", "", Model.empresaId), new { @class = "form-control" })
+                                    @Html.DropDownList("GrupoCondominoID", new DWM.Models.Enumeracoes.BindDropDownList().GrupoCondominos("Todos...", "", Model.CondominioID), new { @class = "form-control" })
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label">Título (até 30 caracteres)</label>
-                                    <input type="text" class="form-control" name="Cabecalho" id="Cabecalho" value="@Model.Cabecalho" maxlength="30" onchange="contaCharCabec();" onkeyup="contaCharCabec();" />
-                                    <span id="contadorCabec" class="label label-default">@Model.Cabecalho.Length / 30</span>
+                                    <label class="control-label">Título (até 60 caracteres)</label>
+                                    <input type="text" class="form-control" name="Cabecalho" id="Cabecalho" value="@Model.Cabecalho" maxlength="60" onchange="contaCharCabec();" onkeyup="contaCharCabec();" />
+                                    <span id="contadorCabec" class="label label-default">@Model.Cabecalho.Length / 60</span>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                                 <div class="form-group">
-                                    <label class="control-label">Resumo do Informativo (até 500 caracteres)</label>
+                                    <label class="control-label">Resumo do Informativo</label>
                                     <input type="hidden" name="Resumo" id="Resumo" value="@Model.Resumo" />
                                     <div id="summernote1">@Model.Resumo</div>
                                 </div>
@@ -113,28 +110,30 @@
                             </div>
                         </div>
                     </div>
-                    
                     <div id="step-2">
                         <h2 class="StepTitle">Passo 2 - Visualizar Informativo</h2>
                         <p>&nbsp;</p>
                         <div class="dashboard-widget-content">
                             <div class="row">
-                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" style="border-right: dotted">
                                     <ul class="list-unstyled timeline widget">
                                         <li>
                                             <div class="block">
-                                                <div class="block_content">
-                                                    <h2 class="title">
-                                                        <a id="_PreviewTitle">Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                                    </h2>
-                                                    <div class="byline">
-                                                        <span id="_PreviewDate">15/10/2016</span>
+                                                <div class="row clearfix">
+                                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                        <div class="block_content">
+                                                            <h2 class="title">
+                                                                <a id="_PreviewTitle">Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                            </h2>
+                                                            <div class="byline">
+                                                                <span id="_PreviewDate">15/10/2016</span>
+                                                            </div>
+                                                            <p class="excerpt" id="_PreviewSummary">
+                                                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                            </p>
+                                                            <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#myModalPreview">Leia mais...</code></p>
+                                                        </div>
                                                     </div>
-                                                    @*<p id="_PreviewMidia1"></p>*@
-                                                    <p class="excerpt" id="_PreviewSummary">
-                                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                                    </p>
-                                                    <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#myModalPreview">Leia mais...</code></p>
                                                 </div>
                                             </div>
                                         </li>
@@ -198,7 +197,7 @@
                             <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Modelo de e-mail</label>
-                                    @Html.DropDownList("EmailTemplateID", new DWM.Models.Enumeracoes.BindDropDownList().EmailTemplates("Selecione...", "0", Model.empresaId, 1), new { @class = "form-control", @onchange = "getEmail();" })
+                                    @Html.DropDownList("EmailTemplateID", new DWM.Models.Enumeracoes.BindDropDownList().EmailTemplates("Selecione...", "0", Model.CondominioID, 1), new { @class = "form-control", @onchange = "getEmail();" })
                                 </div>
                             </div>
                         </div>
@@ -211,15 +210,6 @@
                                 </div>
                             </div>
                         </div>
-                        @*<div class="ln_solid"></div>
-                            <div class="row clearfix">
-                                <div class="col-md-12">
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" />
-                                        <input type="button" onclick="window.location = '../Informativo/Browse'" class="btn btn-default" value="Cancelar" />
-                                    </div>
-                                </div>
-                            </div>*@
                     </div>
                 </div>
             }
@@ -280,90 +270,15 @@
 </div>
 <!-- / modal preview-->
 
-<link href="~/Content/css/jquery.fileupload.css" rel="stylesheet" />
-<script src="~/Scripts/fileUpload/jquery.ui.widget.js"></script>
-<script src="~/Scripts/fileUpload/jquery.fileupload.js"></script>
-
-<!-- NProgress -->
-<script src="../Content/vendors/nprogress/nprogress.js"></script>
 <!-- jQuery Smart Wizard -->
 <script src="../Content/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
-<!-- Cropper -->
-<script src="../Content/vendors/cropper/dist/cropper.min.js"></script>
-
-
-<script>
-    function FileUploadCrop(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _arq, _trash) {
-
-        // _fileupload = fileUpload
-
-        if (_arq == '' || _arq == '')
-            _arq = 'arq1';
-
-        if (_trash == '' || _trash == '')
-            _trash = 'trash1';
-
-        $('#' + _progress).hide();
-
-        $('#' + _fileUpload).fileupload({
-            dataType: 'json',
-            url: "UploadFiles", // MasterController
-            autoUpload: true,
-            done: function (e, data) {
-
-                if (data.result.mensagem != "Sucesso") {
-                    $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
-                    ShowMessageAjaxAlert(data.result.mensagem, "danger");
-                    $('#' + _arq).hide();
-                    $('#' + _trash).hide();
-                    return;
-                }
-
-                $('#' + _fileUpload).hide(); // esconde o componente para forçar a exclusão do arquivo para poder enviar outro arquivo
-
-                if (data.result.type == 'image/jpeg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
-                    $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
-                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
-                    $('#caralho').html('<img src="../Temp/' + data.result.name + '" id="image" alt="Picture">');
-                    coco();
-                }
-                else if (data.result.type == 'application/pdf') {
-                    $('#' + _myModal + '-body').html('<iframe style="height: 480px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
-                    $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
-                }
-                $('.modal-title').html(data.result.nome_original);
-                //_fileHidden = fileBoleto
-                $('#' + _fileHidden).val(data.result.name);
-                $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
-                $('#' + _progress).hide();
-
-                // word: http://www.portugalsenior.org/wp-content/uploads/2014/07/MW-Logo1-50x50.jpg
-
-                //$('.file_type').html(data.result.type);
-                //$('.file_size').html(data.result.size);
-            }
-        }).on('fileuploadprogressall', function (e, data) {
-            $('#' + _progress).show();
-            var progress = parseInt(data.loaded / data.total * 100, 10);
-            $('#' + _progress + ' #' + _progress + '-bar').css('width', progress + '%');
-        });
-    }
-</script>
-
-<!-- FileUpload-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        FileUploadCrop('fileUploadMidia1', 'fileMidia1', 'progress1', 'file_name1', 'myModal1', 'arq1', 'trash1');
-        FileUploadCrop('fileUploadMidia2', 'fileMidia2', 'progress2', 'file_name2', 'myModal2', 'arq2', 'trash2');
-    });
-</script>
 
 <!--Summernote-->
 <script>
     $(document).ready(function () {
         $('#summernote1').summernote({
             lang: 'pt-BR',
-            height: 100,
+            height: 450,
             //toolbar: [
             //   // [groupName, [list of button]]
             //   ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -413,14 +328,7 @@
     function contaCharCabec() {
         var text = $("#Cabecalho").val();
         var count = text.length;
-        $("#contadorCabec").text(count + ' / 30');
-    }
-
-    function Valida() {
-        $('#Resumo').val($('#summernote1').summernote('code'));
-        $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
-        $('#EmailMensagem').val($('#summernote3').summernote('code'));
-        return true;
+        $("#contadorCabec").text(count + ' / 60');
     }
 
     function getEmail() {
@@ -443,6 +351,12 @@
             });
         }
     }
+
+    function Valida() {
+        $('#EmailMensagem').val($('#summernote3').summernote('code'));
+        alert($('#summernote3').summernote('code'));
+        return true;
+    }
 </script>
 
 <!-- jQuery Smart Wizard -->
@@ -461,34 +375,24 @@
         $('.buttonNext').click(function() {
             Preview();
         });
+
+        $('#btn-salvar').click(function () { return Valida(); })
       });
 </script>
 <!-- /jQuery Smart Wizard -->
 
-
-
 <!-- Preview -->
 <script>
     function Preview() {
-        var path_fileMidia1 = '<img src="../Temp/' + $('#fileMidia1').val() + '" class="img-responsive" alt="Responsive image" />';
-        var path_fileMidia2 = '<img src="../Temp/' + $('#fileMidia2').val() + '" class="img-responsive" alt="Responsive image" />';
-
         $('#Resumo').val($('#summernote1').summernote('code'));
         $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
-
         $("#_PreviewTitle").html($('#Cabecalho').val())
         $("#_PreviewDate").html($('#DataPublicacao').val())
-        $("#_PreviewSummary").html($('#Resumo').val().substr(0, 500) + "...")
-
+        $("#_PreviewSummary").html($('#Resumo').val())
         $("#myModalLabelPreview").html($('#Cabecalho').val())
         if ($('#MensagemDetalhada').val() != '')
         {
-            if ($('#fileMidia2').val() != '') {
-                $('#myModal1-body-preview').html("<p>" + path_fileMidia2 + "</p>" + $('#MensagemDetalhada').val());
-            }
-            else {
-                $('#myModal1-body-preview').html($('#MensagemDetalhada').val());
-            }
+            $('#myModal1-body-preview').html($('#MensagemDetalhada').val());
             $('#readmore').show();
         }
         else
@@ -497,8 +401,5 @@
         }
 
         $('#_PreviewMidia1').html('');
-        if ($('#fileMidia1').val() != '') {
-            $('#_PreviewMidia1').html(path_fileMidia1);
-        }
     }
 </script>

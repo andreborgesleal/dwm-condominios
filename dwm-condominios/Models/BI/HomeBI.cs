@@ -47,10 +47,9 @@ namespace dwm_condominios.Models.BI
                 ListViewInformativo listViewInformativo = new ListViewInformativo(this.db, this.seguranca_db);
 
                 string data1 = "01" + DateTime.Today.AddMonths(-1).ToString("/MM/yyyy");
-                string data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("dd/MM/yyyy");
+                string data2 = Funcoes.Brasilia().Date.ToString("dd/MM/yyyy");
 
-
-                home.Informativos = listViewInformativo.Bind(0, 4, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data2).Value, SessaoLocal.GrupoCondominoID, SessaoLocal.Unidades);
+                home.Informativos = listViewInformativo.Bind(0, 8, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data2).Value, SessaoLocal.GrupoCondominoID, SessaoLocal.Unidades);
                 #endregion
             }
             catch (Exception ex)

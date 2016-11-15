@@ -36,11 +36,10 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Cabeçalho")]
         [Required(ErrorMessage = "Informe o Cabeçalho")]
-        [StringLength(30, ErrorMessage = "Cabeçalho deve ter no máximo 30 caracteres")]
+        [StringLength(60, ErrorMessage = "Cabeçalho deve ter no máximo 60 caracteres")]
         public string Cabecalho { get; set; }
 
         [DisplayName("Resumo")]
-        [StringLength(500, ErrorMessage = "Resumo deve ter no máximo 500 caracteres")]
         [Required(ErrorMessage = "Informe o Resumo")]
         public string Resumo { get; set; }
 

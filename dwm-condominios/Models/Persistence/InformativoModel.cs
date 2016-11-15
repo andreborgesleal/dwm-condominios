@@ -11,6 +11,7 @@ using App_Dominio.Models;
 using App_Dominio.Component;
 using System.IO;
 using App_Dominio.Security;
+using System.Data.Entity.SqlServer;
 
 namespace DWM.Models.Persistence
 {
@@ -236,10 +237,11 @@ namespace DWM.Models.Persistence
             DateTime data2 = param.Count() > 1 && param[1] != null ? (DateTime)param[1] : Funcoes.Brasilia().Date.AddDays(30);
             string EdificacaoID = "";
             string GrupoCondominoID = "";
+            string IsHome = "N";
 
             if (param.Count() > 2)
             {
-
+                IsHome = "S";
                 if (param[2] != null)
                 {
                     int[] GrupoCondomino = (int[])param[2];
@@ -257,7 +259,6 @@ namespace DWM.Models.Persistence
                         EdificacaoID += unidade.EdificacaoID + ";";
                     }
                 }
-                
             }
 
             return (from info in db.Informativos
@@ -267,10 +268,10 @@ namespace DWM.Models.Persistence
                     from edi in EDI.DefaultIfEmpty()
                     where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
                             && info.CondominioID == SessaoLocal.empresaId
-                            && info.CondominioID == sessaoCorrente.empresaId
+                            && (IsHome == "N" || info.DataExpiracao >= SqlFunctions.GetDate())
                             && (GrupoCondominoID == "" || GrupoCondominoID.Contains(info.GrupoCondominoID.ToString()))
                             && (EdificacaoID == "" || EdificacaoID.Contains(info.EdificacaoID.ToString()))
-                    orderby info.DataPublicacao
+                    orderby info.DataPublicacao descending
                     select new InformativoViewModel
                     {
                         empresaId = sessaoCorrente.empresaId,
@@ -297,7 +298,7 @@ namespace DWM.Models.Persistence
                                       from edi1 in EDI.DefaultIfEmpty()
                                       where info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2
                                               && info1.CondominioID == sessaoCorrente.empresaId
-                                      orderby info1.DataPublicacao
+                                      orderby info1.DataPublicacao descending
                                       select info1).Count()
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
         }

@@ -179,7 +179,6 @@ C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condomini
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
-C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\ApplicationInsights.config
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
@@ -302,3 +301,4 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Prim
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
