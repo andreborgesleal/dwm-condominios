@@ -234,7 +234,7 @@ namespace DWM.Models.Persistence
         {
             DateTime data1 = param.Count() > 0 && param[0] != null ? (DateTime)param[0] : new DateTime(1980, 1, 1);
             DateTime data2 = param.Count() > 1 && param[1] != null ? (DateTime)param[1] : Funcoes.Brasilia().Date.AddDays(30);
-            string EdificacaoID = null;
+            string EdificacaoID = "";
             string GrupoCondominoID = "";
 
             if (param.Count() > 2)
@@ -249,9 +249,15 @@ namespace DWM.Models.Persistence
                     }
                 }
 
-                IEnumerable<Unidade> Unidades = (IEnumerable<Unidade>) param[3];
-                    
-                     
+                if (param[3] != null)
+                {
+                    IEnumerable<Unidade> Unidades = (IEnumerable<Unidade>)param[3];
+                    foreach (var unidade in Unidades)
+                    {
+                        EdificacaoID += unidade.EdificacaoID + ";";
+                    }
+                }
+                
             }
 
             return (from info in db.Informativos
@@ -263,6 +269,7 @@ namespace DWM.Models.Persistence
                             && info.CondominioID == SessaoLocal.empresaId
                             && info.CondominioID == sessaoCorrente.empresaId
                             && (GrupoCondominoID == "" || GrupoCondominoID.Contains(info.GrupoCondominoID.ToString()))
+                            && (EdificacaoID == "" || EdificacaoID.Contains(info.EdificacaoID.ToString()))
                     orderby info.DataPublicacao
                     select new InformativoViewModel
                     {

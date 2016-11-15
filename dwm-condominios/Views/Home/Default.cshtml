@@ -1,4 +1,8 @@
-﻿<!-- top tiles -->
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model DWM.Models.Repositories.HomeViewModel
+
+<!-- top tiles -->
 <div class="row tile_count">
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> Total Condôminos</span>
@@ -385,66 +389,25 @@
             <div class="x_content">
                 <div class="dashboard-widget-content">
                     <ul class="list-unstyled timeline widget">
-                        <li>
-                            <div class="block">
-                                <div class="block_content">
-                                    <h2 class="title">
-                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                    </h2>
-                                    <div class="byline">
-                                        <span>13 hours ago</span> by <a>Jane Smith</a>
+                        @foreach (InformativoViewModel inf in Model.Informativos)
+                        {
+                            <li>
+                                <div class="block">
+                                    <div class="block_content">
+                                        <h2 class="title">
+                                            <a id="prev_title">@inf.Cabecalho</a>
+                                        </h2>
+                                        <div class="byline">
+                                            <span id="prev_data">@inf.DataPublicacao.ToShortDateString()</span>
+                                        </div>
+                                        <p class="excerpt">
+                                            @Html.Raw(inf.Resumo)
+                                        </p>
+                                        <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#@inf.InformativoID">Leia mais...</code></p>
                                     </div>
-                                    <p class="excerpt">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                    </p>
                                 </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="block">
-                                <div class="block_content">
-                                    <h2 class="title">
-                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                    </h2>
-                                    <div class="byline">
-                                        <span>13 hours ago</span> by <a>Jane Smith</a>
-                                    </div>
-                                    <p class="excerpt">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="block">
-                                <div class="block_content">
-                                    <h2 class="title">
-                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                    </h2>
-                                    <div class="byline">
-                                        <span>13 hours ago</span> by <a>Jane Smith</a>
-                                    </div>
-                                    <p class="excerpt">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="block">
-                                <div class="block_content">
-                                    <h2 class="title">
-                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
-                                    </h2>
-                                    <div class="byline">
-                                        <span>13 hours ago</span> by <a>Jane Smith</a>
-                                    </div>
-                                    <p class="excerpt">
-                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
-                                    </p>
-                                </div>
-                            </div>
-                        </li>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>
@@ -649,3 +612,24 @@
     </div>
 </div>
 
+@* Modal *@
+@foreach (InformativoViewModel inf in Model.Informativos)
+{
+    <div id="@inf.InformativoID" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content hidden-xs">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                </div>
+                <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@* Fim do Modal *@

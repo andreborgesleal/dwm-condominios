@@ -42,7 +42,6 @@ namespace DWM.Controllers
             {
                 // Obter todos os Informativos
 
-
                 #region ListPanorama
                 HomeViewModel home = new HomeViewModel()
                 {
@@ -50,10 +49,8 @@ namespace DWM.Controllers
                     data_ini = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
                 };
 
-                return View();
-
-                //Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();
-                //return View(factory.Execute(new HomeBI(), home));
+                Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();
+                return View(factory.Execute(new HomeBI(), home));
                 #endregion
             }
             else
