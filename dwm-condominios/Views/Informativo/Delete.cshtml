@@ -1,105 +1,427 @@
-﻿@using DWM.Models.Repositories
-@using App_Dominio.Repositories
+﻿@using App_Dominio.Repositories
 @model DWM.Models.Repositories.InformativoViewModel
 @{
-    ViewBag.Title = "DWM-Condomínios";
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Informativo/Delete";
+    t[0].nomeCurto = "Deletar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
 }
-
-<div class="page-header">
-    <h2>Incluir Informativo</h2>
-</div>
-
-@using (Html.BeginForm(new { @class = "form-horizontal form-label-left" }))
-{
-    @Html.Partial("_alerts")
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-
-    @Html.HiddenFor(info => info.InformativoID)
-    @Html.HiddenFor(info => info.Cabecalho)
-    @Html.HiddenFor(info => info.empresaId)
-    @Html.HiddenFor(info => info.DataInformativo)
-    @Html.HiddenFor(info => info.Resumo)
-
-
+<div class="container-cadastro">
     <div class="x_panel">
-        <div class="x_title">
-            <h2>Inclusão de Informativo</h2>
-            <ul class="nav navbar-right panel_toolbox">
-                <li>
-                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                    <ul class="dropdown-menu" role="menu">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Informativo", Descricao = "Exclusão", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Delete", "Informativo", FormMethod.Post, new { @class = "form-horizontal margem-topo-20" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.InformativoID)
+                @Html.HiddenFor(info => info.Cabecalho)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.DataInformativo)
+                @Html.HiddenFor(info => info.Resumo)
+                @Html.HiddenFor(info => info.MensagemDetalhada)
+                @Html.HiddenFor(info => info.DataPublicacao)
+                @Html.HiddenFor(info => info.EdificacaoID)
+                @Html.HiddenFor(info => info.EmailMensagem)
+                @Html.HiddenFor(info => info.GrupoCondominoID)
+                @Html.HiddenFor(info => info.sessionId)
+
+                <div id="wizard" class="form_wizard wizard_horizontal">
+                    <ul class="wizard_steps">
                         <li>
-                            <a href="#">Settings 1</a>
+                            <a href="#step-1">
+                                <span class="step_no">1</span>
+                                <span class="step_descr">
+                                    Passo 1<br />
+                                    <small>Dados do informativo</small>
+                                </span>
+                            </a>
                         </li>
                         <li>
-                            <a href="#">Settings 2</a>
+                            <a href="#step-2" onclick="Preview();">
+                                <span class="step_no">2</span>
+                                <span class="step_descr">
+                                    Passo 2<br />
+                                    <small>Visualizar informativo</small>
+                                </span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#step-3">
+                                <span class="step_no">3</span>
+                                <span class="step_descr">
+                                    Passo 3<br />
+                                    <small>Redigir/enviar e-mail e salvar</small>
+                                </span>
+                            </a>
                         </li>
                     </ul>
-                </li>
-                <li>
-                    <a class="close-link"><i class="fa fa-close"></i></a>
-                </li>
-            </ul>
-            <div class="clearfix"></div>
+                    <div id="step-1" class="margem-topo-50">
+                        <h2 class="StepTitle">Passo 1 - Dados do informativo</h2>
+                        <p>
+                            Preencher abaixo o dados do infomativo que será exibido para os condôminos. O informativo será exibido na <strong>Data de publicação</strong> informada e deixará de ser mostrado na <strong>Data de Expiração</strong>.
+                            O informativo consiste de um <strong>Título</strong> (texto de até 60 caracteres) bem como de um pequeno <strong>Resumo</strong> de até 3 linhas sobre o assunto abordado.
+                        </p>
+                        <p>
+                            Na página inicial do site, quando o condômino clicar no link <code>Leia Mais >></code> será exibido um formulário suspenso contendo a <strong>Mensagem Detalhada</strong>
+                        </p>
+                        <div class="row margem-topo-40">
+                            <div class="col-md-2 col-sm-6 col-lg-2 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">Data Publicação</label>
+                                    @Html.Editor("data1", "DATE", new { identificador = "DataPublicacao", value = Model.DataPublicacao, readOnly = "true" })
+                                </div>
+                            </div>
+                            <div class="col-md-2 col-sm-6 col-lg-2 col-xs-6">
+                                <div class="form-group">
+                                    <label class="control-label">Data Expiração</label>
+                                    @Html.Editor("data2", "DATE", new { identificador = "DataExpiracao", value = Model.DataExpiracao, readOnly = "true" })
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Edificação</label>
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.CondominioID), new { @class = "form-control", @disabled = "disable" })
+                                </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Grupo/Condômino</label>
+                                    @Html.DropDownList("GrupoCondominoID", new DWM.Models.Enumeracoes.BindDropDownList().GrupoCondominos("Todos...", "", Model.CondominioID), new { @class = "form-control", @disabled = "disable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Título (até 60 caracteres)</label>
+                                    <input type="text" class="form-control" name="Cabecalho" disabled id="Cabecalho" value="@Model.Cabecalho" maxlength="60" onchange="contaCharCabec();" onkeyup="contaCharCabec();" />
+                                    <span id="contadorCabec" class="label label-default">@Model.Cabecalho.Length / 60</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Resumo do Informativo</label>
+                                    <input type="hidden" name="Resumo" id="Resumo" value="@Model.Resumo" />
+                                    <p>
+                                        @Html.Raw(Model.Resumo)
+                                    </p>
+                                    @*<div id="summernote1">@Model.Resumo</div>*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">Texto detalhado do informativo</label>
+                                    <input type="hidden" name="MensagemDetalhada" id="MensagemDetalhada" value="@Model.MensagemDetalhada" />
+                                    <p>
+                                        @Html.Raw(Model.MensagemDetalhada)
+                                    </p>
+                                    @*<div id="summernote2">@Model.MensagemDetalhada</div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="step-2">
+                        <h2 class="StepTitle">Passo 2 - Visualizar Informativo</h2>
+                        <p>&nbsp;</p>
+                        <div class="dashboard-widget-content">
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12" style="border-right: dotted">
+                                    <ul class="list-unstyled timeline widget">
+                                        <li>
+                                            <div class="block">
+                                                <div class="row clearfix">
+                                                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                                                        <div class="block_content">
+                                                            <h2 class="title">
+                                                                <a id="_PreviewTitle">Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                            </h2>
+                                                            <div class="byline">
+                                                                <span id="_PreviewDate">15/10/2016</span>
+                                                            </div>
+                                                            <p class="excerpt" id="_PreviewSummary">
+                                                                Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                            </p>
+                                                            <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#myModalPreview">Leia mais...</code></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="block">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="block">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="block">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        <a>Who Needs Sundance When You’ve Got&nbsp;Crowdfunding?</a>
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span>13 hours ago</span> by <a>Jane Smith</a>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        Film festivals used to be do-or-die moments for movie makers. They were where you met the producers that could fund your project, and if the buyers liked your flick, they’d pay to Fast-forward and… <a>Read&nbsp;More</a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p id="calibrador" style="height: 300px"></p>
+                        </div>
+                    </div>
+                    <div id="step-3">
+                        <h2 class="StepTitle">Passo 3 - Notificação por e-mail</h2>
+                        <p>
+                            Selecione o modelo de e-mail desejado e proceda a edição do texto que será enviado aos usuários. Em seguida clique no botão <code>Excluir</code> para excluir o informativo.
+                        </p>
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Modelo de e-mail</label>
+                                    @Html.DropDownList("EmailTemplateID", new DWM.Models.Enumeracoes.BindDropDownList().EmailTemplates("Selecione...", "0", Model.CondominioID, 1), new { @class = "form-control", @onchange = "getEmail();", @disabled = "disable" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
+                                <div class="form-group">
+                                    <label class="control-label">E-mail de notificação do informativo</label>
+                                    <input type="hidden" name="EmailMensagem" id="EmailMensagem" value="@Model.EmailMensagem" />
+                                    <p>
+                                        @Html.Raw(Model.EmailMensagem)
+                                    </p>
+                                    @*<div id="summernote3">@Model.EmailMensagem</div>*@
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+            <!-- End SmartWizard Content -->
         </div>
-        <div class="x_content">
-            <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Cabeçalho *</label>
-                    <div class="col-md-4 col-sm-4 col-xs-4">
-                        @Html.TextBoxFor(m => m.Cabecalho, new { @class = "form-control", @disabled="disable" })
-                    </div>
-                </div>
+    </div>
+</div>
 
-            </div><br />
-
-            <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Data de Publicação</label>
-                    <div class="col-md-4 col-sm-4 col-xs-4">
-                        @Html.Editor("data1", "DATE", new { identificador = "DataPublicacao", value = DateTime.Today, readOnly = "true" })
-                    </div>
-                </div>
-            </div><br />
-
-            <div class="row">
-                <div class="form-group">
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12">Data de Expiração</label>
-                    <div class="col-md-4 col-sm-4 col-xs-4">
-                        @Html.Editor("data2", "DATE", new { identificador = "DataExpiracao", value = DateTime.Today, readOnly = "true" })
-                    </div>
-                </div>
-            </div><br />
-
-            <div class="row">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Resumo, "Resumo *", new { @class = "control-label col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        @Html.TextAreaFor(m => m.Resumo, new { @class = "form-control", @rows = 4, @disabled = "disable" })
-                    </div>
-                </div>
-            </div><br />
-
-            <div class="row">
-                <div class="form-group">
-                    @Html.LabelFor(m => m.MensagemDetalhada, "Mensagem Detalhada", new { @class = "control-label col-md-2 col-sm-2 col-xs-12" })
-                    <div class="col-md-4 col-sm-4 col-xs-12">
-                        @Html.TextAreaFor(m => m.MensagemDetalhada, new { @class = "form-control", @rows = 4, @disabled = "disable" })
-                    </div>
-                </div>
-            </div><br />
-
-           <div class="ln_solid"></div>
-            <div class="form-group">
-                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-2">
-                    <button type="submit" class="btn btn-danger">Deletar</button>
-                    @Html.ActionLink("Cancelar", "Browse", "Informativo", new { @class = "btn btn-primary" })
-                </div>
+<div id="myModal1" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content hidden-xs">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModal">×</button>
+                <h3 class="modal-title" id="myModalLabel">Modal title</h3>
+            </div>
+            <div class="modal-body" id="myModal1-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
             </div>
         </div>
     </div>
-}
+</div>
+<!-- /.modal-dialog -->
+<div class="modal fade" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body text-center" id="myModal2-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div>
+</div>
+<!-- /.modal -->
+<div id="myModalPreview" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content hidden-xs">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                <h3 class="modal-title" id="myModalLabelPreview"></h3>
+            </div>
+            <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- / modal preview-->
+<!-- jQuery Smart Wizard -->
+<script src="../Content/vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 
+<!--Summernote-->
+<script>
+    $(document).ready(function () {
+        $('#summernote1').summernote({
+            lang: 'pt-BR',
+            height: 450,
+            //toolbar: [
+            //   // [groupName, [list of button]]
+            //   ['style', ['bold', 'italic', 'underline', 'clear']],
+            //   ['font', ['strikethrough', 'superscript', 'subscript']],
+            //   ['fontsize', ['fontsize']],
+            //   ['color', ['color']],
+            //   ['para', ['ul', 'ol', 'paragraph']],
+            //   ['height', ['height']]
+            //]
+        });
+        $('#Resumo').html('@Model.Resumo');
+        $('#summernote1').summernote('code', $('#Resumo').val());
+
+        $('#summernote2').summernote({
+            lang: 'pt-BR',
+            height: 450,
+            //toolbar: [
+            //   // [groupName, [list of button]]
+            //   ['style', ['bold', 'italic', 'underline', 'clear']],
+            //   ['font', ['strikethrough', 'superscript', 'subscript']],
+            //   ['fontsize', ['fontsize']],
+            //   ['color', ['color']],
+            //   ['para', ['ul', 'ol', 'paragraph']],
+            //   ['height', ['height']]
+            //]
+        });
+        $('#MensagemDetalhada').html('@Model.MensagemDetalhada');
+        $('#summernote2').summernote('code', $('#MensagemDetalhada').val());
+
+        $('#summernote3').summernote({
+            lang: 'pt-BR',
+            height: 450,
+            //toolbar: [
+            //   // [groupName, [list of button]]
+            //   ['style', ['bold', 'italic', 'underline', 'clear']],
+            //   ['font', ['strikethrough', 'superscript', 'subscript']],
+            //   ['fontsize', ['fontsize']],
+            //   ['color', ['color']],
+            //   ['para', ['ul', 'ol', 'paragraph']],
+            //   ['height', ['height']]
+            //]
+        });
+        $('#EmailMensagem').html('@Model.EmailMensagem');
+        $('#summernote3').summernote('code', $('#EmailMensagem').val());
+        $('#summernote3').on('summernote.blur', function () {
+            $('#EmailMensagem').val($('#summernote3').summernote('code'));
+        });
+    });
+
+    function contaCharCabec() {
+        var text = $("#Cabecalho").val();
+        var count = text.length;
+        $("#contadorCabec").text(count + ' / 60');
+    }
+
+    function getEmail() {
+        var _EmailTemplateID = $('#EmailTemplateID').val();
+        var _CondominioID = $('#CondominioID').val();
+        if (_EmailTemplateID != '' && _EmailTemplateID != '0')
+        {
+            var link = "GetNames?EmailTemplateID=" + _EmailTemplateID + "&CondominioID=" + _CondominioID;
+            link = encodeURI(link + '&noCahce=' + new Date());
+            $.ajax({
+                type: "POST",
+                url: link,
+                contentType: "application/json; charset=utf-8",
+                global: false,
+                async: false,
+                dataType: "json",
+                success: function (jsonObj) {
+                    $('#summernote3').summernote('code', jsonObj.EmailMensagem);
+                    $('#EmailMensagem').val($('#summernote3').summernote('code'));
+                }
+            });
+        }
+    }
+</script>
+
+<!-- jQuery Smart Wizard -->
+<script>
+      $(document).ready(function() {
+        $('#wizard').smartWizard();
+
+        $('#wizard_verticle').smartWizard({
+          transitionEffect: 'slide'
+        });
+
+        $('.buttonNext').addClass('btn btn-default');
+        $('.buttonPrevious').addClass('btn btn-default');
+        $('.buttonFinish').addClass('btn btn-danger');
+        $('.buttonFinish').html('Excluir')
+
+        $('.buttonNext').click(function() {
+            Preview();
+        });
+
+        $('.buttonFinish').click(function () {
+            Valida();
+        });
+
+      });
+</script>
+<!-- /jQuery Smart Wizard -->
+<!-- Preview -->
+<script>
+    function Preview() {
+        $('#Resumo').val($('#summernote1').summernote('code'));
+        $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
+        $("#_PreviewTitle").html($('#Cabecalho').val())
+        $("#_PreviewDate").html($('#DataPublicacao').val())
+        $("#_PreviewSummary").html($('#Resumo').val())
+        $("#myModalLabelPreview").html($('#Cabecalho').val())
+        if ($('#MensagemDetalhada').val() != '')
+        {
+            $('#myModal1-body-preview').html($('#MensagemDetalhada').val());
+            $('#readmore').show();
+        }
+        else
+        {
+            $('#readmore').hide();
+        }
+
+        $('#_PreviewMidia1').html('');
+    }
+</script>

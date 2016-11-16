@@ -24,7 +24,6 @@ namespace DWM.Models.BI
         {
             this.Create(_db, _segurancaDb);
         }
-
         #endregion
 
         public InformativoViewModel Run(Repository value)
@@ -37,6 +36,7 @@ namespace DWM.Models.BI
                 empresaId = SessaoLocal.empresaId,
                 CondominioID = r.CondominioID,
                 EdificacaoID = r.EdificacaoID,
+                InformativoID = r.InformativoID,
                 GrupoCondominoID = r.GrupoCondominoID,
                 DataInformativo = Funcoes.Brasilia(),
                 DataPublicacao = r.DataPublicacao,
@@ -72,7 +72,10 @@ namespace DWM.Models.BI
             {
                 #region Passo 1: Incluir o informativo
                 InformativoModel InformativoModel = new InformativoModel(this.db, this.seguranca_db);
-                result = InformativoModel.Insert(result);
+                if (result.InformativoID == 0)
+                    result = InformativoModel.Insert(result);
+                else
+                    result = InformativoModel.Update(result);
                 if (result.mensagem.Code > 0)
                     throw new App_DominioException(result.mensagem);
                 #endregion
