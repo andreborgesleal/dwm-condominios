@@ -4025,6 +4025,7 @@
     <Content Include="Views\EmailTemplate\Browse.cshtml" />
     <Content Include="Views\EmailTemplate\List.cshtml" />
     <Content Include="Views\EmailTemplate\Create.cshtml" />
+    <Content Include="Views\Condomino\_GrupoCondomino.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

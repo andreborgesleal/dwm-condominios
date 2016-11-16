@@ -70,6 +70,7 @@ namespace DWM.Models.BI
                     if (log.mensagem.Code > 0)
                         throw new App_DominioException(log.mensagem);
                     #endregion
+
                     log.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
                 }
                 catch (ArgumentException ex)

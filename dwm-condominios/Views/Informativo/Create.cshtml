@@ -206,9 +206,10 @@
                                 <div class="form-group">
                                     <label class="control-label">E-mail de notificação do informativo</label>
                                     <input type="hidden" name="EmailMensagem" id="EmailMensagem" value="@Model.EmailMensagem" />
-                                    <div id="summernote3"></div>
+                                    <div id="summernote3">@Model.EmailMensagem</div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -323,6 +324,9 @@
         });
         $('#EmailMensagem').html('@Model.EmailMensagem');
         $('#summernote3').summernote('code', $('#EmailMensagem').val());
+        $('#summernote3').on('summernote.blur', function () {
+            $('#EmailMensagem').val($('#summernote3').summernote('code'));
+        });
     });
 
     function contaCharCabec() {
@@ -347,15 +351,10 @@
                 dataType: "json",
                 success: function (jsonObj) {
                     $('#summernote3').summernote('code', jsonObj.EmailMensagem);
+                    $('#EmailMensagem').val($('#summernote3').summernote('code'));
                 }
             });
         }
-    }
-
-    function Valida() {
-        $('#EmailMensagem').val($('#summernote3').summernote('code'));
-        alert($('#summernote3').summernote('code'));
-        return true;
     }
 </script>
 
@@ -376,7 +375,10 @@
             Preview();
         });
 
-        $('#btn-salvar').click(function () { return Valida(); })
+        $('.buttonFinish').click(function () {
+            Valida();
+        });
+
       });
 </script>
 <!-- /jQuery Smart Wizard -->

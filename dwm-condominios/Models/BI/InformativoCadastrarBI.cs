@@ -34,7 +34,7 @@ namespace DWM.Models.BI
             InformativoViewModel result = new InformativoViewModel()
             {
                 uri = r.uri,
-                empresaId = sessaoCorrente.empresaId,
+                empresaId = SessaoLocal.empresaId,
                 CondominioID = r.CondominioID,
                 EdificacaoID = r.EdificacaoID,
                 GrupoCondominoID = r.GrupoCondominoID,
@@ -50,18 +50,23 @@ namespace DWM.Models.BI
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
 
-            EmailLogViewModel EmailLogViewModel = new EmailLogViewModel()
+            EmailLogViewModel EmailLogViewModel = null;
+
+            if (!string.IsNullOrEmpty(r.EmailMensagem))
             {
-                uri = r.uri,
-                empresaId = sessaoCorrente.empresaId,
-                EmailTipoID = EmailTipoID, // "Informativo"
-                CondominioID = sessaoCorrente.empresaId,
-                EdificacaoID = r.EdificacaoID,
-                GrupoCondominoID = r.GrupoCondominoID,
-                DataEmail = Funcoes.Brasilia(),
-                Assunto = db.EmailTipos.Find(EmailTipoID, sessaoCorrente.empresaId).Assunto,
-                EmailMensagem = r.MensagemDetalhada
-            };
+                EmailLogViewModel = new EmailLogViewModel()
+                {
+                    uri = r.uri,
+                    empresaId = SessaoLocal.empresaId,
+                    EmailTipoID = EmailTipoID, // "Informativo"
+                    CondominioID = SessaoLocal.empresaId,
+                    EdificacaoID = r.EdificacaoID,
+                    GrupoCondominoID = r.GrupoCondominoID,
+                    DataEmail = Funcoes.Brasilia(),
+                    Assunto = db.EmailTipos.Find(EmailTipoID, SessaoLocal.empresaId).Assunto,
+                    EmailMensagem = r.MensagemDetalhada
+                };
+            }
 
             try
             {
@@ -73,10 +78,13 @@ namespace DWM.Models.BI
                 #endregion
 
                 #region Passo 2: Enviar o e-mail de notificação
-                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
-                EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
-                if (EmailLogViewModel.mensagem.Code > 0)
-                    throw new App_DominioException(EmailLogViewModel.mensagem);
+                if (!string.IsNullOrEmpty(r.EmailMensagem))
+                {
+                    EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
+                    EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
+                    if (EmailLogViewModel.mensagem.Code > 0)
+                        throw new App_DominioException(EmailLogViewModel.mensagem);
+                }
                 #endregion
 
                 db.SaveChanges();

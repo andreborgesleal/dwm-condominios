@@ -14,5 +14,9 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Condômino")]
         public int CondominoID { get; set; }
+
+        public string DescricaoGrupo { get; set; }
+
+        public string Situacao { get; set; }
     }
 }

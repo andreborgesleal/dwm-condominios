@@ -1,0 +1,140 @@
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model CondominoEditViewModel
+@{
+    Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+
+@if (Model != null)
+{
+    if (Model.GrupoCondominoUsuarios.Count() > 0)
+    {
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupos", Descricao = "", Transacao = t })
+            <div class="x_content">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Grupo</th>
+                            <th>Ativo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int contador = 0;
+                            foreach (GrupoCondominoUsuarioViewModel usu in Model.GrupoCondominoUsuarios)
+                            {
+                                <tr>
+                                    <td><small>@usu.DescricaoGrupo</small></td>
+                                    @if (usu.Situacao == "A")
+                                    {
+                                        <td>
+                                            <input type="checkbox" id="Situacao"@contador name="Situacao"@contador class="icheckbox_flat-green" checked="checked">
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td>
+                                            <input type="checkbox" id="Situacao"@contador name="Situacao"@contador class="icheckbox_flat-green">
+                                        </td>
+                                    }
+                                </tr>
+                                contador++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+     }
+     @*<div class="x_panel">
+                                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo credenciado", Descricao = "O novo credenciado receberá um convite por e-mail para ativação da conta", Transacao = t })
+                                <div class="x_content">
+                                    @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
+                                    {
+                                        @Html.Partial("_alerts")
+                                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                                        @Html.HiddenFor(info => info.CredenciadoViewModel.CondominoID)
+                                        @Html.HiddenFor(info => info.CredenciadoViewModel.CredenciadoID)
+                                        @Html.HiddenFor(info => info.CredenciadoViewModel.UsuarioID)
+                                        @Html.Hidden("Operacao", "S")
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.CredenciadoViewModel.Nome, new { @class = "control-label" })
+                                                    <input type="text" class="form-control" name="CredenciadoViewModel.Nome" id="CredenciadoViewModel_Nome" value="@Model.CredenciadoViewModel.Nome" maxlength="30" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.CredenciadoViewModel.Email, new { @class = "control-label" })
+                                                    <input type="text" class="form-control" name="CredenciadoViewModel.Email" id="CredenciadoViewModel_Email" value="@Model.CredenciadoViewModel.Email" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.CredenciadoViewModel.TipoCredenciadoID, new { @class = "control-label" })
+                                                    @Html.DropDownListFor(m => m.CredenciadoViewModel.TipoCredenciadoID, new DWM.Models.Enumeracoes.BindDropDownList().TipoCredenciados("", Model.CredenciadoViewModel.TipoCredenciadoID.ToString()), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.CredenciadoViewModel.Sexo, new { @class = "control-label" })
+                                                    @Html.DropDownListFor(m => m.CredenciadoViewModel.Sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.CredenciadoViewModel.Sexo, ""), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                                                <div class="form-group">
+                                                    @Html.LabelFor(m => m.CredenciadoViewModel.Observacao, new { @class = "control-label" })
+                                                    <textarea class="form-control" cols="0" rows="4" name="CredenciadoViewModel.Observacao" id="CredenciadoViewModel_Observacao" value="@Model.CredenciadoViewModel.Observacao"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p>&nbsp;</p>
+                                        <div class="row clearfix">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-credenciado" id="btn-salvar-credenciado" />
+                                                    <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>*@
+ }
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<script type="text/javascript">
+
+    $(function () {
+        $('#form002').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-credenciado').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+</script>

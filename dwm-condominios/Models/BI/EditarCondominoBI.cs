@@ -75,6 +75,11 @@ namespace DWM.Models.BI
                 result.Funcionarios = ListFuncionarios.Bind(0, 50, result.FuncionarioViewModel.CondominioID, result.FuncionarioViewModel.EdificacaoID, result.FuncionarioViewModel.UnidadeID, result.FuncionarioViewModel.CondominoID);
                 #endregion
 
+                #region Grupo de Condôminos
+                ListViewGrupoCondominoUsuarios ListGrupoCondominoUsuarios = new ListViewGrupoCondominoUsuarios(this.db, this.seguranca_db);
+                result.GrupoCondominoUsuarios = ListGrupoCondominoUsuarios.Bind(0, 50, result.CondominoPFViewModel.CondominoID);
+                #endregion
+
                 result.UnidadeViewModel = new UnidadeViewModel()
                 {
                     CondominioID = _empresaId,
