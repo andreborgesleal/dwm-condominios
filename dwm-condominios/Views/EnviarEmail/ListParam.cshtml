@@ -1,0 +1,66 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.EmailLogViewModel>
+
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="col-md-5">
+            Clique nos botões de <code>Ação</code> para executar a ação desejada
+        </div>
+        <div class="col-md-1">
+            <a href="../EnviarEmail/Create" class="text-primary">Incluir</a>
+        </div>
+        <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
+            @Html.Partial("Filtro")
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Edificação</th>
+                        <th class="column-title">Unidade</th>
+                        <th class="column-title">Data</th>
+                        <th class="column-title">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.EmailLogViewModel email in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <a href="Edit?EmailLogID=@email.EmailLogID" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+                                <a href="Delete?EmailLogID=@email.EmailLogID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                            <td>
+                                <span>@email.Descricao_Edificacao</span>
+                            </td>
+                            <td>
+                                <span>@email.UnidadeID</span>
+                            </td>
+                            <td>
+                                <span>@email.DataEmail.ToString("dd/MM/yyyy")</span>
+                            </td>
+                            
+                            <td>
+                                <span>@email.Descricao_GrupoCondomino</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.Partial("Paginacao", Model)
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+
+
+
