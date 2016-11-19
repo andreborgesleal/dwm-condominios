@@ -1,6 +1,6 @@
 ﻿@using DWM.Models.Repositories
 @using App_Dominio.Repositories
-@model CondominoEditViewModel
+@model IEnumerable<GrupoCondominoUsuarioViewModel>
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
@@ -13,7 +13,7 @@
 
 @if (Model != null)
 {
-    if (Model.GrupoCondominoUsuarios.Count() > 0)
+    if (Model.Count() > 0)
     {
         <div class="x_panel">
             @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupos", Descricao = "", Transacao = t })
@@ -27,25 +27,28 @@
                     </thead>
                     <tbody>
                         @{
-                            int contador = 0;
-                            foreach (GrupoCondominoUsuarioViewModel usu in Model.GrupoCondominoUsuarios)
+                            using (Ajax.BeginForm("EditGrupoCondomino", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-grupo-condomino-usuario" }, new { @class = "form", @id = "form006", @name = "form006" }))
                             {
-                                <tr>
-                                    <td><small>@usu.DescricaoGrupo</small></td>
-                                    @if (usu.Situacao == "A")
-                                    {
-                                        <td>
-                                            <input type="checkbox" id="Situacao"@contador name="Situacao"@contador class="icheckbox_flat-green" checked="checked">
-                                        </td>
-                                    }
-                                    else
-                                    {
-                                        <td>
-                                            <input type="checkbox" id="Situacao"@contador name="Situacao"@contador class="icheckbox_flat-green">
-                                        </td>
-                                    }
-                                </tr>
-                                contador++;
+                                int contador = 0;
+                                foreach (GrupoCondominoUsuarioViewModel usu in Model)
+                                {
+                                    <tr>
+                                        <td><small>@usu.DescricaoGrupo</small></td>
+                                        @if (usu.Situacao == "A")
+                                        {
+                                            <td>
+                                                <input type="checkbox" id="Situacao" @contador name="Situacao" @contador class="icheckbox_flat-green" checked="checked" onclick="change('@usu.CondominoID', '@usu.GrupoCondominoID', 'E')">
+                                            </td>
+                                        }
+                                        else
+                                        {
+                                            <td>
+                                                <input type="checkbox" id="Situacao" @contador name="Situacao" @contador class="icheckbox_flat-green" onclick="change('@usu.CondominoID', '@usu.GrupoCondominoID', 'I')">
+                                            </td>
+                                        }
+                                    </tr>
+                                    contador++;
+                                }
                             }
                         }
                     </tbody>
@@ -122,19 +125,52 @@ else
 <script type="text/javascript">
 
     $(function () {
-        $('#form002').submit(function () {
+        $('#form006').submit(function () {
             if ($(this).valid()) {
                 $.ajax({
                     url: this.action,
                     type: this.method,
                     data: $(this).serialize(),
                     success: function (result) {
-                        $('#div-credenciado').html(result);
+                        $('#div-grupo-condomino-usuario').html(result);
                     }
                 });
             }
             return false;
         });
     });
+
+
+    function change(CondominoID, GrupoCondominoID, Operacao)
+    {
+        var link = 'EditGrupoCondomino';
+        link = encodeURI(link + '?CondominoID=' + CondominoID + '&GrupoCondominoID=' + GrupoCondominoID + '&Operacao=' + Operacao);
+
+        $('#carregando').css("visibility", "visible");
+        $('#carregando').css("width", "100%");
+        $('#carregando').css("height", "100%");
+        $('#carregando').css("position", "absolute");
+        $('#carregando').css("background-color", "black");
+        $('#carregando').css("filter", "alpha(opacity=60)");
+        $('#carregando').css("opacity", "0.6");
+        $('#carregando').css("left", "0%");
+        $('#carregando').css("top", "0%");
+
+        link = encodeURI(link + '&noCahce=' + new Date());
+
+        $('#div-grupo-condomino-usuario').load(link);
+
+        $(document).ajaxSuccess(function (event, xhr, settings) {
+            $('#carregando').css("visibility", "hidden");
+            $('#carregando').css("height", "0px");
+            $('#carregando').css("margin-top", "0%");
+            $('#carregando').css("margin-left", "0%");
+        }).error(function () {
+            $('#carregando').css("visibility", "hidden");
+            $('#carregando').css("height", "0px");
+            $('#carregando').css("margin-top", "0%");
+            $('#carregando').css("margin-left", "0%");
+        })
+    }
 
 </script>

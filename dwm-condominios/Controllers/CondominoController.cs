@@ -436,6 +436,34 @@ namespace DWM.Controllers
             }
         }
 
+        [AuthorizeFilter]
+        public ActionResult EditGrupoCondomino(GrupoCondominoUsuarioViewModel GrupoCondominoUsuarioViewModel, string Operacao)
+        {
+            IEnumerable<GrupoCondominoUsuarioViewModel> Grupos = null;
+            try
+            {
+                #region Incluir/Excluir Grupo do Condômino
+                GrupoCondominoUsuarioViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                Factory<GrupoCondominoUsuarioViewModel, ApplicationContext> factory = new Factory<GrupoCondominoUsuarioViewModel, ApplicationContext>();
+
+                Grupos = factory.Execute(new GrupoCondominoUsuarioBI(Operacao), GrupoCondominoUsuarioViewModel, GrupoCondominoUsuarioViewModel.CondominoID);
+                #endregion
+            }
+            catch (App_DominioException ex)
+            {
+                ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+            }
+            catch (Exception ex)
+            {
+                App_DominioException.saveError(ex, GetType().FullName);
+                ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+            }
+
+            return View("_GrupoCondomino", Grupos);
+        }
+
         #endregion
 
         #region Enviar Token

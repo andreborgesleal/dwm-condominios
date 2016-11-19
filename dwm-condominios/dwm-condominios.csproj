@@ -221,6 +221,7 @@
     <Compile Include="Models\BI\EmailNotificacaoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
     <Compile Include="Models\BI\GerarTokenBI.cs" />
+    <Compile Include="Models\BI\GrupoCondominoUsuarioBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
     <Compile Include="Models\BI\InformativoCadastrarBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
