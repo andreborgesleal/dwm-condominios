@@ -205,6 +205,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
     <Compile Include="Controllers\EmailTemplateController.cs" />
+    <Compile Include="Controllers\EnviarEmailController.cs" />
     <Compile Include="Controllers\GrupoCondominoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
@@ -4027,6 +4028,9 @@
     <Content Include="Views\EmailTemplate\List.cshtml" />
     <Content Include="Views\EmailTemplate\Create.cshtml" />
     <Content Include="Views\Condomino\_GrupoCondomino.cshtml" />
+    <Content Include="Views\EnviarEmail\Browse.cshtml" />
+    <Content Include="Views\EnviarEmail\ListParam.cshtml" />
+    <Content Include="Views\EnviarEmail\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
