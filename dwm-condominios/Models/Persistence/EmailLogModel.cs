@@ -4,6 +4,7 @@ using DWM.Models.Repositories;
 using App_Dominio.Contratos;
 using App_Dominio.Enumeracoes;
 using App_Dominio.Models;
+using System.Web;
 
 namespace DWM.Models.Persistence
 {
@@ -120,6 +121,14 @@ namespace DWM.Models.Persistence
                 }
             }
             return value.mensagem;
+        }
+
+
+        public override EmailLogViewModel CreateRepository(HttpRequestBase Request = null)
+        {
+            EmailLogViewModel log = base.CreateRepository(Request);
+            log.CondominioID = SessaoLocal.empresaId;
+            return log;
         }
         #endregion
     }

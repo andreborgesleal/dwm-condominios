@@ -1,5 +1,7 @@
 ﻿using App_Dominio.Controllers;
 using App_Dominio.Models;
+using App_Dominio.Pattern;
+using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
@@ -40,5 +42,36 @@ namespace dwm_condominios.Controllers
             else
                 return View();
         }
+
+        #region Retorna o modelo do template
+        [AllowAnonymous]
+        public JsonResult GetNamesEmailTemplate(int EmailTemplateID)
+        {
+            Facade<EmailTemplateViewModel, EmailTemplateModel, ApplicationContext> facade = new Facade<EmailTemplateViewModel, EmailTemplateModel, ApplicationContext>();
+            var results = facade.getObject(new EmailTemplateViewModel() { EmailTemplateID = EmailTemplateID });
+
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
+        }
+        #endregion
+
+        #region Retorno as Unidades de uma dada Edificação
+        [AllowAnonymous]
+        public JsonResult GetNames(string term, int tag)
+        {
+            var results = new BindDropDownList().Unidades("Selecione...", "", term, tag);
+
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
+        }
+        #endregion
     }
 }

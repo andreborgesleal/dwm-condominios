@@ -43,6 +43,10 @@ namespace DWM.Models.Enumeracoes
             [StringDescription("Chamado")]
             [StringValue("6")]
             CHAMADO = 6,
+
+            [StringDescription("Outros")]
+            [StringValue("9")]
+            OUTROS = 9,
         }
 
     }
