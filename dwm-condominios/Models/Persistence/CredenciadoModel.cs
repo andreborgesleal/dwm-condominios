@@ -33,7 +33,7 @@ namespace DWM.Models.Persistence
             entity.CredenciadoID = value.CredenciadoID;
             entity.CondominoID = value.CondominoID;
             entity.Nome = value.Nome;
-            entity.Email = value.Email.ToLower();
+            entity.Email = !string.IsNullOrEmpty(value.Email) ? value.Email.ToLower() : null;
             entity.TipoCredenciadoID = value.TipoCredenciadoID;
             entity.Sexo = value.Sexo;
             entity.Observacao = value.Observacao;

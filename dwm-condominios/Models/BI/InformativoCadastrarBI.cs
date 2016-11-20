@@ -64,7 +64,7 @@ namespace DWM.Models.BI
                     GrupoCondominoID = r.GrupoCondominoID,
                     DataEmail = Funcoes.Brasilia(),
                     Assunto = db.EmailTipos.Find(EmailTipoID, SessaoLocal.empresaId).Assunto,
-                    EmailMensagem = r.MensagemDetalhada
+                    EmailMensagem = r.EmailMensagem
                 };
             }
 

@@ -230,7 +230,7 @@ namespace DWM.Controllers
                         value = factory.Execute(new CodigoAtivacaoCredenciadoBI(), value);
                         if (value.mensagem.Code > 0)
                             throw new App_DominioException(value.mensagem);
-                        Success("Credenciado ativado com sucesso. Faça seu login para acessar o sistema");
+                        Success("Residente ativado com sucesso. Faça seu login para acessar o sistema");
                         return RedirectToAction("Login", "Account");
                     };
                 }

@@ -149,7 +149,7 @@ namespace DWM.Controllers
             {
                 int CredenciadoViewModel_CondominoID = CredenciadoViewModel.CondominoID;
                 int CredenciadoViewModel_CredenciadoID = CredenciadoViewModel.CredenciadoID;
-                int CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
+                int? CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
                 string CredenciadoViewModel_Nome = CredenciadoViewModel.Nome;
                 string CredenciadoViewModel_Email = CredenciadoViewModel.Email;
                 int CredenciadoViewModel_TipoCredenciadoID = CredenciadoViewModel.TipoCredenciadoID;
@@ -187,15 +187,15 @@ namespace DWM.Controllers
                         if (factory.Mensagem.Code > 0)
                             throw new App_DominioException(factory.Mensagem);
 
-                        if (result.CredenciadoViewModel.CredenciadoID == 0)
-                        {
-                            #region envio de e-mail ao credenciado para ativação
-                            result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
-                            CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
-                            if (repository.mensagem.Code > 0)
-                                throw new ArgumentException(repository.mensagem.MessageBase);
-                            #endregion
-                        }
+                        //if (result.CredenciadoViewModel.CredenciadoID == 0 && !string.IsNullOrEmpty(result.CredenciadoViewModel.Email) )
+                        //{
+                        //    #region envio de e-mail ao credenciado para ativação
+                        //    result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
+                        //    CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
+                        //    if (repository.mensagem.Code > 0)
+                        //        throw new ArgumentException(repository.mensagem.MessageBase);
+                        //    #endregion
+                        //}
 
                         CredenciadoModel CredenciadoModel = new CredenciadoModel();
                         result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);

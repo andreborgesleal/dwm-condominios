@@ -20,7 +20,6 @@ namespace DWM.Models.Repositories
 
         [DisplayName("E-mail")]
         [StringLength(100, ErrorMessage = "E-mail deve ter no máximo 100 caracteres")]
-        [Required(ErrorMessage = "E-mail deve ser informado")]
         [DataType(DataType.EmailAddress, ErrorMessage = "Informe um e-mail válido")]
         [EmailAddress(ErrorMessage = "Informe o E-mail com um formato válido")]
         public string Email { get; set; }
@@ -37,6 +36,6 @@ namespace DWM.Models.Repositories
         public string Observacao { get; set; }
 
         [DisplayName("Usuario ID")]
-        public int UsuarioID { get; set; }
+        public int? UsuarioID { get; set; }
     }
 }

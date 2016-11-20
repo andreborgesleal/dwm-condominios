@@ -26,10 +26,10 @@
                     <tr class="headings">
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Informativo</th>
-                        <th class="column-title">Data</th>
-                        <th class="column-title">Expiração</th>
-                        <th class="column-title">Edificação</th>
-                        <th class="column-title">Grupo</th>
+                        <th class="column-title hidden-sm hidden-xs">Data</th>
+                        <th class="column-title hidden-sm hidden-xs">Expiração</th>
+                        <th class="column-title hidden-sm hidden-xs">Edificação</th>
+                        <th class="column-title hidden-sm hidden-xs">Grupo</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,28 +42,21 @@
                             </td>
                             <td>
                                 <div class="media">
-                                    <!--<div class="media-left">
-                                        <a href="#">
-                                            <img class="media-object" src="@(Path + inf.Midia1)">
-                                        </a>
-                                    </div>
-                                    -->
                                     <div class="media-body">
                                         <h4 class="media-heading">@inf.Cabecalho</h4>
-                                        @*@inf.Resumo*@
                                     </div>
                                 </div>
                             </td>
-                            <td>
+                            <td class="hidden-sm hidden-xs">
                                 <span>@inf.DataPublicacao.ToString("dd/MM/yyyy")</span>
                             </td>
-                            <td>
+                            <td class="hidden-sm hidden-xs">
                                 <span>@(inf.DataExpiracao.HasValue ? inf.DataExpiracao.Value.ToString("dd/MM/yyyy") : "")</span>
                             </td>
-                            <td>
+                            <td class="hidden-sm hidden-xs">
                                 <span>@inf.descricao_edificacao</span>
                             </td>
-                            <td>
+                            <td class="hidden-sm hidden-xs">
                                 <span>@inf.descricao_GrupoCondomino</span>
                             </td>
                         </tr>
