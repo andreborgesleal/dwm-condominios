@@ -123,6 +123,10 @@ namespace DWM.Models.Persistence
             return value.mensagem;
         }
 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 52987f7d9d456d38282fafccd3dc980c0f6bd37d
         public override EmailLogViewModel CreateRepository(HttpRequestBase Request = null)
         {
             EmailLogViewModel log = base.CreateRepository(Request);
