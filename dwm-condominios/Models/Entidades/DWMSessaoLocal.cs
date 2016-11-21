@@ -32,15 +32,24 @@ namespace DWM.Models.Entidades
 
             #region É Condômino?
             if ((from con in db.Condominos
-                 join cre in db.Credenciados on con.CondominoID equals cre.CondominoID
+                 join cre in db.Credenciados on con.CondominoID equals cre.CondominoID into CRE
+                 from cre in CRE.DefaultIfEmpty()
                  where con.CondominioID == SessaoLocal.empresaId && (con.UsuarioID == SessaoLocal.usuarioId || cre.UsuarioID == SessaoLocal.usuarioId) && con.IndSituacao == "A"
                  select con.CondominoID).Count() > 0)
             {
                 #region CondominoID
                 SessaoLocal.CondominoID = (from con in db.Condominos
-                                           join cre in db.Credenciados on con.CondominoID equals cre.CondominoID
+                                           join cre in db.Credenciados on con.CondominoID equals cre.CondominoID into CRE
+                                           from cre in CRE.DefaultIfEmpty()
                                            where con.CondominioID == SessaoLocal.empresaId && (con.UsuarioID == SessaoLocal.usuarioId || cre.UsuarioID == SessaoLocal.usuarioId) && con.IndSituacao == "A"
                                            select con.CondominoID).FirstOrDefault();
+                #endregion
+
+                #region CredenciadoID
+                SessaoLocal.CredenciadoID = (from con in db.Condominos
+                                             join cre in db.Credenciados on con.CondominoID equals cre.CondominoID
+                                             where con.CondominioID == SessaoLocal.empresaId && cre.UsuarioID == SessaoLocal.usuarioId && con.IndSituacao == "A"
+                                             select cre.CredenciadoID).FirstOrDefault();
                 #endregion
 
                 #region Grupos do Condômino

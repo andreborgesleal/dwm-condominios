@@ -9,6 +9,7 @@ namespace DWM.Models.Entidades
     public class SessaoLocal : Sessao
     {
         public int CondominoID { get; set; }
+        public int? CredenciadoID { get; set; }
         public int[] GrupoCondominoID { get; set; }
         public IEnumerable<Unidade> Unidades { get; set; }
     }

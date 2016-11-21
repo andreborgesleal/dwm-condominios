@@ -12,56 +12,54 @@ using App_Dominio.Security;
 
 namespace DWM.Models.Persistence
 {
-    public class GrupoCondominoModel : CrudModelLocal<GrupoCondomino, GrupoCondominoViewModel>
+    public class FilaAtendimentoModel : CrudModelLocal<FilaAtendimento, FilaAtendimentoViewModel>
     {
         #region Constructor
-        public GrupoCondominoModel() { }
+        public FilaAtendimentoModel() { }
         #endregion
 
         #region Métodos da classe CrudContext
-        public override GrupoCondomino MapToEntity(GrupoCondominoViewModel value)
+        public override FilaAtendimento MapToEntity(FilaAtendimentoViewModel value)
         {
-            GrupoCondomino entity = Find(value);
+            FilaAtendimento entity = Find(value);
 
             if (entity == null)
-                entity = new GrupoCondomino();
+                entity = new FilaAtendimento();
 
-            entity.GrupoCondominoID = value.GrupoCondominoID;
+            entity.FilaAtendimentoID = value.FilaAtendimentoID;
             entity.CondominioID = value.CondominioID;
             entity.Descricao = value.Descricao;
-            entity.Objetivo = value.Objetivo;
-            entity.PrivativoAdmin = value.PrivativoAdmin;
+            entity.VisibilidadeCondomino = value.VisibilidadeCondomino;
 
             return entity;
         }
 
-        public override GrupoCondominoViewModel MapToRepository(GrupoCondomino entity)
+        public override FilaAtendimentoViewModel MapToRepository(FilaAtendimento entity)
         {
-            return new GrupoCondominoViewModel()
+            return new FilaAtendimentoViewModel()
             {
-                GrupoCondominoID = entity.GrupoCondominoID,
+                FilaAtendimentoID = entity.FilaAtendimentoID,
                 CondominioID = entity.CondominioID,
                 Descricao = entity.Descricao,
-                Objetivo = entity.Objetivo,
-                PrivativoAdmin = entity.PrivativoAdmin,
+                VisibilidadeCondomino = entity.VisibilidadeCondomino,
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
         }
 
-        public override GrupoCondomino Find(GrupoCondominoViewModel key)
+        public override FilaAtendimento Find(FilaAtendimentoViewModel key)
         {
-            return db.GrupoCondominos.Find(key.GrupoCondominoID);
+            return db.FilaAtendimentos.Find(key.FilaAtendimentoID);
         }
 
-        public override Validate Validate(GrupoCondominoViewModel value, Crud operation)
+        public override Validate Validate(FilaAtendimentoViewModel value, Crud operation)
         {
             value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
 
-            if (operation != Crud.INCLUIR && value.GrupoCondominoID == 0)
+            if (operation != Crud.INCLUIR && value.FilaAtendimentoID == 0)
             {
                 value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Grupo ID").ToString();
-                value.mensagem.MessageBase = "Código identificador do grupo deve ser informado";
+                value.mensagem.Message = MensagemPadrao.Message(5, "Fila ID").ToString();
+                value.mensagem.MessageBase = "Código identificador da fila de atendimento deve ser informado";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             };
@@ -95,11 +93,11 @@ namespace DWM.Models.Persistence
                     return value.mensagem;
                 }
 
-                if (value.PrivativoAdmin == null || value.PrivativoAdmin.Trim().Length == 0)
+                if (value.VisibilidadeCondomino == null || value.VisibilidadeCondomino.Trim().Length <= 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Privativo Administração").ToString();
-                    value.mensagem.MessageBase = "Atributo Privativo da Administração deve ser informado";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visibilidade Condômino").ToString();
+                    value.mensagem.MessageBase = "Campo Visibilidade Condômino deve ser informado.";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
@@ -107,23 +105,22 @@ namespace DWM.Models.Persistence
             return value.mensagem;
         }
 
-        public override GrupoCondominoViewModel CreateRepository(HttpRequestBase Request = null)
+        public override FilaAtendimentoViewModel CreateRepository(HttpRequestBase Request = null)
         {
-            GrupoCondominoViewModel value = base.CreateRepository(Request);
+            FilaAtendimentoViewModel value = base.CreateRepository(Request);
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
             value.CondominioID = security.getSessaoCorrente().empresaId;
-            value.PrivativoAdmin = "N";
             return value;
         }
         #endregion
     }
 
-    public class ListViewGrupoCondominos : ListViewModelLocal<GrupoCondominoViewModel>
+    public class ListViewFilaAtendimento : ListViewModelLocal<FilaAtendimentoViewModel>
     {
         #region Constructor
-        public ListViewGrupoCondominos() { }
+        public ListViewFilaAtendimento() { }
 
-        public ListViewGrupoCondominos(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewFilaAtendimento(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             this.Create(_db, _seguranca_db);
         }
@@ -131,40 +128,39 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe ListViewRepository
-        public override IEnumerable<GrupoCondominoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        public override IEnumerable<FilaAtendimentoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
-            string _nome = param != null && param.Count() > 0 && param[0] != null ? (string)param[0] : null;
+            string _descricao = param != null && param.Count() > 0 && param[0] != null ? (string)param[0] : null;
 
-            return (from gru in db.GrupoCondominos
-                    where gru.CondominioID == sessaoCorrente.empresaId
-                    && (_nome == null || gru.Descricao == _nome)
-                    orderby gru.Descricao
-                    select new GrupoCondominoViewModel
+            return (from fil in db.FilaAtendimentos
+                    where fil.CondominioID == SessaoLocal.empresaId
+                    && (_descricao == null || fil.Descricao == _descricao)
+                    orderby fil.Descricao
+                    select new FilaAtendimentoViewModel
                     {
                         empresaId = sessaoCorrente.empresaId,
-                        GrupoCondominoID = gru.GrupoCondominoID,
-                        CondominioID = gru.CondominioID,
-                        Descricao = gru.Descricao,
-                        PrivativoAdmin = gru.PrivativoAdmin,
-                        Objetivo = gru.Objetivo,
+                        FilaAtendimentoID = fil.FilaAtendimentoID,
+                        CondominioID = fil.CondominioID,
+                        Descricao = fil.Descricao,
+                        VisibilidadeCondomino = fil.VisibilidadeCondomino,
                         PageSize = pageSize,
-                        TotalCount = ((from gru1 in db.GrupoCondominos
-                                       where gru1.CondominioID == sessaoCorrente.empresaId
-                                       && (_nome == null || gru1.Descricao == _nome)
-                                       orderby gru1.Descricao
-                                       select gru1).Count())
+                        TotalCount = ((from fil1 in db.FilaAtendimentos
+                                       where fil1.CondominioID == SessaoLocal.empresaId
+                                       && (_descricao == null || fil1.Descricao == _descricao)
+                                       orderby fil1.Descricao
+                                       select fil1).Count())
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
         }
 
         public override Repository getRepository(Object id)
         {
-            return new GrupoCondominoModel().getObject((GrupoCondominoViewModel)id);
+            return new FilaAtendimentoModel().getObject((FilaAtendimentoViewModel)id);
         }
         #endregion
 
         public override string DivId()
         {
-            return "div-grupo-condomino";
+            return "div-fila-atendimento";
         }
     }
 }

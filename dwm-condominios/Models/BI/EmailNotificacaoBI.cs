@@ -36,6 +36,11 @@ namespace DWM.Models.BI
             {
                 try
                 {
+                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
+                    Validate Validate = Model.Validate(log, Crud.INCLUIR);
+                    if (Validate.Code > 0)
+                        throw new ArgumentException(Validate.Message);
+
                     int _empresaId = SessaoLocal.empresaId;
                     int _sistemaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
 
@@ -65,7 +70,6 @@ namespace DWM.Models.BI
                     }
 
                     #region Incluir o Log do e-mail enviado
-                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
                     log = Model.Insert(log);
                     if (log.mensagem.Code > 0)
                         throw new App_DominioException(log.mensagem);

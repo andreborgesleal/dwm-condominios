@@ -206,6 +206,7 @@
     <Compile Include="Controllers\CondominoController.cs" />
     <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\EnviarEmailController.cs" />
+    <Compile Include="Controllers\FilaAtendimentoController.cs" />
     <Compile Include="Controllers\GrupoCondominoController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
@@ -241,6 +242,8 @@
     <Compile Include="Models\Entidades\EmailLog.cs" />
     <Compile Include="Models\Entidades\EmailTemplate.cs" />
     <Compile Include="Models\Entidades\EmailTipo.cs" />
+    <Compile Include="Models\Entidades\FilaAtendimento.cs" />
+    <Compile Include="Models\Entidades\FilaAtendimentoUsuario.cs" />
     <Compile Include="Models\Entidades\Funcionario.cs" />
     <Compile Include="Models\Entidades\GrupoCondomino.cs" />
     <Compile Include="Models\Entidades\GrupoCondominoUsuario.cs" />
@@ -268,6 +271,8 @@
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
     <Compile Include="Models\Persistence\EmailLogModel.cs" />
     <Compile Include="Models\Persistence\EmailTemplateModel.cs" />
+    <Compile Include="Models\Persistence\FilaAtendimentoModel.cs" />
+    <Compile Include="Models\Persistence\FilaAtendimentoUsuarioModel.cs" />
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoUsuarioModel.cs" />
@@ -287,6 +292,8 @@
     <Compile Include="Models\Repositories\EmailLogViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTemplateViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTipoViewModel.cs" />
+    <Compile Include="Models\Repositories\FilaAtendimentoUsuarioViewModel.cs" />
+    <Compile Include="Models\Repositories\FilaAtendimentoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
     <Compile Include="Models\Repositories\GrupoCondominoUsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\GrupoCondominoViewModel.cs" />
@@ -4031,6 +4038,11 @@
     <Content Include="Views\EnviarEmail\Browse.cshtml" />
     <Content Include="Views\EnviarEmail\ListParam.cshtml" />
     <Content Include="Views\EnviarEmail\Create.cshtml" />
+    <Content Include="Views\FilaAtendimento\Browse.cshtml" />
+    <Content Include="Views\FilaAtendimento\List.cshtml" />
+    <Content Include="Views\FilaAtendimento\Create.cshtml" />
+    <Content Include="Views\FilaAtendimento\Edit.cshtml" />
+    <Content Include="Views\FilaAtendimento\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
