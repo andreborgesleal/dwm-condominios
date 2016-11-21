@@ -15,7 +15,8 @@ namespace DWM.Models.Enumeracoes
             SISTEMA = 3,
             EMPRESA = 4,
             HABILITA_EMAIL = 5,
-            GRUPO_CREDENCIADO = 6
+            GRUPO_CREDENCIADO = 6,
+            URL_CONDOMINIO = 7
         }
 
         public enum EmailTipo
@@ -47,6 +48,10 @@ namespace DWM.Models.Enumeracoes
             [StringDescription("Outros")]
             [StringValue("9")]
             OUTROS = 9,
+<<<<<<< HEAD
+=======
+
+>>>>>>> 52987f7d9d456d38282fafccd3dc980c0f6bd37d
         }
 
     }

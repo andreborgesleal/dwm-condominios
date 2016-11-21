@@ -1,4 +1,5 @@
 ﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
 @model DWM.Models.Repositories.InformativoViewModel
 @{
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
@@ -197,7 +198,7 @@
                             <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                                 <div class="form-group">
                                     <label class="control-label">Modelo de e-mail</label>
-                                    @Html.DropDownList("EmailTemplateID", new DWM.Models.Enumeracoes.BindDropDownList().EmailTemplates("Selecione...", "0", Model.CondominioID, 1), new { @class = "form-control", @onchange = "getEmail();" })
+                                    @Html.DropDownList("EmailTemplateID", new BindDropDownList().EmailTemplates("Selecione...", "0", Model.CondominioID, (int)Enumeradores.EmailTipo.OUTROS), new { @class = "form-control", @onchange = "getEmail();" })
                                 </div>
                             </div>
                         </div>
@@ -388,7 +389,7 @@
     function Preview() {
         $('#Resumo').val($('#summernote1').summernote('code'));
         $('#MensagemDetalhada').val($('#summernote2').summernote('code'));
-        $("#_PreviewTitle").html($('#Cabecalho').val())
+        $("#_PreviewTitle").html($('#Cabecalho').val() + '<img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />')
         $("#_PreviewDate").html($('#DataPublicacao').val())
         $("#_PreviewSummary").html($('#Resumo').val())
         $("#myModalLabelPreview").html($('#Cabecalho').val())

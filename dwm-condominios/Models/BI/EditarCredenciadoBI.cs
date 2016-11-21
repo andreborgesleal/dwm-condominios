@@ -35,6 +35,8 @@ namespace DWM.Models.BI
 
         public CredenciadoViewModel Run(Repository value)
         {
+            bool EnviaEmail = false;
+
             CredenciadoViewModel r = (CredenciadoViewModel)value;
             CredenciadoViewModel result = new CredenciadoViewModel()
             {
@@ -53,7 +55,8 @@ namespace DWM.Models.BI
 
             try
             {
-                int _empresaId = sessaoCorrente.empresaId;
+                int _empresaId = SessaoLocal.empresaId;
+                string _keyword = null;
 
                 CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
 
@@ -65,55 +68,60 @@ namespace DWM.Models.BI
                     #endregion
 
                     #region Cadastrar o credenciado como um usuário em DWM-Segurança
-
-                    Random random = new Random();
-                    string _senha = random.Next(9999, 999999).ToString();
-                    string _keyword = random.Next(9999, 99999999).ToString();
-                    int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
-
-                    #region Usuario 
-                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-
-                    Usuario user = new Usuario()
+                    
+                    if (!string.IsNullOrEmpty(result.Email))
                     {
-                        nome = r.Nome.ToUpper(),
-                        login = r.Email,
-                        empresaId = _empresaId,
-                        dt_cadastro = Funcoes.Brasilia(),
-                        situacao = "D",
-                        isAdmin = "N",
-                        senha = security.Criptografar(_senha),
-                        keyword = _keyword,
-                        dt_keyword = Funcoes.Brasilia().AddDays(1)
-                    };
+                        Random random = new Random();
+                        string _senha = random.Next(9999, 999999).ToString();
+                        _keyword = random.Next(9999, 99999999).ToString();
+                        int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
 
-                    // Verifica se o E-mail do usuário já não existe para a empresa
-                    if (seguranca_db.Usuarios.Where(info => info.empresaId == _empresaId && info.login == r.Email).Count() > 0)
-                        throw new ArgumentException("E-mail já cadastrado");
+                        #region Usuario 
+                        EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
 
-                    seguranca_db.Usuarios.Add(user);
-                    #endregion
+                        Usuario user = new Usuario()
+                        {
+                            nome = r.Nome.ToUpper(),
+                            login = r.Email,
+                            empresaId = _empresaId,
+                            dt_cadastro = Funcoes.Brasilia(),
+                            situacao = "D",
+                            isAdmin = "N",
+                            senha = security.Criptografar(_senha),
+                            keyword = _keyword,
+                            dt_keyword = Funcoes.Brasilia().AddDays(1)
+                        };
 
-                    #region UsuarioGrupo
-                    UsuarioGrupo ug = new UsuarioGrupo()
-                    {
-                        Usuario = user,
-                        grupoId = _grupoId,
-                        situacao = "A"
-                    };
+                        // Verifica se o E-mail do usuário já não existe para a empresa
+                        if (seguranca_db.Usuarios.Where(info => info.empresaId == _empresaId && info.login == r.Email).Count() > 0)
+                            throw new ArgumentException("E-mail já cadastrado");
 
-                    seguranca_db.UsuarioGrupos.Add(ug);
-                    #endregion
+                        seguranca_db.Usuarios.Add(user);
+                        #endregion
 
-                    seguranca_db.SaveChanges();
+                        #region UsuarioGrupo
+                        UsuarioGrupo ug = new UsuarioGrupo()
+                        {
+                            Usuario = user,
+                            grupoId = _grupoId,
+                            situacao = "A"
+                        };
 
+                        seguranca_db.UsuarioGrupos.Add(ug);
+                        #endregion
+
+                        seguranca_db.SaveChanges();
+
+                        result.UsuarioID = user.usuarioId;
+                    }
                     #endregion
 
                     #region Incluir o credenciado
-                    result.UsuarioID = user.usuarioId;
                     result = CredenciadoModel.Insert(result);
                     result.mensagem.Field = _keyword;
                     #endregion
+
+                    EnviaEmail = true;
                 }
                 else if (Operacao == "S") // Alterar credenciado
                 {
@@ -123,15 +131,86 @@ namespace DWM.Models.BI
                     #endregion
 
                     #region Atualiza o cadastro do usuário
-                    Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
+                    if (result.UsuarioID.HasValue && result.UsuarioID > 0 && !string.IsNullOrEmpty(result.Email)) // antes existia UsuarioID e tem E-mail
+                    {
+                        Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID.Value);
 
-                    user.login = result.Email;
-                    user.nome = result.Nome.ToUpper();
-                    user.dt_cadastro = Funcoes.Brasilia();
+                        if (user != null)
+                        {
+                            user.login = result.Email;
+                            user.nome = result.Nome.ToUpper();
+                            user.dt_cadastro = Funcoes.Brasilia();
 
-                    seguranca_db.Entry(user).State = EntityState.Modified;
+                            seguranca_db.Entry(user).State = EntityState.Modified;
 
-                    seguranca_db.SaveChanges();
+                            seguranca_db.SaveChanges();
+                        }
+                    }
+                    else if ((!result.UsuarioID.HasValue || result.UsuarioID.Value == 0) && !string.IsNullOrEmpty(result.Email)) // antes não existia UsuarioID e na altração passou a existir (e-mail)
+                    {
+                        Random random = new Random();
+                        string _senha = random.Next(9999, 999999).ToString();
+                        _keyword = random.Next(9999, 99999999).ToString();
+                        int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
+
+                        #region Usuario 
+                        EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+                        Usuario user = new Usuario()
+                        {
+                            nome = r.Nome.ToUpper(),
+                            login = r.Email,
+                            empresaId = _empresaId,
+                            dt_cadastro = Funcoes.Brasilia(),
+                            situacao = "D",
+                            isAdmin = "N",
+                            senha = security.Criptografar(_senha),
+                            keyword = _keyword,
+                            dt_keyword = Funcoes.Brasilia().AddDays(1)
+                        };
+
+                        // Verifica se o E-mail do usuário já não existe para a empresa
+                        if (seguranca_db.Usuarios.Where(info => info.empresaId == _empresaId && info.login == r.Email).Count() > 0)
+                            throw new ArgumentException("E-mail já cadastrado");
+
+                        seguranca_db.Usuarios.Add(user);
+                        #endregion
+
+                        #region UsuarioGrupo
+                        UsuarioGrupo ug = new UsuarioGrupo()
+                        {
+                            Usuario = user,
+                            grupoId = _grupoId,
+                            situacao = "A"
+                        };
+
+                        seguranca_db.UsuarioGrupos.Add(ug);
+                        #endregion
+
+                        seguranca_db.SaveChanges();
+
+                        result.UsuarioID = user.usuarioId;
+
+                        EnviaEmail = true;
+                    }
+                    else if(result.UsuarioID.HasValue && result.UsuarioID > 0 && string.IsNullOrEmpty(result.Email)) // antes existia usuário e agora não existe mais => Exclui o usuário em dwm-segurança
+                    {
+                        #region Exclui o cadastro do usuário
+                        int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
+
+                        // Exclui o usuário do Grupo
+                        UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
+                        seguranca_db.Set<UsuarioGrupo>().Remove(ug);
+
+                        // Exclui o usuário 
+                        Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
+                        seguranca_db.Set<Usuario>().Remove(user);
+
+                        seguranca_db.SaveChanges();
+                        #endregion
+
+                        result.UsuarioID = null;
+                    }
                     #endregion
 
                     #region Alterar credenciado
@@ -168,6 +247,52 @@ namespace DWM.Models.BI
                     throw new App_DominioException(result.mensagem);
 
                 db.SaveChanges();
+
+                if (EnviaEmail)
+                {
+                    int _sistemaId = int.Parse(db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+                    string _URL_CONDOMINIO = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
+                    #region envio de e-mail ao credenciado para ativação
+                    int EmailTipoID = (int)DWM.Models.Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO;
+                    string EmailMensagem = db.EmailTemplates.Where(info => info.CondominioID == SessaoLocal.empresaId && info.EmailTipoID == EmailTipoID).FirstOrDefault().EmailMensagem;
+                    EmailMensagem = EmailMensagem.Replace("@link_credenciado", "<p><a href=\"" + _URL_CONDOMINIO + "/Account/AtivarCredenciado?id=" + result.UsuarioID.ToString() + "&key=" + _keyword + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + seguranca_db.Sistemas.Find(_sistemaId).descricao + "</span></a></p>");
+
+                    CondominoUnidade cu = (from cou in db.CondominoUnidades
+                                           where cou.CondominioID == SessaoLocal.empresaId
+                                                 && cou.CondominoID == r.CondominoID
+                                           select cou).FirstOrDefault();
+
+                    EmailLogViewModel EmailLogViewModel = new EmailLogViewModel()
+                    {
+                        uri = r.uri,
+                        empresaId = SessaoLocal.empresaId,
+                        EmailTipoID = EmailTipoID, // "Cadastro Credenciado"
+                        CondominioID = SessaoLocal.empresaId,
+                        EdificacaoID = cu.EdificacaoID,
+                        Descricao_Edificacao = db.Edificacaos.Find(cu.EdificacaoID).Descricao,
+                        UnidadeID = cu.UnidadeID,
+                        GrupoCondominoID = null,
+                        Descricao_GrupoCondomino = "",
+                        DataEmail = Funcoes.Brasilia(),
+                        Assunto = db.EmailTipos.Find(EmailTipoID, SessaoLocal.empresaId).Assunto,
+                        EmailMensagem = EmailMensagem,
+                        Nome = r.Nome,
+                        Email = r.Email
+                    };
+
+                    EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
+                    EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
+                    if (EmailLogViewModel.mensagem.Code > 0)
+                        throw new App_DominioException(EmailLogViewModel.mensagem);
+
+
+                    //result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
+                    //EnviarEmailCredenciadoBI EnviarEmailCredenciadoBI = new EnviarEmailCredenciadoBI(this.db, this.seguranca_db);
+                    //CredenciadoViewModel repository = EnviarEmailCredenciadoBI.Run(result);
+                    //if (repository.mensagem.Code > 0)
+                    //    throw new ArgumentException(repository.mensagem.MessageBase);
+                    #endregion
+                }
 
                 result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
 

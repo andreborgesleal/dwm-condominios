@@ -33,6 +33,6 @@ namespace DWM.Models.Entidades
         public string Observacao { get; set; }
 
         [DisplayName("Usuario ID")]
-        public int UsuarioID { get; set; }
+        public int? UsuarioID { get; set; }
     }
 }

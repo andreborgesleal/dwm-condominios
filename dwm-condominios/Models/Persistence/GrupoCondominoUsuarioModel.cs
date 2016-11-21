@@ -107,6 +107,7 @@ namespace DWM.Models.Persistence
                     select new GrupoCondominoUsuarioViewModel()
                     {
                         empresaId = SessaoLocal.empresaId,
+                        CondominoID = _CondominoID,
                         GrupoCondominoID = gru.GrupoCondominoID,
                         Situacao = usu != null && usu.CondominoID > 0 ? "A" : "D",
                         DescricaoGrupo = gru.Descricao,

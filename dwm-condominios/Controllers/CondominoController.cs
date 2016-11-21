@@ -149,7 +149,7 @@ namespace DWM.Controllers
             {
                 int CredenciadoViewModel_CondominoID = CredenciadoViewModel.CondominoID;
                 int CredenciadoViewModel_CredenciadoID = CredenciadoViewModel.CredenciadoID;
-                int CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
+                int? CredenciadoViewModel_UsuarioID = CredenciadoViewModel.UsuarioID;
                 string CredenciadoViewModel_Nome = CredenciadoViewModel.Nome;
                 string CredenciadoViewModel_Email = CredenciadoViewModel.Email;
                 int CredenciadoViewModel_TipoCredenciadoID = CredenciadoViewModel.TipoCredenciadoID;
@@ -187,15 +187,15 @@ namespace DWM.Controllers
                         if (factory.Mensagem.Code > 0)
                             throw new App_DominioException(factory.Mensagem);
 
-                        if (result.CredenciadoViewModel.CredenciadoID == 0)
-                        {
-                            #region envio de e-mail ao credenciado para ativação
-                            result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
-                            CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
-                            if (repository.mensagem.Code > 0)
-                                throw new ArgumentException(repository.mensagem.MessageBase);
-                            #endregion
-                        }
+                        //if (result.CredenciadoViewModel.CredenciadoID == 0 && !string.IsNullOrEmpty(result.CredenciadoViewModel.Email) )
+                        //{
+                        //    #region envio de e-mail ao credenciado para ativação
+                        //    result.CredenciadoViewModel.mensagem.Field = factory.Mensagem.Field; // senha do credenciado
+                        //    CredenciadoViewModel repository = factory.Execute(new EnviarEmailCredenciadoBI(), result.CredenciadoViewModel);
+                        //    if (repository.mensagem.Code > 0)
+                        //        throw new ArgumentException(repository.mensagem.MessageBase);
+                        //    #endregion
+                        //}
 
                         CredenciadoModel CredenciadoModel = new CredenciadoModel();
                         result.CredenciadoViewModel = CredenciadoModel.CreateRepository(Request);
@@ -434,6 +434,34 @@ namespace DWM.Controllers
 
                 return View("_Funcionarios", result);
             }
+        }
+
+        [AuthorizeFilter]
+        public ActionResult EditGrupoCondomino(GrupoCondominoUsuarioViewModel GrupoCondominoUsuarioViewModel, string Operacao)
+        {
+            IEnumerable<GrupoCondominoUsuarioViewModel> Grupos = null;
+            try
+            {
+                #region Incluir/Excluir Grupo do Condômino
+                GrupoCondominoUsuarioViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                Factory<GrupoCondominoUsuarioViewModel, ApplicationContext> factory = new Factory<GrupoCondominoUsuarioViewModel, ApplicationContext>();
+
+                Grupos = factory.Execute(new GrupoCondominoUsuarioBI(Operacao), GrupoCondominoUsuarioViewModel, GrupoCondominoUsuarioViewModel.CondominoID);
+                #endregion
+            }
+            catch (App_DominioException ex)
+            {
+                ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+            }
+            catch (Exception ex)
+            {
+                App_DominioException.saveError(ex, GetType().FullName);
+                ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+            }
+
+            return View("_GrupoCondomino", Grupos);
         }
 
         #endregion

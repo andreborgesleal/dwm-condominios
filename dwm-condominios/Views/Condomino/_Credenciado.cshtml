@@ -16,7 +16,7 @@
     if (Model.Credenciados.Count() > 0)
     {
         <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Credenciados", Descricao = "Usuários incluídos pelo condômino", Transacao = t })
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Residentes", Descricao = "Usuários incluídos pelo condômino", Transacao = t })
             <div class="x_content">
                 <table class="table table-striped">
                     <thead>
@@ -51,7 +51,7 @@
         </div>
     }
     <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo credenciado", Descricao = "O novo credenciado receberá um convite por e-mail para ativação da conta", Transacao = t })
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo residente", Descricao = "O novo residente receberá um convite por e-mail para ativação da conta", Transacao = t })
         <div class="x_content">
             @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
             {

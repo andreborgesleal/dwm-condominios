@@ -36,7 +36,7 @@ namespace DWM.Models.BI
             {
                 try
                 {
-                    int _empresaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.EMPRESA).Valor);
+                    int _empresaId = SessaoLocal.empresaId;
                     int _sistemaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
 
                     Condominio condominio = db.Condominios.Find(log.CondominioID);
@@ -55,7 +55,7 @@ namespace DWM.Models.BI
                         recipients.Add(item.Nome + "<" + item.Email + ">");
 
                     string Subject = log.Assunto.Replace("@condominio", condominio.RazaoSocial);
-                    string Html = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@Nome", log.Nome).Replace("@Unidade", log.UnidadeID.ToString()).Replace("@Edificacao", log.Descricao_Edificacao).Replace("@Grupo", log.Descricao_GrupoCondomino).Replace("@Sistema", sistema.descricao).Replace("@Email", log.Email);
+                    string Html = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
                     Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
                     if (result.Code > 0)
@@ -142,9 +142,9 @@ namespace DWM.Models.BI
         public IEnumerable<EmailLogViewModel> List(params object[] param)
         {
             EmailLogViewModel log = (EmailLogViewModel)param [0];
-            IEnumerable<EmailLogViewModel> result = new List<EmailLogViewModel>();
+            List<EmailLogViewModel> result = new List<EmailLogViewModel>();
 
-            if (log.EmailTipoID.ToString() == Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO.ToString())
+            if (log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO)
             {
                 result = (from con in db.Condominos
                           join und in db.CondominoUnidades on con.CondominoID equals und.CondominoID
@@ -172,6 +172,10 @@ namespace DWM.Models.BI
                                        Nome = cre.Nome,
                                        Email = cre.Email
                                    }).ToList();
+            }
+            else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO)
+            {
+                result.Add(log);
             }
 
             return result;
