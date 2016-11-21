@@ -48,10 +48,7 @@ namespace DWM.Models.Enumeracoes
             [StringDescription("Outros")]
             [StringValue("9")]
             OUTROS = 9,
-<<<<<<< HEAD
-=======
 
->>>>>>> 52987f7d9d456d38282fafccd3dc980c0f6bd37d
         }
 
     }

@@ -114,7 +114,7 @@ namespace DWM.Models.Persistence
                 if (value.EmailMensagem == null || value.EmailMensagem.Trim().Length <= 20)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Resumo").ToString();
+                    value.mensagem.Message = MensagemPadrao.Message(5, "EmailMensagem").ToString();
                     value.mensagem.MessageBase = "Mensagem do e-mail deve ser informada";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
@@ -123,14 +123,11 @@ namespace DWM.Models.Persistence
             return value.mensagem;
         }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 52987f7d9d456d38282fafccd3dc980c0f6bd37d
         public override EmailLogViewModel CreateRepository(HttpRequestBase Request = null)
         {
             EmailLogViewModel log = base.CreateRepository(Request);
             log.CondominioID = SessaoLocal.empresaId;
+            log.empresaId = SessaoLocal.empresaId;
             return log;
         }
         #endregion

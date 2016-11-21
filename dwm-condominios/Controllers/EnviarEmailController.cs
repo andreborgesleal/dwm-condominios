@@ -1,6 +1,7 @@
 ﻿using App_Dominio.Controllers;
 using App_Dominio.Models;
 using App_Dominio.Pattern;
+using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
@@ -13,13 +14,15 @@ namespace dwm_condominios.Controllers
 {
     public class EnviarEmailController : DwmRootController<EmailLogViewModel, EmailLogModel, DWM.Models.Entidades.ApplicationContext>
     {
-
+        #region Constructor
         public override int _sistema_id() { return (int)Sistema.DWMCONDOMINIOS; }
         public override string getListName()
         {
             return "Listar";
         }
+        #endregion
 
+        #region List
         public override ActionResult List(int? index, int? PageSize, string descricao = null)
         {
             return ListParam(index, PageSize);
@@ -42,6 +45,17 @@ namespace dwm_condominios.Controllers
             else
                 return View();
         }
+        #endregion
+
+        #region Create
+        public override EmailLogViewModel Insert(EmailLogViewModel value)
+        {
+            value.EmailTipoID = (int)Enumeradores.EmailTipo.OUTROS;
+            Factory<EmailLogViewModel, ApplicationContext> facade = new Factory<EmailLogViewModel, ApplicationContext>();
+            return facade.Execute(new EmailNotificacaoBI(), value);
+        }
+        
+        #endregion
 
         #region Retorna o modelo do template
         [AllowAnonymous]

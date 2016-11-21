@@ -14,10 +14,11 @@
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Enviar Email", Descricao = "Enviar Email", Transacao = t })
         <div class="x_content">
             <!-- Smart Wizard -->
-            @using (Html.BeginForm("Create", "Informativo", FormMethod.Post, new { @class = "form-horizontal" }))
+            @using (Html.BeginForm("Create", "EnviarEmail", FormMethod.Post, new { @class = "form-horizontal" }))
             {
                 @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
@@ -56,7 +57,7 @@
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Mensagem</label>
-                            <input type="hidden" name="Resumo" id="Resumo" value="@Model.EmailMensagem" />
+                            <input type="hidden" name="EmailMensagem" id="EmailMensagem" value="@Model.EmailMensagem" />
                             <div id="summernote1">@Model.EmailMensagem</div>
                         </div>
                     </div>
@@ -64,7 +65,7 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="submit" value="Enviar" class="btn btn-primary" />
+                        <input type="submit" value="Enviar" class="btn btn-primary" onclick = "return Valida();" />
                     </div>
                 </div>
             }
@@ -92,6 +93,11 @@
         $('#EmailMensagem').html('@Model.EmailMensagem');
         $('#summernote1').summernote('code', $('#EmailMensagem').val());
     });
+
+    function Valida() {
+        $('#EmailMensagem').val($('#summernote1').summernote('code'));
+        return true;
+    }
 
     function getEmail() {
         var _EmailTemplateID = $('#EmailTemplateID').val();

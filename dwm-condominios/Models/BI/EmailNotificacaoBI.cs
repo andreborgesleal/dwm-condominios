@@ -36,6 +36,12 @@ namespace DWM.Models.BI
             {
                 try
                 {
+                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
+                    Validate Validate = Model.Validate(log, Crud.INCLUIR);
+                    if (Validate.Code > 0)
+                        throw new ArgumentException(Validate.Message);
+
+
                     int _empresaId = SessaoLocal.empresaId;
                     int _sistemaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
 
@@ -57,15 +63,14 @@ namespace DWM.Models.BI
                     string Subject = log.Assunto.Replace("@condominio", condominio.RazaoSocial);
                     string Html = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
-                    Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
-                    if (result.Code > 0)
-                    {
-                        result.MessageBase = "Não foi possível enviar o e-mail. Tente novamente mais tarde e se o erro persistir, favor entrar em contato com faleconosco@dwmsisteamas.com e reporte o código de erro " + result.Code.ToString() + ". ";
-                        throw new App_DominioException(result);
-                    }
+                    //Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
+                    //if (result.Code > 0)
+                    //{
+                    //    result.MessageBase = "Não foi possível enviar o e-mail. Tente novamente mais tarde e se o erro persistir, favor entrar em contato com faleconosco@dwmsisteamas.com e reporte o código de erro " + result.Code.ToString() + ". ";
+                    //    throw new App_DominioException(result);
+                    //}
 
                     #region Incluir o Log do e-mail enviado
-                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
                     log = Model.Insert(log);
                     if (log.mensagem.Code > 0)
                         throw new App_DominioException(log.mensagem);
@@ -144,7 +149,7 @@ namespace DWM.Models.BI
             EmailLogViewModel log = (EmailLogViewModel)param [0];
             List<EmailLogViewModel> result = new List<EmailLogViewModel>();
 
-            if (log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO)
+            if (log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.INFORMATIVO || log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.OUTROS)
             {
                 result = (from con in db.Condominos
                           join und in db.CondominoUnidades on con.CondominoID equals und.CondominoID
