@@ -41,7 +41,6 @@ namespace DWM.Models.BI
                     if (Validate.Code > 0)
                         throw new ArgumentException(Validate.Message);
 
-
                     int _empresaId = SessaoLocal.empresaId;
                     int _sistemaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
 

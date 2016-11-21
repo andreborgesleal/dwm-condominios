@@ -1,0 +1,64 @@
+﻿@using App_Dominio.Repositories
+@model DWM.Models.Repositories.FilaAtendimentoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../FilaAtendimento/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+
+    string _checked = Model.VisibilidadeCondomino == "S" ? "checked" : "";
+}
+<!-- Switchery -->
+<link href="../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
+
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fila de Atendimento", Descricao = "Editar Fila de Atendimento.", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Edit", "FilaAtendimento", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.FilaAtendimentoID)
+
+                <div class="row">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Descricao, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="30" />
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Interage c/ Condômino</label>
+                            <label>
+                                <input type="checkbox" class="js-switch" id="VisibilidadeCondomino" name="VisibilidadeCondomino" @_checked /> Sim
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                </div>
+                <div class="ln_solid"></div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" />
+                            <input type="button" onclick="window.location = '../FilaAtendimento/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<!-- Switchery -->
+<script src="../Content/vendors/switchery/dist/switchery.min.js"></script>
+
+
