@@ -9,9 +9,6 @@
         <div class="col-md-5">
             Clique nos botões de <code>Ação</code> para executar a ação desejada
         </div>
-        <div class="col-md-1">
-            <a href="../EnviarEmail/Create" class="text-primary">Incluir</a>
-        </div>
         <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
             @Html.Partial("Filtro")
         </div>
@@ -20,10 +17,11 @@
                 <thead>
                     <tr class="headings">
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Tipo</th>
                         <th class="column-title">Edificação</th>
                         <th class="column-title">Unidade</th>
-                        <th class="column-title">Data</th>
                         <th class="column-title">Grupo</th>
+                        <th class="column-title">Período</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,8 +29,10 @@
                     {
                         <tr class="even pointer">
                             <td class="text-center">
-                                <a href="Edit?EmailLogID=@email.EmailLogID" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
-                                <a href="Delete?EmailLogID=@email.EmailLogID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>
+                                <p class="dedo-indicador" id="readmore" data-toggle="modal" data-target="#@email.EmailLogID"><i class="fa fa-info fa-2x"></i></p>
+                            </td>
+                            <td>
+                                <span>@email.Descricao_EmailTipo</span>
                             </td>
                             <td>
                                 <span>@email.Descricao_Edificacao</span>
@@ -41,11 +41,10 @@
                                 <span>@email.UnidadeID</span>
                             </td>
                             <td>
-                                <span>@email.DataEmail.ToString("dd/MM/yyyy")</span>
-                            </td>
-                            
-                            <td>
                                 <span>@email.Descricao_GrupoCondomino</span>
+                            </td>
+                            <td>
+                                <span>@email.DataEmail.ToString("dd/MM/yyyy")</span>
                             </td>
                         </tr>
                     }
@@ -60,7 +59,22 @@ else
     @Html.Partial("_AcessoNegadoModal")
 }
 
-
-
-
-
+@foreach (DWM.Models.Repositories.EmailLogViewModel email in Model)
+{
+    <div id="@email.EmailLogID" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content hidden-xs">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModal">×</button>
+                    <h3 class="modal-title" id="myModalLabel">@email.Assunto</h3>
+                </div>
+                <div class="modal-body" id="myModal1-body">
+                    <p>@Html.Raw(email.EmailMensagem)</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
