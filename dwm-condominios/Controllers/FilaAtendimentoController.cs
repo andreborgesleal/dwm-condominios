@@ -74,5 +74,33 @@ namespace DWM.Controllers
         }
 
         #endregion
+
+        #region FilaAtendimentoUsuario
+        public ActionResult Index(int id)
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                //BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
+
+                BindBreadCrumb(getBreadCrumbText("Fila de Atendimento", null));
+
+                Factory<FilaAtendimentoUsuarioEditViewModel, ApplicationContext> factory = new Factory<FilaAtendimentoUsuarioEditViewModel, ApplicationContext>();
+                FilaAtendimentoUsuarioEditViewModel value = new FilaAtendimentoUsuarioEditViewModel()
+                {
+                    FilaAtendimentoUsuarioViewModel = new FilaAtendimentoUsuarioViewModel()
+                    {
+                        FilaAtendimentoID = id,
+                    }
+                };
+                FilaAtendimentoUsuarioEditViewModel obj = factory.Execute(new FilaAtendimentoUsuarioBI(), value);
+                return View(obj);
+            }
+            return View();
+        }
+
+        #endregion
+
+
     }
 }

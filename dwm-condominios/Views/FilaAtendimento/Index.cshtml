@@ -1,0 +1,169 @@
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model FilaAtendimentoUsuarioEditViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../FilaAtendimento/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+
+@if (Model != null)
+{
+    <div class="container-cadastro">
+        @if (Model.FilaAtendimentoUsuarios.Count() > 0)
+        {
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fila de Atendimento", Descricao = "Usuários", Transacao = t })
+                <div class="x_content">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Situação</th>
+                                <th>Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (FilaAtendimentoUsuarioViewModel fil in Model.FilaAtendimentoUsuarios)
+                                {
+                                    <tr>
+                                        <td><small>@fil.Nome</small></td>
+                                        <td><small>@fil.Login</small></td>
+                                        <td>
+                                            <small>
+                                                @if (fil.Situacao == "A")
+                                                {
+                                                    <span class="label label-default">Ativo</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Desativado</span>
+                                                }
+                                            </small>
+                                        </td>
+                                        <th scope="row">
+                                            <a href="#" title="Editar" onclick="edit('@fil.FilaAtendimentoID', '@fil.UsuarioID', '@fil.Situacao', '@fil.Nome', '@fil.Login')"><i class="fa fa-edit"></i></a>
+                                            <a href="#" title="Excluir" onclick="del('@fil.FilaAtendimentoID', '@fil.UsuarioID', '@fil.Situacao', '@fil.Nome', '@fil.Login')"><i class="fa fa-trash"></i></a>
+                                        </th>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Incluir usuário", Descricao = "Incluir novo usuário na fila de atendimento", Transacao = t })
+            <div class="x_content">
+                @using (Ajax.BeginForm("EditUser", "FilaAtendimento", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-fila-atendimento" }, new { @class = "form", @id = "form001", @name = "form001" }))
+                {
+                    @Html.Partial("_alerts")
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.HiddenFor(info => info.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID)
+                    @Html.Hidden("Operacao", "S")
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">Nome</label>
+                                @Html.DropDownListFor(m => m.FilaAtendimentoUsuarioViewModel.UsuarioID, new DWM.Models.Enumeracoes.BindDropDownList().Usuarios("", Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">Situação</label>
+                                @Html.DropDownListFor(m => m.FilaAtendimentoUsuarioViewModel.Situacao, App_Dominio.Enumeracoes.DropDownListEnum.Situacao(), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-fila" id="btn-salvar-fila" />
+                                <input type="button" onclick="window.location = '../FilaAtendimento/Browse'" class="btn btn-default" value="Cancelar" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script type="text/javascript">
+    $("#Operacao").val("S");
+    $("#FilaAtendimentoUsuarioViewModel_UsuarioID").val("0");
+
+    $(function () {
+        $('#form001').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-fila-atendimento').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    function fill(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador) {
+        var obs = $("#obs" + contador).val();
+
+        $("#CredenciadoViewModel_Nome").val(Nome);
+        $("#CredenciadoViewModel_Email").val(Email);
+        if (TipoCredenciadoID != '')
+            $("#CredenciadoViewModel_TipoCredenciadoID").val(TipoCredenciadoID);
+        $("#CredenciadoViewModel_Sexo").val(Sexo);
+        $("#CredenciadoViewModel_Observacao").val(obs);
+        $("#CredenciadoViewModel_UsuarioID").val(UsuarioID);
+        $("#CredenciadoViewModel_CredenciadoID").val(CredenciadoID);
+        $("#CredenciadoViewModel_CondominoID").val(CondominoID);
+    }
+
+    function changeBtnClass(oldClas, newClass, oper) {
+        $("#Operacao").val(oper); // S-Salvar ou D-Deletar
+        if (oper == 'S') {
+            $('#header-credenciado').html('Alterar credenciado <small>Alteração de dados do usuário.</small>');
+            $("#btn-salvar-credenciado").val("Salvar");
+        }
+        else if (oper == 'I') {
+            $('#header-credenciado').html('Novo credenciado <small>O novo credenciado receberá um convite por e-mail para ativação da conta.</small>');
+            $("#btn-salvar-credenciado").val("Salvar");
+        }
+        else {
+            $('#header-credenciado').html('Excluir credenciado <small>Exclusão do usuário.</small>');
+            $("#btn-salvar-credenciado").val("Excluir");
+        }
+        $("#btn-salvar-credenciado").removeClass(oldClas);
+        $("#btn-salvar-credenciado").addClass(newClass);
+    }
+
+    function ins(CondominoID) {
+        fill(CondominoID, '0', '0', '', '', '', 'M', '');
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+    }
+
+    function edit(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador) {
+        fill(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador)
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'S')
+    }
+
+    function del(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador) {
+        fill(CondominoID, CredenciadoID, UsuarioID, Nome, Email, TipoCredenciadoID, Sexo, contador)
+        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+    }
+</script>

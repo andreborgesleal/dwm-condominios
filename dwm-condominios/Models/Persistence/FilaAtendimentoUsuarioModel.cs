@@ -16,6 +16,11 @@ namespace DWM.Models.Persistence
     {
         #region Constructor
         public FilaAtendimentoUsuarioModel() { }
+
+        public FilaAtendimentoUsuarioModel(ApplicationContext _db, SecurityContext _segurancaDb)
+        {
+            this.Create(_db, _segurancaDb);
+        }
         #endregion
 
         #region Métodos da classe CrudContext
@@ -92,7 +97,7 @@ namespace DWM.Models.Persistence
         {
             FilaAtendimentoUsuarioViewModel value = base.CreateRepository(Request);
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            if (Request["FilaAtendimentoID"] != null)
+            if (Request != null && Request["FilaAtendimentoID"] != null)
                 value.FilaAtendimentoID = int.Parse(Request["FilaAtendimentoID"]);
             value.empresaId = security.getSessaoCorrente().empresaId;
             return value;

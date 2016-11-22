@@ -222,6 +222,7 @@
     <Compile Include="Models\BI\EditarVeiculoBI.cs" />
     <Compile Include="Models\BI\EmailNotificacaoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
+    <Compile Include="Models\BI\FilaAtendimentoUsuarioBI.cs" />
     <Compile Include="Models\BI\GerarTokenBI.cs" />
     <Compile Include="Models\BI\GrupoCondominoUsuarioBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
@@ -292,6 +293,7 @@
     <Compile Include="Models\Repositories\EmailLogViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTemplateViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTipoViewModel.cs" />
+    <Compile Include="Models\Repositories\FilaAtendimentoUsuarioEditViewModel.cs" />
     <Compile Include="Models\Repositories\FilaAtendimentoUsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\FilaAtendimentoViewModel.cs" />
     <Compile Include="Models\Repositories\FuncionarioViewModel.cs" />
@@ -4043,6 +4045,7 @@
     <Content Include="Views\FilaAtendimento\Create.cshtml" />
     <Content Include="Views\FilaAtendimento\Edit.cshtml" />
     <Content Include="Views\FilaAtendimento\Delete.cshtml" />
+    <Content Include="Views\FilaAtendimento\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
