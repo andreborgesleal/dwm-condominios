@@ -290,7 +290,7 @@ namespace DWM.Models.Enumeracoes
                                     Value = u.usuarioId.ToString(),
                                     Text = u.nome,
                                     Selected = (selectedValue != "" ? u.nome.Equals(selectedValue) : false)
-                                }).Distinct().ToList();
+                                }).GroupBy(info => info.Value).Select(m => m.First()).ToList();
 
                     return q;
                 }

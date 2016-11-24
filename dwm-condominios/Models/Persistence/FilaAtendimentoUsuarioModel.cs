@@ -34,7 +34,7 @@ namespace DWM.Models.Persistence
             entity.FilaAtendimentoID = value.FilaAtendimentoID;
             entity.UsuarioID = value.UsuarioID;
             entity.Situacao = value.Situacao;
-            entity.Nome = value.Nome;
+            entity.Nome = seguranca_db.Usuarios.Find(value.UsuarioID).nome; ;
             entity.Login = seguranca_db.Usuarios.Find(value.UsuarioID).login;
 
             return entity;

@@ -41,6 +41,7 @@ namespace DWM.Models.BI
                 FilaAtendimentoUsuarioModel Model = new FilaAtendimentoUsuarioModel(this.db, this.seguranca_db);
                 result.FilaAtendimentoUsuarioViewModel = Model.CreateRepository();
                 result.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID = r.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID;
+                result.FilaAtendimentoUsuarioViewModel.DescricaoFila = db.FilaAtendimentos.Find(r.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID).Descricao;
 
                 ListViewFilaAtendimentoUsuario list = new ListViewFilaAtendimentoUsuario(this.db, this.seguranca_db);
                 result.FilaAtendimentoUsuarios = list.Bind(0, 50, result.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID);
