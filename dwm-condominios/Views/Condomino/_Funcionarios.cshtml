@@ -4,17 +4,27 @@
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../Condomino/Browse";
+    t[0].url = "#";
     t[0].nomeCurto = "Incluir";
-    t[0].referencia = "";
+    t[0].referencia = "insFunc(" + Model.FuncionarioViewModel.CondominioID + ", " + Model.FuncionarioViewModel.EdificacaoID + ", " + Model.FuncionarioViewModel.UnidadeID + ", " + Model.FuncionarioViewModel.CondominoID + ", '','','','','','','')";
+    t[0].exibir = "S";
 
     t[1].url = "../Home/Default";
+
+    TransacaoRepository[] t1 = { new TransacaoRepository(), new TransacaoRepository() };
+    t1[0].url = "../Condomino/Browse";
+    t1[0].nomeCurto = "Funcionário";
+    t1[0].referencia = "";
+    t1[0].exibir = "N";
+
+    t1[1].url = "../Home/Default";
+
 }
 @if (Model != null)
 {
     if (Model.Funcionarios.Count() > 0)
     {
-        <table class="table table-striped">
+        <table class="table table-striped" id="cad-funcionario">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -83,8 +93,8 @@
                             <td><small>@fun.HoraInicial</small></td>
                             <td><small>@fun.HoraFinal</small></td>
                             <th scope="row">
-                                <a href="#cad-veiculo" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
-                                <a href="#cad-veiculo" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
+                                <a href="#cad-funcionario" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
+                                <a href="#cad-funcionario" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
                             </th>
                         </tr>
                     }
@@ -93,8 +103,8 @@
         </table>
     }
     <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo funcionário", Descricao = "", Transacao = t })
-        <div class="x_content" id="cad-funcionario">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Funcionário", Descricao = "", Transacao = t1 })
+        <div class="x_content">
             @using (Ajax.BeginForm("EditFuncionario", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-funcionarios" }, new { @class = "form", @id = "form004", @name = "form004" }))
             {
                 @Html.Partial("_alerts")
@@ -275,8 +285,8 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun()" />
-                            <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun();" />
+                            <input type="button" onclick="insFunc(@(Model.FuncionarioViewModel.CondominioID), @(Model.FuncionarioViewModel.EdificacaoID),@(Model.FuncionarioViewModel.UnidadeID),@(Model.FuncionarioViewModel.CondominoID), '','','','','','','')" class="btn btn-default" value="Cancelar" />
                         </div>
                     </div>
                 </div>

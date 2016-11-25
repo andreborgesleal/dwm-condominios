@@ -100,7 +100,7 @@ namespace DWM.Controllers
         }
 
         [AuthorizeFilter]
-        public ActionResult EditUser(string FilaAtendimentoID, string UsuarioID, string Situacao, string Operacao)
+        public ActionResult EditUser(string FilaAtendimentoID, string UsuarioID, string UsuarioID_Exc, string Situacao, string Operacao)
         {
             if (ModelState.IsValid)
             {
@@ -110,6 +110,8 @@ namespace DWM.Controllers
                     try
                     {
                         #region Incluir/Editar FilaAtendimentoUsuario
+                        UsuarioID = Operacao == "I" ? UsuarioID : UsuarioID_Exc;
+
                         result = new FilaAtendimentoUsuarioEditViewModel()
                         {
                             FilaAtendimentoUsuarioViewModel = new FilaAtendimentoUsuarioViewModel()

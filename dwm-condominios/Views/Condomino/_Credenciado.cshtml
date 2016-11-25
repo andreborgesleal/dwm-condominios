@@ -4,11 +4,20 @@
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../Condomino/Browse";
+    t[0].url = "#";
     t[0].nomeCurto = "Incluir";
-    t[0].referencia = "";
+    t[0].referencia = "ins(" + Model.CredenciadoViewModel.CondominoID + ")";
+    t[0].exibir = "S";
 
     t[1].url = "../Home/Default";
+
+    TransacaoRepository[] t1 = { new TransacaoRepository(), new TransacaoRepository() };
+    t1[0].url = "../Condomino/Browse";
+    t1[0].nomeCurto = "Residente";
+    t1[0].referencia = "";
+    t1[0].exibir = "N";
+
+    t1[1].url = "../Home/Default";
 }
 
 @if (Model != null)
@@ -16,7 +25,7 @@
     if (Model.Credenciados.Count() > 0)
     {
         <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Residentes", Descricao = "Usuários incluídos pelo condômino", Transacao = t })
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Residentes", Descricao = "", Transacao = t })
             <div class="x_content">
                 <table class="table table-striped">
                     <thead>
@@ -51,7 +60,7 @@
         </div>
     }
     <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo residente", Descricao = "O novo residente receberá um convite por e-mail para ativação da conta", Transacao = t })
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Residente", Descricao = "", Transacao = t1 })
         <div class="x_content">
             @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
             {
@@ -102,7 +111,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-credenciado" id="btn-salvar-credenciado" />
-                            <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                            <input type="button" onclick="ins(@(Model.CredenciadoViewModel.CondominoID))" class="btn btn-default" value="Cancelar" />
                         </div>
                     </div>
                 </div>

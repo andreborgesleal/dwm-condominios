@@ -4,11 +4,20 @@
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../FilaAtendimento/Browse";
+    t[0].url = "#";
     t[0].nomeCurto = "Incluir";
-    t[0].referencia = "";
+    t[0].referencia = "ins(" + Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID + ")";
+    t[0].exibir = "S";
 
     t[1].url = "../Home/Default";
+
+    TransacaoRepository[] t1 = { new TransacaoRepository(), new TransacaoRepository() };
+    t1[0].url = "../FilaAtendimento/Browse";
+    t1[0].nomeCurto = "Fila de Atendimento";
+    t1[0].referencia = "";
+    t1[0].exibir = "N";
+
+    t1[1].url = "../Home/Default";
 }
 <div class="container-cadastro">
     @if (Model != null)
@@ -16,7 +25,7 @@
         if (Model.FilaAtendimentoUsuarios.Count() > 0)
         {
             <div class="x_panel">
-                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Usuários", Descricao = Model.FilaAtendimentoUsuarioViewModel.DescricaoFila, Transacao = t })
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Usuários", Descricao = Model.FilaAtendimentoUsuarioViewModel.DescricaoFila, Transacao = t })
                 <div class="x_content">
                     <table class="table table-striped">
                         <thead>
@@ -24,7 +33,7 @@
                                 <th>Nome</th>
                                 <th>E-mail</th>
                                 <th class="text-center">Situação</th>
-                                <th>Ação</th>
+                                <th class="text-center">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,8 +55,7 @@
                                                 }
                                             </small>
                                         </td>
-                                        <th scope="row">
-                                            <a href="#" title="Editar" onclick="edit('@fil.FilaAtendimentoID', '@fil.UsuarioID', '@fil.Situacao')"><i class="fa fa-edit"></i></a>
+                                        <th scope="row" class="text-center">
                                             <a href="#" title="Excluir" onclick="del('@fil.FilaAtendimentoID', '@fil.UsuarioID', '@fil.Situacao')"><i class="fa fa-trash"></i></a>
                                         </th>
                                     </tr>
@@ -59,26 +67,21 @@
             </div>
         }
         <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Incluir usuário", Descricao = "Incluir novo usuário na fila de atendimento", Transacao = t })
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Usuário", Descricao = "", Transacao = t1 })
             <div class="x_content">
                 @using (Ajax.BeginForm("EditUser", "FilaAtendimento", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-fila-atendimento" }, new { @class = "form", @id = "form001", @name = "form001" }))
                 {
                     @Html.Partial("_alerts")
-                    @Html.HiddenFor(info => info.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID)
-                    @Html.Hidden("Operacao", "I")
+                    @Html.Partial("_AjaxAlert", "panel-top")
                     <input type="hidden" name="FilaAtendimentoID" id="FilaAtendimentoID" value="@Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID" />
-                    <input type="hidden" name="Operacao" id="Operacao" value="S" />
+                    <input type="hidden" name="Operacao" id="Operacao" value="I" />
+                    <input type="hidden" name="Situacao" id="Situacao" value="A" />
+                    <input type="hidden" name="UsuarioID_Exc" id="UsuarioID_Exc" value="@Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()" />
                     <div class="row">
                         <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                             <div class="form-group">
                                 <label class="control-label">Nome</label>
-                                @Html.DropDownList("UsuarioID", new DWM.Models.Enumeracoes.BindDropDownList().Usuarios("", Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                            <div class="form-group">
-                                <label class="control-label">Situação</label>
-                                @Html.DropDownList("Situacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao(), new { @class = "form-control" })
+                                @Html.DropDownList("UsuarioID", new DWM.Models.Enumeracoes.BindDropDownList().Usuarios("Selecione...", Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()), new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -86,8 +89,8 @@
                     <div class="row clearfix">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-fila" id="btn-salvar-fila" />
-                                <input type="button" onclick="window.location = '../FilaAtendimento/Browse'" class="btn btn-default" value="Cancelar" />
+                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-fila" id="btn-salvar-fila" onclick="return valida();"/>
+                                <input type="button" onclick="ins(@(Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID))" class="btn btn-default" value="Cancelar" />
                             </div>
                         </div>
                     </div>
@@ -121,27 +124,34 @@
         });
     });
 
+    function valida() {
+        if ($("#UsuarioID").val() == "") {
+            ShowMessageAjaxAlert('Usuário deve ser informado', 'warning');
+            return false;
+        }
+        else
+            return true;
+    }
+
     function fill(FilaAtendimentoID, UsuarioID, Situacao) {
         $("#FilaAtendimentoID").val(FilaAtendimentoID);
         $("#UsuarioID").val(UsuarioID);
+        $('#UsuarioID_Exc').val(UsuarioID);
         $("#Situacao").val(Situacao);
     }
 
     function changeBtnClass(oldClas, newClass, oper) {
         $("#Operacao").val(oper); // A-Alterar ou D-Deletar
         if (oper == 'A') {
-            $('.x_title').html('<h4>Alterar usuário </h4>');
-            $("#UsuarioID").prop('readonly', 'disabled')
+            $("#UsuarioID").prop('disabled', 'disabled')
             $("#btn-salvar-fila").val("Salvar");
         }
         else if (oper == 'I') {
-            $('.x_title').html('<h4>Novo usuário </h4>');
-            $("#UsuarioID").prop('readonly', false);
+            $("#UsuarioID").prop('disabled', false);
             $("#btn-salvar-fila").val("Salvar");
         }
         else {
-            $('.x_title').html('<h4>Excluir usuário</h4>');
-            $("#UsuarioID").prop('readonly', 'disabled')
+            $("#UsuarioID").prop('disabled', 'disabled')
             $("#btn-salvar-fila").val("Excluir");
         }
         $("#btn-salvar-fila").removeClass(oldClas);
@@ -149,7 +159,7 @@
     }
 
     function ins(FilaAtendimentoID) {
-        fill(FilaAtendimentoID, '0', 'A');
+        fill(FilaAtendimentoID, '', 'A');
         changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
     }
 

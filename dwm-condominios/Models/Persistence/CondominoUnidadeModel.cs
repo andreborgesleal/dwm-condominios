@@ -8,6 +8,7 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Models;
 using DWM.Models.Entidades;
 using DWM.Models.Repositories;
+using System.Web;
 
 namespace DWM.Models.Persistence
 {
@@ -95,7 +96,7 @@ namespace DWM.Models.Persistence
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "ID Edificação").ToString();
-                value.mensagem.MessageBase = "Torre/Sala/Casa deve ser informada";
+                value.mensagem.MessageBase = "Edificação deve ser informada";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
@@ -139,7 +140,46 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+            #region Verifica se a unidade já não está ocupada por outro condômino
+            if (operation == Crud.INCLUIR)
+            {
+                if ((from cu in db.CondominoUnidades
+                     where cu.CondominioID == value.CondominioID &&
+                           cu.EdificacaoID == value.EdificacaoID &&
+                           cu.UnidadeID == value.UnidadeID &&
+                           !cu.DataFim.HasValue 
+                     select cu.CondominoID).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "A unidade selecionada está ocupada por outro condômino";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+
+            #endregion
+
             return value.mensagem;
+        }
+
+        public override CondominoUnidadeViewModel CreateRepository(HttpRequestBase Request = null)
+        {
+            CondominoUnidadeViewModel obj = new CondominoUnidadeViewModel();
+            obj.CondominoViewModel = new CondominoPFViewModel();
+
+            if (Request ["CondominoID"] != "")
+            {
+                CondominoPFModel CondominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
+
+                obj.CondominioID = SessaoLocal.empresaId;
+                obj.CondominoID = int.Parse(Request["CondominoID"]);
+                obj.DataInicio = Funcoes.Brasilia().Date;
+                obj.CondominoViewModel.CondominoID = obj.CondominoID;
+                obj.CondominoViewModel = CondominoPFModel.getObject((CondominoPFViewModel)obj.CondominoViewModel);
+            }
+
+            return obj;
         }
         #endregion
     }

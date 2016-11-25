@@ -463,6 +463,23 @@ namespace DWM.Controllers
 
             return View("_GrupoCondomino", Grupos);
         }
+        #endregion
+
+        #region Vincular Unidade ao Condômino
+        [AuthorizeFilter]
+        public ActionResult Append(int CondominoID)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getBreadCrumbText("Condômino", null));
+                Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext> facade = new Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext>();
+                CondominoUnidadeViewModel obj = facade.CreateRepository(Request);
+
+                return View(obj);
+            }
+            return View();
+        }
+
 
         #endregion
 
