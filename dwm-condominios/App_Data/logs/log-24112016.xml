@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="984880" Data="24/11/2016 19:31:19">
+    <Sessao>xkr4w5zvxnanfzyah3ufsnay</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.FilaAtendimentoController =&gt; filaatendimento/edituser</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.FilaAtendimentoController.EditUser(String FilaAtendimentoID, String UsuarioID, String Situacao, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\FilaAtendimentoController.cs:linha 113</StackTrace>
+  </LOG>
+  <LOG ID="1217054952" Data="24/11/2016 20:51:45">
+    <Sessao>xkr4w5zvxnanfzyah3ufsnay</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>A cadeia de caracteres de entrada não estava em um formato correto.</Mensagem>
+    <NameSpace>DWM.Controllers.FilaAtendimentoController =&gt; filaatendimento/edituser</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.FilaAtendimentoController.EditUser(String FilaAtendimentoID, String UsuarioID, String UsuarioID_Exc, String Situacao, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\FilaAtendimentoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="1222029379" Data="24/11/2016 20:51:55">
+    <Sessao>xkr4w5zvxnanfzyah3ufsnay</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>A cadeia de caracteres de entrada não estava em um formato correto.</Mensagem>
+    <NameSpace>DWM.Controllers.FilaAtendimentoController =&gt; filaatendimento/edituser</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.FilaAtendimentoController.EditUser(String FilaAtendimentoID, String UsuarioID, String UsuarioID_Exc, String Situacao, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\FilaAtendimentoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="841291457" Data="24/11/2016 20:57:34">
+    <Sessao>xkr4w5zvxnanfzyah3ufsnay</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>A cadeia de caracteres de entrada não estava em um formato correto.</Mensagem>
+    <NameSpace>DWM.Controllers.FilaAtendimentoController =&gt; filaatendimento/edituser</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.FilaAtendimentoController.EditUser(String FilaAtendimentoID, String UsuarioID, String UsuarioID_Exc, String Situacao, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\FilaAtendimentoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="1327983765" Data="24/11/2016 20:58:36">
+    <Sessao>xkr4w5zvxnanfzyah3ufsnay</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>A cadeia de caracteres de entrada não estava em um formato correto.</Mensagem>
+    <NameSpace>DWM.Controllers.FilaAtendimentoController =&gt; filaatendimento/edituser</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.FilaAtendimentoController.EditUser(String FilaAtendimentoID, String UsuarioID, String UsuarioID_Exc, String Situacao, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\FilaAtendimentoController.cs:linha 115</StackTrace>
+  </LOG>
+</LOG>

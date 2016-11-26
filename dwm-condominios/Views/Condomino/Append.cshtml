@@ -1,0 +1,45 @@
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model CondominoUnidadeViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Vincular unidade ao condômino", Descricao = Model.CondominoViewModel.Nome, Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Append", "Condomino", FormMethod.Post, new { @class = "form" }))
+            {
+                @Html.Partial("_alerts")
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.CondominoID)
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Edificação</label>
+                            @Html.DropDownListFor(info => info.EdificacaoID, new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidade</label>
+                            @Html.DropDownListFor(info => info.UnidadeID, new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, Model.CondominioID), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    <input type="submit" class="btn btn-success" value="Salvar" name="btn-enviar-token" id="btn-enviar-token" />
+                    <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+

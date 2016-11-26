@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using DWM.Models.Entidades;
 using App_Dominio.Security;
 using App_Dominio.Entidades;
+using static DWM.Models.Enumeracoes.Enumeradores;
 
 namespace DWM.Models.Enumeracoes
 {
@@ -253,6 +254,46 @@ namespace DWM.Models.Enumeracoes
                             }).ToList();
 
                 return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> Usuarios(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> Security = new EmpresaSecurity<SecurityContext>();
+            
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    IList<SelectListItem> q = new List<SelectListItem>();
+
+                    if (cabecalho != "")
+                        q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                    Sessao sessaoCorrente = Security._getSessaoCorrente(seguranca_db);
+
+                    int GRUPO_USUARIO = int.Parse(db.Parametros.Find(sessaoCorrente.empresaId, (int)Param.GRUPO_USUARIO).Valor);
+                    int GRUPO_CREDENCIADO = int.Parse(db.Parametros.Find(sessaoCorrente.empresaId, (int)Param.GRUPO_CREDENCIADO).Valor);
+
+                    q = q.Union(from u in seguranca_db.Usuarios.AsEnumerable()
+                                join g in seguranca_db.UsuarioGrupos.AsEnumerable() on u.usuarioId equals g.usuarioId
+                                where u.empresaId == sessaoCorrente.empresaId && g.grupoId != GRUPO_USUARIO && g.grupoId != GRUPO_CREDENCIADO
+                                orderby u.nome
+                                select new SelectListItem()
+                                {
+                                    Value = u.usuarioId.ToString(),
+                                    Text = u.nome,
+                                    Selected = (selectedValue != "" ? u.nome.Equals(selectedValue) : false)
+                                }).GroupBy(info => info.Value).Select(m => m.First()).ToList();
+
+                    return q;
+                }
             }
         }
     }

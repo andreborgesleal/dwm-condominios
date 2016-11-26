@@ -1,0 +1,176 @@
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model FilaAtendimentoUsuarioEditViewModel
+@{
+    Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "#";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "ins(" + Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID + ")";
+    t[0].exibir = "S";
+
+    t[1].url = "../Home/Default";
+
+    TransacaoRepository[] t1 = { new TransacaoRepository(), new TransacaoRepository() };
+    t1[0].url = "../FilaAtendimento/Browse";
+    t1[0].nomeCurto = "Fila de Atendimento";
+    t1[0].referencia = "";
+    t1[0].exibir = "N";
+
+    t1[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @if (Model != null)
+    {
+        if (Model.FilaAtendimentoUsuarios.Count() > 0)
+        {
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Usuários", Descricao = Model.FilaAtendimentoUsuarioViewModel.DescricaoFila, Transacao = t })
+                <div class="x_content">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th class="text-center">Situação</th>
+                                <th class="text-center">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                foreach (FilaAtendimentoUsuarioViewModel fil in Model.FilaAtendimentoUsuarios)
+                                {
+                                    <tr>
+                                        <td><small>@fil.Nome</small></td>
+                                        <td><small>@fil.Login</small></td>
+                                        <td class="text-center">
+                                            <small>
+                                                @if (fil.Situacao == "A")
+                                                {
+                                                    <span class="label label-default">Ativo</span>
+                                                }
+                                                else
+                                                {
+                                                    <span>Desativado</span>
+                                                }
+                                            </small>
+                                        </td>
+                                        <th scope="row" class="text-center">
+                                            <a href="#" title="Excluir" onclick="del('@fil.FilaAtendimentoID', '@fil.UsuarioID', '@fil.Situacao')"><i class="fa fa-trash"></i></a>
+                                        </th>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Usuário", Descricao = "", Transacao = t1 })
+            <div class="x_content">
+                @using (Ajax.BeginForm("EditUser", "FilaAtendimento", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-fila-atendimento" }, new { @class = "form", @id = "form001", @name = "form001" }))
+                {
+                    @Html.Partial("_alerts")
+                    @Html.Partial("_AjaxAlert", "panel-top")
+                    <input type="hidden" name="FilaAtendimentoID" id="FilaAtendimentoID" value="@Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID" />
+                    <input type="hidden" name="Operacao" id="Operacao" value="I" />
+                    <input type="hidden" name="Situacao" id="Situacao" value="A" />
+                    <input type="hidden" name="UsuarioID_Exc" id="UsuarioID_Exc" value="@Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()" />
+                    <div class="row">
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label">Nome</label>
+                                @Html.DropDownList("UsuarioID", new DWM.Models.Enumeracoes.BindDropDownList().Usuarios("Selecione...", Model.FilaAtendimentoUsuarioViewModel.UsuarioID.ToString()), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-fila" id="btn-salvar-fila" onclick="return valida();"/>
+                                <input type="button" onclick="ins(@(Model.FilaAtendimentoUsuarioViewModel.FilaAtendimentoID))" class="btn btn-default" value="Cancelar" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        @Html.Partial("_AcessoNegadoModal")
+    }
+</div>
+
+<script type="text/javascript">
+    $("#Operacao").val("I");
+    $("#FilaAtendimentoUsuarioViewModel_UsuarioID").val("0");
+
+    $(function () {
+        $('#form001').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-fila-atendimento').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+    function valida() {
+        if ($("#UsuarioID").val() == "") {
+            ShowMessageAjaxAlert('Usuário deve ser informado', 'warning');
+            return false;
+        }
+        else
+            return true;
+    }
+
+    function fill(FilaAtendimentoID, UsuarioID, Situacao) {
+        $("#FilaAtendimentoID").val(FilaAtendimentoID);
+        $("#UsuarioID").val(UsuarioID);
+        $('#UsuarioID_Exc').val(UsuarioID);
+        $("#Situacao").val(Situacao);
+    }
+
+    function changeBtnClass(oldClas, newClass, oper) {
+        $("#Operacao").val(oper); // A-Alterar ou D-Deletar
+        if (oper == 'A') {
+            $("#UsuarioID").prop('disabled', 'disabled')
+            $("#btn-salvar-fila").val("Salvar");
+        }
+        else if (oper == 'I') {
+            $("#UsuarioID").prop('disabled', false);
+            $("#btn-salvar-fila").val("Salvar");
+        }
+        else {
+            $("#UsuarioID").prop('disabled', 'disabled')
+            $("#btn-salvar-fila").val("Excluir");
+        }
+        $("#btn-salvar-fila").removeClass(oldClas);
+        $("#btn-salvar-fila").addClass(newClass);
+    }
+
+    function ins(FilaAtendimentoID) {
+        fill(FilaAtendimentoID, '', 'A');
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'I');
+    }
+
+    function edit(FilaAtendimentoID, UsuarioID, Situacao) {
+        fill(FilaAtendimentoID, UsuarioID, Situacao)
+        changeBtnClass('btn btn-danger', 'btn btn-success', 'A')
+    }
+
+    function del(FilaAtendimentoID, UsuarioID, Situacao) {
+        fill(FilaAtendimentoID, UsuarioID, Situacao)
+        changeBtnClass('btn btn-success', 'btn btn-danger', 'D')
+    }
+</script>
+

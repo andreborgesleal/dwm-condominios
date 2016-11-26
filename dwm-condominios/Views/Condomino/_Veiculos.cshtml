@@ -4,18 +4,27 @@
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../Condomino/Browse";
+    t[0].url = "#";
     t[0].nomeCurto = "Incluir";
-    t[0].referencia = "";
+    t[0].referencia = "insVei(" + Model.VeiculoViewModel.CondominioID + ", " + Model.VeiculoViewModel.EdificacaoID + ", " + Model.VeiculoViewModel.UnidadeID + ", " + Model.VeiculoViewModel.CondominoID + ", '','','','','')";
+    t[0].exibir = "S";
 
     t[1].url = "../Home/Default";
+
+    TransacaoRepository[] t1 = { new TransacaoRepository(), new TransacaoRepository() };
+    t1[0].url = "../Condomino/Browse";
+    t1[0].nomeCurto = "Veículo";
+    t1[0].referencia = "";
+    t1[0].exibir = "N";
+
+    t1[1].url = "../Home/Default";
 }
 
 @if (Model != null)
 {
     if (Model.Veiculos.Count() > 0)
     {
-        <table class="table table-striped">
+        <table class="table table-striped" id="cad-veiculo">
             <thead>
                 <tr>
                     <th>Placa</th>
@@ -47,8 +56,8 @@
         </table>
     }
     <div class="x_panel">
-    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Novo veículo", Descricao = "", Transacao = t })
-    <div class="x_content" id="cad-veiculo">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Veículo", Descricao = "", Transacao = t1 })
+    <div class="x_content">
         @using (Ajax.BeginForm("EditVeiculo", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-veiculos" }, new { @class = "form", @id = "form003", @name = "form003" }))
         {
             @Html.Partial("_alerts")
@@ -97,7 +106,7 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-veiculo" id="btn-salvar-veiculo" />
-                        <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                        <input type="button" onclick="insVei(@(Model.VeiculoViewModel.CondominioID), @(Model.VeiculoViewModel.EdificacaoID),@(Model.VeiculoViewModel.UnidadeID),@(Model.VeiculoViewModel.CondominoID), '','','','','')" class="btn btn-default" value="Cancelar" />
                     </div>
                 </div>
             </div>

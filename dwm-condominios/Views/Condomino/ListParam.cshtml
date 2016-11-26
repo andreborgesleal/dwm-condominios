@@ -37,9 +37,13 @@
                                 <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
                                 <td class="">@value.CondominoViewModel.Email</td>
                                 <td class="">@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
-                                <td class="last">
-                                    <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)">Editar</a>
+                                <td>
+                                    <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
+                                    <a href="~/Condomino/Append?CondominoID=@(value.CondominoID)" title="Adicionar unidade ao condômino"><i class="fa fa-plus-circle"></i></a>
                                 </td>
+                                @*<td class="last">
+                                    <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)">Editar</a>
+                                </td>*@
                             </tr>
                         }
                     </tbody>
