@@ -97,30 +97,78 @@ namespace DWM.Models.Persistence
         {
             int _CondominoID = (int)param[0];
 
-            return (from gru in db.GrupoCondominos 
-                    join usu in db.GrupoCondominoUsuarios on gru.GrupoCondominoID equals usu.GrupoCondominoID into USU
-                    from usu in USU.DefaultIfEmpty()
-                    where gru.CondominioID == SessaoLocal.empresaId
-                          && (usu.CondominoID == _CondominoID || usu == null)
-                          && (SessaoLocal.CondominoID == 0 || gru.PrivativoAdmin == "N")
-                    orderby gru.Descricao
-                    select new GrupoCondominoUsuarioViewModel()
-                    {
-                        empresaId = SessaoLocal.empresaId,
-                        CondominoID = _CondominoID,
-                        GrupoCondominoID = gru.GrupoCondominoID,
-                        Situacao = usu != null && usu.CondominoID > 0 ? "A" : "D",
-                        DescricaoGrupo = gru.Descricao,
-                        PageSize = pageSize,
-                        TotalCount = ((from gru1 in db.GrupoCondominos
-                                       join usu1 in db.GrupoCondominoUsuarios on gru1.GrupoCondominoID equals usu1.GrupoCondominoID into USU1
-                                       from usu1 in USU1.DefaultIfEmpty()
-                                       where gru1.CondominioID == SessaoLocal.empresaId
-                                             && (usu1.CondominoID == _CondominoID || usu1 == null)
-                                       && (SessaoLocal.CondominoID == 0 || gru1.PrivativoAdmin == "N")
-                                       orderby gru1.Descricao
-                                       select gru1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            int _TotalCount = (from g1 in db.GrupoCondominos
+                               where g1.CondominioID == SessaoLocal.empresaId
+                                      && (SessaoLocal.CondominoID == 0 || g1.PrivativoAdmin == "N")
+                               select g1).Count();
+
+            IList<GrupoCondominoUsuarioViewModel> g = (from gru in db.GrupoCondominos
+                                                       where gru.CondominioID == SessaoLocal.empresaId
+                                                             && (SessaoLocal.CondominoID == 0 || gru.PrivativoAdmin == "N")
+                                                       orderby gru.Descricao
+                                                       select new GrupoCondominoUsuarioViewModel()
+                                                       {
+                                                           empresaId = SessaoLocal.empresaId,
+                                                           CondominoID = _CondominoID,
+                                                           GrupoCondominoID = gru.GrupoCondominoID,
+                                                           Situacao = "D",
+                                                           DescricaoGrupo = gru.Descricao,
+                                                           PageSize = pageSize,
+                                                           TotalCount = _TotalCount
+                                                       }).ToList();
+            int i = 0;
+            foreach (GrupoCondominoUsuarioViewModel r in g)
+            {
+                if ((from usu in db.GrupoCondominoUsuarios
+                     where usu.GrupoCondominoID == r.GrupoCondominoID && usu.CondominoID == _CondominoID
+                     select usu).Count() > 0)
+                    g.ElementAt(i).Situacao = "A";
+                i++;
+            }
+
+            return g.Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+
+
+            //return (from X in (from gru in db.GrupoCondominos
+            //                    join usu in db.GrupoCondominoUsuarios on gru.GrupoCondominoID equals usu.GrupoCondominoID
+            //                    where gru.CondominioID == SessaoLocal.empresaId
+            //                        && usu.CondominoID == _CondominoID 
+            //                        && (SessaoLocal.CondominoID == 0 || gru.PrivativoAdmin == "N")
+            //                    select new GrupoCondominoUsuarioViewModel()
+            //                    {
+            //                        empresaId = SessaoLocal.empresaId,
+            //                        CondominoID = _CondominoID,
+            //                        GrupoCondominoID = gru.GrupoCondominoID,
+            //                        Situacao = "A",
+            //                        DescricaoGrupo = gru.Descricao,
+            //                        PageSize = pageSize,
+            //                        TotalCount = 0
+            //                    }).Union(from gru in db.GrupoCondominos
+            //                            where gru.CondominioID == SessaoLocal.empresaId
+            //                                && (SessaoLocal.CondominoID == 0 || gru.PrivativoAdmin == "N")
+            //                            select new GrupoCondominoUsuarioViewModel()
+            //                            {
+            //                                empresaId = SessaoLocal.empresaId,
+            //                                CondominoID = _CondominoID,
+            //                                GrupoCondominoID = gru.GrupoCondominoID,
+            //                                Situacao = "D",
+            //                                DescricaoGrupo = gru.Descricao,
+            //                                PageSize = pageSize,
+            //                                TotalCount = 0
+            //                            }
+            //                    )
+            //        select new GrupoCondominoUsuarioViewModel()
+            //        {
+            //            empresaId = X.empresaId,
+            //            CondominoID = X.CondominoID,
+            //            GrupoCondominoID = X.GrupoCondominoID,
+            //            Situacao = X.Situacao,
+            //            DescricaoGrupo = X.DescricaoGrupo,
+            //            PageSize = X.PageSize,
+            //            TotalCount = (from g1 in db.GrupoCondominos where g1.CondominioID == SessaoLocal.empresaId
+            //                          && (SessaoLocal.CondominoID == 0 || g1.PrivativoAdmin == "N")
+            //                          select g1).Count()
+            //        }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
         }
 
         public override Repository getRepository(Object id)
