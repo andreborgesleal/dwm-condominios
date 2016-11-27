@@ -4049,6 +4049,7 @@
     <Content Include="Views\FilaAtendimento\Index.cshtml" />
     <Content Include="Views\FilaAtendimento\_EditUser.cshtml" />
     <Content Include="Views\Condomino\Append.cshtml" />
+    <Content Include="Views\Condomino\Desativar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

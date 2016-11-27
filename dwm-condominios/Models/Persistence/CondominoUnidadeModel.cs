@@ -9,6 +9,8 @@ using App_Dominio.Models;
 using DWM.Models.Entidades;
 using DWM.Models.Repositories;
 using System.Web;
+using App_Dominio.Negocio;
+using System.Data.Entity;
 
 namespace DWM.Models.Persistence
 {
@@ -30,6 +32,68 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe CrudModel
+        public override CondominoUnidadeViewModel BeforeInsert(CondominoUnidadeViewModel value)
+        {
+            if (value.CondominoViewModel is CondominoPFViewModel && value.CondominoViewModel.CondominoID == 0)
+            {
+                value.CondominoViewModel.CondominoID = value.CondominoID;
+                CondominoPFModel model = new CondominoPFModel(this.db, this.seguranca_db);
+                value.CondominoViewModel = model.getObject((CondominoPFViewModel)value.CondominoViewModel); 
+            }
+
+            return value;
+        }
+
+        public override CondominoUnidadeViewModel BeforeUpdate(CondominoUnidadeViewModel value)
+        {
+            value = BeforeInsert(value);
+
+            // Verifica se o condômino não está mais vinculado a nenhuma unidade
+            if ((from cu in db.CondominoUnidades
+                 where cu.CondominioID == value.CondominioID && cu.CondominoID == value.CondominoID
+                        && !cu.DataFim.HasValue && cu.EdificacaoID + cu.UnidadeID != value.EdificacaoID + value.UnidadeID
+                 select cu).Count() == 0)
+            {
+                value.CondominoViewModel.IndSituacao = "D";
+            }
+
+            return value;
+        }
+
+        public override CondominoUnidadeViewModel AfterUpdate(CondominoUnidadeViewModel value)
+        {
+            if ((from cu in db.CondominoUnidades
+                 where cu.CondominioID == value.CondominioID && cu.CondominoID == value.CondominoID
+                        && !cu.DataFim.HasValue && cu.EdificacaoID + cu.UnidadeID != value.EdificacaoID + value.UnidadeID
+                 select cu).Count() == 0)
+            {
+                // Desativar o usuário em seguranca
+                Usuario u = seguranca_db.Usuarios.Find(value.CondominoViewModel.UsuarioID);
+                if (u != null)
+                {
+                    u.situacao = "D";
+                    seguranca_db.Entry(u).State = EntityState.Modified;
+                }
+
+                // Recuperar a lista de usuários credenciados
+                ListViewCredenciados list = new ListViewCredenciados(this.db, this.seguranca_db);
+                IEnumerable<CredenciadoViewModel> listCredenciados = list.Bind(0, 50, value.CondominoID);
+
+                // Desativar os credenciados em seguranca
+                foreach (CredenciadoViewModel cred in listCredenciados.Where(info => info.UsuarioID.HasValue))
+                {
+                    u = seguranca_db.Usuarios.Find(cred.UsuarioID);
+                    if (u != null)
+                    {
+                        u.situacao = "D";
+                        seguranca_db.Entry(u).State = EntityState.Modified;
+                    }
+                }
+            }
+
+            return value;
+        }
+
         public override CondominoUnidade MapToEntity(CondominoUnidadeViewModel value)
         {
             CondominoUnidade condominoUnidade = Find(value);
@@ -63,6 +127,7 @@ namespace DWM.Models.Persistence
                 CondominoID = entity.CondominoID,
                 DataInicio = entity.DataInicio,
                 DataFim = entity.DataFim,
+                EdificacaoDescricao = db.Edificacaos.Find(entity.EdificacaoID).Descricao,
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
 

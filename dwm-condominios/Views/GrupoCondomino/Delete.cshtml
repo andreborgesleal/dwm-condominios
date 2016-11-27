@@ -29,13 +29,13 @@
                 @Html.HiddenFor(info => info.empresaId)
                 <div class="well well-sm">Atenção: Não será permitido excluir um grupo se houver usuários vinculados a ele.</div>
                 <div class="row">
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Descricao, new { @class = "control-label" })
                             <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="30" disabled />
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="col-md-8 col-xs-12 col-sm-12 col-lg-8">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Objetivo, new { @class = "control-label" })
                             <input type="text" class="form-control" name="Objetivo" id="Objetivo" value="@Model.Objetivo" maxlength="100" disabled />
