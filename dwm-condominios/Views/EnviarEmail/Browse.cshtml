@@ -2,7 +2,7 @@
 @model PagedList<DWM.Models.Repositories.EmailLogViewModel>
 @{
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../EnviarEmail/Create";
+    t[0].url = "../EnviarEmail/Browse";
     t[0].nomeCurto = "Incluir";
     t[0].referencia = "";
 
@@ -12,7 +12,7 @@
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Emails", Descricao = "", Transacao = t })
         <div class="x_content">
-            @using (Ajax.BeginForm("Listparam", "InformativoID", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
+            @using (Ajax.BeginForm("Listparam", "EmailLogID", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
             {
                 <div class="container-cadastro">
                     <div class="row clearfix">
@@ -40,9 +40,9 @@
             <div id="div-list">
                 @Html.Partial("ListParam", Model)
             </div>
-            <div class="altura-35">
+            @*<div class="altura-35">
                 @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "EnviarEmail", buttonType = "link" } })
-            </div>
+            </div>*@
         </div>
     </div>
 </div>
@@ -64,3 +64,4 @@
         });
     });
 </script>
+

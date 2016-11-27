@@ -38,8 +38,7 @@ namespace dwm_condominios.Controllers
                     data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("dd/MM/yyyy");
                 }
 
-                //InformativoCadastrarBI list = new InformativoCadastrarBI();
-                ListViewInformativo list = new ListViewInformativo();
+                ListViewEmailLog list = new ListViewEmailLog();
                 return this._List(index, pageSize, "Browse", list, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data2).Value);
             }
             else
