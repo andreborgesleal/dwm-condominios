@@ -131,9 +131,9 @@ namespace DWM.Models.BI
         #region Constructor
         public EnviarEmailCredenciadoBI() { }
 
-        public EnviarEmailCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EnviarEmailCredenciadoBI(ApplicationContext _db, SecurityContext _seguranca_db, string Token)
         {
-            Create(_db, _seguranca_db);
+            Create(_db, _seguranca_db, Token);
         }
         #endregion
 

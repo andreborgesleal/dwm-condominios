@@ -231,6 +231,7 @@
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
     <Compile Include="Models\Entidades\Cidade.cs" />
+    <Compile Include="Models\Entidades\InformativoComentario.cs" />
     <Compile Include="Models\Entidades\Condominio.cs" />
     <Compile Include="Models\Entidades\Condomino.cs" />
     <Compile Include="Models\Entidades\CondominoPF.cs" />
@@ -278,6 +279,7 @@
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoModel.cs" />
     <Compile Include="Models\Persistence\GrupoCondominoUsuarioModel.cs" />
+    <Compile Include="Models\Persistence\InformativoComentarioModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
@@ -301,6 +303,7 @@
     <Compile Include="Models\Repositories\GrupoCondominoUsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\GrupoCondominoViewModel.cs" />
     <Compile Include="Models\Repositories\HomeViewModel.cs" />
+    <Compile Include="Models\Repositories\InformativoComentarioViewModel.cs" />
     <Compile Include="Models\Repositories\InformativoViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
     <Compile Include="Models\Repositories\ProfissaoViewModel.cs" />

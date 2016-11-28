@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1761978247" Data="03/07/2016 13:19:37">
+    <Sessao>awle4lkcg2wy1dxdqkbev2ed</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewCondominoUnidade =&gt; condomino/browse</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewCondominoUnidade.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\CondominoUnidadeModel.cs:linha 213
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+  <LOG ID="516862147" Data="03/07/2016 13:20:02">
+    <Sessao>awle4lkcg2wy1dxdqkbev2ed</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewCondominoUnidade =&gt; condomino/browse</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewCondominoUnidade.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\CondominoUnidadeModel.cs:linha 213
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+  <LOG ID="177779885" Data="03/07/2016 15:34:59">
+    <Sessao>eisvnpk2zxk1phchftfi3x11</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>E-mail deve ser preenchido e ter um formato válido</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 114</StackTrace>
+  </LOG>
+  <LOG ID="887733138" Data="03/07/2016 15:35:12">
+    <Sessao>eisvnpk2zxk1phchftfi3x11</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>CPF informado está incorreto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 114</StackTrace>
+  </LOG>
+</LOG>

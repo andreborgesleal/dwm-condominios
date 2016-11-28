@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="2137439407" Data="10/08/2016 12:05:19">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="901362633" Data="10/08/2016 12:05:32">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="561185350" Data="10/08/2016 12:06:26">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="1715334888" Data="10/08/2016 12:07:31">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="783107770" Data="10/08/2016 12:11:13">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="899440007" Data="10/08/2016 12:12:07">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="1164858539" Data="10/08/2016 12:15:03">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="1469124183" Data="10/08/2016 12:17:31">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="1254279687" Data="10/08/2016 12:17:51">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="696673629" Data="10/08/2016 12:24:06">
+    <Sessao>mcksbd2bqmt3ki5mtdde4ah0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.CondominoController.EditCredenciado(String CredenciadoViewModel_CondominoID, String CredenciadoViewModel_CredenciadoID, String CredenciadoViewModel_Nome, String CredenciadoViewModel_Email, String CredenciadoViewModel_Observacao, String CredenciadoViewModel_Sexo, String CredenciadoViewModel_UsuarioID) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 147</StackTrace>
+  </LOG>
+  <LOG ID="680021351" Data="10/08/2016 12:53:12">
+    <Sessao>0fb35jbg3pax4x5lqk3qee11</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Registro processado com sucesso</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1912824216" Data="10/08/2016 12:53:40">
+    <Sessao>0fb35jbg3pax4x5lqk3qee11</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 176</StackTrace>
+  </LOG>
+  <LOG ID="1215922099" Data="10/08/2016 16:45:34">
+    <Sessao>vs3tryujaut5u0oxhxacvm3b</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 176</StackTrace>
+  </LOG>
+  <LOG ID="478512432" Data="10/08/2016 16:49:31">
+    <Sessao>ciw4kcprn44if5u1wiucz1ss</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Identificador interno do usuário não foi localizado. Favor realizar um novo login e se o problema persistir entre em contato com o administrador do sistema.</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="322580869" Data="10/08/2016 16:50:04">
+    <Sessao>ciw4kcprn44if5u1wiucz1ss</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 175</StackTrace>
+  </LOG>
+  <LOG ID="1223893830" Data="10/08/2016 17:33:09">
+    <Sessao>gxshr5hxbrrmbdursrbto0fc</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>E-mail já cadastrado</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 178</StackTrace>
+  </LOG>
+</LOG>

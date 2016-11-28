@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="97493191" Data="27/11/2016 09:34:36">
+    <Sessao>cktfrivepd3cwz1d2y5hhrjz</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/desativar</NameSpace>
+    <Context>CondominioID="3",EdificacaoID="2",UnidadeID="1302",CondominoID="171",DataInicio="09/10/2015 00:00:00",btn-desativar="Desativar"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 145
+   em DWM.Controllers.CondominoController.Update(CondominoUnidadeViewModel value) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 556
+   em App_Dominio.Controllers.DwmRootController`3.SetEdit(R value, FormCollection collection, String breadCrumbText, IDictionary`2 text) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 226</StackTrace>
+  </LOG>
+</LOG>

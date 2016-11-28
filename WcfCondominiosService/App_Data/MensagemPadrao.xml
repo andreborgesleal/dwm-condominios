@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Mensagem>
+  <Context key="0" value="Operação realizada com sucesso." type="Sucesso"></Context>
+  <Context key="2" value="Confirma Operação?" type="Alerta"></Context>
+  <Context key="3" value="Erro inesperado ao tentar recuperar a informação do sistema. Por favor, tente mais tarde ou contate o administrador" type="Error"></Context>
+  <Context key="4" value="Valor inválido para o campo {0}. {1}" type="Error"></Context>
+  <Context key="5" value="Valor do campo obrigatório: {0}" type="Error"></Context>
+  <Context key="6" value="Pelo menos um dos filtros da consulta deve ser preenchido" type="Error"></Context>
+  <Context key="7" value="O campo {0} deve ser uma data maior que a data atual." type="Error"></Context>
+  <Context key="8" value="O Campo {0} deve ser uma data maior ou igual que a data atual." type="Error"></Context>
+  <Context key="9" value="O Campo {0} deve ser uma data menor que a data atual." type="Error"></Context>
+  <Context key="10" value="O Campo {0} deve ser uma data menor ou igual que a data atual." type="Error"></Context>
+  <Context key="11" value="O Campo {0} deve ser uma data maior que o Campo {1}." type="Error"></Context>
+  <Context key="12" value="O Campo {0} deve ser uma data maior ou igual que o Campo {1}." type="Error"></Context>
+  <Context key="13" value="O Campo {0} deve ser uma data menor que o Campo {1}." type="Error"></Context>
+  <Context key="14" value="O Campo {0} deve ser uma data menor ou igual que o Campo {1}." type="Error"></Context>
+  <Context key="15" value="Não foi possível enviar o e-mail. Problemas de infra estrutura. Tente novamente mais tarde." type="Error"></Context>
+  <Context key="16" value="Este registro não pode ser excluído porque existem outros cadastros vinculados a ele." type="Error"></Context>
+  <Context key="17" value="Problemas de infra estrutura. Tente novamente mais tarde." type="Error"></Context>
+  <Context key="18" value="Deseja realmente cancelar a operação? Todos os dados não salvos serão perdidos." type="Alerta"></Context>
+  <Context key="19" value="Registro já cadastrado." type="Error"></Context>
+  <Context key="20" value="Nenhum registro foi encontrado." type="Error"></Context>
+  <Context key="21" value="Conta contábil deve ser do tipo [Analítica]." type="Error"></Context>
+  <Context key="22" value="O campo {0} deve ser maior que o campo {1}" type="Error"></Context>
+  <Context key="28" value="Este registro não pode ser editado porque existem outros cadastros vinculados a ele." type="Error"></Context>
+  <Context key="29" value="CPF inválido para o dígito verificador digitado" type="Error"></Context>
+  <Context key="30" value="CNPJ inválido para o dígito verificador digitado" type="Error"></Context>
+  <Context key="31" value="Já existe pessoa cadastrada com este CPF no sistema" type="Error"></Context>
+  <Context key="32" value="Já existe pessoa cadastrada com este CNPJ no sistema" type="Error"></Context>
+  <Context key="33" value="Toda conta analítica é obrigada estar vinculada a uma conta sintética. Favor informar a conta pai" type="Error"></Context>
+  <Context key="34" value="Valor do campo Data Final é obrigatório" type="Error"></Context>
+  <Context key="35" value="Identificador interno do usuário não foi localizado. Favor realizar um novo login e se o problema persistir entre em contato com o administrador do sistema." type="Warning"></Context>
+  <Context key="36" value="Usuário e (ou) senha inválidos." type="Error"></Context>
+  <Context key="37" value="Registro já existente." type="Error"></Context>
+  <Context key="38" value="Esta função estará disponível a partir do dia 21/01/2013." type="Error"></Context>
+  <Context key="39" value="Já existe uma sessão deste navegador online no chat. Para realizar o acesso, feche todas as conexões abertas de seu navegador e tente novamente." type="Error"></Context>
+  <Context key="40" value="Já existe registro cadastrado com este(a) {0} no sistema" type="Error"></Context>
+  <Context key="41" value="Registro já existente: {0}" type="Error"></Context>
+  <Context key="42" value="Ocorreu um erro interno no banco de dados na tentativa de excluir o registro." type="Error"></Context>
+  <Context key="43" value="Ocorreu um erro interno no banco de dados na tentativa de alterar o registro." type="Error"></Context>
+  <Context key="44" value="Ocorreu um erro interno no banco de dados na tentativa de incluir o registro." type="Error"></Context>
+  <Context key="45" value="Este registro não pode ser incluído porque possui campos que não estão vinculados aos seus respectivos cadastros." type="Error"></Context>
+  <Context key="46" value="Pelo menos um item de {0} deve exisitir para salvar o registro" type="Error"></Context>
+  <Context key="47" value="O campo {0} deve ser maior que zero." type="Error"></Context>
+  <Context key="48" value="O Campo {0} deve deve estar no período de {1} à {2}." type="Error"></Context>
+  <Context key="49" value="O Campo {0} deve deve diferente de {2}." type="Error"></Context>
+  <Context key="50" value="A operação não foi concluída. Foram identificadas algumas inconsistências em nossos registros. Favor entrar em contato com a secretaria desta empresa." type="Error"></Context>
+  <Context key="51" value="Tamanho do arquivo inválido para fazer upload. Tamanho máximo permitido é de {0} kb" type="Error"></Context>
+  <Context key="52" value="Formato do arquivo inválido para fazer upload. Formatos válidos: {0}" type="Error"></Context>
+  <Context key="53" value="Quantidade de itens excede o limite permitido: {0}" type="Error"></Context>
+  <Context key="54" value="Registro já existente. Existe algum campo prenchido no formulário que está violando a regra de chave única. Este campo já foi cadastrado anteriormente e não pode ser novamente incluído." type="Error"></Context>
+  <Context key="55" value="Data inválida." type="Error"></Context>
+  <Context key="56" value="Registro não pode ser alterado ou excluído pois pertence a um lote já fechado." type="Error"></Context>
+  <Context key="57" value="A unidade informada está ocupada por outro condômino." type="Error"></Context>
+  <Context key="58" value="Código de ativação inválido." type="Error"></Context>
+  <Context key="200" value="Sessão não pode ser atualizada porque não existe ou já foi encerrada" type="Error"></Context>
+  <Context key="201" value="Acesso não autorizado. A sessão já está em uso. Favor tentar novamente mais tarde." type="Error"></Context>
+  <Context key="202" value="Acesso negado. Suas credenciais não estão autorizadas para executar essa operação." type="Error"></Context>
+  <Context key="997" value="Dado(s) incorretos." type="Error"></Context>
+  <Context key="998" value="Se o problema persistir entre em contato com o administrador do sistema." type="Error"></Context>
+  <Context key="999" value="A operação não foi concluída. Foram identificadas algumas inconsistências no preenchimento do formulário. Favor corrigir e tentar a operação novamente." type="Error"></Context>
+</Mensagem>
