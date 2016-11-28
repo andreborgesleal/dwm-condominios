@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="133988931" Data="21/06/2016 16:10:18">
+    <Sessao>ga2cjrglskytzcu3nkz5jda1</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="fZ0lVGzqFv5Wf7IlFxTtH3HlJskdR4mqk1Y1Tk6IrgOntMSe7iIrs5BC57AcOWvMG87L5ZRcUQyXXDg3zxiN02vStojxStx50uw-CgDuQTs1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="553144968" Data="21/06/2016 16:10:18">
+    <Sessao>ga2cjrglskytzcu3nkz5jda1</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="fZ0lVGzqFv5Wf7IlFxTtH3HlJskdR4mqk1Y1Tk6IrgOntMSe7iIrs5BC57AcOWvMG87L5ZRcUQyXXDg3zxiN02vStojxStx50uw-CgDuQTs1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="586005007" Data="21/06/2016 23:03:02">
+    <Sessao>nmy51t1c5p4wks3tai3taz5n</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="uH7eu9ZbSpztUGaR5IGy4mOgYwHxuSjmQg7Y93v-ioaH1Qcwe_t40JZBYjI20zySwC_NZmWw_UWMbLYMBIuum4ETyp4WSX9_itBR3x5OgLw1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1005161044" Data="21/06/2016 23:03:02">
+    <Sessao>nmy51t1c5p4wks3tai3taz5n</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="uH7eu9ZbSpztUGaR5IGy4mOgYwHxuSjmQg7Y93v-ioaH1Qcwe_t40JZBYjI20zySwC_NZmWw_UWMbLYMBIuum4ETyp4WSX9_itBR3x5OgLw1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+</LOG>

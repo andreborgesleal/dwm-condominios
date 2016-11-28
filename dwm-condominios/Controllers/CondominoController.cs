@@ -12,6 +12,7 @@ using System;
 using App_Dominio.Enumeracoes;
 using DWM.Models.Pattern;
 using System.Collections.Generic;
+using App_Dominio.Models;
 
 namespace DWM.Controllers
 {
@@ -478,6 +479,80 @@ namespace DWM.Controllers
                 return View(obj);
             }
             return View();
+        }
+
+        [AuthorizeFilter]
+        [HttpPost]
+        public ActionResult Append(CondominoUnidadeViewModel value, FormCollection collection)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                value.CondominoViewModel = new CondominoPFViewModel();
+                value.DataInicio = Funcoes.Brasilia().Date;
+                CondominoUnidadeViewModel ret = SetCreate(value, collection);
+
+                if (ret.mensagem.Code == 0)
+                    return RedirectToAction("Browse");
+                else
+                    return View(ret);
+            }
+            else
+                return null;
+        }
+
+        public override CondominoUnidadeViewModel Insert(CondominoUnidadeViewModel value)
+        {
+            Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext> facade = new Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext>();
+            return facade.Save(value, Crud.INCLUIR);
+        }
+
+
+        #endregion
+
+        #region Desativar Condômino da Unidade 
+        [AuthorizeFilter]
+        public ActionResult Desativar(int CondominioID, int EdificacaoID, int UnidadeID, int CondominoID)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getBreadCrumbText("Condômino", null));
+                Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext> facade = new Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext>();
+                CondominoUnidadeViewModel value = new CondominoUnidadeViewModel()
+                {
+                    CondominioID = CondominioID,
+                    EdificacaoID = EdificacaoID,
+                    UnidadeID = UnidadeID,
+                    CondominoID = CondominoID
+                };
+                CondominoUnidadeViewModel obj = facade.getObject(value);
+                return View(obj);
+            }
+            return View();
+        }
+
+        [AuthorizeFilter]
+        [HttpPost]
+        public ActionResult Desativar(CondominoUnidadeViewModel value, FormCollection collection)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                value.CondominoViewModel = new CondominoPFViewModel();
+                value.DataFim = Funcoes.Brasilia().Date;
+                CondominoUnidadeViewModel ret = SetEdit(value, collection, "Condômino");
+
+                if (ret.mensagem.Code == 0)
+                    return RedirectToAction("Browse");
+                else
+                    return View(ret);
+            }
+            else
+                return null;
+        }
+
+        public override CondominoUnidadeViewModel Update(CondominoUnidadeViewModel value)
+        {
+            Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext> facade = new Facade<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext>();
+            return facade.Save(value, Crud.ALTERAR);
         }
 
 

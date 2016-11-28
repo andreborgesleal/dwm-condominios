@@ -2,6 +2,7 @@
 using App_Dominio.Entidades;
 using App_Dominio.Security;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -27,12 +28,18 @@ namespace DWM.Models.Repositories
 
         public DateTime DataInformativo { get; set; }
 
+        public string _DataInformativo { get; set; }
+
         [DisplayName("Publicação")]
         [Required(ErrorMessage = "Informe a data de publicação do informativo")]
         public DateTime DataPublicacao { get; set; }
 
+        public string _DataPublicacao { get; set; }
+
         [DisplayName("Expiracao")]
         public System.Nullable<DateTime> DataExpiracao { get; set; }
+
+        public string _DataExpiracao { get; set; }
 
         [DisplayName("Cabeçalho")]
         [Required(ErrorMessage = "Informe o Cabeçalho")]
@@ -64,5 +71,7 @@ namespace DWM.Models.Repositories
                 return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Informativos/";
             }
         }
+
+        public IEnumerable<InformativoComentarioViewModel> Comentarios { get; set; }
     }
 }

@@ -1,0 +1,68 @@
+﻿@using DWM.Models.Repositories
+@using App_Dominio.Repositories
+@model CondominoUnidadeViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Condomino/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Desativar condômino da unidade", Descricao = Model.CondominoViewModel.Nome, Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Desativar", "Condomino", FormMethod.Post, new { @class = "form" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.EdificacaoID)
+                @Html.HiddenFor(info => info.UnidadeID)
+                @Html.HiddenFor(info => info.CondominoID)
+                @Html.HiddenFor(info => info.DataInicio)
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Edificação</label>
+                            @Html.Raw("<h3>" + Model.EdificacaoDescricao + "</h3>")
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidade</label>
+                            @Html.Raw("<h3>" + Model.UnidadeID + "</h3>")
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <div class="well well-lg">
+                    <p>
+                        <h3><strong>Atenção:</strong></h3>
+                    </p>
+                    <br />
+                    <p>
+                        <h4>Antes de confirmar esta operação certifique-se de que o condômino não esteja mais ocupando a unidade.</h4>
+                    </p>
+                    <p>
+                        <h4>Ao desativar o condômino da unidade ele não será mais exibido na lista para esta unidade, será impedido de acessar o condomínio por esta unidade e terá seu acesso bloqueado ao sistema.</h4>
+                    </p>
+                    <p>
+                        <h4>Após a confirmação a unidade estará disponível para ser ocupada por outro condômino.</h4>
+                    </p>
+                    <p>&nbsp;</p>
+                    <p>
+                        <h3>Confirma desativação do condômino para a @Model.EdificacaoDescricao @Model.UnidadeID ?</h3>
+                    </p>
+                </div>
+                <p>
+                    <input type="submit" class="btn btn-danger" value="Desativar" name="btn-desativar" id="btn-desativar" />
+                    <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                </p>
+            }
+        </div>
+    </div>
+</div>
+
+
+

@@ -25,5 +25,6 @@ namespace DWM.Models.Entidades
         public DbSet<GrupoCondominoUsuario> GrupoCondominoUsuarios { get; set; }
         public DbSet<FilaAtendimento> FilaAtendimentos { get; set; }
         public DbSet<FilaAtendimentoUsuario> FilaAtendimentoUsuarios { get; set; }
+        public DbSet<InformativoComentario> InformativoComentarios { get; set; }
     }
 }

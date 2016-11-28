@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1174989990" Data="22/09/2016 00:04:54">
+    <Sessao>f3dvkluj4vevcfnpd4qkfhyu</Sessao>
+    <IP>127.0.0.1</IP>
+    <HostName>DESKTOP-K3RDLHQ\André</HostName>
+    <Mensagem>Invalid object name 'dbo.GrupoCondomino'. *** An error occurred while executing the command definition. See the inner exception for details.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewGrupoCondominos =&gt; grupocondomino/browse</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   em System.Data.Entity.Core.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__6()
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   em System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   em DWM.Models.Persistence.ListViewGrupoCondominos.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Persistence\GrupoCondominoModel.cs:linha 123
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+  <LOG ID="1646590904" Data="22/09/2016 00:05:25">
+    <Sessao>f3dvkluj4vevcfnpd4qkfhyu</Sessao>
+    <IP>127.0.0.1</IP>
+    <HostName>DESKTOP-K3RDLHQ\André</HostName>
+    <Mensagem>Invalid object name 'dbo.GrupoCondomino'. *** An error occurred while executing the command definition. See the inner exception for details.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewGrupoCondominos =&gt; grupocondomino/browse</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   em System.Data.Entity.Core.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__6()
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   em System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   em DWM.Models.Persistence.ListViewGrupoCondominos.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Persistence\GrupoCondominoModel.cs:linha 123
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+</LOG>

@@ -19,7 +19,7 @@
                             <th class="column-title">Telefone </th>
                             <th class="column-title">E-mail </th>
                             <th class="column-title">Data </th>
-                            <th class="column-title no-link last">
+                            <th class="column-title no-link last text-center">
                                 <span class="nobr">Ação</span>
                             </th>
                             <th class="bulk-actions" colspan="7">
@@ -37,9 +37,10 @@
                                 <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
                                 <td class="">@value.CondominoViewModel.Email</td>
                                 <td class="">@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
-                                <td>
+                                <td class="text-center">
                                     <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
-                                    <a href="~/Condomino/Append?CondominoID=@(value.CondominoID)" title="Adicionar unidade ao condômino"><i class="fa fa-plus-circle"></i></a>
+                                    <a href="~/Condomino/Append?CondominoID=@(value.CondominoID)" title="Adicionar unidade ao condômino"><i class="fa fa-plus-circle"></i></a>&nbsp;
+                                    <a href="~/Condomino/Desativar?CondominioID=@(value.CondominioID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&CondominoID=@(value.CondominoID)" title="Desativar condômino da unidade"><i class="fa fa-trash"></i></a>
                                 </td>
                                 @*<td class="last">
                                     <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)">Editar</a>

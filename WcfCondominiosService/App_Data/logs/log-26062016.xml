@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="112955161" Data="26/06/2016 22:59:20">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>Telefone deve ser informado</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="_Oxy-OJzxfdcdtpf1U5g5TDQ25Nsb9uUmA11mK67k7nlnndy7KXpbvf6qoqxResaJOkkuybOUwIv9-LhIkhq610RXEoZpJvdVg63cspEjqs1",CondominioID="3",CondominoID="137",Nome="ALCIR DE FREITAS VELASCO",Email="alcir.velasco@gmail.com",IndFiscal="391.817.152-34",IndSituacao="A",TelParticular1="(91)32359-216",TelParticular2="(91)91165-008",DataNascimento="29/05/2016",Sexo="M",IndProprietario="N",IndAnimal="N",ProfissaoID="16",observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="505161333" Data="26/06/2016 22:59:57">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>Telefone deve ser informado</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="abbHNpY9lRMEdsXo5US8y__Rvo3UZ8UkWl_pbJ9hkkUZ4f0wMEMpoaALdndpTECykkzF3L8WiebvnfuMyhIc3_B7ALhU_vAmbR1utbkUVgw1",CondominioID="3",CondominoID="102",Nome="ALESSANDRO FONTES",Email="alessandromfontes@gmail.com",IndFiscal="793.883.101-87",IndSituacao="A",TelParticular1="(91)30323-499",TelParticular2="(91)91466-343",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",ProfissaoID="7",observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="51080737" Data="26/06/2016 23:06:25">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>Telefone deve ser informado</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="_cng_MDTnoQIHpjE0giOPXkjpyiABAt-r6f8iJh1au_Q0k3GVgokx1ut9NKdLHvFDJ-iyv3JHvT6M9yC94XjObOZbpfgMKZHSHNch2ojh501",CondominioID="3",CondominoID="102",Nome="ALESSANDRO FONTES",Email="alessandromfontes@gmail.com",IndFiscal="793.883.101-87",IndSituacao="A",TelParticular1="(91)30323-499",TelParticular2="(91)91466-343",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",ProfissaoID="17",observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="1467622773" Data="26/06/2016 23:10:05">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="e0iBSNTzEXZKUR-q9yyqu08EkEVAiR7Fm5vDPyMuaHuONQbx6e6IrFqe7pXX9hKvRbgsTN0ZHH6ZpjzytkyPns36RxyVF5lXEFYmxHa76yI1",CondominioID="3",CondominoID="184",Nome="ALEX MORAES",Email="alexpenha@hotmail.com",IndFiscal="713.441.012-91",IndSituacao="A",TelParticular1="(91)99123-1050",TelParticular2="(91)32296-772",DataNascimento="09/06/2016",Sexo="M",IndProprietario="S",IndAnimal="S",ProfissaoID="18",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="1938223598" Data="26/06/2016 23:12:36">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="7-lkaa8QhlsUitJ4akL6aPSr5lBT-eijIofuoXy_-sL1WZIrc2-vkNWOOwN5pK7_0duZT9wMLBxmobAK1f_az9mzsnluO-PzdcjjvkYlhhI1",CondominioID="3",CondominoID="184",Nome="ALEX MORAES DA FONSECA",Email="alexpenha@hotmail.com",IndFiscal="713.441.012-91",IndSituacao="A",TelParticular1="(91)99123-1050",TelParticular2="(91)32296-772",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="S",ProfissaoID="18",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="488444512" Data="26/06/2016 23:21:22">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="er4dYTUtFesfkb9H_i7sg_jii8UUdm95OalHj4ci9nlFybruGaAacUzky5XfJZqZj8nDI2mp2Pe6avGZneVIzMlo71KHmfj2xlteWjFOLaM1",CondominioID="3",CondominoID="184",Nome="ALEX MORAES DA FONSECA",Email="alexpenha@hotmail.com",IndFiscal="713.441.012-91",IndSituacao="A",TelParticular1="(91)99123-1050",TelParticular2="(91)32296-772",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="S",ProfissaoID="18",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="2052333549" Data="26/06/2016 23:24:57">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="-zZm5jZtblbnLyuuckIeVTGzfxMs0Ld6BGAzOpfZ74mume3WSrmDGqZDbRxTvS4NypOdcpg4MGPuPcWNcSa97VzTDayfn0sUuBUGB008HaI1",CondominioID="3",CondominoID="9",Nome="ADERSON L RAMOS JUNIOR",Email="adersonjunior@gmail.com",IndFiscal="102.560.817-86",IndSituacao="A",TelParticular1="(91)98836-3280",TelParticular2="(91)98126-9374",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",ProfissaoID="20",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="406594828" Data="26/06/2016 23:25:13">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="jhLRb_OKD20ReYqNFTTy85bIC1tpbE1nV92-nrebkO4jXmuOnuyxCmQHfSo-TavdS-xU5ABQCv4t0lP_MMDCodNvneJiw_hC6L93dqCS1j81",CondominioID="3",CondominoID="9",Nome="ADERSON L RAMOS JUNIOR",Email="adersonjunior@gmail.com",IndFiscal="102.560.817-86",IndSituacao="A",TelParticular1="(91)98836-3280",TelParticular2="(91)98126-9374",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",ProfissaoID="20",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+  <LOG ID="585891888" Data="26/06/2016 23:31:05">
+    <Sessao>govmvpf2k0pay5njeh3f5pmx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-SLG6G19\andre</HostName>
+    <Mensagem>The INSERT statement conflicted with the FOREIGN KEY constraint "FK_LogAuditoria_Transacao". The conflict occurred in database "seguranca", table "dbo.Transacao", column 'transacaoId'.
+The statement has been terminated.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context>__RequestVerificationToken="ar2ULNS4rxtWmtFGphvRlntl2NzhnfO54H1_QqV-E1fJ_pJXmaML0g5XLevio53u2pTbARM4oqENKDiPoSy_Nr9OGB8tIdtslgkmi2ZHv4Q1",CondominioID="3",CondominoID="9",Nome="ADERSON L RAMOS JUNIOR",Email="adersonjunior@gmail.com",IndFiscal="102.560.817-86",IndSituacao="A",TelParticular1="(91)98836-3280",TelParticular2="(91)98126-9374",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="S",ProfissaoID="20",Observacao=""</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 115</StackTrace>
+  </LOG>
+</LOG>

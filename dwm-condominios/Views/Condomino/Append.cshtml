@@ -15,8 +15,7 @@
         <div class="x_content">
             @using (Html.BeginForm("Append", "Condomino", FormMethod.Post, new { @class = "form" }))
             {
-                @Html.Partial("_alerts")
-                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.CondominoID)
                 <div class="row">
@@ -33,6 +32,7 @@
                         </div>
                     </div>
                 </div>
+                <br />
                 <p>
                     <input type="submit" class="btn btn-success" value="Salvar" name="btn-enviar-token" id="btn-enviar-token" />
                     <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />

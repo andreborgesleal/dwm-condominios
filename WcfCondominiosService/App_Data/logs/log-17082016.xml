@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="6504719" Data="17/08/2016 11:18:22">
+    <Sessao>wicx2dqqwrgevej1dqwzdlm0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="ZSKLogWvbpnvtGBvOz5r359SZQeilP85NBzPz4e1yxCdHafihSeIJeLIB5q_nn_oK4VN9MP8akLbpCKLAajMLs02v43n_wJc0_aDpHGIUNs1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1547560575" Data="17/08/2016 11:18:22">
+    <Sessao>wicx2dqqwrgevej1dqwzdlm0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="ZSKLogWvbpnvtGBvOz5r359SZQeilP85NBzPz4e1yxCdHafihSeIJeLIB5q_nn_oK4VN9MP8akLbpCKLAajMLs02v43n_wJc0_aDpHGIUNs1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="2138649097" Data="17/08/2016 11:18:53">
+    <Sessao>wicx2dqqwrgevej1dqwzdlm0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="pv1v-LVeWNmZcoox0WdAFoPTg9l3EOW23Qv8A4LXGFMb1oPVt-9-gMiy7mzbUhZPAMj8Tzu2RhlSQEb5BcqdjBZBQBMHXBg8FPxd_RARybU1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1787277206" Data="17/08/2016 11:18:53">
+    <Sessao>wicx2dqqwrgevej1dqwzdlm0</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; </NameSpace>
+    <Context>__RequestVerificationToken="pv1v-LVeWNmZcoox0WdAFoPTg9l3EOW23Qv8A4LXGFMb1oPVt-9-gMiy7mzbUhZPAMj8Tzu2RhlSQEb5BcqdjBZBQBMHXBg8FPxd_RARybU1",UserName="andreborgesleal@live.com",Password="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1690003973" Data="17/08/2016 16:23:13">
+    <Sessao>quoobj1lrownbxovhnlvqvrm</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",UnidadeViewModel.NomeCondomino="Antônio José Darwich Borges Leal",UnidadeViewModel.Email="zecadbleal@gmail.com",EdificacaoID="3",UnidadeID="1203",X-Requested-With="XMLHttpRequest"</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EnviarToken(UnidadeViewModel UnidadeViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 467</StackTrace>
+  </LOG>
+  <LOG ID="1815907852" Data="17/08/2016 16:26:45">
+    <Sessao>quoobj1lrownbxovhnlvqvrm</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",UnidadeViewModel.NomeCondomino="Antônio José Darwich Borges Leal",UnidadeViewModel.Email="zecadbleal@gmail.com",EdificacaoID="3",UnidadeID="1203"</Context>
+    <StackTrace>   em DWM.Controllers.CondominoController.EnviarToken(UnidadeViewModel UnidadeViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 467</StackTrace>
+  </LOG>
+  <LOG ID="1527823750" Data="17/08/2016 16:53:27">
+    <Sessao>k2ksgghoijycrlp0mmu5x4hh</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="teste",Email="",EdificacaoID="4",UnidadeID="301",btn-enviar-token="Enviar"</Context>
+    <StackTrace>   em DWM.Models.BI.GerarTokenBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\GerarTokenBI.cs:linha 130
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.CondominoController.EnviarToken(UnidadeViewModel UnidadeViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 465</StackTrace>
+  </LOG>
+  <LOG ID="679056273" Data="17/08/2016 16:56:41">
+    <Sessao>k2ksgghoijycrlp0mmu5x4hh</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="teste",Email="",EdificacaoID="3",UnidadeID="302",btn-enviar-token="Enviar"</Context>
+    <StackTrace>   em DWM.Models.BI.GerarTokenBI.Run(Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\GerarTokenBI.cs:linha 130
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.CondominoController.EnviarToken(UnidadeViewModel UnidadeViewModel) na C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 465</StackTrace>
+  </LOG>
+  <LOG ID="592064049" Data="17/08/2016 17:00:21">
+    <Sessao>uw5mdovoxp4i0ddpwlh0vflw</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor do campo obrigatório: E-mail</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="teste",Email="",EdificacaoID="3",UnidadeID="302",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="695498950" Data="17/08/2016 17:03:07">
+    <Sessao>uw5mdovoxp4i0ddpwlh0vflw</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor do campo obrigatório: E-mail</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="teste",Email="",EdificacaoID="4",UnidadeID="303",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1836751152" Data="17/08/2016 17:06:04">
+    <Sessao>dssatqxwjkfhlvpphhuhsivg</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor do campo obrigatório: Nome do Condômino</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="",Email="",EdificacaoID="3",UnidadeID="401",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1100302798" Data="17/08/2016 17:06:43">
+    <Sessao>dssatqxwjkfhlvpphhuhsivg</Sessao>
+    <IP>::1</IP>
+    <HostName>NONECO-N010\andre.leal</HostName>
+    <Mensagem>Valor do campo obrigatório: E-mail</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="Clarinha",Email="",EdificacaoID="4",UnidadeID="401",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1554461619" Data="17/08/2016 18:50:25">
+    <Sessao>cfnqq1ofxwugzt04rkebqnvs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-K3RDLHQ\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Nome do Condômino</Mensagem>
+    <NameSpace>DWM.Models.BI.GerarTokenBI =&gt; condomino/enviartoken</NameSpace>
+    <Context>CondominioID="3",NomeCondomino="",Email="",EdificacaoID="3",UnidadeID="401",btn-enviar-token="Enviar"</Context>
+    <StackTrace />
+  </LOG>
+</LOG>

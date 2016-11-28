@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1632667215" Data="22/11/2016 16:52:32">
+    <Sessao>11r0zazmutcvwbtt1qtiuwzr</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>O método 'DWM.Models.Entidades.EmailTipo Find(System.Object[])' declarado no tipo 'System.Data.Entity.DbSet`1[DWM.Models.Entidades.EmailTipo]' não pode ser chamado com uma instância do tipo 'System.Data.Entity.Core.Objects.ObjectQuery`1[DWM.Models.Entidades.EmailTipo]'</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewEmailLog =&gt; enviaremail/browse</NameSpace>
+    <Context />
+    <StackTrace>   em System.Linq.Expressions.Expression.ValidateCallInstanceType(Type instanceType, MethodInfo method)
+   em System.Linq.Expressions.Expression.ValidateStaticOrInstanceMethod(Expression instance, MethodInfo method)
+   em System.Linq.Expressions.Expression.Call(Expression instance, MethodInfo method, IEnumerable`1 arguments)
+   em System.Linq.Expressions.InstanceMethodCallExpressionN.Rewrite(Expression instance, IList`1 args)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMethodCall(MethodCallExpression node)
+   em System.Data.Entity.Internal.Linq.DbQueryVisitor.VisitMethodCall(MethodCallExpression node)
+   em System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMember(MemberExpression node)
+   em System.Data.Entity.Internal.Linq.DbQueryVisitor.VisitMember(MemberExpression node)
+   em System.Linq.Expressions.MemberExpression.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMemberAssignment(MemberAssignment node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMemberBinding(MemberBinding node)
+   em System.Linq.Expressions.ExpressionVisitor.Visit[T](ReadOnlyCollection`1 nodes, Func`2 elementVisitor)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMemberInit(MemberInitExpression node)
+   em System.Linq.Expressions.MemberInitExpression.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitLambda[T](Expression`1 node)
+   em System.Linq.Expressions.Expression`1.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitUnary(UnaryExpression node)
+   em System.Linq.Expressions.UnaryExpression.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Linq.Expressions.ExpressionVisitor.VisitArguments(IArgumentProvider nodes)
+   em System.Linq.Expressions.ExpressionVisitor.VisitMethodCall(MethodCallExpression node)
+   em System.Data.Entity.Internal.Linq.DbQueryVisitor.VisitMethodCall(MethodCallExpression node)
+   em System.Linq.Expressions.MethodCallExpression.Accept(ExpressionVisitor visitor)
+   em System.Linq.Expressions.ExpressionVisitor.Visit(Expression node)
+   em System.Data.Entity.Internal.Linq.DbQueryProvider.CreateObjectQuery(Expression expression)
+   em System.Data.Entity.Internal.Linq.DbQueryProvider.CreateQuery[TElement](Expression expression)
+   em System.Linq.Queryable.Select[TSource,TResult](IQueryable`1 source, Expression`1 selector)
+   em DWM.Models.Persistence.ListViewEmailLog.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\EmailLogModel.cs:linha 185
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+</LOG>

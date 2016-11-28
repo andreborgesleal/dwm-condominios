@@ -14,7 +14,7 @@
     <div class="x_content">
         @using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form0" }))
         {
-            @Html.Partial("_alerts")
+            @*@Html.Partial("_alerts")*@
             @Html.ValidationSummary("", new { @class = "text-danger" })
             @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
             <div class="row">

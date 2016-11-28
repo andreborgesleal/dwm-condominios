@@ -267,10 +267,10 @@ namespace DWM.Models.Persistence
                     join edi in db.Edificacaos on info.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
                     where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
-                            && info.CondominioID == SessaoLocal.empresaId
+                            && info.CondominioID == sessaoCorrente.empresaId
                             && (IsHome == "N" || info.DataExpiracao >= SqlFunctions.GetDate())
-                            && (GrupoCondominoID == "" || GrupoCondominoID.Contains(info.GrupoCondominoID.ToString()))
-                            && (EdificacaoID == "" || EdificacaoID.Contains(info.EdificacaoID.ToString()))
+                            && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info.GrupoCondominoID)))
+                            && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info.EdificacaoID)))
                     orderby info.DataPublicacao descending
                     select new InformativoViewModel
                     {
@@ -287,17 +287,37 @@ namespace DWM.Models.Persistence
                         Cabecalho = info.Cabecalho,
                         Resumo = info.Resumo,
                         MensagemDetalhada = info.MensagemDetalhada,
-                        Midia1 = info.Midia1,
-                        Midia2 = info.Midia2,
                         InformativoAnuncio = info.InformativoAnuncio,
+                        //Comentarios = (from com in db.InformativoComentarios
+                        //               join con in db.Condominos on com.CondominoID equals con.CondominoID
+                        //               join cu in db.CondominoUnidades on new { con.CondominioID, con.CondominoID } equals new { cu.CondominioID, cu.CondominoID }
+                        //               join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                        //               where com.InformativoID == info.InformativoID &&
+                        //                     cu.DataFim == null
+                        //               select new InformativoComentarioViewModel()
+                        //               {
+                        //                   InformativoID = info.InformativoID,
+                        //                   DataComentario = com.DataComentario,
+                        //                   CondominoID = com.CondominoID,
+                        //                   Nome = con.Nome,
+                        //                   EdificacaoID = ed.EdificacaoID,
+                        //                   DescricaoEdificacao = ed.Descricao,
+                        //                   UnidadeID = cu.UnidadeID,
+                        //                   Descricao = com.Descricao,
+                        //                   DataDesativacao = com.DataDesativacao,
+                        //                   Motivo = com.Motivo
+                        //               }).ToList(),
                         PageSize = pageSize,
                         TotalCount = (from info1 in db.Informativos
                                       join gru1 in db.GrupoCondominos on info1.GrupoCondominoID equals gru1.GrupoCondominoID into GRU1
                                       from gru1 in GRU1.DefaultIfEmpty()
                                       join edi1 in db.Edificacaos on info1.EdificacaoID equals edi1.EdificacaoID into EDI1
-                                      from edi1 in EDI.DefaultIfEmpty()
+                                      from edi1 in EDI1.DefaultIfEmpty()
                                       where info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2
                                               && info1.CondominioID == sessaoCorrente.empresaId
+                                              && (IsHome == "N" || info1.DataExpiracao >= SqlFunctions.GetDate())
+                                              && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info1.GrupoCondominoID)))
+                                              && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info1.EdificacaoID)))
                                       orderby info1.DataPublicacao descending
                                       select info1).Count()
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
