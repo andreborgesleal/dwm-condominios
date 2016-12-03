@@ -20,6 +20,14 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe CrudContext
+        public override InformativoComentarioViewModel BeforeInsert(InformativoComentarioViewModel value)
+        {
+            if (value.CondominoID == 0)
+                value.CondominoID = SessaoLocal.CondominoID;
+
+            return value;
+        }
+
         public override InformativoComentario MapToEntity(InformativoComentarioViewModel value)
         {
             InformativoComentario entity = Find(value);

@@ -28,18 +28,18 @@ namespace DWM.Models.Repositories
 
         public DateTime DataInformativo { get; set; }
 
-        public string _DataInformativo { get; set; }
+        //public string _DataInformativo { get; set; }
 
         [DisplayName("Publicação")]
         [Required(ErrorMessage = "Informe a data de publicação do informativo")]
         public DateTime DataPublicacao { get; set; }
 
-        public string _DataPublicacao { get; set; }
+        //public string _DataPublicacao { get; set; }
 
         [DisplayName("Expiracao")]
         public System.Nullable<DateTime> DataExpiracao { get; set; }
 
-        public string _DataExpiracao { get; set; }
+        //public string _DataExpiracao { get; set; }
 
         [DisplayName("Cabeçalho")]
         [Required(ErrorMessage = "Informe o Cabeçalho")]
@@ -63,14 +63,14 @@ namespace DWM.Models.Repositories
 
         public string EmailMensagem { get; set; }
 
-        public string PathArquivos
-        {
-            get
-            {
-                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Informativos/";
-            }
-        }
+        //public string PathArquivos
+        //{
+        //    get
+        //    {
+        //        EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+        //        return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Informativos/";
+        //    }
+        //}
 
         public IEnumerable<InformativoComentarioViewModel> Comentarios { get; set; }
     }
