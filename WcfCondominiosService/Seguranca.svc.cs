@@ -46,12 +46,13 @@ namespace WcfCondominiosService
             }
             catch (ArgumentException ex)
             {
-                int length = ex.Message.IndexOf("\r\n");
-                result.Code = int.Parse(ex.ParamName ?? "0");
-                if (length >= 0)
-                    result.Mensagem = ex.Message.Substring(0, length);
-                else
-                    result.Mensagem = ex.Message;
+                //int length = ex.Message.IndexOf("\r\n");
+                result.Code = 202;
+                result.Mensagem = ex.ParamName;
+                //if (length >= 0)
+                //    result.Mensagem = ex.Message.Substring(0, length);
+                //else
+                //    result.Mensagem = ex.Message;
                 result.Token = "-1";
             }
             catch (Exception ex)
