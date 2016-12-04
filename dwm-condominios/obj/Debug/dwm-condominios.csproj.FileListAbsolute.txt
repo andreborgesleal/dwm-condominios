@@ -301,3 +301,10 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Prim
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache

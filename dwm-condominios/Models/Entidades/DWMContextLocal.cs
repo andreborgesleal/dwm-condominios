@@ -17,5 +17,12 @@ namespace DWM.Models.Entidades
             base.Create(_db, _seguranca_db);
             SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
         }
+
+        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db, string Token)
+        {
+            base.Create(_db, _seguranca_db, Token);
+            SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
+        }
+
     }
 }

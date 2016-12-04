@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dwm-condominios", "dwm-cond
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "App_Dominio", "..\app_dominio\App_Dominio\App_Dominio\App_Dominio.csproj", "{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WcfCondominiosService", "WcfCondominiosService\WcfCondominiosService.csproj", "{744A85F5-D192-4CAE-A9FC-53CF0F15AFCB}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FFAF7B0-E293-489C-80DE-0C0AC24CF8E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{744A85F5-D192-4CAE-A9FC-53CF0F15AFCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{744A85F5-D192-4CAE-A9FC-53CF0F15AFCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{744A85F5-D192-4CAE-A9FC-53CF0F15AFCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{744A85F5-D192-4CAE-A9FC-53CF0F15AFCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

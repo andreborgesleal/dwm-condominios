@@ -288,25 +288,25 @@ namespace DWM.Models.Persistence
                         Resumo = info.Resumo,
                         MensagemDetalhada = info.MensagemDetalhada,
                         InformativoAnuncio = info.InformativoAnuncio,
-                        //Comentarios = (from com in db.InformativoComentarios
-                        //               join con in db.Condominos on com.CondominoID equals con.CondominoID
-                        //               join cu in db.CondominoUnidades on new { con.CondominioID, con.CondominoID } equals new { cu.CondominioID, cu.CondominoID }
-                        //               join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
-                        //               where com.InformativoID == info.InformativoID &&
-                        //                     cu.DataFim == null
-                        //               select new InformativoComentarioViewModel()
-                        //               {
-                        //                   InformativoID = info.InformativoID,
-                        //                   DataComentario = com.DataComentario,
-                        //                   CondominoID = com.CondominoID,
-                        //                   Nome = con.Nome,
-                        //                   EdificacaoID = ed.EdificacaoID,
-                        //                   DescricaoEdificacao = ed.Descricao,
-                        //                   UnidadeID = cu.UnidadeID,
-                        //                   Descricao = com.Descricao,
-                        //                   DataDesativacao = com.DataDesativacao,
-                        //                   Motivo = com.Motivo
-                        //               }).ToList(),
+                        Comentarios = (from com in db.InformativoComentarios
+                                       join con in db.Condominos on com.CondominoID equals con.CondominoID
+                                       join cu in db.CondominoUnidades on new { con.CondominioID, con.CondominoID } equals new { cu.CondominioID, cu.CondominoID }
+                                       join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                                       where com.InformativoID == info.InformativoID &&
+                                             cu.DataFim == null
+                                       select new InformativoComentarioViewModel()
+                                       {
+                                           InformativoID = info.InformativoID,
+                                           DataComentario = com.DataComentario,
+                                           CondominoID = com.CondominoID,
+                                           Nome = con.Nome,
+                                           EdificacaoID = ed.EdificacaoID,
+                                           DescricaoEdificacao = ed.Descricao,
+                                           UnidadeID = cu.UnidadeID,
+                                           Descricao = com.Descricao,
+                                           DataDesativacao = com.DataDesativacao,
+                                           Motivo = com.Motivo
+                                       }).ToList(),
                         PageSize = pageSize,
                         TotalCount = (from info1 in db.Informativos
                                       join gru1 in db.GrupoCondominos on info1.GrupoCondominoID equals gru1.GrupoCondominoID into GRU1

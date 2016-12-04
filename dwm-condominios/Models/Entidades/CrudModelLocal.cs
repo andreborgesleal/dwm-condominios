@@ -1,4 +1,5 @@
 ﻿using App_Dominio.Component;
+using App_Dominio.Contratos;
 using App_Dominio.Entidades;
 using DWM.Models.Entidades;
 using System;
@@ -9,7 +10,7 @@ using System.Web;
 
 namespace DWM.Models.Entidades
 {
-    public abstract class CrudModelLocal<E, R> : CrudModel<E, R, ApplicationContext>
+    public abstract class CrudModelLocal<E, R> : CrudModel<E, R, ApplicationContext>, ICrudModelLocal<R, ApplicationContext>
         where E : class
         where R : Repository
     {
@@ -20,5 +21,17 @@ namespace DWM.Models.Entidades
             base.Create(_db, _seguranca_db);
             SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
         }
+
+        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db, string Token)
+        {
+            base.Create(_db, _seguranca_db, Token);
+            SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
+        }
+
+        public void Open(ApplicationContext _db, SecurityContext _seguranca_db, string Token)
+        {
+            Create(_db, _seguranca_db, Token);
+        }
+
     }
 }
