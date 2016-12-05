@@ -26,5 +26,11 @@ namespace DWM.Models.Entidades
         public DbSet<FilaAtendimento> FilaAtendimentos { get; set; }
         public DbSet<FilaAtendimentoUsuario> FilaAtendimentoUsuarios { get; set; }
         public DbSet<InformativoComentario> InformativoComentarios { get; set; }
+        public DbSet<Chamado> Chamados { get; set; }
+        public DbSet<ChamadoMotivo> ChamadoMotivos { get; set; }
+        public DbSet<ChamadoStatus> ChamadoStatuss { get; set; }
+        public DbSet<ChamadoFila> ChamadoFilas { get; set; }
+        public DbSet<ChamadoAnexo> ChamadoAnexos { get; set; }
+        public DbSet<ChamadoAnotacao> ChamadoAnotacaos { get; set; }
     }
 }
