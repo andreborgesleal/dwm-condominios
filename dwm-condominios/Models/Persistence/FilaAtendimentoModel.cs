@@ -64,6 +64,15 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             };
 
+            if (operation != Crud.INCLUIR && db.FilaAtendimentos.Find(value.FilaAtendimentoID).Descricao.ToLower() == "condôminos")
+            {
+                value.mensagem.Code = 59;
+                value.mensagem.Message = MensagemPadrao.Message(59).ToString();
+                value.mensagem.MessageBase = "Registro não pode ser alterado e nem excluído porque é utilizado internamente pelo sistema";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
             if (operation != Crud.EXCLUIR)
             {
                 if (value.CondominioID == 0)
@@ -92,6 +101,7 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
 
                 if (value.VisibilidadeCondomino == null || value.VisibilidadeCondomino.Trim().Length <= 0)
                 {

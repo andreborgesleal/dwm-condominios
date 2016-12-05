@@ -68,5 +68,10 @@ namespace DWM.Models.Entidades
 
             return SessaoLocal;
         }
+
+        public static int FilaCondominoID(Sessao sessaoCorrente, ApplicationContext db)
+        {
+            return db.FilaAtendimentos.Where(info => info.CondominioID == sessaoCorrente.empresaId && info.Descricao.ToLower() == "condôminos").FirstOrDefault().FilaAtendimentoID;
+        }
     }
 }

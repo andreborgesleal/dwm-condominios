@@ -248,6 +248,12 @@
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
+    <Compile Include="Models\Entidades\Chamado.cs" />
+    <Compile Include="Models\Entidades\ChamadoAnexo.cs" />
+    <Compile Include="Models\Entidades\ChamadoAnotacao.cs" />
+    <Compile Include="Models\Entidades\ChamadoFila.cs" />
+    <Compile Include="Models\Entidades\ChamadoMotivo.cs" />
+    <Compile Include="Models\Entidades\ChamadoStatus.cs" />
     <Compile Include="Models\Entidades\Cidade.cs" />
     <Compile Include="Models\Entidades\InformativoComentario.cs" />
     <Compile Include="Models\Entidades\Condominio.cs" />
@@ -288,6 +294,12 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pattern\FacadeLocalhost.cs" />
     <Compile Include="Models\Pattern\FactoryLocalhost.cs" />
+    <Compile Include="Models\Persistence\ChamadoAnexoModel.cs" />
+    <Compile Include="Models\Persistence\ChamadoAnotacaoModel.cs" />
+    <Compile Include="Models\Persistence\ChamadoFilaModel.cs" />
+    <Compile Include="Models\Persistence\ChamadoModel.cs" />
+    <Compile Include="Models\Persistence\ChamadoMotivoModel.cs" />
+    <Compile Include="Models\Persistence\ChamadoStatusModel.cs" />
     <Compile Include="Models\Persistence\CondominoModel.cs" />
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
@@ -303,6 +315,12 @@
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoAnexoViewModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoAnotacaoViewModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoFilaViewModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoMotivoViewModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoStatusViewModel.cs" />
+    <Compile Include="Models\Repositories\ChamadoViewModel.cs" />
     <Compile Include="Models\Repositories\CidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominioViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoEditViewModel.cs" />
@@ -4075,6 +4093,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
+    <Folder Include="Users_Data\Empresas\3\Chamados\" />
     <Folder Include="Users_Data\Empresas\3\Documentos\" />
     <Folder Include="Users_Data\Empresas\3\Informativos\" />
   </ItemGroup>

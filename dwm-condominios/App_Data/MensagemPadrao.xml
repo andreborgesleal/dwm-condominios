@@ -53,6 +53,7 @@
   <Context key="56" value="Registro não pode ser alterado ou excluído pois pertence a um lote já fechado." type="Error"></Context>
   <Context key="57" value="A unidade informada está ocupada por outro condômino." type="Error"></Context>
   <Context key="58" value="Código de ativação inválido." type="Error"></Context>
+  <Context key="59" value="Este registro não pode ser excluído nem alterado porque é de uso interno do sistema." type="Error"></Context>
   <Context key="200" value="Sessão não pode ser atualizada porque não existe ou já foi encerrada" type="Error"></Context>
   <Context key="201" value="Acesso não autorizado. A sessão já está em uso. Favor tentar novamente mais tarde." type="Error"></Context>
   <Context key="202" value="Acesso negado. Suas credenciais não estão autorizadas para executar essa operação." type="Error"></Context>
