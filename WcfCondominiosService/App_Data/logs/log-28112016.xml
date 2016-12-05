@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1100500443" Data="28/11/2016 14:06:28">
+    <Sessao>xspunge2li15um5pna0oecor</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>An error occurred while getting provider information from the database. This can be caused by Entity Framework using an incorrect connection string. Check the inner exceptions for details and ensure that the connection string is correct.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; seguranca.svc/autenticar/andreborgesleal@live.com/evergladesparc2/motorola</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="392989123" Data="28/11/2016 14:07:36">
+    <Sessao>xspunge2li15um5pna0oecor</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>An error occurred while getting provider information from the database. This can be caused by Entity Framework using an incorrect connection string. Check the inner exceptions for details and ensure that the connection string is correct.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; seguranca.svc/autenticar/andreborgesleal@live.com/evergladesparc2/motorola</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="2127368801" Data="28/11/2016 14:08:19">
+    <Sessao>xspunge2li15um5pna0oecor</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>An error occurred while getting provider information from the database. This can be caused by Entity Framework using an incorrect connection string. Check the inner exceptions for details and ensure that the connection string is correct.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; seguranca.svc/autenticar/andreborgesleal@live.com/evergladesparc2/motorola</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="476565092" Data="28/11/2016 14:10:59">
+    <Sessao>xspunge2li15um5pna0oecor</Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>An error occurred while getting provider information from the database. This can be caused by Entity Framework using an incorrect connection string. Check the inner exceptions for details and ensure that the connection string is correct.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; seguranca.svc/autenticar/andreborgesleal@live.com/evergladesparc2/motorola</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>
