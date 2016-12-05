@@ -10,6 +10,7 @@ using DWM.Models.Persistence;
 using DWM.Models.API;
 using DWM.Models.Pattern;
 using App_Dominio.Security;
+using System.Web.Http.Cors;
 
 namespace DWM.Controllers.API
 {

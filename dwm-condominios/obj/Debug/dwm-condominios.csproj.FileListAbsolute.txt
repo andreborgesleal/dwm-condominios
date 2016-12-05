@@ -308,3 +308,12 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.xml
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.xml
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.xml
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Cors.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.dll
+C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.xml
