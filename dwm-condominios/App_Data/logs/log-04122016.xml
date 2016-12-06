@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="104472932" Data="04/12/2016 10:10:59">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Não há suporte para a palavra-chave: 'data sourceinspiron15r;initial catalog'.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1364962259" Data="04/12/2016 17:52:42">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1910567500" Data="04/12/2016 17:53:58">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="871711334" Data="04/12/2016 17:54:30">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1201107787" Data="04/12/2016 17:55:17">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="2044394288" Data="04/12/2016 17:55:28">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="2107943212" Data="04/12/2016 17:59:26">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1602379052" Data="04/12/2016 18:02:06">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1157598666" Data="04/12/2016 18:02:14">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Referência de cadeia de caracteres não foi definida como uma instância de cadeia de caracteres.
+Nome do parâmetro: s</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>
