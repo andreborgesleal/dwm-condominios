@@ -34,6 +34,19 @@ namespace DWM.Models.Persistence
             value.ChamadoFilaViewModel = ChamadoFilaModel.BeforeInsert(value.ChamadoFilaViewModel);
             #endregion
 
+            #region Executa o método BeforeInsert do ChamadoAnexo para cada elemento da coleção
+            ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+            ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+            int index = 0;
+            while (index <= value.Anexos.Count()-1)
+            {
+                ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.BeforeInsert(value.Anexos.ElementAt(index));
+                value.Anexos.ElementAt(index).UsuarioID = ChamadoAnexoViewModel.UsuarioID;
+                value.Anexos.ElementAt(index).Nome = ChamadoAnexoViewModel.Nome;
+                value.Anexos.ElementAt(index).Login = ChamadoAnexoViewModel.Login;
+                index++;
+            }
+            #endregion
             return value;
         }
 
@@ -71,6 +84,15 @@ namespace DWM.Models.Persistence
             ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
             entity.ChamadoFila = ChamadoFilaModel.MapToEntity(value.ChamadoFilaViewModel);
 
+            // Mapear anexos
+            ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+            ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+            entity.Anexos = new List<ChamadoAnexo>();
+            foreach (ChamadoAnexoViewModel cha in value.Anexos)
+            {
+                ChamadoAnexo ChamadoAnexo = ChamadoAnexoModel.MapToEntity(cha);
+                entity.Anexos.Add(ChamadoAnexo);
+            };
             return entity;
         }
 
@@ -256,6 +278,16 @@ namespace DWM.Models.Persistence
             ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
             ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
             value.mensagem = ChamadoFilaModel.Validate(value.ChamadoFilaViewModel, Crud.INCLUIR);
+
+            // Validar Anexos
+            ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+            ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+            foreach (ChamadoAnexoViewModel cha in value.Anexos)
+            {
+                value.mensagem = ChamadoAnexoModel.Validate(cha, Crud.INCLUIR);
+                if (value.mensagem.Code > 0)
+                    break;
+            };
 
             return value.mensagem;
         }
