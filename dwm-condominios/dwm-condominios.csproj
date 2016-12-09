@@ -227,6 +227,7 @@
     <Compile Include="Controllers\API\DwmApiController.cs" />
     <Compile Include="Controllers\API\InformativosAPIController.cs" />
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
+    <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
     <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\EnviarEmailController.cs" />
@@ -4098,6 +4099,8 @@
     <Content Include="Views\FilaAtendimento\_EditUser.cshtml" />
     <Content Include="Views\Condomino\Append.cshtml" />
     <Content Include="Views\Condomino\Desativar.cshtml" />
+    <Content Include="Views\Chamado\List.cshtml" />
+    <Content Include="Views\Chamado\Browse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

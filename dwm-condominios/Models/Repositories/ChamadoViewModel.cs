@@ -26,6 +26,8 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Fila solicitante do chamado deve ser informada")]
         public int FilaSolicitanteID { get; set; }
 
+        public string DescricaoFilaSolicitante { get; set; }
+
         [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
 
@@ -76,6 +78,9 @@ namespace DWM.Models.Repositories
         [DisplayName("Fila de Atendimento")]
         public System.Nullable<int> FilaAtendimentoID { get; set; }
 
+        public string DescricaoFilaAtendimento { get; set; }
+        public int FilaCondominoID { get; set; }
+
         [DisplayName("Data do Redirecionamento")]
         public System.DateTime DataRedirecionamento { get; set; }
 
@@ -87,6 +92,8 @@ namespace DWM.Models.Repositories
 
         [DisplayName("LoginUsuarioFila")]
         public string LoginUsuarioFila { get; set; }
+
+        public IEnumerable<ChamadoAnotacaoViewModel> Anotacoes{ get; set; }
 
         public virtual ChamadoFilaViewModel ChamadoFilaViewModel { get; set; }
         public IEnumerable<ChamadoFilaViewModel> Rotas { get; set; }

@@ -42,6 +42,7 @@ namespace DWM.Models.Persistence
                 CondominioID = entity.CondominioID,
                 Descricao = entity.Descricao,
                 VisibilidadeCondomino = entity.VisibilidadeCondomino,
+                FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db),
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
         }
@@ -64,11 +65,11 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             };
 
-            if (operation != Crud.INCLUIR && db.FilaAtendimentos.Find(value.FilaAtendimentoID).Descricao.ToLower() == "condôminos")
+            if (operation == Crud.INCLUIR && value.Descricao.ToLower() == "condôminos")
             {
-                value.mensagem.Code = 59;
+                value.mensagem.Code = 37;
                 value.mensagem.Message = MensagemPadrao.Message(59).ToString();
-                value.mensagem.MessageBase = "Registro não pode ser alterado e nem excluído porque é utilizado internamente pelo sistema";
+                value.mensagem.MessageBase = "Registro não pode ser incluído. Esta descrição é um nome reservado internamente pelo sistema";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
@@ -141,6 +142,7 @@ namespace DWM.Models.Persistence
         public override IEnumerable<FilaAtendimentoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
             string _descricao = param != null && param.Count() > 0 && param[0] != null ? (string)param[0] : null;
+            int _FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db);
 
             return (from fil in db.FilaAtendimentos
                     where fil.CondominioID == SessaoLocal.empresaId
@@ -153,6 +155,7 @@ namespace DWM.Models.Persistence
                         CondominioID = fil.CondominioID,
                         Descricao = fil.Descricao,
                         VisibilidadeCondomino = fil.VisibilidadeCondomino,
+                        FilaCondominoID = _FilaCondominoID,
                         PageSize = pageSize,
                         TotalCount = ((from fil1 in db.FilaAtendimentos
                                        where fil1.CondominioID == SessaoLocal.empresaId

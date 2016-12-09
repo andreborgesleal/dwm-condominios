@@ -16,7 +16,8 @@ namespace DWM.Models.Enumeracoes
             EMPRESA = 4,
             HABILITA_EMAIL = 5,
             GRUPO_CREDENCIADO = 6,
-            URL_CONDOMINIO = 7
+            URL_CONDOMINIO = 7,
+            EMAIL_TEMPLATE_CHAMADO = 8
         }
 
         public enum EmailTipo
