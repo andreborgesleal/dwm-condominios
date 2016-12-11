@@ -385,4 +385,18 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
+    public class ListViewCondominoUnidadeChamado : ListViewCondominoUnidade
+    {
+        public ListViewCondominoUnidadeChamado() { }
+        public ListViewCondominoUnidadeChamado(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #region Métodos da classe ListViewRepository
+        public override string action()
+        {
+            return "../Condomino/ListCondomino";
+        }
+        #endregion
+    }
 }

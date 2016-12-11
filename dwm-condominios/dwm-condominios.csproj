@@ -4101,6 +4101,9 @@
     <Content Include="Views\Condomino\Desativar.cshtml" />
     <Content Include="Views\Chamado\List.cshtml" />
     <Content Include="Views\Chamado\Browse.cshtml" />
+    <Content Include="Views\Chamado\Create.cshtml" />
+    <Content Include="Views\Condomino\ListCondomino.cshtml" />
+    <Content Include="Views\Condomino\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

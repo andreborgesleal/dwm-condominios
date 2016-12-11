@@ -64,6 +64,18 @@ namespace DWM.Models.Entidades
                                         where con.CondominoID == SessaoLocal.CondominoID
                                         select uni).ToList();
             }
+            else 
+            {
+                #region É Fornecedor
+                SessaoLocal.FilaFornecedorID = (from f in db.FilaAtendimentos
+                                                join u in db.FilaAtendimentoUsuarios on f.FilaAtendimentoID equals u.FilaAtendimentoID
+                                                where f.CondominioID == SessaoLocal.empresaId &&
+                                                      u.UsuarioID == SessaoLocal.usuarioId &&
+                                                      u.Situacao == "A" &&
+                                                      f.IsFornecedor == "S"
+                                                select f.FilaAtendimentoID).FirstOrDefault();
+                #endregion
+            }
             #endregion
 
             return SessaoLocal;
@@ -73,5 +85,7 @@ namespace DWM.Models.Entidades
         {
             return db.FilaAtendimentos.Where(info => info.CondominioID == sessaoCorrente.empresaId && info.Descricao.ToLower() == "condôminos").FirstOrDefault().FilaAtendimentoID;
         }
+
+
     }
 }

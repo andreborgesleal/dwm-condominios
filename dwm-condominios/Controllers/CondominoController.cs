@@ -51,6 +51,32 @@ namespace DWM.Controllers
                 return View();
         }
 
+        /// <summary>
+        /// Este método é acionado pelo funcionalidade CHAMADO
+        /// </summary>
+        /// <param name="index"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="EdificacaoID"></param>
+        /// <param name="UnidadeID"></param>
+        /// <param name="Nome"></param>
+        /// <returns></returns>
+        public ActionResult ListCondomino(int? index, int? pageSize = 25, string EdificacaoID = null, string UnidadeID = null, string Nome = null)
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                int _EdificacaoID = EdificacaoID == null || EdificacaoID == "" ? 0 : int.Parse(EdificacaoID);
+                int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
+
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                ViewBag.empresaId = security.getSessaoCorrente().empresaId;
+
+                ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado();
+                return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+            }
+            else
+                return View();
+        }
         #endregion
 
         #endregion

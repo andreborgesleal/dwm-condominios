@@ -296,5 +296,151 @@ namespace DWM.Models.Enumeracoes
                 }
             }
         }
+
+        public IEnumerable<SelectListItem> ChamadoMotivos(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            int _CondominioID = security.getSessaoCorrente().empresaId;
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from m in db.ChamadoMotivos.AsEnumerable()
+                            where m.CondominioID == _CondominioID
+                            orderby m.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = m.ChamadoMotivoID.ToString(),
+                                Text = m.Descricao,
+                                Selected = (selectedValue != "" ? m.ChamadoMotivoID.ToString() == selectedValue : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> Filas(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            IList<SelectListItem> q = new List<SelectListItem>();
+
+            if (cabecalho != "")
+                q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                    Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
+                    SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, db);
+                    if (SessaoLocal.CondominoID > 0) // usuário logado é um condômino
+                    {
+                        q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                    where f.CondominioID == SessaoLocal.empresaId &&
+                                            f.VisibilidadeCondomino == "S" &&
+                                            f.IsFornecedor != "S"
+                                    orderby f.Descricao
+                                    select new SelectListItem()
+                                    {
+                                        Value = f.FilaAtendimentoID.ToString(),
+                                        Text = f.Descricao,
+                                        Selected = (selectedValue != "" ? f.FilaAtendimentoID.ToString() == selectedValue : false)
+                                    }).ToList();
+                    }
+                    else if (SessaoLocal.FilaFornecedorID.HasValue && SessaoLocal.FilaFornecedorID.Value > 0) // É um fornecedor
+                    {
+                        int FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db);
+                        q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                    where f.CondominioID == SessaoLocal.empresaId &&
+                                            f.IsFornecedor == "N" &&
+                                            f.FilaAtendimentoID != FilaCondominoID
+                                    orderby f.Descricao
+                                    select new SelectListItem()
+                                    {
+                                        Value = f.FilaAtendimentoID.ToString(),
+                                        Text = f.Descricao,
+                                        Selected = (selectedValue != "" ? f.FilaAtendimentoID.ToString() == selectedValue : false)
+                                    }).ToList();
+                    }
+                    else
+                    {
+                        q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                    where f.CondominioID == SessaoLocal.empresaId 
+                                    orderby f.Descricao
+                                    select new SelectListItem()
+                                    {
+                                        Value = f.FilaAtendimentoID.ToString(),
+                                        Text = f.Descricao,
+                                        Selected = (selectedValue != "" ? f.FilaAtendimentoID.ToString() == selectedValue : false)
+                                    }).ToList();
+                    }
+                }
+            }
+
+            return q;
+        }
+
+        public IEnumerable<SelectListItem> FilaSolicitante(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            IList<SelectListItem> q = new List<SelectListItem>();
+
+            if (cabecalho != "")
+                q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                    Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
+                    SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, db);
+                    if (SessaoLocal.CondominoID > 0) // usuário logado é um condômino
+                    {
+                        q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                    where f.CondominioID == SessaoLocal.empresaId &&
+                                            f.Descricao == "Condôminos"
+                                    orderby f.Descricao
+                                    select new SelectListItem()
+                                    {
+                                        Value = f.FilaAtendimentoID.ToString(),
+                                        Text = f.Descricao,
+                                        Selected = (selectedValue != "" ? f.FilaAtendimentoID.ToString() == selectedValue : false)
+                                    }).ToList();
+                    }
+                    else
+                        q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                    join u in db.FilaAtendimentoUsuarios.AsEnumerable() on f.FilaAtendimentoID equals u.FilaAtendimentoID
+                                    where f.CondominioID == SessaoLocal.empresaId &&
+                                            u.UsuarioID == SessaoLocal.usuarioId &&
+                                            u.Situacao == "A"
+                                    orderby f.Descricao
+                                    select new SelectListItem()
+                                    {
+                                        Value = f.FilaAtendimentoID.ToString(),
+                                        Text = f.Descricao,
+                                        Selected = (selectedValue != "" ? f.FilaAtendimentoID.ToString() == selectedValue : false)
+                                    }).ToList();
+                }
+            }
+
+            return q;
+        }
     }
 }

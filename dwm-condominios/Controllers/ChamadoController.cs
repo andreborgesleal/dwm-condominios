@@ -40,7 +40,19 @@ namespace DWM.Controllers
         #endregion
         #endregion
 
+        #region Retorno as Unidades de uma dada Edificação
+        [AllowAnonymous]
+        public JsonResult GetNames(string term, int tag)
+        {
+            var results = new BindDropDownList().Unidades("Selecione...", "", term, tag);
 
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
 
+        }
+        #endregion
     }
 }

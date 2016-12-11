@@ -1,0 +1,73 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
+@model PagedList<CondominoUnidadeViewModel>
+@{
+    Layout = null;
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Chamado/Browse";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Condômino", Descricao = "", Transacao = t })
+    <div class="x_content">
+        @using (Ajax.BeginForm("ListCondomino", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-condomino-pf" }, new { @role = "search", @id = "form0" }))
+            {
+            @*@Html.Partial("_alerts")*@
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
+            <div class="row">
+                <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Nome</label>
+                        <div class="input-group col-md-12">
+                            <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar nome ou cpf ou e-mail" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Torre</label>
+                        @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                    </div>
+                </div>
+                <div class="col-md-3 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Unidade</label>
+                        @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+                <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, 15, '@Model.action', '@Model.DivId')" />
+                <br />
+        }
+        <div id="div-condomino-pf">
+            @if (Model != null)
+            {
+                @Html.Partial("../Condomino/ListCondomino", Model)
+            }
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#form0').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-condomino-pf').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+

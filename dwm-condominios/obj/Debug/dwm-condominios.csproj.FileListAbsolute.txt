@@ -260,7 +260,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.S
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
-C:\sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.WebForms.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\SendGridMail.dll
@@ -307,7 +306,6 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.xml
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.xml
-C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.dll
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.dll
@@ -320,3 +318,5 @@ C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condomini
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Cors.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache

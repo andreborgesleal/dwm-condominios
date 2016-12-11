@@ -13,6 +13,7 @@ using App_Dominio.Models;
 using App_Dominio.Repositories;
 using System.Data.Entity.Infrastructure;
 using DWM.Models.BI;
+using System.Web.Mvc;
 
 namespace DWM.Models.Persistence
 {
@@ -429,8 +430,24 @@ namespace DWM.Models.Persistence
         public override ChamadoViewModel CreateRepository(HttpRequestBase Request = null)
         {
             ChamadoViewModel value = base.CreateRepository(Request);
-            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            value.CondominioID = security.getSessaoCorrente().empresaId;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    EmpresaSecurity <SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                    security.Create(seguranca_db);
+                    Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
+                    SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, db);
+                    value.CondominioID = sessaoCorrente.empresaId;
+                    if (SessaoLocal.CondominoID > 0)
+                        value.CondominoID = SessaoLocal.CondominoID;
+                    value.UsuarioID = SessaoLocal.usuarioId;
+
+                    ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado(db, seguranca_db);
+                    value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, 0, 0, "");
+                }
+            }
+
             return value;
         }
         #endregion

@@ -12,5 +12,6 @@ namespace DWM.Models.Entidades
         public int? CredenciadoID { get; set; }
         public int[] GrupoCondominoID { get; set; }
         public IEnumerable<Unidade> Unidades { get; set; }
+        public int? FilaFornecedorID { get; set; }
     }
 }

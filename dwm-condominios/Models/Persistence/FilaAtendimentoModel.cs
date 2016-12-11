@@ -30,6 +30,7 @@ namespace DWM.Models.Persistence
             entity.CondominioID = value.CondominioID;
             entity.Descricao = value.Descricao;
             entity.VisibilidadeCondomino = value.VisibilidadeCondomino;
+            entity.IsFornecedor = value.IsFornecedor;
 
             return entity;
         }
@@ -42,6 +43,7 @@ namespace DWM.Models.Persistence
                 CondominioID = entity.CondominioID,
                 Descricao = entity.Descricao,
                 VisibilidadeCondomino = entity.VisibilidadeCondomino,
+                IsFornecedor = entity.IsFornecedor,
                 FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db),
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
@@ -112,6 +114,16 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                if (value.IsFornecedor == null || value.IsFornecedor.Trim().Length <= 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "É Fornecedor").ToString();
+                    value.mensagem.MessageBase = "Campo É Fornecedor deve ser informado.";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
             }
             return value.mensagem;
         }
@@ -156,6 +168,7 @@ namespace DWM.Models.Persistence
                         Descricao = fil.Descricao,
                         VisibilidadeCondomino = fil.VisibilidadeCondomino,
                         FilaCondominoID = _FilaCondominoID,
+                        IsFornecedor = fil.IsFornecedor,
                         PageSize = pageSize,
                         TotalCount = ((from fil1 in db.FilaAtendimentos
                                        where fil1.CondominioID == SessaoLocal.empresaId

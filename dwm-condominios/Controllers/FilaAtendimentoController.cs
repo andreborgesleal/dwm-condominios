@@ -45,6 +45,7 @@ namespace DWM.Controllers
         {
             base.BeforeCreate(ref value, collection);
             value.VisibilidadeCondomino = collection["VisibilidadeCondomino"] == "on" ? "S" : "N";
+            value.IsFornecedor = collection["IsFornecedor"] == "on" ? "S" : "N";
         }
         #endregion
 
