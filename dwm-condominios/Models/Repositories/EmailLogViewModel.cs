@@ -41,5 +41,10 @@ namespace DWM.Models.Repositories
         public string Nome { get; set; }
 
         public string Email { get; set; }
+
+        /// <summary>
+        /// Usado para refinar a lista de e-mails que serão enviados
+        /// </summary>
+        public Repository Repository { get; set; }
     }
 }

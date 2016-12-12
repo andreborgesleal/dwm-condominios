@@ -75,6 +75,7 @@ namespace DWM.Models.Repositories
         public System.Nullable<System.DateTime> DataUltimaAnotacao { get; set; }
 
         [DisplayName("Mensagem")]
+        [AllowHtml]
         [Required(ErrorMessage = "Mensagem do chamado deve ser informada")]
         public string MensagemOriginal { get; set; }
 

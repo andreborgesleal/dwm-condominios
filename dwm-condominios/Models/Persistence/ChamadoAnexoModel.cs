@@ -111,7 +111,7 @@ namespace DWM.Models.Persistence
         {
             value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
 
-            if (value.ChamadoID == 0)
+            if (value.ChamadoID == 0 && operation != Crud.INCLUIR)
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Identificador do Chamado").ToString();
@@ -125,6 +125,15 @@ namespace DWM.Models.Persistence
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Identificador do arquivo").ToString();
                 value.mensagem.MessageBase = "Código identificador do arquivo deve ser informado";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            };
+
+            if (String.IsNullOrEmpty(value.NomeOriginal))
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Nome do arquivo").ToString();
+                value.mensagem.MessageBase = "Código Nome do arquivo deve ser informado";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             };

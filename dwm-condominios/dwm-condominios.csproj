@@ -241,6 +241,7 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\Auth.cs" />
+    <Compile Include="Models\BI\AlertaBI.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EditarCredenciadoBI.cs" />

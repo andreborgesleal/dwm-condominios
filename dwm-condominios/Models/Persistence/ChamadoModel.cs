@@ -26,31 +26,59 @@ namespace DWM.Models.Persistence
         #region Métodos da classe CrudContext
         public override ChamadoViewModel BeforeInsert(ChamadoViewModel value)
         {
-            value = GetUsuario(value);
-            value.empresaId = SessaoLocal.empresaId;
-            value.DataChamado = Funcoes.Brasilia();
-            value.CondominioID = SessaoLocal.empresaId;
-            value.DataRedirecionamento = Funcoes.Brasilia(); // Este atributo será atualizado pela Trigger
-
-            #region Executa o método BeforeInsert do ChamadoFila
-            ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
-            ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            value.ChamadoFilaViewModel = ChamadoFilaModel.BeforeInsert(value.ChamadoFilaViewModel);
-            #endregion
-
-            #region Executa o método BeforeInsert do ChamadoAnexo para cada elemento da coleção
-            ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
-            ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            int index = 0;
-            while (index <= value.Anexos.Count()-1)
+            try
             {
-                ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.BeforeInsert(value.Anexos.ElementAt(index));
-                value.Anexos.ElementAt(index).UsuarioID = ChamadoAnexoViewModel.UsuarioID;
-                value.Anexos.ElementAt(index).Nome = ChamadoAnexoViewModel.Nome;
-                value.Anexos.ElementAt(index).Login = ChamadoAnexoViewModel.Login;
-                index++;
+                value = GetUsuario(value);
+                value.empresaId = SessaoLocal.empresaId;
+                value.DataChamado = Funcoes.Brasilia();
+                value.CondominioID = SessaoLocal.empresaId;
+                value.CredenciadoID = SessaoLocal.CredenciadoID;
+                value.ChamadoStatusID = 0;
+                value.DataRedirecionamento = Funcoes.Brasilia();
+
+                // Se a fila de atendimento destino for a fila do condômino, então preencher o responsável pelo chamado (UsuarioID, Nome e Login)
+                if (value.FilaAtendimentoID == DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db))
+                {
+                    int UsuarioCondominoID = db.Condominos.Find(value.CondominoID).UsuarioID.Value;
+                    Usuario u = seguranca_db.Usuarios.Find(UsuarioCondominoID);
+                    value.UsuarioFilaID = u.usuarioId;
+                    value.NomeUsuarioFila = u.nome;
+                    value.LoginUsuarioFila = u.login;
+                    value.ChamadoFilaViewModel.UsuarioID = u.usuarioId; // login e nome do usuário serão recuperados do método beforeinsert do ChamadoFilaModel.
+                }
+
+                #region Executa o método BeforeInsert do ChamadoFila
+                ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
+                ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                value.ChamadoFilaViewModel = ChamadoFilaModel.BeforeInsert(value.ChamadoFilaViewModel);
+                value.Rotas = new List<ChamadoFilaViewModel>();
+                ((List<ChamadoFilaViewModel>)value.Rotas).Add(value.ChamadoFilaViewModel);
+                #endregion
+
+                #region Executa o método BeforeInsert do ChamadoAnexo para cada elemento da coleção
+                ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+                ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                int index = 0;
+                while (index <= value.Anexos.Count() - 1)
+                {
+                    ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.BeforeInsert(value.Anexos.ElementAt(index));
+                    value.Anexos.ElementAt(index).UsuarioID = ChamadoAnexoViewModel.UsuarioID;
+                    value.Anexos.ElementAt(index).Nome = ChamadoAnexoViewModel.Nome;
+                    value.Anexos.ElementAt(index).Login = ChamadoAnexoViewModel.Login;
+                    index++;
+                }
+                #endregion
             }
-            #endregion
+            catch (Exception ex)
+            {
+                value.mensagem = new Validate()
+                {
+                    Code = 999,
+                    Message = "Ocorreu um erro no evento interno que antecede a  inclusão do chamado. Favor entrar em contato com o administrador do sistema",
+                    MessageBase = ex.Message
+                };
+            }
+
             return value;
         }
 
@@ -59,21 +87,7 @@ namespace DWM.Models.Persistence
             // Enviar e-mail ao destinatário
             try
             {
-                EmailLogViewModel EmailLogViewModel = new EmailLogViewModel()
-                {
-                    uri = value.uri,
-                    empresaId = SessaoLocal.empresaId,
-                    EmailTipoID = (int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO,
-                    CondominioID = SessaoLocal.empresaId,
-                    EdificacaoID = value.EdificacaoID,
-                    UnidadeID = value.UnidadeID,
-                    GrupoCondominoID = null,
-                    DataEmail = Funcoes.Brasilia(),
-                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO, SessaoLocal.empresaId).Assunto + " número " + value.ChamadoID.ToString() + " - " + db.Condominios.Find(value.CondominioID).RazaoSocial,
-                    EmailMensagem = value.MensagemOriginal
-                };
-
-                #region Passo 1: Executa o método AfterInsert do ChamadoAnexo para cada elemento da coleção
+                #region Passo único: Executa o método AfterInsert do ChamadoAnexo para cada elemento da coleção
                 ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
                 ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
                 int index = 0;
@@ -83,35 +97,6 @@ namespace DWM.Models.Persistence
                     index++;
                 }
                 #endregion
-
-                #region Passo 2: Enviar o e-mail de notificação
-                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
-                EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
-                if (EmailLogViewModel.mensagem.Code > 0)
-                    throw new App_DominioException(EmailLogViewModel.mensagem);
-                #endregion
-
-                #region Passo 3: Alerta 
-                EmpresaSecurity<SecurityContext> empresaSecurity = new EmpresaSecurity<SecurityContext>();
-                empresaSecurity.Create(seguranca_db);
-
-                AlertaRepository alerta = new AlertaRepository()
-                {
-                    uri = value.uri,
-                    empresaId = sessaoCorrente.empresaId,
-                    usuarioId = value.UsuarioID,
-                    sistemaId = sessaoCorrente.sistemaId,
-                    dt_emissao = Funcoes.Brasilia(),
-                    linkText = value.Assunto,
-                    url = "../Atendimento/Create?chamadoId=" + value.ChamadoID.ToString(),
-                    mensagemAlerta = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>" + value.Assunto + "</p>"
-                };
-
-                AlertaRepository r = empresaSecurity.InsertAlerta(alerta);
-                if (r.mensagem.Code > 0)
-                    throw new DbUpdateException(r.mensagem.Message);
-                #endregion
-
             }
             catch (ArgumentException ex)
             {
@@ -174,17 +159,16 @@ namespace DWM.Models.Persistence
                 value.mensagem.MessageBase = new App_DominioException(ex.InnerException.InnerException.Message ?? ex.Message, GetType().FullName).Message;
                 value.mensagem.MessageType = MsgType.ERROR;
             }
-
-            
-
             return value;
         }
 
         public override Chamado MapToEntity(ChamadoViewModel value)
         {
-            Chamado entity = Find(value);
+            Chamado entity = null;
 
-            if (entity == null)
+            if (value.ChamadoID > 0)
+                entity = Find(value);
+            else
                 entity = new Chamado();
 
             entity.ChamadoID = value.ChamadoID;
@@ -192,12 +176,13 @@ namespace DWM.Models.Persistence
             entity.ChamadoStatusID = value.ChamadoStatusID;
             entity.FilaSolicitanteID = value.FilaSolicitanteID;
             entity.CondominioID = value.CondominioID;
-            entity.CondominoID = value.CondominoID;
-            entity.CredenciadoID = value.CredenciadoID;
+            entity.CondominoID = value.CondominoID == 0 ? null : value.CondominoID;
+            entity.CredenciadoID = value.CredenciadoID == 0 ? null : value.CredenciadoID;
             entity.EdificacaoID = value.EdificacaoID;
             entity.UnidadeID = value.UnidadeID;
             entity.DataChamado = value.DataChamado;
             entity.Assunto = value.Assunto;
+            entity.MensagemOriginal = value.MensagemOriginal;
             entity.UsuarioID = value.UsuarioID;
             entity.NomeUsuario = value.NomeUsuario;
             entity.LoginUsuario = value.LoginUsuario;
@@ -212,7 +197,8 @@ namespace DWM.Models.Persistence
             // Executa o MapToEntity do ChamadoFila
             ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
             ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            entity.ChamadoFila = ChamadoFilaModel.MapToEntity(value.ChamadoFilaViewModel);
+            entity.Rotas = new List<ChamadoFila>();
+            entity.Rotas.Add(ChamadoFilaModel.MapToEntity(value.ChamadoFilaViewModel));
 
             // Mapear anexos
             ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
@@ -256,15 +242,39 @@ namespace DWM.Models.Persistence
             };
 
             ListViewChamadoFila listChamadoFila = new ListViewChamadoFila(this.db, this.seguranca_db);
-            value.Rotas = listChamadoFila.Bind(0, 200, value.ChamadoID);
-
-            // Observação: incluir aqui as Anotações do chamado (ChamadoAnotacao) (IEnumerable<CahamdoAnotacaoViewModel>) 
             ListViewChamadoAnotacao listChamadoAnotacao = new ListViewChamadoAnotacao(this.db, this.seguranca_db);
-            value.Anotacoes = listChamadoAnotacao.Bind(0, 200, value.ChamadoID);
-
-            // Observação: incluir aqui os anexos do chamado (ChamadoAnotacao) (IEnumerable<CahamdoAnexoViewModel>) 
             ListViewChamadoAnexo listChamadoAnexo = new ListViewChamadoAnexo(this.db, this.seguranca_db);
-            value.Anexos = listChamadoAnexo.Bind(0, 100, value.ChamadoID);
+
+            if (entity.ChamadoID > 0)
+            {
+                value.Rotas = listChamadoFila.Bind(0, 200, value.ChamadoID);
+                value.Anotacoes = listChamadoAnotacao.Bind(0, 200, value.ChamadoID);
+                value.Anexos = listChamadoAnexo.Bind(0, 100, value.ChamadoID);
+            }
+            else
+            {
+                #region Rotas
+                value.Rotas = new List<ChamadoFilaViewModel>();
+                ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
+                ChamadoFilaModel.Create(this.db, this.seguranca_db);
+                foreach (ChamadoFila fila in entity.Rotas)
+                {
+                    ChamadoFilaViewModel ChamadoFilaViewModel = ChamadoFilaModel.MapToRepository(fila);
+                    ((List<ChamadoFilaViewModel>)value.Rotas).Add(ChamadoFilaViewModel);
+                }
+                #endregion
+
+                #region Anexos
+                value.Anexos = new List<ChamadoAnexoViewModel>();
+                ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+                ChamadoAnexoModel.Create(this.db, this.seguranca_db);
+                foreach (ChamadoAnexo anexo in entity.Anexos)
+                {
+                    ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.MapToRepository(anexo);
+                    ((List<ChamadoAnexoViewModel>)value.Anexos).Add(ChamadoAnexoViewModel);
+                }
+                #endregion
+            }
 
             return value;
         }
@@ -305,7 +315,7 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (value.ChamadoStatusID == 0)
+            if (value.ChamadoStatusID != 0 && operation == Crud.INCLUIR)
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Situação").ToString();
@@ -320,11 +330,19 @@ namespace DWM.Models.Persistence
             if (DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db) == value.FilaSolicitanteID ||
                 DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db) == value.FilaAtendimentoID)
             {
-                if (value.CondominoID == 0 && value.CredenciadoID == 0)
+                if (value.CondominoID == 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Condômino/Residente").ToString();
-                    value.mensagem.MessageBase = "Condômino/Residente deve ser informado";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Condômino").ToString();
+                    value.mensagem.MessageBase = "Condômino deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                if (SessaoLocal.CredenciadoID > 0 && value.CredenciadoID == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Residente").ToString();
+                    value.mensagem.MessageBase = "Residente deve ser informado";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
@@ -409,6 +427,15 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+            if (value.FilaAtendimentoID == value.FilaSolicitanteID)
+            {
+                value.mensagem.Code = 49;
+                value.mensagem.Message = MensagemPadrao.Message(49, "Solicitante", "Encaminhado para").ToString();
+                value.mensagem.MessageBase = "Fila do Solicitante dever ser diferente da Fila de Atendimento";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
             // Valida o ChamadoFila
             ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
             ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
@@ -461,7 +488,7 @@ namespace DWM.Models.Persistence
                     if (Request["_FilaAtendimentoID"] != null && Request["_FilaAtendimentoID"] != "")
                         value.FilaAtendimentoID = int.Parse(Request["_FilaAtendimentoID"]);
 
-                    value.MensagemOriginal = Request["MensagemOriginal"] ?? "";
+                    
                     value.Assunto = Request["Assunto"] ?? "";
                     value.Prioridade = "2";
                 }
@@ -483,7 +510,6 @@ namespace DWM.Models.Persistence
             return value;
         }
         #endregion
-
     }
 
     public class ListViewChamado : ListViewModelLocal<ChamadoViewModel>

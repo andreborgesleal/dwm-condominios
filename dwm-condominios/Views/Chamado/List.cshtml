@@ -42,9 +42,31 @@
                                 _solicitante = value.DescricaoFilaSolicitante;
                             }
                             <tr class="even pointer">
+                                @{ 
+                                    string[] n = _solicitante.Split(' ');
+                                    int contador = n.Count();
+                                    string _n = n[0];
+                                    if (contador > 1)
+                                    {
+                                        _n += " " + n[contador - 1];
+                                    }
+                                    string _resp = "";
+                                    if (value.NomeUsuarioFila != null && value.NomeUsuarioFila != "")
+                                    {
+                                        string[] resp = value.NomeUsuarioFila.Split(' ');
+                                        contador = resp.Count();
+                                        _resp = resp[0];
+                                        if (contador > 1)
+                                        {
+                                            _resp += " " + resp[contador - 1];
+                                        }
+
+                                    }
+
+                                }
                                 <td class="text-center">@value.DataChamado.ToString("dd/MM/yyyy")</td>
                                 <td class="text-center">@value.ChamadoID </td>
-                                <td class="text-left">@_solicitante</td>
+                                <td class="text-left">@_n</td>
                                 <td class="text-left">@value.DescricaoEdificacao</td>
                                 <td class="text-center">@value.UnidadeID</td>
                                 <td class="text-left">@value.NomeCondomino</td>
@@ -52,7 +74,7 @@
                                 <td class="text-center">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>
                                 <td class="text-center">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</td>
                                 <td class="text-left">@value.DescricaoFilaAtendimento</td>
-                                <td class="text-left">@value.NomeUsuarioFila</td>
+                                <td class="text-left">@_resp</td>
                                 <td class="text-center">
                                     <a href="~/Chamado/Index?id=@value.ChamadoID" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
                                 </td>

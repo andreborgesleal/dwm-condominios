@@ -3,13 +3,19 @@
 @model PagedList<CondominoUnidadeViewModel>
 @{
     Layout = null;
-    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository(), new TransacaoRepository() };
     t[0].url = "#panel-top";
     t[0].nomeCurto = "Ir para Chamado";
     t[0].referencia = "";
     t[0].exibir = "S";
 
-    t[1].url = "../Home/Default";
+    t[1].url = "#panel-condomino";
+    t[1].nomeCurto = "Salvar";
+    t[1].referencia = "$('#btn-salvar').click();";
+    t[1].exibir = "S";
+
+
+    t[2].url = "../Home/Default";
 }
 
 <div class="x_panel">

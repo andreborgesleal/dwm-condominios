@@ -14,6 +14,7 @@ using DWM.Models.Pattern;
 using System.Collections.Generic;
 using App_Dominio.Models;
 using App_Dominio.Contratos;
+using App_Dominio.Repositories;
 
 namespace DWM.Controllers
 {
@@ -40,7 +41,6 @@ namespace DWM.Controllers
         }
         #endregion
         #endregion
-
 
         public override void BeforeCreate(ref ChamadoViewModel value, FormCollection collection)
         {
@@ -96,8 +96,17 @@ namespace DWM.Controllers
                 value.FilaSolicitanteID = int.Parse(collection["_FilaSolicitanteID"]);
 
             if (Request["_FilaAtendimentoID"] != null && Request["_FilaAtendimentoID"] != "")
+            {
                 value.FilaAtendimentoID = int.Parse(collection["_FilaAtendimentoID"]);
+                value.ChamadoFilaViewModel = new ChamadoFilaViewModel()
+                {
+                    Data = Funcoes.Brasilia(),
+                    FilaAtendimentoID = value.FilaAtendimentoID.Value
+                };
+            }
 
+            value.MensagemOriginal = collection["MensagemOriginal"];
+            value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
         }
 
         public override void OnCreateError(ref ChamadoViewModel value, FormCollection collection)
@@ -108,7 +117,28 @@ namespace DWM.Controllers
 
             value = facade.CreateRepository(Request);
             value.mensagem = validate;
+            value.MensagemOriginal = collection["MensagemOriginal"] ?? "";
         }
+
+        public override ActionResult AfterCreate(ChamadoViewModel value, FormCollection collection)
+        {
+            try
+            {
+                FactoryLocalhost<AlertaRepository, ApplicationContext> factory = new FactoryLocalhost<AlertaRepository, ApplicationContext>();
+                AlertaBI bi = new AlertaBI();
+                value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                AlertaRepository a = factory.Execute(new AlertaBI(), value);
+                if (a.mensagem.Code > 0)
+                    throw new Exception(a.mensagem.Message);
+            }
+            catch (Exception ex)
+            {
+                Error(ex.Message);
+            }
+
+            return RedirectToAction("Browse");
+        }
+
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

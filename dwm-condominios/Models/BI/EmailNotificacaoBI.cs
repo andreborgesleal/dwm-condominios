@@ -59,15 +59,17 @@ namespace DWM.Models.BI
                     foreach (EmailLogViewModel item in EmailLogPessoas)
                         recipients.Add(item.Nome + "<" + item.Email + ">");
 
-                    string Subject = log.Assunto.Replace("@condominio", condominio.RazaoSocial);
-                    string Html = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
+                    log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
-                    //Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
-                    //if (result.Code > 0)
-                    //{
-                    //    result.MessageBase = "Não foi possível enviar o e-mail. Tente novamente mais tarde e se o erro persistir, favor entrar em contato com faleconosco@dwmsisteamas.com e reporte o código de erro " + result.Code.ToString() + ". ";
-                    //    throw new App_DominioException(result);
-                    //}
+                    string Subject = log.Assunto.Replace("@condominio", condominio.RazaoSocial);
+                    string Html = log.EmailMensagem;
+
+                    Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
+                    if (result.Code > 0)
+                    {
+                        result.MessageBase = "Não foi possível enviar o e-mail. Tente novamente mais tarde e se o erro persistir, favor entrar em contato com faleconosco@dwmsisteamas.com e reporte o código de erro " + result.Code.ToString() + ". ";
+                        throw new App_DominioException(result);
+                    }
 
                     #region Incluir o Log do e-mail enviado
                     log = Model.Insert(log);
@@ -180,6 +182,39 @@ namespace DWM.Models.BI
             else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO)
             {
                 result.Add(log);
+            }
+            else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO)
+            {
+                ChamadoViewModel r = (ChamadoViewModel)log.Repository;
+                EmailLogViewModel l = new EmailLogViewModel()
+                {
+                    Nome = r.NomeUsuario,
+                    Email = r.LoginUsuario
+                };
+
+                if (r.FilaAtendimentoID != DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db))
+                {
+                    result = (from usu in db.FilaAtendimentoUsuarios
+                              where usu.FilaAtendimentoID == r.FilaAtendimentoID
+                              select new EmailLogViewModel()
+                              {
+                                  Nome = usu.Nome,
+                                  Email = usu.Login
+                              }).ToList();
+                }
+                else
+                {
+                    // Encaminhar para o condômino
+                    EmailLogViewModel condomino = new EmailLogViewModel()
+                    {
+                        Nome = r.NomeUsuarioFila,
+                        Email = r.LoginUsuarioFila
+                    };
+
+                    result.Add(condomino);
+                }
+
+                result.Add(l);
             }
 
             return result;

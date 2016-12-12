@@ -74,7 +74,7 @@ namespace DWM.Models.Entidades
         [DisplayName("LoginUsuarioFila")]
         public string LoginUsuarioFila { get; set; }
 
-        public virtual ChamadoFila ChamadoFila { get; set; }
+        public virtual ICollection<ChamadoFila> Rotas { get; set; }
 
         public virtual ICollection<ChamadoAnexo> Anexos { get; set; }
     }
