@@ -266,8 +266,8 @@ namespace DWM.Models.Persistence
                     from gru in GRU.DefaultIfEmpty()
                     join edi in db.Edificacaos on info.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
-                    where info.DataPublicacao >= data1 && info.DataPublicacao <= data2
-                            && info.CondominioID == sessaoCorrente.empresaId
+                    where // info.DataPublicacao >= data1 && info.DataPublicacao <= data2 &&
+                             info.CondominioID == sessaoCorrente.empresaId
                             && (IsHome == "N" || info.DataExpiracao >= SqlFunctions.GetDate())
                             && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info.GrupoCondominoID)))
                             && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info.EdificacaoID)))
@@ -313,8 +313,8 @@ namespace DWM.Models.Persistence
                                       from gru1 in GRU1.DefaultIfEmpty()
                                       join edi1 in db.Edificacaos on info1.EdificacaoID equals edi1.EdificacaoID into EDI1
                                       from edi1 in EDI1.DefaultIfEmpty()
-                                      where info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2
-                                              && info1.CondominioID == sessaoCorrente.empresaId
+                                      where // info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2 &&
+                                              info1.CondominioID == sessaoCorrente.empresaId
                                               && (IsHome == "N" || info1.DataExpiracao >= SqlFunctions.GetDate())
                                               && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info1.GrupoCondominoID)))
                                               && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info1.EdificacaoID)))
