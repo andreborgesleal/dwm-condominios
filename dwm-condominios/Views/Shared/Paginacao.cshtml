@@ -29,7 +29,7 @@
     
     nextPage = lastPage;
 }
-@if (Model.LastPage != -1)
+@if (Model.LastPage != -1 && Model.TotalCount > 1)
 {
     <span class="pull-right margem-negativa margem-interna"><small>@Model.TotalCount.ToString("###,##0") registro(s)</small></span>
     <div class="row" style="text-align: center">

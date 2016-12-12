@@ -13,6 +13,7 @@ using App_Dominio.Enumeracoes;
 using DWM.Models.Pattern;
 using System.Collections.Generic;
 using App_Dominio.Models;
+using App_Dominio.Contratos;
 
 namespace DWM.Controllers
 {
@@ -39,6 +40,75 @@ namespace DWM.Controllers
         }
         #endregion
         #endregion
+
+
+        public override void BeforeCreate(ref ChamadoViewModel value, FormCollection collection)
+        {
+            base.BeforeCreate(ref value, collection);
+
+            #region Anexos
+            value.Anexos = new List<ChamadoAnexoViewModel>();
+            if (collection["File1ID"] != null && collection["File1ID"] != "")
+            {
+                ChamadoAnexoViewModel anexo1 = new ChamadoAnexoViewModel()
+                {
+                    FileID = collection["File1ID"],
+                    DataAnexo = Funcoes.Brasilia(),
+                    NomeOriginal = collection["NomeOriginal1"],
+                };
+                ((List<ChamadoAnexoViewModel>)value.Anexos).Add(anexo1);
+            }
+            if (collection["File2ID"] != null && collection["File2ID"] != "")
+            {
+                ChamadoAnexoViewModel anexo2 = new ChamadoAnexoViewModel()
+                {
+                    FileID = collection["File2ID"],
+                    DataAnexo = Funcoes.Brasilia(),
+                    NomeOriginal = collection["NomeOriginal2"],
+                };
+                ((List<ChamadoAnexoViewModel>)value.Anexos).Add(anexo2);
+            }
+            if (collection["File3ID"] != null && collection["File3ID"] != "")
+            {
+                ChamadoAnexoViewModel anexo3 = new ChamadoAnexoViewModel()
+                {
+                    FileID = collection["File3ID"],
+                    DataAnexo = Funcoes.Brasilia(),
+                    NomeOriginal = collection["NomeOriginal3"],
+                };
+                ((List<ChamadoAnexoViewModel>)value.Anexos).Add(anexo3);
+            }
+            #endregion
+
+            #region Identificação do Condômino
+            if (collection ["__EdificacaoID"] != null && collection["__EdificacaoID"] != "")
+            {
+                value.EdificacaoID = int.Parse(collection["__EdificacaoID"]);
+                value.UnidadeID = int.Parse(collection["__UnidadeID"]);
+                value.CondominoID = int.Parse(collection["__CondominoID"]);
+            }
+            #endregion
+
+            if (Request ["_ChamadoMotivoID"] != null && Request["_ChamadoMotivoID"] != "")
+                value.ChamadoMotivoID = int.Parse(collection["_ChamadoMotivoID"]);
+
+            if (Request["_FilaSolicitanteID"] != null && Request["_FilaSolicitanteID"] != "")
+                value.FilaSolicitanteID = int.Parse(collection["_FilaSolicitanteID"]);
+
+            if (Request["_FilaAtendimentoID"] != null && Request["_FilaAtendimentoID"] != "")
+                value.FilaAtendimentoID = int.Parse(collection["_FilaAtendimentoID"]);
+
+        }
+
+        public override void OnCreateError(ref ChamadoViewModel value, FormCollection collection)
+        {
+            base.OnCreateError(ref value, collection);
+            FacadeLocalhost<ChamadoViewModel, ChamadoModel, ApplicationContext> facade = new FacadeLocalhost<ChamadoViewModel, ChamadoModel, ApplicationContext>();
+            Validate validate = value.mensagem;
+
+            value = facade.CreateRepository(Request);
+            value.mensagem = validate;
+        }
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

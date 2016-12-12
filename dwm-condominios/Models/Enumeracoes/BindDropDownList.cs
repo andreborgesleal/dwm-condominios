@@ -324,6 +324,9 @@ namespace DWM.Models.Enumeracoes
                                 Selected = (selectedValue != "" ? m.ChamadoMotivoID.ToString() == selectedValue : false)
                             }).ToList();
 
+                if ((selectedValue == "" || selectedValue == null || selectedValue == "0") && q.Count > 0)
+                    q[0].Selected = true;
+
                 return q;
             }
         }
@@ -390,6 +393,9 @@ namespace DWM.Models.Enumeracoes
                 }
             }
 
+            if ((selectedValue == "" || selectedValue == null || selectedValue == "0") && q.Count > 0)
+                q[0].Selected = true;
+
             return q;
         }
 
@@ -439,7 +445,8 @@ namespace DWM.Models.Enumeracoes
                                     }).ToList();
                 }
             }
-
+            if ((selectedValue == "" || selectedValue == null || selectedValue == "0") && q.Count > 0)
+                q[0].Selected = true;
             return q;
         }
     }

@@ -1,5 +1,5 @@
 ﻿@using DWM.Models.Repositories
-@model IEnumerable<CondominoUnidadeViewModel>
+@model PagedList<CondominoUnidadeViewModel>
 @{
     Layout = null;
 }
@@ -37,7 +37,7 @@
                                     <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
                                     <td class="">@value.CondominoViewModel.Email</td>
                                     <td class="text-center">
-                                        <a href="#div-condomino-pf" title="Selecionar" onclick="Seleciona('@value.CondominoID','@value.EdificacaoID', '@value.UnidadeID','@idx')"><i class="glyphicon glyphicon-check"></i></a>&nbsp;
+                                        <input type="checkbox" name="check_@idx" id="check_@idx" class="icheckbox_flat-green" onclick="Seleciona('@value.CondominoID','@value.EdificacaoID', '@value.UnidadeID','@idx', this)" />
                                     </td>
                                 </tr>
                                 idx++;
@@ -61,15 +61,39 @@ else
     _EdificacaoID = '';
     _UnidadeID = '';
 
-    function Seleciona(CondominoID,EdificacaoID, UnidadeID, indice)
+    function Seleciona(CondominoID,EdificacaoID, UnidadeID, indice, obj)
     {
-        $('#line_' + _indice).css('background-color', '');
-        $('#line_' + indice).css('background-color', 'cornsilk');
+        if (obj.checked == true)
+            $('#line_' + indice).css('background-color', 'cornsilk');
+        else
+            $('#line_' + indice).css('background-color', '');
+
+        if (indice != _indice)
+        {
+            $('#check_' + _indice).prop("checked", false);
+            $('#line_' + _indice).css('background-color', '');
+        }
+        
         _indice = indice;
 
         _EdificacaoID = EdificacaoID;
         _UnidadeID = UnidadeID;
         _CondominoID = CondominoID;
+    }
+
+    function setTotalCount(total, CondominoID, EdificacaoID, UnidadeID, indice) {
+        if (total == 1)
+        {
+            $('#check_0').prop("checked", true);
+            $('#line_' + indice).css('background-color', 'cornsilk');
+
+            _indice = 0;
+
+            _EdificacaoID = EdificacaoID;
+            _UnidadeID = UnidadeID;
+            _CondominoID = CondominoID;
+        }
+            
     }
 
 </script>

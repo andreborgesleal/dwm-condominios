@@ -42,10 +42,16 @@ namespace DWM.Controllers
                 int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
 
                 EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                ViewBag.empresaId = security.getSessaoCorrente().empresaId;
+                Sessao sessaoCorrente = security.getSessaoCorrente();
+                SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+
+                ViewBag.empresaId = sessaoCorrente.empresaId;
 
                 ListViewCondominoUnidade l = new ListViewCondominoUnidade();
-                return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+                if (SessaoLocal.CondominoID == 0)
+                    return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+                else
+                    return this._List(index, pageSize, "Browse", l, SessaoLocal.CondominoID);
             }
             else
                 return View();
@@ -69,10 +75,17 @@ namespace DWM.Controllers
                 int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
 
                 EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                Sessao sessaoCorrente = security.getSessaoCorrente();
+                SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+
                 ViewBag.empresaId = security.getSessaoCorrente().empresaId;
 
                 ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado();
-                return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+
+                if (SessaoLocal.CondominoID == 0)
+                    return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+                else
+                    return this._List(index, pageSize, "Browse", l, SessaoLocal.CondominoID);
             }
             else
                 return View();

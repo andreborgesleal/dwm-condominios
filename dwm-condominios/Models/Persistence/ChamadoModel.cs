@@ -439,12 +439,31 @@ namespace DWM.Models.Persistence
                     Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
                     SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, db);
                     value.CondominioID = sessaoCorrente.empresaId;
-                    if (SessaoLocal.CondominoID > 0)
-                        value.CondominoID = SessaoLocal.CondominoID;
+                    value.CondominoID = SessaoLocal.CondominoID;
                     value.UsuarioID = SessaoLocal.usuarioId;
+                    value.FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db);
 
                     ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado(db, seguranca_db);
-                    value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, 0, 0, "");
+                    if (SessaoLocal.CondominoID == 0)
+                        value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, 0, 0, "");
+                    else
+                        value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, SessaoLocal.CondominoID);
+
+                    // Anexo
+                    value.ChamadoAnexoViewModel = new ChamadoAnexoViewModel();
+
+                    if (Request["_ChamadoMotivoID"] != null && Request["_ChamadoMotivoID"] != "")
+                        value.ChamadoMotivoID = int.Parse(Request["_ChamadoMotivoID"]);
+
+                    if (Request["_FilaSolicitanteID"] != null && Request["_FilaSolicitanteID"] != "")
+                        value.FilaSolicitanteID = int.Parse(Request["_FilaSolicitanteID"]);
+
+                    if (Request["_FilaAtendimentoID"] != null && Request["_FilaAtendimentoID"] != "")
+                        value.FilaAtendimentoID = int.Parse(Request["_FilaAtendimentoID"]);
+
+                    value.MensagemOriginal = Request["MensagemOriginal"] ?? "";
+                    value.Assunto = Request["Assunto"] ?? "";
+                    value.Prioridade = "2";
                 }
             }
 

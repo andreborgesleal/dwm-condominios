@@ -71,10 +71,10 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
             }
 
             $('#' + _fileUpload).hide(); // esconde o componente para forçar a exclusão do arquivo para poder enviar outro arquivo
-
-            if (data.result.type == 'image/jpeg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
+            
+            if (data.result.type == 'image/jpeg' || data.result.type == 'image/jpg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
+                
                 $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
-            alert(_fileupload);
                 $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
             }
             else if (data.result.type == 'application/pdf') {
@@ -83,6 +83,64 @@ function FileUpload(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _
             }
             $('.modal-title').html(data.result.nome_original);
             //_fileHidden = fileBoleto
+            $('#' + _fileHidden).val(data.result.name);
+            $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
+            $('#' + _progress).hide();
+
+            // word: http://www.portugalsenior.org/wp-content/uploads/2014/07/MW-Logo1-50x50.jpg
+
+            //$('.file_type').html(data.result.type);
+            //$('.file_size').html(data.result.size);
+        }
+    }).on('fileuploadprogressall', function (e, data) {
+        $('#' + _progress).show();
+        var progress = parseInt(data.loaded / data.total * 100, 10);
+        $('#' + _progress + ' #' + _progress + '-bar').css('width', progress + '%');
+    });
+}
+
+function FileUpload2(_fileUpload, _fileHidden, _progress, _file_name, _myModal, _arq, _trash, _NomeArquivoOriginal) {
+
+    // _fileupload = fileUpload
+    // Este objeto difere da versão anterior apenas na atribuição do "Nome do arquivo original" 
+    //no campo Hidden passado como parâmetro
+
+    if (_arq == '' || _arq == '')
+        _arq = 'arq1';
+
+    if (_trash == '' || _trash == '')
+        _trash = 'trash1';
+
+    $('#' + _progress).hide();
+
+    $('#' + _fileUpload).fileupload({
+        dataType: 'json',
+        url: "UploadFiles", // MasterController
+        autoUpload: true,
+        done: function (e, data) {
+
+            if (data.result.mensagem != "Sucesso") {
+                $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
+                ShowMessageAjaxAlert(data.result.mensagem, "danger");
+                $('#' + _arq).hide();
+                $('#' + _trash).hide();
+                return;
+            }
+
+            $('#' + _fileUpload).hide(); // esconde o componente para forçar a exclusão do arquivo para poder enviar outro arquivo
+
+            if (data.result.type == 'image/jpeg' || data.result.type == 'image/jpg' || data.result.type == 'image/png' || data.result.type == 'image/bmp') {
+
+                $('#' + _myModal + '-body').html('<img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 480px">');
+                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="../Temp/' + data.result.name + '" class="img-responsive" alt="Responsive image" style="height: 75px">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
+            }
+            else if (data.result.type == 'application/pdf') {
+                $('#' + _myModal + '-body').html('<iframe style="height: 480px; width: 100%" src="../Temp/' + data.result.name + '"></iframe>');
+                $('#' + _file_name).html('<small data-toggle="modal" data-target="#' + _myModal + '" style="cursor: pointer" id="' + _arq + '"><img src="http://www.equidadeparaainfancia.org/img/pdf.jpg" class="img-responsive" alt="Responsive image">' + data.result.nome_original + '</small>&nbsp;&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" aria-hidden="true" style="cursor: pointer" id="' + _trash + '" onclick="DelFile(\'' + data.result.name + '\', \'' + _fileUpload + '\', \'' + _arq + '\', \'' + _trash + '\', \'' + _fileHidden + '\')"></span>');
+            }
+            $('.modal-title').html(data.result.nome_original);
+            //_fileHidden = fileBoleto
+            $('#' + _NomeArquivoOriginal).val(data.result.nome_original);
             $('#' + _fileHidden).val(data.result.name);
             $('#' + _progress + ' #' + _progress + '-bar').css('width', '0%');
             $('#' + _progress).hide();
@@ -127,7 +185,6 @@ function DelFile(_file, _fileupload, _arq, _trash, _fileHidden) {
         }
     });
 }
-
 
 function Mascara(formato, keypress, objeto) {
     campo = eval(objeto);
@@ -215,7 +272,6 @@ function BuscaCep(_cep, _logradouro, _bairro, _cidade, _uf) {
     });
 }
 
-
 function BuscaCep2(_cep, _logradouro, _bairro, _cidade, _uf) {
     CarregandoIn();
     var cep = $("#" + _cep).val();
@@ -253,8 +309,6 @@ function BuscaCep3(_cep, _logradouro, _bairro, _cidade, _uf) {
     $('#carregando').css("margin-left", "0%");
 
 }
-
-
 
 function ReadAlert(id) {
     var link = "../Home/ReadAlert?alertaId=" + id;
@@ -445,7 +499,6 @@ function MoveId(_descricao, id, data) {
     };
 }
 
-
 function validateTypeahead(obj, temp, id) {
     if ($("#" + temp).val().trim() != $("#" + obj).val().trim()) {
         $("#" + obj).val("");
@@ -542,7 +595,6 @@ function showMyLovModal(lovModal, DivId, report, controller, action) {
     });
 }
 
-
 function InsertModal(crudModal, fieldName, id, temp, text, nextField) {
     // crudModal => Nome do controller/action que irá fazer a inclusão
     // fieldName => Nome do campo do repository que retorna o conteúdo da descrição
@@ -574,7 +626,6 @@ function InsertModal(crudModal, fieldName, id, temp, text, nextField) {
     });
 }
 
-
 function clean(id, text) {
     $("#" + text).val("");
     $("#" + id).val("");
@@ -586,7 +637,6 @@ function CleanMiniCrud(id, text, controller, action, DivId) {
     var link = action + "?DivId=" + DivId;
     $('#' + DivId).load(encodeURI(link));
 }
-
 
 function numeros() {
     var tecla = event.keyCode;
@@ -614,7 +664,6 @@ function numerosPonto() {
             return true;
     }
 }
-
 
 function float2moeda(num) {
 
@@ -670,8 +719,6 @@ function FormataNumero(campo) {
         campo.value = "-" + campo.value
     }
 }
-
-
 
 function isNumeric(source) {
 
