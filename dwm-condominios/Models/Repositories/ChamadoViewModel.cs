@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using App_Dominio.Component;
 using System.Collections.Generic;
+using System.Web.Mvc;
 
 namespace DWM.Models.Repositories
 {
@@ -25,6 +26,8 @@ namespace DWM.Models.Repositories
         [DisplayName("Fila Solicitante")]
         [Required(ErrorMessage = "Fila solicitante do chamado deve ser informada")]
         public int FilaSolicitanteID { get; set; }
+
+        public string DescricaoFilaSolicitante { get; set; }
 
         [DisplayName("CondominioID")]
         public int CondominioID { get; set; }
@@ -62,6 +65,8 @@ namespace DWM.Models.Repositories
         [DisplayName("Login Usuário")]
         public string LoginUsuario { get; set; }
 
+        public bool IsFornecedor { get; set; }
+
         [DisplayName("Prioridade")]
         [Required(ErrorMessage = "Prioridade deve ser informada")]
         public string Prioridade { get; set; }
@@ -76,6 +81,9 @@ namespace DWM.Models.Repositories
         [DisplayName("Fila de Atendimento")]
         public System.Nullable<int> FilaAtendimentoID { get; set; }
 
+        public string DescricaoFilaAtendimento { get; set; }
+        public int FilaCondominoID { get; set; }
+
         [DisplayName("Data do Redirecionamento")]
         public System.DateTime DataRedirecionamento { get; set; }
 
@@ -88,10 +96,25 @@ namespace DWM.Models.Repositories
         [DisplayName("LoginUsuarioFila")]
         public string LoginUsuarioFila { get; set; }
 
+        public string Solicitante
+        {
+            get
+            {
+                if (FilaSolicitanteID == FilaCondominoID)
+                    return NomeUsuario;
+                else
+                    return DescricaoFilaSolicitante;
+            }
+        }
+
+        public IEnumerable<ChamadoAnotacaoViewModel> Anotacoes{ get; set; }
+
         public virtual ChamadoFilaViewModel ChamadoFilaViewModel { get; set; }
         public IEnumerable<ChamadoFilaViewModel> Rotas { get; set; }
 
         public ChamadoAnexoViewModel ChamadoAnexoViewModel { get; set; }
         public virtual IEnumerable<ChamadoAnexoViewModel> Anexos { get; set; }
+
+        public PagedList<CondominoUnidadeViewModel> Condominos { get; set; }
     }
 }

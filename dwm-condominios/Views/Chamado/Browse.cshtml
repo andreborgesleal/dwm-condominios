@@ -1,0 +1,28 @@
+﻿@using App_Dominio.Repositories
+@model PagedList<DWM.Models.Repositories.ChamadoViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Chamado/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+    t[0].exibir = "S";
+
+    t[1].url = "../Chamado/Filtrar";
+    t[1].nomeCurto = "Filtrar";
+    t[1].referencia = "";
+    t[1].exibir = "S";
+
+    t[2].url = "../Home/Default";
+}
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Chamados", Descricao = "Meus chamados", Transacao = t })
+    <div class="x_content">
+        <div id="div-chamado">
+            @Html.Partial("List", Model)
+        </div>
+        <div class="altura-35">
+            @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Chamado", buttonType = "link" } })
+        </div>
+    </div>
+</div>
+

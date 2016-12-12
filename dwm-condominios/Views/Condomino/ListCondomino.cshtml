@@ -1,0 +1,102 @@
+﻿@using DWM.Models.Repositories
+@model PagedList<CondominoUnidadeViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <br />
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Nome </th>
+                            <th class="column-title">Edificação </th>
+                            <th class="column-title">Unidade </th>
+                            <th class="column-title">Telefone </th>
+                            <th class="column-title">E-mail </th>
+                            <th class="column-title no-link last text-center">
+                                <span class="nobr">Selecionar</span>
+                            </th>
+                            <th class="bulk-actions" colspan="7">
+                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            int idx = 0;
+                            foreach (CondominoUnidadeViewModel value in Model)
+                            {
+                                <tr class="even pointer" id="line_@idx">
+                                    <td class="">@value.CondominoViewModel.Nome</td>
+                                    <td class="">@value.EdificacaoDescricao </td>
+                                    <td class="">@value.UnidadeID</td>
+                                    <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
+                                    <td class="">@value.CondominoViewModel.Email</td>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="check_@idx" id="check_@idx" class="icheckbox_flat-green" onclick="Seleciona('@value.CondominoID','@value.EdificacaoID', '@value.UnidadeID','@idx', this)" />
+                                    </td>
+                                </tr>
+                                idx++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("Paginacao", Model)
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+
+    _CondominoID = '';
+    _EdificacaoID = '';
+    _UnidadeID = '';
+
+    function Seleciona(CondominoID,EdificacaoID, UnidadeID, indice, obj)
+    {
+        if (obj.checked == true)
+            $('#line_' + indice).css('background-color', 'cornsilk');
+        else
+            $('#line_' + indice).css('background-color', '');
+
+        if (indice != _indice)
+        {
+            $('#check_' + _indice).prop("checked", false);
+            $('#line_' + _indice).css('background-color', '');
+        }
+        
+        _indice = indice;
+
+        _EdificacaoID = EdificacaoID;
+        _UnidadeID = UnidadeID;
+        _CondominoID = CondominoID;
+    }
+
+    function setTotalCount(total, CondominoID, EdificacaoID, UnidadeID, indice) {
+        if (total == 1)
+        {
+            $('#check_0').prop("checked", true);
+            $('#line_' + indice).css('background-color', 'cornsilk');
+
+            _indice = 0;
+
+            _EdificacaoID = EdificacaoID;
+            _UnidadeID = UnidadeID;
+            _CondominoID = CondominoID;
+        }
+            
+    }
+
+</script>
+
+
+

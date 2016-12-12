@@ -29,14 +29,14 @@
     
     nextPage = lastPage;
 }
-@if (Model.LastPage != -1)
+@if (Model.LastPage != -1 && Model.TotalCount > 1)
 {
     <span class="pull-right margem-negativa margem-interna"><small>@Model.TotalCount.ToString("###,##0") registro(s)</small></span>
     <div class="row" style="text-align: center">
         <div class="col-md-12">
             <ul class="pagination pagination-sm">
-                <li><a href="#" onclick="javascript:foward('0', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-backward"></span> </a></li>
-                <li><a href="#" onclick="javascript:foward('@previewsPage', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-step-backward"></span> </a></li>
+                <li><a href="#@DivId" onclick="javascript:foward('0', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-backward"></span> </a></li>
+                <li><a href="#@DivId" onclick="javascript:foward('@previewsPage', '@Model.PageSize', '@Model.LastPage', '@action', '@DivId');"><span class="glyphicon glyphicon-step-backward"></span> </a></li>
                 @for (int i = firstPage; i < lastPage; i++)
                 {
                     if (Model.PageIndex == i)

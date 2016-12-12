@@ -19,5 +19,8 @@ namespace DWM.Models.Entidades
 
         [DisplayName("Visibilidade")]
         public string VisibilidadeCondomino { get; set; }
+
+        [DisplayName("IsFornecedor")]
+        public string IsFornecedor { get; set; }
     }
 }

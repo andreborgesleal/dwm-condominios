@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="12620277" Data="10/12/2016 19:54:10">
+    <Sessao>mz2lgokoeggo1eiatsisghbk</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewCondominoUnidade =&gt; chamado/create</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewCondominoUnidade.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\CondominoUnidadeModel.cs:linha 318
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 272
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 255</StackTrace>
+  </LOG>
+</LOG>

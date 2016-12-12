@@ -1,4 +1,5 @@
 ﻿using App_Dominio.Entidades;
+using App_Dominio.Security;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -64,6 +65,18 @@ namespace DWM.Models.Entidades
                                         where con.CondominoID == SessaoLocal.CondominoID
                                         select uni).ToList();
             }
+            else 
+            {
+                #region É Fornecedor
+                SessaoLocal.FilaFornecedorID = (from f in db.FilaAtendimentos
+                                                join u in db.FilaAtendimentoUsuarios on f.FilaAtendimentoID equals u.FilaAtendimentoID
+                                                where f.CondominioID == SessaoLocal.empresaId &&
+                                                      u.UsuarioID == SessaoLocal.usuarioId &&
+                                                      u.Situacao == "A" &&
+                                                      f.IsFornecedor == "S"
+                                                select f.FilaAtendimentoID).FirstOrDefault();
+                #endregion
+            }
             #endregion
 
             return SessaoLocal;
@@ -73,5 +86,25 @@ namespace DWM.Models.Entidades
         {
             return db.FilaAtendimentos.Where(info => info.CondominioID == sessaoCorrente.empresaId && info.Descricao.ToLower() == "condôminos").FirstOrDefault().FilaAtendimentoID;
         }
+
+        /// <summary>
+        /// Abre a conexão com o banco de dados e retorna a SessaoLocal
+        /// </summary>
+        /// <param name="Token"></param>
+        /// <returns>Retorna Null se a sessão estiver expirada</returns>
+        public static SessaoLocal GetSessaoLocal(string Token = null)
+        {
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                Sessao sessaoCorrente = security.getSessaoCorrente(Token);
+                SessaoLocal SessaoLocal = null; // se a sessão estiver expirada retorna null
+                if (sessaoCorrente == null)
+                    return SessaoLocal;
+                else
+                    return GetSessaoLocal(sessaoCorrente, db);
+            }
+        }
+
     }
 }

@@ -22,6 +22,7 @@
                         <th class="col-md-3 col-lg-3 column-title text-center nobr">Ação</th>
                         <th class="column-title">Descrição</th>
                         <th class="column-title text-center">Interage c/ Condômino</th>
+                        <th class="column-title text-center">É Fornecedor</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,9 +30,18 @@
                     {
                         <tr class="even pointer">
                             <td class="text-center">
-                                <a href="Edit?id=@fil.FilaAtendimentoID" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
-                                <a href="Delete?id=@fil.FilaAtendimentoID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>&nbsp;
-                                <a href="Index?id=@fil.FilaAtendimentoID" title="Usuários"><i class="fa fa-user fa-2x"></i></a>
+                                @if (fil.FilaCondominoID == fil.FilaAtendimentoID)
+                                {
+                                    <a href="" title="Editar"><i class="fa fa-edit fa-2x"></i></a> 
+                                    <a href="" title="Excluir"><i class="fa fa-trash fa-2x"></i></a> 
+                                    <a href="" title="Usuários"><i class="fa fa-user fa-2x"></i></a>
+                                }
+                                else
+                                {
+                                    <a href="Edit?FilaAtendimentoID=@fil.FilaAtendimentoID" title="Editar"><i class="fa fa-edit fa-2x"></i></a> 
+                                    <a href="Delete?FilaAtendimentoID=@fil.FilaAtendimentoID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a> 
+                                    <a href="Index?id=@fil.FilaAtendimentoID" title="Usuários"><i class="fa fa-user fa-2x"></i></a>
+                                }
                             </td>
                             <td>
                                 <span>@fil.Descricao</span>
@@ -46,6 +56,16 @@
                                     <span>Não</span>
                                 }
 
+                            </td>
+                            <td class="text-center">
+                                @if (fil.IsFornecedor == "S")
+                                {
+                                    <span class="label label-default">Sim</span>
+                                }
+                                else
+                                {
+                                    <span>Não</span>
+                                }
                             </td>
                         </tr>
                     }

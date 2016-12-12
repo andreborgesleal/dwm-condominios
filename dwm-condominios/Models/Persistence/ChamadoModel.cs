@@ -10,6 +10,10 @@ using App_Dominio.Enumeracoes;
 using System.Web;
 using App_Dominio.Security;
 using App_Dominio.Models;
+using App_Dominio.Repositories;
+using System.Data.Entity.Infrastructure;
+using DWM.Models.BI;
+using System.Web.Mvc;
 
 namespace DWM.Models.Persistence
 {
@@ -47,6 +51,132 @@ namespace DWM.Models.Persistence
                 index++;
             }
             #endregion
+            return value;
+        }
+
+        public override ChamadoViewModel AfterInsert(ChamadoViewModel value)
+        {
+            // Enviar e-mail ao destinatário
+            try
+            {
+                EmailLogViewModel EmailLogViewModel = new EmailLogViewModel()
+                {
+                    uri = value.uri,
+                    empresaId = SessaoLocal.empresaId,
+                    EmailTipoID = (int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO,
+                    CondominioID = SessaoLocal.empresaId,
+                    EdificacaoID = value.EdificacaoID,
+                    UnidadeID = value.UnidadeID,
+                    GrupoCondominoID = null,
+                    DataEmail = Funcoes.Brasilia(),
+                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO, SessaoLocal.empresaId).Assunto + " número " + value.ChamadoID.ToString() + " - " + db.Condominios.Find(value.CondominioID).RazaoSocial,
+                    EmailMensagem = value.MensagemOriginal
+                };
+
+                #region Passo 1: Executa o método AfterInsert do ChamadoAnexo para cada elemento da coleção
+                ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+                ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                int index = 0;
+                while (index <= value.Anexos.Count() - 1)
+                {
+                    ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.AfterInsert(value.Anexos.ElementAt(index));
+                    index++;
+                }
+                #endregion
+
+                #region Passo 2: Enviar o e-mail de notificação
+                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
+                EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
+                if (EmailLogViewModel.mensagem.Code > 0)
+                    throw new App_DominioException(EmailLogViewModel.mensagem);
+                #endregion
+
+                #region Passo 3: Alerta 
+                EmpresaSecurity<SecurityContext> empresaSecurity = new EmpresaSecurity<SecurityContext>();
+                empresaSecurity.Create(seguranca_db);
+
+                AlertaRepository alerta = new AlertaRepository()
+                {
+                    uri = value.uri,
+                    empresaId = sessaoCorrente.empresaId,
+                    usuarioId = value.UsuarioID,
+                    sistemaId = sessaoCorrente.sistemaId,
+                    dt_emissao = Funcoes.Brasilia(),
+                    linkText = value.Assunto,
+                    url = "../Atendimento/Create?chamadoId=" + value.ChamadoID.ToString(),
+                    mensagemAlerta = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>" + value.Assunto + "</p>"
+                };
+
+                AlertaRepository r = empresaSecurity.InsertAlerta(alerta);
+                if (r.mensagem.Code > 0)
+                    throw new DbUpdateException(r.mensagem.Message);
+                #endregion
+
+            }
+            catch (ArgumentException ex)
+            {
+                value.mensagem = new Validate() { Code = 997, Message = MensagemPadrao.Message(997).ToString(), MessageBase = ex.Message };
+            }
+            catch (App_DominioException ex)
+            {
+                value.mensagem = ex.Result;
+
+                if (ex.InnerException != null)
+                    value.mensagem.MessageBase = new App_DominioException(ex.InnerException.Message ?? ex.Message, GetType().FullName).Message;
+                else
+                    value.mensagem.MessageBase = new App_DominioException(ex.Result.Message, GetType().FullName).Message;
+            }
+            catch (DbUpdateException ex)
+            {
+                value.mensagem.MessageBase = ex.InnerException.InnerException.Message ?? ex.Message;
+                if (value.mensagem.MessageBase.ToUpper().Contains("REFERENCE") || value.mensagem.MessageBase.ToUpper().Contains("FOREIGN"))
+                {
+                    if (value.mensagem.MessageBase.ToUpper().Contains("DELETE"))
+                    {
+                        value.mensagem.Code = 16;
+                        value.mensagem.Message = MensagemPadrao.Message(16).ToString();
+                        value.mensagem.MessageType = MsgType.ERROR;
+                    }
+                    else
+                    {
+                        value.mensagem.Code = 28;
+                        value.mensagem.Message = MensagemPadrao.Message(28).ToString();
+                        value.mensagem.MessageType = MsgType.ERROR;
+                    }
+                }
+                else if (value.mensagem.MessageBase.ToUpper().Contains("PRIMARY"))
+                {
+                    value.mensagem.Code = 37;
+                    value.mensagem.Message = MensagemPadrao.Message(37).ToString();
+                    value.mensagem.MessageType = MsgType.WARNING;
+                }
+                else if (value.mensagem.MessageBase.ToUpper().Contains("UNIQUE KEY"))
+                {
+                    value.mensagem.Code = 54;
+                    value.mensagem.Message = MensagemPadrao.Message(54).ToString();
+                    value.mensagem.MessageType = MsgType.WARNING;
+                }
+                else
+                {
+                    value.mensagem.Code = 44;
+                    value.mensagem.Message = MensagemPadrao.Message(44).ToString();
+                    value.mensagem.MessageType = MsgType.ERROR;
+                }
+            }
+            catch (System.Data.Entity.Validation.DbEntityValidationException ex)
+            {
+                value.mensagem = new Validate() { Code = 42, Message = MensagemPadrao.Message(42).ToString(), MessageBase = ex.EntityValidationErrors.Select(m => m.ValidationErrors.First().ErrorMessage).First() };
+            }
+            catch (Exception ex)
+            {
+                value.mensagem.Code = 17;
+                value.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                value.mensagem.MessageBase = new App_DominioException(ex.InnerException.InnerException.Message ?? ex.Message, GetType().FullName).Message;
+                value.mensagem.MessageType = MsgType.ERROR;
+            }
+
+            
+
             return value;
         }
 
@@ -129,8 +259,13 @@ namespace DWM.Models.Persistence
             value.Rotas = listChamadoFila.Bind(0, 200, value.ChamadoID);
 
             // Observação: incluir aqui as Anotações do chamado (ChamadoAnotacao) (IEnumerable<CahamdoAnotacaoViewModel>) 
+            ListViewChamadoAnotacao listChamadoAnotacao = new ListViewChamadoAnotacao(this.db, this.seguranca_db);
+            value.Anotacoes = listChamadoAnotacao.Bind(0, 200, value.ChamadoID);
 
             // Observação: incluir aqui os anexos do chamado (ChamadoAnotacao) (IEnumerable<CahamdoAnexoViewModel>) 
+            ListViewChamadoAnexo listChamadoAnexo = new ListViewChamadoAnexo(this.db, this.seguranca_db);
+            value.Anexos = listChamadoAnexo.Bind(0, 100, value.ChamadoID);
+
             return value;
         }
 
@@ -295,8 +430,43 @@ namespace DWM.Models.Persistence
         public override ChamadoViewModel CreateRepository(HttpRequestBase Request = null)
         {
             ChamadoViewModel value = base.CreateRepository(Request);
-            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            value.CondominioID = security.getSessaoCorrente().empresaId;
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    EmpresaSecurity <SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                    security.Create(seguranca_db);
+                    Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
+                    SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, db);
+                    value.CondominioID = sessaoCorrente.empresaId;
+                    value.CondominoID = SessaoLocal.CondominoID;
+                    value.UsuarioID = SessaoLocal.usuarioId;
+                    value.FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db);
+
+                    ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado(db, seguranca_db);
+                    if (SessaoLocal.CondominoID == 0)
+                        value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, 0, 0, "");
+                    else
+                        value.Condominos = (PagedList<CondominoUnidadeViewModel>)l.getPagedList(0, 10, SessaoLocal.CondominoID);
+
+                    // Anexo
+                    value.ChamadoAnexoViewModel = new ChamadoAnexoViewModel();
+
+                    if (Request["_ChamadoMotivoID"] != null && Request["_ChamadoMotivoID"] != "")
+                        value.ChamadoMotivoID = int.Parse(Request["_ChamadoMotivoID"]);
+
+                    if (Request["_FilaSolicitanteID"] != null && Request["_FilaSolicitanteID"] != "")
+                        value.FilaSolicitanteID = int.Parse(Request["_FilaSolicitanteID"]);
+
+                    if (Request["_FilaAtendimentoID"] != null && Request["_FilaAtendimentoID"] != "")
+                        value.FilaAtendimentoID = int.Parse(Request["_FilaAtendimentoID"]);
+
+                    value.MensagemOriginal = Request["MensagemOriginal"] ?? "";
+                    value.Assunto = Request["Assunto"] ?? "";
+                    value.Prioridade = "2";
+                }
+            }
+
             return value;
         }
         #endregion
@@ -314,5 +484,228 @@ namespace DWM.Models.Persistence
         }
         #endregion
 
+    }
+
+    public class ListViewChamado : ListViewModelLocal<ChamadoViewModel>
+    {
+        #region Constructor
+        public ListViewChamado() { }
+
+        public ListViewChamado(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<ChamadoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            int _FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db);
+
+            return (from cha in db.Chamados
+                    join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
+                    join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
+                    from con in CON.DefaultIfEmpty()
+                    join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
+                    from edi in EDI.DefaultIfEmpty()
+                    join sta in db.ChamadoStatuss on cha.ChamadoStatusID equals sta.ChamadoStatusID
+                    join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
+                    where  cha.CondominioID == SessaoLocal.empresaId &&
+                           sta.CondominioID == SessaoLocal.empresaId &&
+                           mot.CondominioID == SessaoLocal.empresaId && 
+                           cha.ChamadoStatusID != 3 && // 3-Encerrado
+                           (cha.UsuarioID == SessaoLocal.usuarioId || cha.UsuarioFilaID == SessaoLocal.usuarioId ||
+                           (from usu in db.FilaAtendimentoUsuarios
+                            where usu.FilaAtendimentoID == cha.FilaAtendimentoID
+                            select usu.UsuarioID).Contains(SessaoLocal.usuarioId)) 
+                    orderby cha.DataChamado descending
+                    select new ChamadoViewModel
+                    {
+                        empresaId = SessaoLocal.empresaId,
+                        ChamadoID = cha.ChamadoID,
+                        ChamadoMotivoID = cha.ChamadoMotivoID,
+                        DescricaoChamadoMotivo = mot.Descricao,
+                        ChamadoStatusID = cha.ChamadoStatusID,
+                        DescricaoChamadoStatus = sta.Descricao,
+                        FilaSolicitanteID = cha.FilaSolicitanteID,
+                        DescricaoFilaSolicitante = (from fil in db.FilaAtendimentos where fil.CondominioID == SessaoLocal.empresaId && fil.FilaAtendimentoID == cha.FilaSolicitanteID select fil.Descricao).FirstOrDefault(),
+                        FilaAtendimentoID = cha.FilaAtendimentoID,
+                        DescricaoFilaAtendimento = FilaAtual.Descricao,
+                        FilaCondominoID = _FilaCondominoID,
+                        CondominoID = cha.CondominoID,
+                        CredenciadoID = cha.CredenciadoID,
+                        NomeCondomino = con != null ? con.Nome : "",
+                        EdificacaoID = cha.EdificacaoID,
+                        DescricaoEdificacao = edi.Descricao,
+                        UnidadeID = cha.UnidadeID,
+                        DataChamado = cha.DataChamado,
+                        Assunto = cha.Assunto,
+                        UsuarioID = cha.UsuarioID,
+                        NomeUsuario = cha.NomeUsuario,
+                        LoginUsuario = cha.LoginUsuario,
+                        Prioridade = cha.Prioridade,
+                        DataUltimaAnotacao = cha.DataUltimaAnotacao,
+                        DataRedirecionamento = cha.DataRedirecionamento,
+                        UsuarioFilaID = cha.UsuarioFilaID,
+                        NomeUsuarioFila = cha.NomeUsuarioFila,
+                        LoginUsuarioFila = cha.LoginUsuarioFila,
+                        PageSize = pageSize,
+                        TotalCount = ((from cha1 in db.Chamados
+                                       join FilaAtual1 in db.FilaAtendimentos on cha1.FilaAtendimentoID equals FilaAtual1.FilaAtendimentoID
+                                       join con1 in db.Condominos on cha1.CondominoID equals con1.CondominoID into CON1
+                                       from con1 in CON1.DefaultIfEmpty()
+                                       join edi1 in db.Edificacaos on cha1.EdificacaoID equals edi1.EdificacaoID into EDI1
+                                       from edi1 in EDI1.DefaultIfEmpty()
+                                       join sta1 in db.ChamadoStatuss on cha1.ChamadoStatusID equals sta1.ChamadoStatusID
+                                       join mot1 in db.ChamadoMotivos on cha1.ChamadoMotivoID equals mot1.ChamadoMotivoID
+                                       where cha1.CondominioID == SessaoLocal.empresaId &&
+                                              sta1.CondominioID == SessaoLocal.empresaId &&
+                                              mot1.CondominioID == SessaoLocal.empresaId &&
+                                              cha1.ChamadoStatusID != 3 && // 3-Encerrado
+                                              (cha1.UsuarioID == SessaoLocal.usuarioId || cha1.UsuarioFilaID == SessaoLocal.usuarioId ||
+                                              (from usu1 in db.FilaAtendimentoUsuarios
+                                               where usu1.FilaAtendimentoID == cha1.FilaAtendimentoID
+                                               select usu1.UsuarioID).Contains(SessaoLocal.usuarioId))
+                                       orderby cha1.DataChamado descending
+                                       select cha1).Count())
+                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new ChamadoModel().getObject((ChamadoViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-chamado";
+        }
+    }
+
+    public class ListViewChamadoDetalhe : ListViewModelLocal<ChamadoViewModel>
+    {
+        #region Constructor
+        public ListViewChamadoDetalhe() { }
+
+        public ListViewChamadoDetalhe(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<ChamadoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            #region parâmetros
+            /* 0. Período:
+             *      007 última semana
+             *      030 últimos 30 dias
+             *      060 últimos 60 dias
+             *      090 Últimos 90 dias
+             *      180 Últimos 180 dias
+             * 
+             * 1. Edificação
+             * 2. Unidade
+             * 3. Condômino
+             * 4. Fila de atendimento
+             * 5. Chamado Motivo =>> Null = Todos
+             * 6. Chamado Status =>> Null = Todos             * 
+             */
+
+            #region Param1: Período
+            DateTime _data1 = _data1 = Funcoes.Brasilia().Date.AddDays(-(int)param[0]);
+            DateTime _data2 = Funcoes.Brasilia().Date;
+            #endregion
+
+            int? _EdificacaoID = (int?)param[1];
+            int? _UnidadeID = (int?)param[2];
+            int? _CondominoID = (int?)param[3];
+            int? _FilaAtendimentoID = (int?)param[4];
+            int? _ChamadoMotivoID = (int?)param[5];
+            int? _ChamadoStatusID = (int?)param[6];
+            #endregion
+
+            return (from cha in db.Chamados
+                    join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
+                    join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
+                    from con in CON.DefaultIfEmpty()
+                    join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
+                    from edi in EDI.DefaultIfEmpty()
+                    join sta in db.ChamadoStatuss on cha.ChamadoStatusID equals sta.ChamadoStatusID
+                    join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
+                    where cha.CondominioID == SessaoLocal.empresaId &&
+                          cha.DataChamado >= _data1 && cha.DataChamado <= _data2 &&
+                          sta.CondominioID == SessaoLocal.empresaId &&
+                          mot.CondominioID == SessaoLocal.empresaId &&
+                          (!_EdificacaoID.HasValue || (cha.EdificacaoID == _EdificacaoID && cha.UnidadeID == _UnidadeID)) &&
+                          (!_CondominoID.HasValue || cha.CondominoID == _CondominoID) &&
+                          (!_FilaAtendimentoID.HasValue || cha.FilaAtendimentoID == _FilaAtendimentoID) &&
+                          (!_ChamadoMotivoID.HasValue || cha.ChamadoMotivoID == _ChamadoMotivoID) &&
+                          (!_ChamadoStatusID.HasValue || cha.ChamadoStatusID == _ChamadoStatusID)
+                    orderby cha.DataChamado descending
+                    select new ChamadoViewModel
+                    {
+                        empresaId = SessaoLocal.empresaId,
+                        ChamadoID = cha.ChamadoID,
+                        ChamadoMotivoID = cha.ChamadoMotivoID,
+                        DescricaoChamadoMotivo = mot.Descricao,
+                        ChamadoStatusID = cha.ChamadoStatusID,
+                        DescricaoChamadoStatus = sta.Descricao,
+                        FilaSolicitanteID = cha.FilaSolicitanteID,
+                        DescricaoFilaSolicitante = (from fil in db.FilaAtendimentos where fil.CondominioID == SessaoLocal.empresaId && fil.FilaAtendimentoID == cha.FilaSolicitanteID select fil.Descricao).FirstOrDefault(),
+                        FilaAtendimentoID = cha.FilaAtendimentoID,
+                        DescricaoFilaAtendimento = FilaAtual.Descricao,
+                        CondominoID = cha.CondominoID,
+                        CredenciadoID = cha.CredenciadoID,
+                        NomeCondomino = con != null ? con.Nome : "",
+                        EdificacaoID = cha.EdificacaoID,
+                        DescricaoEdificacao = edi.Descricao,
+                        UnidadeID = cha.UnidadeID,
+                        DataChamado = cha.DataChamado,
+                        Assunto = cha.Assunto,
+                        UsuarioID = cha.UsuarioID,
+                        NomeUsuario = cha.NomeUsuario,
+                        LoginUsuario = cha.LoginUsuario,
+                        Prioridade = cha.Prioridade,
+                        DataUltimaAnotacao = cha.DataUltimaAnotacao,
+                        DataRedirecionamento = cha.DataRedirecionamento,
+                        UsuarioFilaID = cha.UsuarioFilaID,
+                        NomeUsuarioFila = cha.NomeUsuarioFila,
+                        LoginUsuarioFila = cha.LoginUsuarioFila,
+                        PageSize = pageSize,
+                        TotalCount = ((from cha1 in db.Chamados
+                                       join FilaAtual1 in db.FilaAtendimentos on cha1.FilaAtendimentoID equals FilaAtual1.FilaAtendimentoID
+                                       join con1 in db.Condominos on cha1.CondominoID equals con1.CondominoID into CON1
+                                       from con1 in CON1.DefaultIfEmpty()
+                                       join edi1 in db.Edificacaos on cha1.EdificacaoID equals edi1.EdificacaoID into EDI1
+                                       from edi1 in EDI1.DefaultIfEmpty()
+                                       join sta1 in db.ChamadoStatuss on cha1.ChamadoStatusID equals sta1.ChamadoStatusID
+                                       join mot1 in db.ChamadoMotivos on cha1.ChamadoMotivoID equals mot1.ChamadoMotivoID
+                                       where cha1.CondominioID == SessaoLocal.empresaId &&
+                                             cha1.DataChamado >= _data1 && cha1.DataChamado <= _data2 &&
+                                             sta1.CondominioID == SessaoLocal.empresaId &&
+                                             mot1.CondominioID == SessaoLocal.empresaId &&
+                                             (!_EdificacaoID.HasValue || (cha1.EdificacaoID == _EdificacaoID && cha1.UnidadeID == _UnidadeID)) &&
+                                             (!_CondominoID.HasValue || cha1.CondominoID == _CondominoID) &&
+                                             (!_FilaAtendimentoID.HasValue || cha1.FilaAtendimentoID == _FilaAtendimentoID) &&
+                                             (!_ChamadoMotivoID.HasValue || cha1.ChamadoMotivoID == _ChamadoMotivoID) &&
+                                             (!_ChamadoStatusID.HasValue || cha1.ChamadoStatusID == _ChamadoStatusID)
+                                       orderby cha1.DataChamado descending
+                                       select cha1).Count())
+                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new ChamadoModel().getObject((ChamadoViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-chamado-det";
+        }
     }
 }

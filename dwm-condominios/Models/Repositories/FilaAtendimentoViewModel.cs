@@ -20,5 +20,10 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Visibilidade")]
         public string VisibilidadeCondomino { get; set; }
+
+        [DisplayName("É Fornecedor")]
+        public string IsFornecedor { get; set; }
+
+        public int FilaCondominoID { get; set; }
     }
 }

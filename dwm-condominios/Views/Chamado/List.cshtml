@@ -1,0 +1,75 @@
+﻿@using DWM.Models.Repositories
+@model IEnumerable<ChamadoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <br />
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <p>Clique nos botões de <code>Ação</code> para executar a ação desejada</p>
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title text-center">Data </th>
+                            <th class="column-title text-center">ID </th>
+                            <th class="column-title text-left">Solicitante </th>
+                            <th class="column-title text-left">Edificação </th>
+                            <th class="column-title text-center">Unidade </th>
+                            <th class="column-title text-left">Condômino </th>
+                            <th class="column-title text-left">Assunto </th>
+                            <th class="column-title text-center">Última Anotação </th>
+                            <th class="column-title text-center">Redirecionamento </th>
+                            <th class="column-title text-left">Fila de atendimento </th>
+                            <th class="column-title text-left">Responsável </th>
+                            <th class="column-title no-link last text-center">
+                                <span class="nobr">Ação</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ChamadoViewModel value in Model)
+                        {
+                            string _solicitante = "";
+                            if (value.FilaSolicitanteID == value.FilaCondominoID)
+                            {
+                                _solicitante = value.NomeUsuario;
+                            }
+                            else
+                            {
+                                _solicitante = value.DescricaoFilaSolicitante;
+                            }
+                            <tr class="even pointer">
+                                <td class="text-center">@value.DataChamado.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center">@value.ChamadoID </td>
+                                <td class="text-left">@_solicitante</td>
+                                <td class="text-left">@value.DescricaoEdificacao</td>
+                                <td class="text-center">@value.UnidadeID</td>
+                                <td class="text-left">@value.NomeCondomino</td>
+                                <td class="text-left">@value.Assunto</td>
+                                <td class="text-center">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>
+                                <td class="text-center">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</td>
+                                <td class="text-left">@value.DescricaoFilaAtendimento</td>
+                                <td class="text-left">@value.NomeUsuarioFila</td>
+                                <td class="text-center">
+                                    <a href="~/Chamado/Index?id=@value.ChamadoID" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("Paginacao", Model)
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+
+
