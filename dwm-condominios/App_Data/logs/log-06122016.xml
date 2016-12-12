@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="439884110" Data="06/12/2016 10:37:08">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="745604607" Data="06/12/2016 10:37:51">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1795357931" Data="06/12/2016 10:39:28">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="121591704" Data="06/12/2016 10:39:48">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1913351910" Data="06/12/2016 10:39:55">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="552397113" Data="06/12/2016 10:40:59">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1255259433" Data="06/12/2016 10:41:12">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1430217952" Data="06/12/2016 10:42:05">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="437467944" Data="06/12/2016 10:42:10">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1571719774" Data="06/12/2016 10:42:34">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="715160935" Data="06/12/2016 10:42:57">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="400439888" Data="06/12/2016 10:43:42">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="569801103" Data="06/12/2016 10:44:07">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1683571124" Data="06/12/2016 10:44:51">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>Erro de rede ou específico à instância ao estabelecer conexão com o SQL Server. O servidor não foi encontrado ou não estava acessível. Verifique se o nome da instância está correto e se o SQL Server está configurado para permitir conexões remotas. (provider: Named Pipes Provider, error: 40 - Não foi possível abrir uma conexão com o SQL Server) *** The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/validar</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.EntityConnection.Open()
+   em System.Data.Entity.Core.Objects.ObjectContext.EnsureConnection(Boolean shouldMonitorTransactions)
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1857452002" Data="06/12/2016 10:45:10">
+    <Sessao></Sessao>
+    <IP>::1</IP>
+    <HostName>INSPIRON15R\Daniel</HostName>
+    <Mensagem>The underlying provider failed on Open.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; api/segurancaapi/autenticar</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>

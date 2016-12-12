@@ -11,6 +11,7 @@ using DWM.Models.API;
 using DWM.Models.Pattern;
 using App_Dominio.Security;
 using System.Web.Http.Cors;
+using App_Dominio.Contratos;
 
 namespace DWM.Controllers.API
 {
@@ -23,8 +24,22 @@ namespace DWM.Controllers.API
             // Validar Token
             Auth a = ValidarToken(value);
             if (a.Code != 0)
-                //return new List<InformativoViewModel>();
-                throw new Exception(a.Mensagem);
+            {
+                InformativoViewModel informativoViewModel = new InformativoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<InformativoViewModel> ret = new List<InformativoViewModel>();
+                ret.Add(informativoViewModel);
+                return ret;
+            }
+            //if (a.Code != 0)
+            //    //return new List<InformativoViewModel>();
+            //    throw new Exception(a.Mensagem);
 
             // Listar
             PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
