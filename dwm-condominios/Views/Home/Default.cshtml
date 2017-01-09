@@ -1,6 +1,16 @@
 ﻿@using DWM.Models.Repositories
 @using App_Dominio.Models
 @model DWM.Models.Repositories.HomeViewModel
+@{ 
+    string _hidden = "";
+    string _largura = "col-md-8 col-lg-8";
+
+    if (Model.Informativos.Count() == 0)
+    {
+        _hidden = "hidden";
+        _largura = "col-md-12 col-lg-12";
+    }
+}
 
 <!-- top tiles -->
 <div class="row tile_count">
@@ -37,7 +47,7 @@
 </div>
 <!-- /top tiles -->
 <div class="row">
-    <div class="col-md-4 col-sm-4 col-xs-12">
+    <div class="col-md-4 col-sm-4 col-xs-12" @_hidden>
         <!-- Informativos -->
         <div class="x_panel">
             <div class="x_title">
@@ -102,7 +112,7 @@
         </div>
         <!-- Fim-Informativos -->
     </div>
-    <div class="col-md-8 col-sm-8 col-lg-8 col-xs-12">
+    <div class="@_largura col-sm-12 col-xs-12">
         <div  class="row clearfix">
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <div class="dashboard_graph">

@@ -66,6 +66,7 @@ namespace DWM.Models.Repositories
         public string LoginUsuario { get; set; }
 
         public bool IsFornecedor { get; set; }
+        public bool IsUsuarioFila { get; set; }
 
         [DisplayName("Prioridade")]
         [Required(ErrorMessage = "Prioridade deve ser informada")]
@@ -108,6 +109,7 @@ namespace DWM.Models.Repositories
             }
         }
 
+        public ChamadoAnotacaoViewModel ChamadoAnotacaoViewModel { get; set; }
         public IEnumerable<ChamadoAnotacaoViewModel> Anotacoes{ get; set; }
 
         public virtual ChamadoFilaViewModel ChamadoFilaViewModel { get; set; }

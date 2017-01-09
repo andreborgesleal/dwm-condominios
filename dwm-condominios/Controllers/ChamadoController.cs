@@ -139,6 +139,129 @@ namespace DWM.Controllers
             return RedirectToAction("Browse");
         }
 
+        [AuthorizeFilter]
+        public ActionResult Index(int id)
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getBreadCrumbText("Chamado", null));
+
+                FactoryLocalhost<ChamadoViewModel, ApplicationContext> factory = new FactoryLocalhost<ChamadoViewModel, ApplicationContext>();
+                ChamadoViewModel value = new ChamadoViewModel()
+                {
+                    ChamadoID = id
+                };
+
+                ChamadoViewModel obj = factory.Execute(new ChamadoEditBI(), value);
+                return View(obj);
+            }
+            return View();
+        }
+
+        [ValidateInput(false)]
+        [AuthorizeFilter]
+        public ActionResult EditAnotacao(int ChamadoID, string Mensagem, string FilaAtendimentoAtualID, string _FilaAtendimentoID, string DescricaoFilaAtendimento)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ViewBag.ValidateRequest)
+                {
+                    ChamadoViewModel result = null;
+                    try
+                    {
+                        int? FilaAtendimentoID = null;
+                        if (FilaAtendimentoAtualID != _FilaAtendimentoID)
+                            FilaAtendimentoID = int.Parse(_FilaAtendimentoID);
+
+                        #region Incluir Anotação
+                        result = new ChamadoViewModel()
+                        {
+                            ChamadoID = ChamadoID,
+                            ChamadoAnexoViewModel = new ChamadoAnexoViewModel(),
+                            ChamadoFilaViewModel = new ChamadoFilaViewModel(),
+                            ChamadoAnotacaoViewModel = new ChamadoAnotacaoViewModel()
+                            {
+                                ChamadoID = ChamadoID,
+                                Mensagem = Mensagem
+                            },
+                            FilaAtendimentoID = FilaAtendimentoID,
+                            DescricaoFilaAtendimento = DescricaoFilaAtendimento,
+                            DataRedirecionamento = Funcoes.Brasilia(),
+                            Rotas = new List<ChamadoFilaViewModel>(),
+                            Anexos = new List<ChamadoAnexoViewModel>(),
+                            mensagem = new Validate() { Code = 0 }
+                        };
+                        if (FilaAtendimentoAtualID == _FilaAtendimentoID)
+                            result.IsUsuarioFila = false;
+                        else
+                            result.IsUsuarioFila = true;
+
+                        result.ChamadoAnotacaoViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                        FactoryLocalhost<ChamadoAnotacaoViewModel, ApplicationContext> factory = new FactoryLocalhost<ChamadoAnotacaoViewModel, ApplicationContext>();
+                        result.Anotacoes = factory.Execute(new ChamadoAnotacaoBI(), result, ChamadoID);
+                        if (factory.Mensagem.Code > 0)
+                            throw new App_DominioException(factory.Mensagem);
+
+                        ChamadoAnotacaoModel model = new ChamadoAnotacaoModel();
+                        ChamadoAnotacaoViewModel ChamadoAnotacaoViewModel = model.CreateRepository(Request);
+                        result.ChamadoAnotacaoViewModel.ChamadoID = ChamadoID;
+                        #endregion
+
+                        if (FilaAtendimentoAtualID != _FilaAtendimentoID)
+                            result.IsUsuarioFila = false;
+                        else
+                            result.IsUsuarioFila = true;
+
+                        Success("Registro processado com sucesso");
+                    }
+                    catch (App_DominioException ex)
+                    {
+                        ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+                    catch (Exception ex)
+                    {
+                        App_DominioException.saveError(ex, GetType().FullName);
+                        ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+
+                    return View("_Anotacao", result);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                //CondominoEditViewModel result = new CondominoEditViewModel()
+                //{
+                //    UnidadeViewModel = new UnidadeViewModel()
+                //    {
+                //        EdificacaoID = VeiculoViewModel.EdificacaoID,
+                //        UnidadeID = VeiculoViewModel.UnidadeID,
+                //        CondominioID = VeiculoViewModel.CondominioID
+                //    },
+                //    CondominoPFViewModel = new CondominoPFViewModel()
+                //    {
+                //        CondominoID = VeiculoViewModel.CondominoID
+                //    },
+                //    VeiculoViewModel = VeiculoViewModel
+                //};
+
+                //Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
+                //CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), result);
+                //result.Veiculos = obj.Veiculos;
+
+                //Error("Erro de preenhcimento em campos");
+
+                return View("_Anotacao", result);
+            }
+
+        }
+
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="625997512" Data="08/01/2017 21:53:45">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String _FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 175</StackTrace>
+  </LOG>
+  <LOG ID="723054918" Data="08/01/2017 21:54:16">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String _FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 175</StackTrace>
+  </LOG>
+  <LOG ID="1932623582" Data="08/01/2017 22:00:03">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String _FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 175</StackTrace>
+  </LOG>
+  <LOG ID="35647944" Data="08/01/2017 22:13:59">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1136443077" Data="08/01/2017 22:14:01">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1279270415" Data="08/01/2017 22:14:02">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="883622221" Data="08/01/2017 22:14:04">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="31128281" Data="08/01/2017 22:14:05">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="986108818" Data="08/01/2017 22:15:01">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1047996000" Data="08/01/2017 22:19:26">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1955376750" Data="08/01/2017 22:21:17">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="59414210" Data="08/01/2017 22:28:06">
+    <Sessao>0f2sklbjhr0ehmerxusragzs</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Texto da anotação</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>

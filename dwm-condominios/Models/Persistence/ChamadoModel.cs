@@ -218,13 +218,19 @@ namespace DWM.Models.Persistence
             {
                 ChamadoID = entity.ChamadoID,
                 ChamadoMotivoID = entity.ChamadoMotivoID,
+                DescricaoChamadoMotivo = db.ChamadoMotivos.Find(entity.ChamadoMotivoID, sessaoCorrente.empresaId).Descricao,
                 ChamadoStatusID = entity.ChamadoStatusID,
+                DescricaoChamadoStatus = db.ChamadoStatuss.Find(entity.ChamadoStatusID, sessaoCorrente.empresaId).Descricao,
                 FilaSolicitanteID = entity.FilaSolicitanteID,
+                DescricaoFilaSolicitante = db.FilaAtendimentos.Find(entity.FilaSolicitanteID).Descricao,
+                FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db),
                 CondominioID = entity.CondominioID,
                 CondominoID = entity.CondominoID,
+                NomeCondomino = entity.CondominoID.HasValue ? db.Condominos.Find(entity.CondominoID).Nome : "",
                 CredenciadoID = entity.CredenciadoID,
                 EdificacaoID = entity.EdificacaoID,
                 UnidadeID = entity.UnidadeID,
+                DescricaoEdificacao = entity.UnidadeID.HasValue ? db.Edificacaos.Find(entity.EdificacaoID).Descricao : "",
                 DataChamado = entity.DataChamado,
                 Assunto = entity.Assunto,
                 UsuarioID = entity.UsuarioID,
@@ -234,6 +240,7 @@ namespace DWM.Models.Persistence
                 DataUltimaAnotacao = entity.DataUltimaAnotacao,
                 MensagemOriginal = entity.MensagemOriginal,
                 FilaAtendimentoID = entity.FilaAtendimentoID,
+                DescricaoFilaAtendimento = db.FilaAtendimentos.Find(entity.FilaAtendimentoID).Descricao,
                 DataRedirecionamento = entity.DataRedirecionamento,
                 UsuarioFilaID = entity.UsuarioFilaID,
                 NomeUsuarioFila = entity.NomeUsuarioFila,
@@ -275,6 +282,22 @@ namespace DWM.Models.Persistence
                 }
                 #endregion
             }
+
+            #region Verifica se o usuário corrente é um usuário da Fila de atendimento atual
+            value.IsUsuarioFila = false;
+
+            if (value.UsuarioFilaID.HasValue && value.UsuarioFilaID.Value == SessaoLocal.usuarioId)
+                value.IsUsuarioFila = true;
+            else if (value.FilaAtendimentoID != DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db))
+            {
+                value.IsUsuarioFila = (from f in db.FilaAtendimentos
+                                       join fu in db.FilaAtendimentoUsuarios on f.FilaAtendimentoID equals fu.FilaAtendimentoID
+                                       where f.CondominioID == SessaoLocal.empresaId &&
+                                              f.FilaAtendimentoID == value.FilaAtendimentoID &&
+                                              fu.UsuarioID == SessaoLocal.usuarioId
+                                       select fu.UsuarioID).Count() > 0;
+            }
+            #endregion
 
             return value;
         }

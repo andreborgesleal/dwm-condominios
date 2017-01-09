@@ -1,0 +1,113 @@
+﻿@using System.Linq
+@using App_Dominio.Repositories
+@using DWM.Models.Repositories
+@model ChamadoViewModel
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    foreach (ChamadoAnotacaoViewModel anotacao in Model.Anotacoes)
+    {
+        string[] _nome = anotacao.Nome.Split();
+        <hr />
+        <div class="row clearfix">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                <p>
+                    <strong>@anotacao.DataAnotacao.ToString("dd/MM/yyyy HH:mm")h.</strong>
+                    <span class="pull-right text-prateado">@(_nome[0] + (_nome.Length > 1 ? " " + _nome[_nome.Length - 1] : ""))</span>
+                </p>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                @Html.Raw(anotacao.Mensagem)
+            </div>
+        </div>
+    }
+    <hr />
+    using (Ajax.BeginForm("EditAnotacao", "Chamado", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-anotacao" }, new { @class = "form", @id = "form001", @name = "form001" }))
+    {
+        <div class="row clearfix">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                @Html.Partial("_AjaxAlert", "panel-top")
+                @Html.Partial("_alerts")
+                @Html.HiddenFor(info => info.ChamadoID)
+                @Html.Hidden("DescricaoFilaAtendimento")
+                @Html.Hidden("FilaAtendimentoAtualID", Model.FilaAtendimentoID)
+                <div class="form-group">
+                    <label class="control-label">Nova Mensagem</label>
+                    <input type="hidden" name="Mensagem" id="Mensagem" />
+                    <div id="summernote1"></div>
+                </div>
+                @if (Model.IsUsuarioFila)
+                {
+                    <div class="form-group">
+                        <label class="control-label">Encaminhar para:</label>
+                        @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("",0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                    </div>
+                }
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" onclick="return Valida();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+    $('#summernote1').summernote({
+        lang: 'pt-BR',
+        height: 250,
+        toolbar: [
+           // [groupName, [list of button]]
+           ['style', ['bold', 'italic', 'underline', 'clear']],
+           ['font', ['strikethrough', 'superscript', 'subscript']],
+           ['fontsize', ['fontsize']],
+           ['color', ['color']],
+           ['para', ['ul', 'ol', 'paragraph']],
+           ['height', ['height']],
+           ['insert', ['link', 'picture']]
+        ]
+    });
+    $('#summernote1').summernote('code', $('#Mensagem').val());
+    $('#_DescricaoFilaAtendimento').html("@Model.DescricaoFilaAtendimento <small class=\"text-mama-africa\">@Model.DataRedirecionamento.ToString("dd/MM/yyyy HH:mm") h.</small>");
+
+    $(function () {
+        $('#form001').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-anotacao').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+
+
+    function Valida() {
+        $('#Mensagem').val($('#summernote1').summernote('code'));
+        $('#DescricaoFilaAtendimento').val($("#FilaAtendimentoID option:selected").text());
+
+        if ($('#Mensagem').val() == "") {
+            ShowMessageAjaxAlert('Mensagem deve ser informada', 'warning');
+            return false;
+        }
+
+        return true;
+    }
+
+
+</script>
+

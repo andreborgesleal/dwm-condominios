@@ -242,6 +242,8 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\Auth.cs" />
     <Compile Include="Models\BI\AlertaBI.cs" />
+    <Compile Include="Models\BI\ChamadoAnotacaoBI.cs" />
+    <Compile Include="Models\BI\ChamadoEditBI.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
@@ -4105,6 +4107,8 @@
     <Content Include="Views\Chamado\Create.cshtml" />
     <Content Include="Views\Condomino\ListCondomino.cshtml" />
     <Content Include="Views\Condomino\Search.cshtml" />
+    <Content Include="Views\Chamado\Index.cshtml" />
+    <Content Include="Views\Chamado\_Anotacao.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
