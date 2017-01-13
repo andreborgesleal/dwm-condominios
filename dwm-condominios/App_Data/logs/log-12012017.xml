@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="77542737" Data="12/01/2017 18:26:24">
+    <Sessao>nagcprpugommj1uu4d2w1wpm</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 160
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+  <LOG ID="543117350" Data="12/01/2017 18:32:35">
+    <Sessao>nagcprpugommj1uu4d2w1wpm</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 160
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+  <LOG ID="1734604901" Data="12/01/2017 18:58:59">
+    <Sessao>nagcprpugommj1uu4d2w1wpm</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 161
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+  <LOG ID="855809740" Data="12/01/2017 19:06:18">
+    <Sessao>nagcprpugommj1uu4d2w1wpm</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 161
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+</LOG>

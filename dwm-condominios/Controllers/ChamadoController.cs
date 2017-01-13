@@ -161,7 +161,7 @@ namespace DWM.Controllers
 
         [ValidateInput(false)]
         [AuthorizeFilter]
-        public ActionResult EditAnotacao(int ChamadoID, string Mensagem, string FilaAtendimentoAtualID, string _FilaAtendimentoID, string DescricaoFilaAtendimento)
+        public ActionResult EditAnotacao(int ChamadoID, string Mensagem, string FilaAtendimentoAtualID, string _FilaAtendimentoID, string DescricaoFilaAtendimento, string _ChamadoStatusID, string DescricaoChamadoStatus)
         {
             if (ModelState.IsValid)
             {
@@ -185,8 +185,10 @@ namespace DWM.Controllers
                                 ChamadoID = ChamadoID,
                                 Mensagem = Mensagem
                             },
+                            ChamadoStatusID = _ChamadoStatusID == null || _ChamadoStatusID == "" ? 0 : int.Parse(_ChamadoStatusID),
                             FilaAtendimentoID = FilaAtendimentoID,
                             DescricaoFilaAtendimento = DescricaoFilaAtendimento,
+                            DescricaoChamadoStatus = DescricaoChamadoStatus,
                             DataRedirecionamento = Funcoes.Brasilia(),
                             Rotas = new List<ChamadoFilaViewModel>(),
                             Anexos = new List<ChamadoAnexoViewModel>(),

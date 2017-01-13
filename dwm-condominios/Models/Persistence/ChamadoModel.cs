@@ -195,10 +195,13 @@ namespace DWM.Models.Persistence
             entity.LoginUsuarioFila = value.LoginUsuarioFila;
 
             // Executa o MapToEntity do ChamadoFila
-            ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
-            ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            entity.Rotas = new List<ChamadoFila>();
-            entity.Rotas.Add(ChamadoFilaModel.MapToEntity(value.ChamadoFilaViewModel));
+            if (value.ChamadoFilaViewModel != null)
+            {
+                ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
+                ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                entity.Rotas = new List<ChamadoFila>();
+                entity.Rotas.Add(ChamadoFilaModel.MapToEntity(value.ChamadoFilaViewModel));
+            }
 
             // Mapear anexos
             ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
@@ -209,6 +212,7 @@ namespace DWM.Models.Persistence
                 ChamadoAnexo ChamadoAnexo = ChamadoAnexoModel.MapToEntity(cha);
                 entity.Anexos.Add(ChamadoAnexo);
             };
+
             return entity;
         }
 
@@ -297,6 +301,10 @@ namespace DWM.Models.Persistence
                                               fu.UsuarioID == SessaoLocal.usuarioId
                                        select fu.UsuarioID).Count() > 0;
             }
+            #endregion
+
+            #region Verifica se o usuário corrente é um condômino/credenciado
+            value.IsCondomino = (SessaoLocal.CondominoID > 0 || SessaoLocal.CredenciadoID.HasValue);
             #endregion
 
             return value;
@@ -460,9 +468,12 @@ namespace DWM.Models.Persistence
             }
 
             // Valida o ChamadoFila
-            ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
-            ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            value.mensagem = ChamadoFilaModel.Validate(value.ChamadoFilaViewModel, Crud.INCLUIR);
+            if (operation == Crud.INCLUIR)
+            {
+                ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
+                ChamadoFilaModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                value.mensagem = ChamadoFilaModel.Validate(value.ChamadoFilaViewModel, Crud.INCLUIR);
+            }
 
             // Validar Anexos
             ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();

@@ -67,6 +67,10 @@ namespace DWM.Models.Repositories
 
         public bool IsFornecedor { get; set; }
         public bool IsUsuarioFila { get; set; }
+        /// <summary>
+        /// Indica se o usuário atual logado é um condômino/credenciado
+        /// </summary>
+        public bool IsCondomino { get; set; }
 
         [DisplayName("Prioridade")]
         [Required(ErrorMessage = "Prioridade deve ser informada")]

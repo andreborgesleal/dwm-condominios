@@ -331,6 +331,40 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> ChamadoStatus(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            int _CondominioID = security.getSessaoCorrente().empresaId;
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from m in db.ChamadoStatuss.AsEnumerable()
+                            where m.CondominioID == _CondominioID
+                            orderby m.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = m.ChamadoStatusID.ToString(),
+                                Text = m.Descricao,
+                                Selected = (selectedValue != "" ? m.ChamadoStatusID.ToString() == selectedValue : false)
+                            }).ToList();
+
+                if ((selectedValue == "" || selectedValue == null || selectedValue == "0") && q.Count > 0)
+                    q[0].Selected = true;
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Filas(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

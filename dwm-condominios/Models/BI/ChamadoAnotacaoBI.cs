@@ -80,8 +80,23 @@ namespace DWM.Models.BI
                 }
                 #endregion
 
+                #region Altera o Status do Chamado
+                ChamadoModel ChamadoModel = new ChamadoModel();
+                ChamadoModel.Create(this.db, this.seguranca_db);
+                ChamadoViewModel ChamadoViewModel = ChamadoModel.getObject(repository);
+                if (ChamadoViewModel.ChamadoStatusID != repository.ChamadoStatusID)
+                {
+                    ChamadoViewModel.ChamadoStatusID = repository.ChamadoStatusID;
+                    ChamadoViewModel.empresaId = SessaoLocal.empresaId;
+                    ChamadoViewModel.uri = r.uri;
+                    ChamadoViewModel = ChamadoModel.Update(ChamadoViewModel);
+                    if (ChamadoViewModel.mensagem.Code > 0)
+                        throw new App_DominioException(ChamadoViewModel.mensagem);
+                }
+                #endregion
+
                 db.SaveChanges();
-                seguranca_db.SaveChanges();
+                seguranca_db.SaveChanges(); // 
 
                 result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
             }
@@ -142,7 +157,7 @@ namespace DWM.Models.BI
             catch (Exception ex)
             {
                 result.mensagem.Code = 17;
-                result.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                result.mensagem.Message = MensagemPadrao.Message(17).ToString(); // 
                 result.mensagem.MessageBase = new App_DominioException(ex.InnerException.InnerException.Message ?? ex.Message, GetType().FullName).Message;
                 result.mensagem.MessageType = MsgType.ERROR;
             }

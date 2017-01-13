@@ -34,6 +34,8 @@
                 @Html.HiddenFor(info => info.ChamadoID)
                 @Html.Hidden("DescricaoFilaAtendimento")
                 @Html.Hidden("FilaAtendimentoAtualID", Model.FilaAtendimentoID)
+                @Html.Hidden("DescricaoChamadoStatus")
+                @Html.Hidden("ChamadoStatusID", Model.ChamadoStatusID)
                 <div class="form-group">
                     <label class="control-label">Nova Mensagem</label>
                     <input type="hidden" name="Mensagem" id="Mensagem" />
@@ -44,6 +46,13 @@
                     <div class="form-group">
                         <label class="control-label">Encaminhar para:</label>
                         @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("",0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                    </div>
+                }
+                @if (!Model.IsCondomino)
+                {
+                    <div class="form-group">
+                        <label class="control-label">Situação:</label>
+                        @Html.ListBox("_ChamadoStatusID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoStatus("", 0).Where(info => info.Text != "Novo") , new { @class = "form-control", @size = "5", @id = "ChamadoStatusID" })
                     </div>
                 }
                 <hr />
@@ -78,6 +87,7 @@ else
     });
     $('#summernote1').summernote('code', $('#Mensagem').val());
     $('#_DescricaoFilaAtendimento').html("@Model.DescricaoFilaAtendimento <small class=\"text-mama-africa\">@Model.DataRedirecionamento.ToString("dd/MM/yyyy HH:mm") h.</small>");
+    $('#_DescricaoChamadoStatus').html("@Model.DescricaoChamadoStatus");
 
     $(function () {
         $('#form001').submit(function () {
@@ -99,13 +109,16 @@ else
     function Valida() {
         $('#Mensagem').val($('#summernote1').summernote('code'));
         $('#DescricaoFilaAtendimento').val($("#FilaAtendimentoID option:selected").text());
+        $('#DescricaoChamadoStatus').val($("#ChamadoStatusID option:selected").text());
+
+        alert($('#DescricaoChamadoStatus').val());
 
         if ($('#Mensagem').val() == "") {
             ShowMessageAjaxAlert('Mensagem deve ser informada', 'warning');
             return false;
         }
 
-        return true;
+        return false;
     }
 
 

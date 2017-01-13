@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="212012469" Data="10/01/2017 23:19:42">
+    <Sessao>rsw5hwhb3ysiv4i4vzccrrez</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Identificador interno do usuário não foi localizado. Favor realizar um novo login e se o problema persistir entre em contato com o administrador do sistema.</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="2023409499" Data="10/01/2017 23:26:38">
+    <Sessao>rsw5hwhb3ysiv4i4vzccrrez</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 159
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+  <LOG ID="1326002137" Data="10/01/2017 23:33:14">
+    <Sessao>rsw5hwhb3ysiv4i4vzccrrez</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.ChamadoAnotacaoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\ChamadoAnotacaoBI.cs:linha 160
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 39
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 203</StackTrace>
+  </LOG>
+</LOG>
