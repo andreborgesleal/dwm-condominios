@@ -15,8 +15,8 @@
         <div class="row clearfix">
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <p>
-                    <strong>@anotacao.DataAnotacao.ToString("dd/MM/yyyy HH:mm")h.</strong>
-                    <span class="pull-right text-prateado">@(_nome[0] + (_nome.Length > 1 ? " " + _nome[_nome.Length - 1] : ""))</span>
+                    <strong class="text-mama-africa">@(_nome[0] + (_nome.Length > 1 ? " " + _nome[_nome.Length - 1] : ""))</strong>
+                    <span class="pull-right text-prateado">@anotacao.DataAnotacao.ToString("dd/MM/yyyy HH:mm")h.</span>
                 </p>
             </div>
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
@@ -32,10 +32,11 @@
                 @Html.Partial("_AjaxAlert", "panel-top")
                 @Html.Partial("_alerts")
                 @Html.HiddenFor(info => info.ChamadoID)
-                @Html.Hidden("DescricaoFilaAtendimento")
+                @Html.HiddenFor(info => info.DescricaoFilaAtendimento)
                 @Html.Hidden("FilaAtendimentoAtualID", Model.FilaAtendimentoID)
-                @Html.Hidden("DescricaoChamadoStatus")
-                @Html.Hidden("ChamadoStatusID", Model.ChamadoStatusID)
+                @Html.HiddenFor(info => info.DescricaoChamadoStatus)
+                @Html.HiddenFor(info => info.IsCondomino)
+                @Html.HiddenFor(info => info.IsUsuarioFila)
                 <div class="form-group">
                     <label class="control-label">Nova Mensagem</label>
                     <input type="hidden" name="Mensagem" id="Mensagem" />
@@ -44,9 +45,13 @@
                 @if (Model.IsUsuarioFila)
                 {
                     <div class="form-group">
-                        <label class="control-label">Encaminhar para:</label>
+                        <label class="control-label">Fila de atendimento:</label>
                         @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("",0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
                     </div>
+                }
+                else
+                {
+                    @Html.Hidden("_FilaAtendimentoID", Model.FilaAtendimentoID)
                 }
                 @if (!Model.IsCondomino)
                 {
@@ -54,6 +59,10 @@
                         <label class="control-label">Situação:</label>
                         @Html.ListBox("_ChamadoStatusID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoStatus("", 0).Where(info => info.Text != "Novo") , new { @class = "form-control", @size = "5", @id = "ChamadoStatusID" })
                     </div>
+                }
+                else
+                {
+                    @Html.Hidden("_ChamadoStatusID", Model.ChamadoStatusID)
                 }
                 <hr />
                 <div class="row">
@@ -105,20 +114,19 @@ else
         });
     });
 
-
     function Valida() {
         $('#Mensagem').val($('#summernote1').summernote('code'));
-        $('#DescricaoFilaAtendimento').val($("#FilaAtendimentoID option:selected").text());
-        $('#DescricaoChamadoStatus').val($("#ChamadoStatusID option:selected").text());
-
-        alert($('#DescricaoChamadoStatus').val());
+        if ($('#IsUsuarioFila').val() == 'True')
+            $('#DescricaoFilaAtendimento').val($("#FilaAtendimentoID option:selected").text());
+        if ($('#IsCondomino').val() != 'True')
+            $('#DescricaoChamadoStatus').val($("#ChamadoStatusID option:selected").text());
 
         if ($('#Mensagem').val() == "") {
             ShowMessageAjaxAlert('Mensagem deve ser informada', 'warning');
             return false;
         }
 
-        return false;
+        return true;
     }
 
 

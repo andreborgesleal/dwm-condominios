@@ -483,5 +483,42 @@ namespace DWM.Models.Enumeracoes
                 q[0].Selected = true;
             return q;
         }
+
+        public IEnumerable<SelectListItem> UsuariosFila(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int FilaAtendimentoID = (int)param[2];
+            IList<SelectListItem> q = new List<SelectListItem>();
+
+            if (cabecalho != "")
+                q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                using (SecurityContext seguranca_db = new SecurityContext())
+                {
+                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                    Sessao sessaoCorrente = security._getSessaoCorrente(seguranca_db);
+                    q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
+                                join u in db.FilaAtendimentoUsuarios.AsEnumerable() on f.FilaAtendimentoID equals u.FilaAtendimentoID
+                                where f.CondominioID == sessaoCorrente.empresaId &&
+                                      f.FilaAtendimentoID == FilaAtendimentoID &&  
+                                      u.Situacao == "A"
+                                orderby u.Nome
+                                select new SelectListItem()
+                                {
+                                    Value = u.UsuarioID.ToString(),
+                                    Text = u.Nome,
+                                    Selected = (selectedValue != "" ? u.UsuarioID.ToString() == selectedValue : false)
+                                }).ToList();
+                }
+            }
+            if ((selectedValue == "" || selectedValue == null || selectedValue == "0") && q.Count > 0)
+                q[0].Selected = true;
+            return q;
+        }
     }
 }

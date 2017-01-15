@@ -161,7 +161,10 @@ namespace DWM.Controllers
 
         [ValidateInput(false)]
         [AuthorizeFilter]
-        public ActionResult EditAnotacao(int ChamadoID, string Mensagem, string FilaAtendimentoAtualID, string _FilaAtendimentoID, string DescricaoFilaAtendimento, string _ChamadoStatusID, string DescricaoChamadoStatus)
+        public ActionResult EditAnotacao(
+            int ChamadoID, string Mensagem, 
+            string FilaAtendimentoAtualID, string _FilaAtendimentoID, string DescricaoFilaAtendimento, 
+            string IsCondomino, string _ChamadoStatusID, string DescricaoChamadoStatus)
         {
             if (ModelState.IsValid)
             {
@@ -178,6 +181,7 @@ namespace DWM.Controllers
                         result = new ChamadoViewModel()
                         {
                             ChamadoID = ChamadoID,
+                            uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
                             ChamadoAnexoViewModel = new ChamadoAnexoViewModel(),
                             ChamadoFilaViewModel = new ChamadoFilaViewModel(),
                             ChamadoAnotacaoViewModel = new ChamadoAnotacaoViewModel()
@@ -210,10 +214,25 @@ namespace DWM.Controllers
                         result.ChamadoAnotacaoViewModel.ChamadoID = ChamadoID;
                         #endregion
 
-                        if (FilaAtendimentoAtualID != _FilaAtendimentoID)
-                            result.IsUsuarioFila = false;
-                        else
-                            result.IsUsuarioFila = true;
+                        #region Emitir Alerta e enviar o e-mail para a fila destinatária
+                        FactoryLocalhost<AlertaRepository, ApplicationContext> factoryAlert = new FactoryLocalhost<AlertaRepository, ApplicationContext>();
+                        AlertaBI bi = new AlertaBI();
+                        AlertaRepository a = factoryAlert.Execute(new AlertaBI(), result);
+                        if (a.mensagem.Code > 0)
+                            throw new Exception(a.mensagem.Message);
+                        #endregion
+
+                        #region Recupera o ChamadoViewModel
+                        FactoryLocalhost<ChamadoViewModel, ApplicationContext> factoryChamado = new FactoryLocalhost<ChamadoViewModel, ApplicationContext>();
+                        result = factoryChamado.Execute(new ChamadoEditBI(), result);
+                        #endregion
+
+                        //if (FilaAtendimentoAtualID != _FilaAtendimentoID)
+                        //    result.IsUsuarioFila = false;
+                        //else
+                        //    result.IsUsuarioFila = true;
+
+                        //result.IsCondomino = IsCondomino == "True" ? true : false;
 
                         Success("Registro processado com sucesso");
                     }
@@ -261,9 +280,96 @@ namespace DWM.Controllers
 
                 return View("_Anotacao", result);
             }
-
         }
 
+
+        [AuthorizeFilter]
+        public ActionResult Responsavel(int ChamadoID, string _UsuarioFilaID, string DataRedirecionamento, string FilaAtendimentoID)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ViewBag.ValidateRequest)
+                {
+                    ChamadoViewModel result = null;
+                    try
+                    {
+                        #region Alterar o responsável do chamado (ChamadoFila)
+                        result = new ChamadoViewModel()
+                        {
+                            ChamadoID = ChamadoID,
+                            ChamadoFilaViewModel = new ChamadoFilaViewModel()
+                            {
+                                uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                                ChamadoID = ChamadoID,
+                                Data = Convert.ToDateTime(DataRedirecionamento),
+                                FilaAtendimentoID = int.Parse(FilaAtendimentoID),
+                                UsuarioID = int.Parse(_UsuarioFilaID)
+                            },
+                            UsuarioID = int.Parse(_UsuarioFilaID),
+                            uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                            mensagem = new Validate() { Code = 0 }
+                        };
+
+                        FacadeLocalhost<ChamadoFilaViewModel, ChamadoFilaModel, ApplicationContext> facade = new FacadeLocalhost<ChamadoFilaViewModel, ChamadoFilaModel, ApplicationContext>();
+                        result.ChamadoFilaViewModel = facade.Save(result.ChamadoFilaViewModel, Crud.ALTERAR);
+                        if (result.ChamadoFilaViewModel.mensagem.Code > 0)
+                            throw new App_DominioException(result.ChamadoFilaViewModel.mensagem);
+                        #endregion
+
+                        #region Recupera o ChamadoViewModel
+                        FactoryLocalhost<ChamadoViewModel, ApplicationContext> factoryChamado = new FactoryLocalhost<ChamadoViewModel, ApplicationContext>();
+                        result = factoryChamado.Execute(new ChamadoEditBI(), result);
+                        #endregion
+
+                        Success("Registro processado com sucesso");
+                    }
+                    catch (App_DominioException ex)
+                    {
+                        ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+                    catch (Exception ex)
+                    {
+                        App_DominioException.saveError(ex, GetType().FullName);
+                        ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+
+                    return View("_Responsavel", result);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                //CondominoEditViewModel result = new CondominoEditViewModel()
+                //{
+                //    UnidadeViewModel = new UnidadeViewModel()
+                //    {
+                //        EdificacaoID = VeiculoViewModel.EdificacaoID,
+                //        UnidadeID = VeiculoViewModel.UnidadeID,
+                //        CondominioID = VeiculoViewModel.CondominioID
+                //    },
+                //    CondominoPFViewModel = new CondominoPFViewModel()
+                //    {
+                //        CondominoID = VeiculoViewModel.CondominoID
+                //    },
+                //    VeiculoViewModel = VeiculoViewModel
+                //};
+
+                //Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
+                //CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), result);
+                //result.Veiculos = obj.Veiculos;
+
+                //Error("Erro de preenhcimento em campos");
+
+                return View("_Responsavel", result);
+            }
+
+
+        }
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

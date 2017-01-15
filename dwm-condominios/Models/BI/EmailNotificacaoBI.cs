@@ -188,25 +188,41 @@ namespace DWM.Models.BI
                 ChamadoViewModel r = (ChamadoViewModel)log.Repository;
                 EmailLogViewModel l = new EmailLogViewModel()
                 {
+                    UsuarioID = r.UsuarioID,
                     Nome = r.NomeUsuario,
                     Email = r.LoginUsuario
                 };
 
                 if (r.FilaAtendimentoID != DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db))
                 {
-                    result = (from usu in db.FilaAtendimentoUsuarios
-                              where usu.FilaAtendimentoID == r.FilaAtendimentoID
-                              select new EmailLogViewModel()
-                              {
-                                  Nome = usu.Nome,
-                                  Email = usu.Login
-                              }).ToList();
+                    if (!r.UsuarioFilaID.HasValue)
+                        // Fila de direcioinamento do chamado
+                        result = (from usu in db.FilaAtendimentoUsuarios
+                                  where usu.FilaAtendimentoID == r.FilaAtendimentoID
+                                  select new EmailLogViewModel()
+                                  {
+                                      UsuarioID = usu.UsuarioID,
+                                      Nome = usu.Nome,
+                                      Email = usu.Login
+                                  }).ToList();
+                    else
+                    {
+                        // Responsável pelo chamado
+                        EmailLogViewModel responsavel = new EmailLogViewModel()
+                        {
+                            UsuarioID = r.UsuarioFilaID,
+                            Nome = r.NomeUsuarioFila,
+                            Email = r.LoginUsuarioFila
+                        };
+                        result.Add(responsavel);
+                    }
                 }
                 else
                 {
                     // Encaminhar para o condômino
                     EmailLogViewModel condomino = new EmailLogViewModel()
                     {
+                        UsuarioID = r.UsuarioFilaID,
                         Nome = r.NomeUsuarioFila,
                         Email = r.LoginUsuarioFila
                     };

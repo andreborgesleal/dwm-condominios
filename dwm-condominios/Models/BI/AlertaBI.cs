@@ -45,10 +45,17 @@ namespace DWM.Models.BI
                 sessaoCorrente = security._getSessaoCorrente(seguranca_db, value.sessionId);
 
                 #region Recupera o número do chamado
-                c.ChamadoID = (from cham in db.Chamados
-                               where cham.CondominioID == sessaoCorrente.empresaId &&
-                                     cham.UsuarioID == sessaoCorrente.usuarioId
-                               select cham.ChamadoID).Max();
+                if (c.ChamadoID == 0)
+                    c.ChamadoID = (from cham in db.Chamados
+                                   where cham.CondominioID == sessaoCorrente.empresaId &&
+                                         cham.UsuarioID == sessaoCorrente.usuarioId
+                                   select cham.ChamadoID).Max();
+                else
+                {
+                    ChamadoModel ChamadoModel = new ChamadoModel();
+                    ChamadoModel.Create(this.db, this.seguranca_db);
+                    c = ChamadoModel.getObject(c);
+                }
                 #endregion
 
                 #region Enviar E-mail de notificação
@@ -69,25 +76,30 @@ namespace DWM.Models.BI
                     Nome = c.NomeUsuario + _Edificacao,
                     Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO, sessaoCorrente.empresaId).Assunto + " " + c.ChamadoID.ToString() + " - " + c.Assunto + " - " + db.Condominios.Find(c.CondominioID).RazaoSocial,
                     EmailMensagem = db.EmailTemplates.Find(EmailTemplateID).EmailMensagem,
-                    Repository = value
+                    Repository = c
                 };
                 EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
                 EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
+
+                IEnumerable<EmailLogViewModel> EmailLogPessoas = notificacaoBI.List(EmailLogViewModel);
                 #endregion
 
-                Alerta alerta = new Alerta()
+                foreach (EmailLogViewModel log in EmailLogPessoas)
                 {
-                    usuarioId = c.UsuarioID,
-                    sistemaId = sessaoCorrente.sistemaId,
-                    dt_emissao = Funcoes.Brasilia(),
-                    linkText = c.Assunto,
-                    url = "../Chamado/Edit?chamadoId=" + c.ChamadoID.ToString(),
-                    mensagem = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>" + c.Assunto + "</p>"
-                };
+                    Alerta alerta = new Alerta()
+                    {
+                        usuarioId = log.UsuarioID.Value,
+                        sistemaId = sessaoCorrente.sistemaId,
+                        dt_emissao = Funcoes.Brasilia(),
+                        linkText = c.Assunto,
+                        url = "../Chamado/Index?id=" + c.ChamadoID.ToString(),
+                        mensagem = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>" + c.Assunto + "</p>"
+                    };
 
-                seguranca_db.Alertas.Add(alerta);
+                    seguranca_db.Alertas.Add(alerta);
+                }
                 r.mensagem = new Validate() { Code = 0 };
             }
             catch (DbUpdateException ex)

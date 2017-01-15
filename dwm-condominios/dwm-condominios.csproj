@@ -4109,6 +4109,7 @@
     <Content Include="Views\Condomino\Search.cshtml" />
     <Content Include="Views\Chamado\Index.cshtml" />
     <Content Include="Views\Chamado\_Anotacao.cshtml" />
+    <Content Include="Views\Chamado\_Responsavel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

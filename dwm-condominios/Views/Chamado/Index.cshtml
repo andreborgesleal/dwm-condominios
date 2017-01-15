@@ -47,6 +47,23 @@
                         <h4><strong>Fila</strong></h4>
                         <div id="_DescricaoFilaAtendimento">@(Model.DescricaoFilaAtendimento + " " + Model.DataRedirecionamento.ToString("dd/MM/yyyy HH:mm")) h.</div>
                     </li>
+                    <li class="list-group-item">
+                        <h4><strong>Responsável</strong></h4>
+                        @if (!String.IsNullOrEmpty(Model.NomeUsuarioFila))
+                        {
+                            <div id="_Responsavel">@Model.NomeUsuarioFila</div>
+                        }
+                        else
+                        {
+                            <div id="_Responsavel" class="text-enfatico">Nenhum responsável vinculado</div>
+                        }
+                        @if (!Model.IsCondomino && Model.IsUsuarioFila)
+                        {
+                            <div id="div-responsavel">
+                                @Html.Partial("_Responsavel", Model)
+                            </div>
+                        }
+                    </li>
                 </ul>
             </div>
         </div>

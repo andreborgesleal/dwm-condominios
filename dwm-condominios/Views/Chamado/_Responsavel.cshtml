@@ -1,0 +1,60 @@
+﻿@using System.Linq
+@using App_Dominio.Repositories
+@using DWM.Models.Repositories
+@model ChamadoViewModel
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    using (Ajax.BeginForm("Responsavel", "Chamado", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-responsavel" }, new { @class = "form", @id = "form002", @name = "form002" }))
+    {
+        <div class="row clearfix margem-topo-20">
+            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                @Html.Partial("_AjaxAlert", "panel-top")
+                @Html.Partial("_alerts")
+                @Html.HiddenFor(info => info.ChamadoID)
+                @Html.Hidden("DataRedirecionamento", Model.DataRedirecionamento.ToString("yyyy-MM-dd HH:mm:ss.fff"))
+                @Html.HiddenFor(info => info.FilaAtendimentoID)
+                @Html.HiddenFor(info => info.NomeUsuarioFila)
+                <div class="form-group">
+                    <label class="control-label">Selecionar responsável:</label>
+                    @Html.ListBox("_UsuarioFilaID", new DWM.Models.Enumeracoes.BindDropDownList().UsuariosFila("", 0, Model.FilaAtendimentoID), new { @class = "form-control", @size = "5", @id = "UsuarioFilaID" })
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+    $(function () {
+        $('#form002').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-responsavel').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+    if ($('#NomeUsuarioFila').val() != null && $('#NomeUsuarioFila').val() != '')
+        $('#_Responsavel').html("@Model.NomeUsuarioFila");
+</script>
+
+

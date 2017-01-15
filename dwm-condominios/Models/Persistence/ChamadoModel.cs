@@ -204,14 +204,17 @@ namespace DWM.Models.Persistence
             }
 
             // Mapear anexos
-            ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
-            ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
-            entity.Anexos = new List<ChamadoAnexo>();
-            foreach (ChamadoAnexoViewModel cha in value.Anexos)
+            if (entity.Anexos == null || entity.Anexos.Count == 0)
             {
-                ChamadoAnexo ChamadoAnexo = ChamadoAnexoModel.MapToEntity(cha);
-                entity.Anexos.Add(ChamadoAnexo);
-            };
+                ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
+                ChamadoAnexoModel.Create(this.db, this.seguranca_db, SessaoLocal.sessaoId);
+                entity.Anexos = new List<ChamadoAnexo>();
+                foreach (ChamadoAnexoViewModel cha in value.Anexos)
+                {
+                    ChamadoAnexo ChamadoAnexo = ChamadoAnexoModel.MapToEntity(cha);
+                    entity.Anexos.Add(ChamadoAnexo);
+                };
+            }
 
             return entity;
         }

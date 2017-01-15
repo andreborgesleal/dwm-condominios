@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1790187138" Data="14/01/2017 12:13:37">
+    <Sessao>bfqnr03bftmnziawwlctezne</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.AlertaBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\AlertaBI.cs:linha 148
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 217</StackTrace>
+  </LOG>
+  <LOG ID="1798875019" Data="14/01/2017 12:22:06">
+    <Sessao>elrmradujsecearvmqhvolmv</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>O Campo Solicitante deve deve diferente de {2}.</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1511661920" Data="14/01/2017 12:31:28">
+    <Sessao>elrmradujsecearvmqhvolmv</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>O Campo Solicitante deve deve diferente de {2}.</Mensagem>
+    <NameSpace>DWM.Models.BI.ChamadoAnotacaoBI =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1866224744" Data="14/01/2017 13:41:53">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="13889863" Data="14/01/2017 13:42:00">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="224837573" Data="14/01/2017 13:42:03">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="810328791" Data="14/01/2017 13:42:06">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="615966104" Data="14/01/2017 13:42:07">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="1850262598" Data="14/01/2017 13:42:07">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="1192131345" Data="14/01/2017 13:42:07">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="1655899911" Data="14/01/2017 13:42:07">
+    <Sessao>qrnou32stqcohuqkimzoov4p</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="2126994276" Data="14/01/2017 13:46:12">
+    <Sessao>r5qh2d2nk04ufo0wgrw3cemj</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="635186940" Data="14/01/2017 13:49:56">
+    <Sessao>r5qh2d2nk04ufo0wgrw3cemj</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor não pode ser nulo.
+Nome do parâmetro: String</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer&amp; number, NumberFormatInfo info, Boolean parseDecimal)
+   em System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   em System.Int32.Parse(String s)
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 178</StackTrace>
+  </LOG>
+  <LOG ID="926254284" Data="14/01/2017 17:48:00">
+    <Sessao>r5qh2d2nk04ufo0wgrw3cemj</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 228</StackTrace>
+  </LOG>
+  <LOG ID="589951338" Data="14/01/2017 23:33:00">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="851343747" Data="14/01/2017 23:37:35">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="1832092938" Data="14/01/2017 23:45:01">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="2133461885" Data="14/01/2017 23:45:51">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="638992718" Data="14/01/2017 23:52:03">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="1163206622" Data="14/01/2017 23:53:06">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+  <LOG ID="668136641" Data="14/01/2017 23:53:50">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>A cadeia de caracteres não foi reconhecida como um DateTime válido. Há uma palavra desconhecida que começa no índice 22.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em System.DateTimeParse.Parse(String s, DateTimeFormatInfo dtfi, DateTimeStyles styles)
+   em System.Convert.ToDateTime(String value)
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 297</StackTrace>
+  </LOG>
+  <LOG ID="744037576" Data="14/01/2017 23:58:12">
+    <Sessao>de3gqixr4dq0nrsxivwr2j34</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/responsavel</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Pattern.FacadeLocalhost`3.Save(R value, Crud operation) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FacadeLocalhost.cs:linha 61
+   em DWM.Controllers.ChamadoController.Responsavel(Int32 ChamadoID, String _UsuarioFilaID, String DataRedirecionamento, String FilaAtendimentoID) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 314</StackTrace>
+  </LOG>
+</LOG>
