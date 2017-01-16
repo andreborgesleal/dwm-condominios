@@ -5,6 +5,7 @@
     Sessao sessao = security.getSessaoCorrente();
     Empresa empresa = security.getEmpresa();
     Usuario usuario = security.getUsuario();
+    string[] nome = usuario.nome.Split();
 }
 <!DOCTYPE html>
 <html>
@@ -49,7 +50,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Usuário,</span>
-                            <h2>@(usuario.nome.Trim().Length > 17 ? usuario.nome.Trim().Substring(0,17) : usuario.nome)</h2>
+                            <h2>@(nome[0] + (nome.Length > 1 ? " " + nome[nome.Length - 1] : ""))</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -192,9 +193,10 @@
             <!-- pagen content -->
             <div class="right_col" role="main">
                 @BreadCrumbPage.Trace((App_Dominio.Component.BreadCrumb)ViewBag.BreadCrumb)
-                <div class="container-cadastro">
+                @Html.Partial("_alerts")
+                @*<div class="container-cadastro">
                     @Html.Partial("_alerts")
-                </div>
+                </div>*@
                 @RenderBody()
                 <div style="height: 570px">
                 </div>

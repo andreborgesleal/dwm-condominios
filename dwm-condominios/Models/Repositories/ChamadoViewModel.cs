@@ -3,10 +3,13 @@ using System.ComponentModel.DataAnnotations;
 using App_Dominio.Component;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using DWM.Models.Interfaces;
+using App_Dominio.Security;
+using App_Dominio.Entidades;
 
 namespace DWM.Models.Repositories
 {
-    public class ChamadoViewModel : Repository
+    public class ChamadoViewModel : Repository, IPathArquivos
     {
         [DisplayName("ID")]
         public int ChamadoID { get; set; }
@@ -123,5 +126,17 @@ namespace DWM.Models.Repositories
         public virtual IEnumerable<ChamadoAnexoViewModel> Anexos { get; set; }
 
         public PagedList<CondominoUnidadeViewModel> Condominos { get; set; }
+
+        public string Path()
+        {
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Chamados/";
+        }
+
+        public string Extension(string FileID)
+        {
+            System.IO.FileInfo f = new System.IO.FileInfo(System.IO.Path.Combine(Path(), FileID));
+            return f.Extension;
+        }
     }
 }

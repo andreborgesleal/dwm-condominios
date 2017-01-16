@@ -21,7 +21,7 @@
                             <th class="column-title text-left">Condômino </th>
                             <th class="column-title text-left">Assunto </th>
                             <th class="column-title text-center">Última Anotação </th>
-                            <th class="column-title text-center">Redirecionamento </th>
+                            <th class="column-title text-center">Na fila desde</th>
                             <th class="column-title text-left">Fila de atendimento </th>
                             <th class="column-title text-left">Responsável </th>
                             <th class="column-title no-link last text-center">
@@ -32,6 +32,15 @@
                     <tbody>
                         @foreach (ChamadoViewModel value in Model)
                         {
+                            string WhitePaper = "";
+                            if (value.DataChamado.AddDays(7) < App_Dominio.Models.Funcoes.Brasilia().Date)
+                            {
+                                WhitePaper = "text-danger";
+                            }
+                            else if (value.ChamadoStatusID == 0)
+                            {
+                                WhitePaper = "bg bg-warning";
+                            }
                             string _solicitante = "";
                             if (value.FilaSolicitanteID == value.FilaCondominoID)
                             {
@@ -64,18 +73,18 @@
                                     }
 
                                 }
-                                <td class="text-center">@value.DataChamado.ToString("dd/MM/yyyy")</td>
-                                <td class="text-center">@value.ChamadoID </td>
-                                <td class="text-left">@_n</td>
-                                <td class="text-left">@value.DescricaoEdificacao</td>
-                                <td class="text-center">@value.UnidadeID</td>
-                                <td class="text-left">@value.NomeCondomino</td>
-                                <td class="text-left">@value.Assunto</td>
-                                <td class="text-center">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>
-                                <td class="text-center">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</td>
-                                <td class="text-left">@value.DescricaoFilaAtendimento</td>
-                                <td class="text-left">@_resp</td>
-                                <td class="text-center">
+                                <td class="text-center @WhitePaper">@value.DataChamado.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center @WhitePaper">@value.ChamadoID </td>
+                                <td class="text-left @WhitePaper">@_n</td>
+                                <td class="text-left @WhitePaper">@value.DescricaoEdificacao</td>
+                                <td class="text-center @WhitePaper">@value.UnidadeID</td>
+                                <td class="text-left @WhitePaper">@value.NomeCondomino</td>
+                                <td class="text-left @WhitePaper">@value.Assunto</td>
+                                <td class="text-center @WhitePaper">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>
+                                <td class="text-center @WhitePaper">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</td>
+                                <td class="text-left @WhitePaper">@value.DescricaoFilaAtendimento</td>
+                                <td class="text-left @WhitePaper">@_resp</td>
+                                <td class="text-center @WhitePaper">
                                     <a href="~/Chamado/Index?id=@value.ChamadoID" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
                                 </td>
                             </tr>

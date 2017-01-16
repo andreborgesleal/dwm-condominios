@@ -20,7 +20,7 @@
                 @Html.HiddenFor(info => info.NomeUsuarioFila)
                 <div class="form-group">
                     <label class="control-label">Selecionar responsável:</label>
-                    @Html.ListBox("_UsuarioFilaID", new DWM.Models.Enumeracoes.BindDropDownList().UsuariosFila("", 0, Model.FilaAtendimentoID), new { @class = "form-control", @size = "5", @id = "UsuarioFilaID" })
+                    @Html.ListBox("_UsuarioFilaID", new DWM.Models.Enumeracoes.BindDropDownList().UsuariosFila("", Model.UsuarioFilaID ?? 0, Model.FilaAtendimentoID), new { @class = "form-control", @size = "5", @id = "UsuarioFilaID" })
                 </div>
                 <hr />
                 <div class="row">

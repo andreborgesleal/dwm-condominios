@@ -282,7 +282,6 @@ namespace DWM.Controllers
             }
         }
 
-
         [AuthorizeFilter]
         public ActionResult Responsavel(int ChamadoID, string _UsuarioFilaID, string DataRedirecionamento, string FilaAtendimentoID)
         {
@@ -369,6 +368,72 @@ namespace DWM.Controllers
             }
 
 
+        }
+
+        [AuthorizeFilter]
+        [HttpPost]
+        public ActionResult Anexo(int ChamadoID, string File1ID, string NomeOriginal1)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ViewBag.ValidateRequest)
+                {
+                    ChamadoViewModel result = null;
+                    try
+                    {
+                        #region Incluir novo anexo ao chamado (ChamadoAnexo)
+                        result = new ChamadoViewModel()
+                        {
+                            ChamadoID = ChamadoID,
+                            ChamadoAnexoViewModel = new ChamadoAnexoViewModel()
+                            {
+                                uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                                ChamadoID = ChamadoID,
+                                FileID = File1ID,
+                                DataAnexo = Funcoes.Brasilia(),
+                                NomeOriginal = NomeOriginal1,
+                            },
+                            uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                            mensagem = new Validate() { Code = 0 }
+                        };
+
+                        FacadeLocalhost<ChamadoAnexoViewModel, ChamadoAnexoModel, ApplicationContext> facade = new FacadeLocalhost<ChamadoAnexoViewModel, ChamadoAnexoModel, ApplicationContext>();
+                        result.ChamadoAnexoViewModel = facade.Save(result.ChamadoAnexoViewModel, Crud.INCLUIR);
+                        if (result.ChamadoAnexoViewModel.mensagem.Code > 0)
+                            throw new App_DominioException(result.ChamadoAnexoViewModel.mensagem);
+                        #endregion
+
+                        //#region Recupera o ChamadoViewModel
+                        //FactoryLocalhost<ChamadoViewModel, ApplicationContext> factoryChamado = new FactoryLocalhost<ChamadoViewModel, ApplicationContext>();
+                        //result = factoryChamado.Execute(new ChamadoEditBI(), result);
+                        //#endregion
+
+                        Success("Registro processado com sucesso");
+                    }
+                    catch (App_DominioException ex)
+                    {
+                        ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                        Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+                    catch (Exception ex)
+                    {
+                        App_DominioException.saveError(ex, GetType().FullName);
+                        ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                        Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                    }
+
+                    return RedirectToAction("Browse"); 
+                    //return View("_Anexo", result);
+                }
+                else
+                {
+                    return View();
+                }
+            }
+            else
+            {
+                return View("_Anexo", result);
+            }
         }
 
         #region Retorno as Unidades de uma dada Edificação

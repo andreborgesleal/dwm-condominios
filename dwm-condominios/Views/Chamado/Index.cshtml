@@ -67,6 +67,14 @@
                 </ul>
             </div>
         </div>
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Anexos", Descricao = "", Transacao = t })
+            <div class="x_content">
+                <div id="div-anexo">
+                    @Html.Partial("_Anexo", Model)
+                </div>
+            </div>
+        </div>
     </div>
     <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
         <div class="x_panel">
@@ -88,3 +96,14 @@
     </div>
 </div>
 
+<!-- FileUpload -->
+<link href="~/Content/css/jquery.fileupload.css" rel="stylesheet" />
+<script src="~/Scripts/fileUpload/jquery.ui.widget.js"></script>
+<script src="~/Scripts/fileUpload/jquery.fileupload.js"></script>
+
+<script>
+    $(document).ready(function () {
+        FileUpload2('fileupload1', 'File1ID', 'progress1', 'file_name1', 'myModal1', 'arq1', 'trash1', 'NomeOriginal1');
+    });
+
+</script>

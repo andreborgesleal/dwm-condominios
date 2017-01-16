@@ -46,7 +46,7 @@
                 {
                     <div class="form-group">
                         <label class="control-label">Fila de atendimento:</label>
-                        @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("",0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                        @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("", Model.FilaAtendimentoID ?? 0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
                     </div>
                 }
                 else

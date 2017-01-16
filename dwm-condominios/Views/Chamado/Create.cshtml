@@ -39,7 +39,7 @@
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Assunto</label>
-                            <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
+                            <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Encaminhar para:</label>
-                            @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("", Model.FilaAtendimentoID ?? 0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                            @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("", Model.FilaAtendimentoID ?? 0).Where(info => info.Text != "Condôminos"), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
                         </div>
                     </div>
                 </div>
@@ -277,7 +277,7 @@
             return false;
         }
 
-        return true;
+        return true; 
     }
 
 </script>

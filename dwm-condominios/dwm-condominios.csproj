@@ -303,6 +303,7 @@
     <Compile Include="Models\Enumeracoes\DwmCondominiosEnum.cs" />
     <Compile Include="Models\Enumeracoes\Enumeradores.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Interfaces\IPathArquivos.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pattern\FacadeLocalhost.cs" />
     <Compile Include="Models\Pattern\FactoryLocalhost.cs" />
@@ -4110,6 +4111,7 @@
     <Content Include="Views\Chamado\Index.cshtml" />
     <Content Include="Views\Chamado\_Anotacao.cshtml" />
     <Content Include="Views\Chamado\_Responsavel.cshtml" />
+    <Content Include="Views\Chamado\_Anexo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

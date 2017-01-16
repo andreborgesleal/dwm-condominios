@@ -15,7 +15,7 @@
     t[2].url = "../Home/Default";
 }
 <div class="x_panel">
-    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Chamados", Descricao = "Meus chamados", Transacao = t })
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Meus chamados", Descricao = "Meus chamados", Transacao = t })
     <div class="x_content">
         <div id="div-chamado">
             @Html.Partial("List", Model)
