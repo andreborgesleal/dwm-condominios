@@ -224,6 +224,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\API\DwmApiController.cs" />
     <Compile Include="Controllers\API\InformativosAPIController.cs" />
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
@@ -364,6 +365,7 @@
     <Compile Include="Models\Repositories\TipoCredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\TipoEdificacaoViewModel.cs" />
     <Compile Include="Models\Repositories\UnidadeViewModel.cs" />
+    <Compile Include="Models\Repositories\UsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\VeiculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -406,6 +408,8 @@
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
     <Content Include="Content\images\PARC-PARADISO-LOGO.png" />
     <Content Include="Content\images\parcparadiso.png" />
+    <Content Include="Content\jquery.Jcrop.css" />
+    <Content Include="Content\jquery.Jcrop.min.css" />
     <Content Include="Content\js\custom.js" />
     <Content Include="Content\js\shieldui-all.min.js" />
     <Content Include="Content\js\template.js" />
@@ -465,6 +469,7 @@
     <Content Include="Content\production\js\maps\jquery-jvectormap-us-aea-en.js" />
     <Content Include="Content\production\js\maps\jquery-jvectormap-world-mill-en.js" />
     <Content Include="Content\production\js\moment\moment.min.js" />
+    <Content Include="Content\site.avatar.css" />
     <Content Include="Content\vendors\autosize\.gitignore" />
     <Content Include="Content\vendors\autosize\build.js" />
     <Content Include="Content\vendors\autosize\dist\autosize.js" />
@@ -4005,6 +4010,9 @@
     <Content Include="Scripts\jquery-3.1.1.min.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.js" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.js" />
+    <Content Include="Scripts\jquery.form.js" />
+    <Content Include="Scripts\jquery.form.min.js" />
+    <Content Include="Scripts\jquery.Jcrop.js" />
     <Content Include="Scripts\jquery.maskedinput.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
@@ -4018,9 +4026,10 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\site.avatar.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Temp\teste.txt" />
-    <Content Include="Users_Data\Empresas\3\Avatar\1.png" />
+    <Content Include="Users_Data\Empresas\3\Avatar\68.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -4112,6 +4121,8 @@
     <Content Include="Views\Chamado\_Anotacao.cshtml" />
     <Content Include="Views\Chamado\_Responsavel.cshtml" />
     <Content Include="Views\Chamado\_Anexo.cshtml" />
+    <Content Include="Views\Condomino\Avatar.cshtml" />
+    <Content Include="Views\AlterarSenha\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

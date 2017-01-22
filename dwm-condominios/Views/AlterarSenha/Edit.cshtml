@@ -1,0 +1,94 @@
+﻿@using App_Dominio.Repositories
+@model UsuarioRepository
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Home/Default";
+    t[0].nomeCurto = "Home";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+
+@if (Model != null)
+{
+    <div class="container-cadastro">
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Alterar Senha", Descricao = Model.nome, Transacao = t })
+            <div class="x_content">
+                @using (Html.BeginForm("Edit", "AlterarSenha", FormMethod.Post, new { @class = "form-horizontal" }))
+                {
+                    @Html.HiddenFor(m => m.usuarioId)
+                    @Html.HiddenFor(m => m.empresaId)
+                    @Html.HiddenFor(m => m.login)
+                    @Html.HiddenFor(m => m.nome)
+                    @Html.HiddenFor(m => m.dt_cadastro)
+                    @Html.HiddenFor(m => m.situacao)
+                    @Html.HiddenFor(m => m.isAdmin)
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.login, "Login", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group col-md-4">
+                                        @Html.TextBoxFor(m => m.login, new { @class = "form-control input-sm", @disabled = "disable" })<br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => ((AlterarSenhaRepository)m).senhaAtual, "Senha Atual", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group col-md-4">
+                                        @Html.PasswordFor(m => ((AlterarSenhaRepository)m).senhaAtual, new { @class = "form-control input-sm" })<br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.senha, "Nova Senha", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group col-md-4">
+                                        @Html.PasswordFor(m => m.senha, new { @class = "form-control input-sm" })<br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.confirmacaoSenha, "Confirmação de Senha", new { @class = "col-md-2 control-label" })
+                                <div class="col-md-8">
+                                    <div class="input-group col-md-4">
+                                        @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control input-sm" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" value="Salvar" />
+                                <a href="../Home/Default" class="btn btn-default">Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+

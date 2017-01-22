@@ -5,8 +5,6 @@ using DWM.Models.Persistence;
 using DWM.Models.Repositories;
 using System.Web.Mvc;
 using DWM.Models.Entidades;
-using App_Dominio.Entidades;
-using App_Dominio.Pattern;
 using DWM.Models.BI;
 using System;
 using App_Dominio.Enumeracoes;

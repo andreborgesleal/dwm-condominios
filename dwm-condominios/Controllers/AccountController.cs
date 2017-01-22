@@ -267,6 +267,14 @@ namespace DWM.Controllers
         }
         #endregion
 
+        #region Alterar Senha
+        public ActionResult AlterarSenha()
+        {
+            return View();
+        }
+
+        #endregion
+
         [AllowAnonymous]
         public ActionResult LogOff()
         {
@@ -290,6 +298,4 @@ namespace DWM.Controllers
         }
 
     }
-
-    
 }

@@ -1,6 +1,7 @@
 ﻿using App_Dominio.Component;
 using App_Dominio.Entidades;
 using App_Dominio.Security;
+using DWM.Models.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DWM.Models.Repositories
 {
-    public class InformativoViewModel : Repository
+    public class InformativoViewModel : Repository, IPathArquivos
     {
         [DisplayName("ID")]
         public int InformativoID { get; set; }
@@ -73,5 +74,18 @@ namespace DWM.Models.Repositories
         //}
 
         public IEnumerable<InformativoComentarioViewModel> Comentarios { get; set; }
+
+        public string Path()
+        {
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            return "../Users_Data/Empresas/" + security.getSessaoCorrente().empresaId.ToString() + "/Informativos/";
+        }
+
+        public string Extension(string FileID)
+        {
+            System.IO.FileInfo f = new System.IO.FileInfo(System.IO.Path.Combine(Path(), FileID));
+            return f.Extension;
+        }
+
     }
 }

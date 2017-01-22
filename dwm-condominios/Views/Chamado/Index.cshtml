@@ -9,92 +9,102 @@
 
     t[1].url = "../Home/Default";
 
-    string[] solicitante = Model.Solicitante.Split();
-
+    string[] solicitante = { "" };
+    if (Model != null)
+    {
+        solicitante = Model.Solicitante.Split();
+    }
 }
 
-<div class="row">
-    <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Chamado Nº " + Model.ChamadoID, Descricao = "", Transacao = t })
-            <div class="x_content">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <h4><strong>Solicitante</strong></h4>
-                        <h3>@(solicitante[0] + (solicitante.Length > 1 ? " " + solicitante[solicitante.Length-1] : ""))</h3>
-                    </li>
-                    <li class="list-group-item">
-                        <h4><strong>Data</strong></h4>
-                        @Model.DataChamado.ToString("dd/MM/yyyy HH:mm")h.
-                    </li>
-                    @if (Model.CondominoID.HasValue)
-                    {
+@if (Model != null)
+    {
+    <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Chamado Nº " + Model.ChamadoID, Descricao = "", Transacao = t })
+                <div class="x_content">
+                    <ul class="list-group">
                         <li class="list-group-item">
-                            <h4><strong>Condômino</strong></h4>
-                            @Model.NomeCondomino
-                            <small class="text-enfatico">@(Model.DescricaoEdificacao + " " + Model.UnidadeID)</small>
+                            <h4><strong>Solicitante</strong></h4>
+                            <h3>@(solicitante[0] + (solicitante.Length > 1 ? " " + solicitante[solicitante.Length - 1] : ""))</h3>
                         </li>
-                    }
-                    <li class="list-group-item">
-                        <h4><strong>Motivo</strong></h4>
-                        @Model.DescricaoChamadoMotivo
-                    </li>
-                    <li class="list-group-item">
-                        <h4><strong>Situação</strong></h4>
-                        <div id="_DescricaoChamadoStatus">@Model.DescricaoChamadoStatus</div>
-                    </li>
-                    <li class="list-group-item">
-                        <h4><strong>Fila</strong></h4>
-                        <div id="_DescricaoFilaAtendimento">@(Model.DescricaoFilaAtendimento + " " + Model.DataRedirecionamento.ToString("dd/MM/yyyy HH:mm")) h.</div>
-                    </li>
-                    <li class="list-group-item">
-                        <h4><strong>Responsável</strong></h4>
-                        @if (!String.IsNullOrEmpty(Model.NomeUsuarioFila))
+                        <li class="list-group-item">
+                            <h4><strong>Data</strong></h4>
+                            @Model.DataChamado.ToString("dd/MM/yyyy HH:mm")h.
+                        </li>
+                        @if (Model.CondominoID.HasValue)
                         {
-                            <div id="_Responsavel">@Model.NomeUsuarioFila</div>
+                            <li class="list-group-item">
+                                <h4><strong>Condômino</strong></h4>
+                                @Model.NomeCondomino
+                                <small class="text-enfatico">@(Model.DescricaoEdificacao + " " + Model.UnidadeID)</small>
+                            </li>
                         }
-                        else
-                        {
-                            <div id="_Responsavel" class="text-enfatico">Nenhum responsável vinculado</div>
-                        }
-                        @if (!Model.IsCondomino && Model.IsUsuarioFila)
-                        {
-                            <div id="div-responsavel">
-                                @Html.Partial("_Responsavel", Model)
-                            </div>
-                        }
-                    </li>
-                </ul>
-            </div>
-        </div>
-        <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Anexos", Descricao = "", Transacao = t })
-            <div class="x_content">
-                <div id="div-anexo">
-                    @Html.Partial("_Anexo", Model)
+                        <li class="list-group-item">
+                            <h4><strong>Motivo</strong></h4>
+                            @Model.DescricaoChamadoMotivo
+                        </li>
+                        <li class="list-group-item">
+                            <h4><strong>Situação</strong></h4>
+                            <div id="_DescricaoChamadoStatus">@Model.DescricaoChamadoStatus</div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4><strong>Fila</strong></h4>
+                            <div id="_DescricaoFilaAtendimento">@(Model.DescricaoFilaAtendimento + " " + Model.DataRedirecionamento.ToString("dd/MM/yyyy HH:mm")) h.</div>
+                        </li>
+                        <li class="list-group-item">
+                            <h4><strong>Responsável</strong></h4>
+                            @if (!String.IsNullOrEmpty(Model.NomeUsuarioFila))
+                            {
+                                <div id="_Responsavel">@Model.NomeUsuarioFila</div>
+                            }
+                            else
+                            {
+                                <div id="_Responsavel" class="text-enfatico">Nenhum responsável vinculado</div>
+                            }
+                            @if (!Model.IsCondomino && Model.IsUsuarioFila)
+                            {
+                                <div id="div-responsavel">
+                                    @Html.Partial("_Responsavel", Model)
+                                </div>
+                            }
+                        </li>
+                    </ul>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
-        <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = Model.Assunto, Descricao = "", Transacao = t })
-            <div class="x_content">
-                <div class="row clear">
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                        @Html.Raw(Model.MensagemOriginal)
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Anexos", Descricao = "", Transacao = t })
+                <div class="x_content">
+                    <div id="div-anexo">
+                        @Html.Partial("_Anexo", Model)
                     </div>
                 </div>
-                <div id="div-anotacao">
-                    @Html.Partial("_Anotacao", Model)
+            </div>
+        </div>
+        <div class="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = Model.Assunto, Descricao = "", Transacao = t })
+                <div class="x_content">
+                    <div class="row clear">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            @Html.Raw(Model.MensagemOriginal)
+                        </div>
+                    </div>
+                    <div id="div-anotacao">
+                        @Html.Partial("_Anotacao", Model)
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
 
+        </div>
     </div>
-</div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
 
 <!-- FileUpload -->
 <link href="~/Content/css/jquery.fileupload.css" rel="stylesheet" />

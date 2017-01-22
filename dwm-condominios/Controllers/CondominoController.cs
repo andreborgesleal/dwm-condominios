@@ -13,11 +13,19 @@ using App_Dominio.Enumeracoes;
 using DWM.Models.Pattern;
 using System.Collections.Generic;
 using App_Dominio.Models;
+using System.Web;
+using System.Linq;
+using System.IO;
+using System.Web.Helpers;
+using App_Dominio.Repositories;
 
 namespace DWM.Controllers
 {
     public class CondominoController : DwmRootController<CondominoUnidadeViewModel, CondominoUnidadeModel, ApplicationContext>
     {
+        private int _avatarWidth = 100; // ToDo - Change the size of the stored avatar image
+        private int _avatarHeight = 100; // ToDo - Change the size of the stored avatar image
+
         #region Inheritance
         public override int _sistema_id() { return (int)DWM.Models.Enumeracoes.Sistema.DWMCONDOMINIOS; }
 
@@ -95,10 +103,9 @@ namespace DWM.Controllers
         #endregion
 
         #region Index
-        /*[AuthorizeFilter]*/
+        [AuthorizeFilter]
         public ActionResult Index(int id, int EdificacaoID, int UnidadeID)
         {
-            ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
                 //BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
@@ -668,5 +675,192 @@ namespace DWM.Controllers
         }
         #endregion
 
+        #region Avatar
+        [HttpGet]
+        [AuthorizeFilter]
+        public ActionResult Avatar()
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                UsuarioRepository u = security.getUsuarioRepositoryById();
+
+                UsuarioViewModel r = new UsuarioViewModel()
+                {
+                    usuarioId = u.usuarioId,
+                    empresaId = u.empresaId,
+                    dt_cadastro = u.dt_cadastro,
+                    Grupos = u.Grupos,
+                    isAdmin = u.isAdmin,
+                    login = u.login,
+                    nome = u.nome,
+                    nome_sistema = u.nome_sistema,
+                    situacao = u.situacao
+                };
+
+                return View(r);
+            }
+            return View();
+        }
+
+        [ValidateAntiForgeryToken]
+        [AuthorizeFilter]
+        public ActionResult Avatar(IEnumerable<HttpPostedFileBase> files)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                string errorMessage = "";
+
+                if (files != null && files.Count() > 0)
+                {
+                    // Get one only
+                    var file = files.FirstOrDefault();
+                    // Check if the file is an image
+                    if (file != null && IsImage(file))
+                    {
+                        // Verify that the user selected a file
+                        if (file != null && file.ContentLength > 0)
+                        {
+                            var webPath = SaveTemporaryFile(file);
+                            return Json(new { success = true, fileName = webPath.Replace("/", "\\") }); // success
+                        }
+                        errorMessage = "Arquivo não pode ser de tamnho nulo."; //failure
+                    }
+                    errorMessage = "Formato de arquivo inválido."; //failure
+                }
+                errorMessage = "Nenhum arquivo foi enviado."; //failure
+
+                return Json(new { success = false, errorMessage = errorMessage });
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Save(string t, string l, string h, string w, string fileName, string key)
+        {
+            try
+            {
+                // Get file from temporary folder
+                var fn = Path.Combine(Server.MapPath("~/Temp"), Path.GetFileName(fileName));
+
+                // Calculate dimesnions
+                int top = Convert.ToInt32(t.Replace("-", "").Replace("px", ""));
+                int left = Convert.ToInt32(l.Replace("-", "").Replace("px", ""));
+                int height = Convert.ToInt32(h.Replace("-", "").Replace("px", ""));
+                int width = Convert.ToInt32(w.Replace("-", "").Replace("px", ""));
+
+                // Get image and resize it, ...
+                var img = new WebImage(fn);
+                img.Resize(width, height);
+                // ... crop the part the user selected, ...
+                img.Crop(top, left, img.Height - top - _avatarHeight, img.Width - left - _avatarWidth);
+                // ... delete the temporary file,...
+                System.IO.File.Delete(fn);
+                // ... and save the new one.
+
+                string oldName = new UsuarioViewModel().Avatar;
+                if (oldName.Substring(0,4) != "http")
+                    System.IO.File.Delete(Server.MapPath(oldName));
+
+                string newName = String.Format("{0}" + new FileInfo(fn).Extension, key);
+                //AssociadoViewModel value = (AssociadoViewModel)getModel().getObject(new AssociadoViewModel() { associadoId = int.Parse(key) });
+                //if (value.avatar != null)
+                //    newName = value.avatar;
+
+                //string newFileName = System.Configuration.ConfigurationManager.AppSettings["Avatar"] + "/" + newName; // Path.GetFileName(fn);
+                string newFileLocation = HttpContext.Server.MapPath(new UsuarioViewModel().Path());
+                if (Directory.Exists(Path.GetDirectoryName(newFileLocation)) == false)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(newFileLocation));
+                }
+
+                img.FileName = Path.Combine(newFileLocation, Path.GetFileName(newName));  //newName;
+                img.Save(img.FileName);
+                return Json(new { success = true, avatarFileLocation = newFileLocation });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, errorMessage = "Não foi possível fazer o upload do arquivo.\nERRORINFO: " + ex.Message });
+            }
+        }
+
+        private bool IsImage(HttpPostedFileBase file)
+        {
+            if (file.ContentType.Contains("image"))
+            {
+                return true;
+            }
+
+            var extensions = new string[] { ".jpg", ".png", ".gif", ".jpeg" }; // add more if you like...
+
+            // linq from Henrik Stenbæk
+            return extensions.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
+        }
+
+        private string SaveTemporaryFile(HttpPostedFileBase file)
+        {
+            // Define destination
+            var folderName = "/Temp";
+            var serverPath = HttpContext.Server.MapPath(folderName);
+            if (Directory.Exists(serverPath) == false)
+            {
+                Directory.CreateDirectory(serverPath);
+            }
+
+            // Generate unique file name
+            var fileName = Path.GetFileName(file.FileName);
+            fileName = SaveTemporaryAvatarFileImage(file, serverPath, fileName);
+
+            // Clean up old files after every save
+            CleanUpTempFolder(1);
+
+            return Path.Combine(folderName, fileName);
+        }
+
+        private string SaveTemporaryAvatarFileImage(HttpPostedFileBase file, string serverPath, string fileName)
+        {
+            var img = new WebImage(file.InputStream);
+            double ratio = (double)img.Height / (double)img.Width;
+
+            string fullFileName = Path.Combine(serverPath, fileName);
+
+            img.Resize(400, (int)(400 * ratio)); // ToDo - Change the value of the width of the image oin the screen
+
+            if (System.IO.File.Exists(fullFileName))
+                System.IO.File.Delete(fullFileName);
+
+            img.Save(fullFileName);
+
+            return Path.GetFileName(img.FileName);
+        }
+
+        private void CleanUpTempFolder(int hoursOld)
+        {
+            try
+            {
+                DateTime fileCreationTime;
+                DateTime currentUtcNow = DateTime.UtcNow;
+
+                var serverPath = HttpContext.Server.MapPath("/Temp");
+                if (Directory.Exists(serverPath))
+                {
+                    string[] fileEntries = Directory.GetFiles(serverPath);
+                    foreach (var fileEntry in fileEntries)
+                    {
+                        fileCreationTime = System.IO.File.GetCreationTimeUtc(fileEntry);
+                        var res = currentUtcNow - fileCreationTime;
+                        if (res.TotalHours > hoursOld)
+                        {
+                            System.IO.File.Delete(fileEntry);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+            }
+        }
+
+        #endregion
     }
 }

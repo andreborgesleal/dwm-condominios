@@ -41,6 +41,16 @@ namespace DWM.Models.BI
                 ChamadoModel model = new ChamadoModel();
                 model.Create(this.db, this.seguranca_db, r.sessionId);
                 result = model.MapToRepository(this.db.Chamados.Find(r.ChamadoID));
+
+                #region Valida permissão do usuário para editar o chamado
+                if (!(result.CondominioID == _empresaId &&
+                      (result.CondominoID.HasValue && result.CondominoID == SessaoLocal.CondominoID || 
+                       result.CredenciadoID.HasValue && result.CredenciadoID == SessaoLocal.CredenciadoID ||
+                       result.UsuarioID == SessaoLocal.usuarioId ||
+                       result.UsuarioFilaID.HasValue && result.UsuarioFilaID == SessaoLocal.usuarioId ||
+                       result.Rotas.Where(info => info.UsuarioID == SessaoLocal.usuarioId).Count() > 0)))
+                    result = null;
+                #endregion
             }
             catch (ArgumentException ex)
             {

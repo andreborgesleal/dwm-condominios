@@ -5,69 +5,97 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DWM-Condomínios</title>
-    <!-- Bootstrap -->
-    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="../Content/production/css/custom.css" rel="stylesheet">
-    <script type="text/javascript" src="../scripts/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
-    <script type="text/javascript" src="~/scripts/inputs-jquery-ui.js"></script>
-    
+    <!-- CSS -->
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+    <link rel="stylesheet" href="~/Content/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/Content/assets/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/Content/assets/css/form-elements.css">
+    <link rel="stylesheet" href="~/Content/assets/css/style.css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <!-- Favicon and touch icons -->
+    <link rel="shortcut icon" href="~/Content/assets/ico/favicon.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/assets/ico/apple-touch-icon-57-precomposed.png">
 </head>
-<body style="background:#F7F7F7;">
-    <div class="">
-        <a class="hiddenanchor" id="toregister"></a>
-        <a class="hiddenanchor" id="tologin"></a>
-        <div id="wrapper">
-            <div id="login" class="form">
-                <section class="login_content">
-                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", @role = "form" }))
-                    {
-                        <h1>Acesso</h1>
-                        <div class="row">
-                            <div class="col-md-12">
-                                @Html.AntiForgeryToken()
-                                @Html.Partial("_alerts")
-                                @Html.ValidationSummary(false)
+<body>
+    <!-- Top content -->
+    <div class="top-content" style="margin-top: -85px !important">
+        @Html.Partial("_alerts")
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", @role = "form" }))
+        {
+            @Html.ValidationSummary(false)
+            @Html.AntiForgeryToken()
+            <div class="inner-bg">
+                <div class="container">
+                    @Html.Partial("_alerts")
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1><strong>Condomínio Parc Paradiso</strong> Acesso</h1>
+                            <div class="description hidden-xs">
+                                <p>
+                                    Sistema de Gestão Administrativa de Condomínios.
+                                </p>
                             </div>
                         </div>
-                        <div>
-                            <input type="text" id="UserName" name="UserName" placeholder="E-mail" value="" class="form-control" required autofocus>
-                        </div>
-                        <div>
-                            <input type="password" id="Password" name="Password" placeholder="Senha" class="form-control">
-                        </div>
-                        <div>
-                            <button type="submit" class="btn btn-default submit">Acesso</button>
-                            <a class="reset_pass" href="#">Esqueceu sua senha?</a>
-                        </div>
-                        <div class="clearfix"></div>
-                        <div class="separator">
-                            <p class="change_link">
-                                Novo condômino ?
-                                <a href="../Account/Register?id=3" class="to_register dark"> Cadastre-se </a>
-                            </p>
-                            <div class="clearfix"></div>
-                            <br />
-                            <div>
-                                <h1><i class="fa fa-building-o" style="font-size: 26px;"></i> DWM-Condomínios</h1>
-                                <p>©2016 Todos os direitos reservados - DWM Sistemas</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                            <div class="form-top">
+                                <div class="form-top-left">
+                                    <h3>DWM-Condomínios</h3>
+                                    <p>Informe seu usuário e senha para acessar o sistema:</p>
+                                </div>
+                                <div class="form-top-right">
+                                    <i class="fa fa-lock"></i>
+                                </div>
+                            </div>
+                            <div class="form-bottom">
+                                <form role="form" action="" method="post" class="login-form">
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-username">Username</label>
+                                        <input type="text" id="UserName" name="UserName" placeholder=" E-mail..." value="" class="form-username form-control" required autofocus>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="sr-only" for="form-password">Password</label>
+                                        <input type="password" id="Password" name="Password" placeholder="Senha..." class="form-password form-control">
+                                    </div>
+                                    <div class="row clearfix">
+                                        <div class="col-md-6">
+                                            <button type="submit" class="btn">Acesso</button>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <a href="../Account/Register?id=3" class="pull-right">Cadastre-se</a><br />
+                                            <a href="../Account/Forgot?id=3" class="pull-right">Esqueci minha senha</a>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-                    }
-                </section>
+                    </div>
+                </div>
             </div>
-        </div>
+        }
     </div>
+
+    <!-- Javascript -->
+    <script src="~/Content/assets/js/jquery-1.11.1.min.js"></script>
+    <script src="~/Content/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/Content/assets/js/jquery.backstretch.min.js"></script>
+    <script src="~/Content/assets/js/scripts.js"></script>
+
+    <!--[if lt IE 10]>
+        <script src="assets/js/placeholder.js"></script>
+    <![endif]-->
 </body>
 </html>

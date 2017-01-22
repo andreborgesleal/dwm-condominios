@@ -19,13 +19,13 @@ namespace DWM.Models.Pattern
                     proc.Create(db, seguranca_db);
                     R r = proc.Run(value);
 
-                    if (r.mensagem.Code == 0)
+                    if (r != null && r.mensagem.Code == 0)
                     {
                         db.SaveChanges();
                         seguranca_db.SaveChanges();
                     }
 
-                    Mensagem = r.mensagem;
+                    Mensagem = r != null ? r.mensagem : null;
                     return r;
                 }
             }

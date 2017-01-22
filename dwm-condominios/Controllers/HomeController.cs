@@ -32,7 +32,7 @@ namespace DWM.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return RedirectToAction("Default");
         }
 
         [AuthorizeFilter]
@@ -70,5 +70,23 @@ namespace DWM.Controllers
 
             return View();
         }
+
+        #region Alerta - segurança
+        public ActionResult ReadAlert(int? alertaId)
+        {
+            try
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                if (alertaId.HasValue && alertaId > 0)
+                    security.ReadAlert(alertaId.Value);
+            }
+            catch
+            {
+                return null;
+            }
+
+            return null;
+        }
+        #endregion
     }
 }

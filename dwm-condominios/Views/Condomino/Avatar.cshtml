@@ -1,0 +1,85 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
+@model UsuarioViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Home/Default";
+    t[0].nomeCurto = "Home";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+
+<script type="text/javascript" src="~/scripts/jquery.form.js"></script>
+<script type="text/javascript" src="~/scripts/jquery.Jcrop.js"></script>
+<script type="text/javascript" src="~/scripts/site.avatar.js"></script>
+
+<link href="@Styles.Url("~/Content/jquery.Jcrop.css")" rel="stylesheet" />
+<link href="@Styles.Url("~/Content/site.avatar.css")" rel="stylesheet" />
+
+@if (Model != null)
+{
+    <div class="container-cadastro">
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = Model.nome, Descricao = Model.Grupos.FirstOrDefault().descricao, Transacao = t })
+            <div class="x_content">
+                <div id="avatar-upload-box">
+                    @using (Ajax.BeginForm("Avatar", "Condomino", new AjaxOptions() { HttpMethod = "POST" }, new { enctype = "multipart/form-data", id = "avatar-upload-form" }))
+                    {
+                        @Html.Hidden("usuarioId", Model.usuarioId)
+                        @Html.AntiForgeryToken()
+                        <p class="text-info">Selecione o arquivo desejado para alterar a foto do perfil e depois clique no botão Salvar</p>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <a href="#" class="thumbnail">
+                                    <img id="foto" src="@Model.Avatar" alt="300x200">
+                                </a>
+                            </div>
+                            <div class="col-md-9"></div>
+                        </div>
+                        <div>
+                            <input type="file" name="files" /><br>
+                            <div class="upload-file-notice">Tamanho máximo: <span id="avatar-max-size"></span> MB</div>
+                        </div>
+                    }
+                    <div class="upload-progress col-md-6 hidden">
+                        <div class="upload-percent-value pull-left">0%</div>
+                        <div class="upload-percent-bar pull-left"></div>
+                    </div>
+                    <div id="upload-status"></div>
+                </div>
+                <div id="avatar-crop-box" class="hidden">
+                    <p class="text-info">Ajuste a foto e depois clique no botão Salvar</p>
+                    <div class="jc-demo-box">
+                        <div class="row clearfix">
+                            <div class="col-md-12">
+                                <img src="" id="crop-avatar-target" alt="Uploaded image" />
+                                <div id="preview-pane">
+                                    <div class="preview-container">
+                                        <img src="" class="jcrop-preview" alt="Preview" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p>&nbsp;</p>
+                        <div class="row clearfix">
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button class="btn btn-success" onclick="saveAvatar('@Model.usuarioId')">Salvar</button>
+                                    <a href="../Home/Default" class="btn btn-default" >Cancelar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="avatar-result" class="hidden">
+                    <img src="" alt="Final Image" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
