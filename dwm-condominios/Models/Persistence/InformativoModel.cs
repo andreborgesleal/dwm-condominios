@@ -247,7 +247,7 @@ namespace DWM.Models.Persistence
                     int[] GrupoCondomino = (int[])param[2];
                     for(int i = 0; i <= GrupoCondomino.Count() - 1; i++)
                     {
-                        GrupoCondominoID += GrupoCondominoID[i].ToString() + ";";
+                        GrupoCondominoID += GrupoCondomino[i].ToString() + ";";
                     }
                 }
 
@@ -255,9 +255,7 @@ namespace DWM.Models.Persistence
                 {
                     IEnumerable<Unidade> Unidades = (IEnumerable<Unidade>)param[3];
                     foreach (var unidade in Unidades)
-                    {
-                        EdificacaoID += unidade.EdificacaoID + ";";
-                    }
+                        EdificacaoID += unidade.EdificacaoID.ToString().Trim() + ";";
                 }
             }
 
@@ -266,11 +264,11 @@ namespace DWM.Models.Persistence
                     from gru in GRU.DefaultIfEmpty()
                     join edi in db.Edificacaos on info.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
-                    where // info.DataPublicacao >= data1 && info.DataPublicacao <= data2 &&
-                             info.CondominioID == sessaoCorrente.empresaId
-                            && (IsHome == "N" || info.DataExpiracao >= SqlFunctions.GetDate())
-                            && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info.GrupoCondominoID)))
-                            && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info.EdificacaoID)))
+                    where info.DataPublicacao <= SqlFunctions.GetDate() &&
+                          info.CondominioID == sessaoCorrente.empresaId
+                          && (IsHome == "N" || info.DataExpiracao >= SqlFunctions.GetDate())
+                          && (GrupoCondominoID == "" || !info.GrupoCondominoID.HasValue || (info.GrupoCondominoID.HasValue && GrupoCondominoID.Contains(SqlFunctions.StringConvert((double)info.GrupoCondominoID).Trim())))
+                          && (EdificacaoID == "" || !info.EdificacaoID.HasValue || (info.EdificacaoID.HasValue && EdificacaoID.Contains(SqlFunctions.StringConvert((double)info.EdificacaoID).Trim())))
                     orderby info.DataPublicacao descending
                     select new InformativoViewModel
                     {
@@ -313,11 +311,11 @@ namespace DWM.Models.Persistence
                                       from gru1 in GRU1.DefaultIfEmpty()
                                       join edi1 in db.Edificacaos on info1.EdificacaoID equals edi1.EdificacaoID into EDI1
                                       from edi1 in EDI1.DefaultIfEmpty()
-                                      where // info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2 &&
-                                              info1.CondominioID == sessaoCorrente.empresaId
-                                              && (IsHome == "N" || info1.DataExpiracao >= SqlFunctions.GetDate())
-                                              && (GrupoCondominoID == "" || GrupoCondominoID.Contains(SqlFunctions.StringConvert((decimal)info1.GrupoCondominoID)))
-                                              && (EdificacaoID == "" || EdificacaoID.Contains(SqlFunctions.StringConvert((decimal)info1.EdificacaoID)))
+                                      where info.DataPublicacao <= SqlFunctions.GetDate() &&
+                                            info1.CondominioID == sessaoCorrente.empresaId
+                                            && (IsHome == "N" || info1.DataExpiracao >= SqlFunctions.GetDate())
+                                            && (GrupoCondominoID == "" || !info1.GrupoCondominoID.HasValue || (info1.GrupoCondominoID.HasValue && GrupoCondominoID.Contains(SqlFunctions.StringConvert((double)info1.GrupoCondominoID).Trim())))
+                                            && (EdificacaoID == "" || !info1.EdificacaoID.HasValue || (info1.EdificacaoID.HasValue && EdificacaoID.Contains(SqlFunctions.StringConvert((double)info1.EdificacaoID).Trim())))
                                       orderby info1.DataPublicacao descending
                                       select info1).Count()
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();

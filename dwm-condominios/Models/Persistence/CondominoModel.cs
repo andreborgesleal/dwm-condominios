@@ -48,6 +48,7 @@ namespace DWM.Models.Persistence
             {
                 condomino = getEntityInstance();
                 condomino.DataCadastro = Funcoes.Brasilia();
+                condomino.UsuarioID = value.UsuarioID;
             }
 
             condomino.CondominoID = value.CondominoID;
@@ -59,9 +60,7 @@ namespace DWM.Models.Persistence
             condomino.TelParticular2 = value.TelParticular2 != null ? value.TelParticular2.Replace("(", "").Replace(")", "").Replace("-", "") : value.TelParticular2;
             condomino.IndSituacao = value.IndSituacao;
             condomino.Email = value.Email.ToLower();
-            condomino.UsuarioID = value.UsuarioID;
-            condomino.Observacao = value.Observacao;
-            
+            condomino.Observacao = value.Observacao; 
             condomino.Avatar = value.Avatar;
 
             return condomino;
@@ -84,6 +83,14 @@ namespace DWM.Models.Persistence
             condominoViewModel.Observacao = entity.Observacao;
             condominoViewModel.DataCadastro = entity.DataCadastro;
             condominoViewModel.Avatar = entity.Avatar;
+            #region Avatar do condômino
+            condominoViewModel.UsuarioViewModel = new UsuarioViewModel()
+            {
+                usuarioId = entity.UsuarioID ?? 0,
+                empresaId = entity.CondominioID
+            };
+            #endregion
+
             condominoViewModel.mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS };
 
             return condominoViewModel;

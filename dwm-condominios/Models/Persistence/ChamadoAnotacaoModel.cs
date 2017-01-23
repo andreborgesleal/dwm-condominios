@@ -162,6 +162,11 @@ namespace DWM.Models.Persistence
                             UsuarioID = cha.UsuarioID,
                             Nome = cha.Nome,
                             Login = cha.Login,
+                            UsuarioViewModel = new UsuarioViewModel()
+                            {
+                                empresaId = SessaoLocal.empresaId,
+                                usuarioId = cha.UsuarioID
+                            },
                             PageSize = pageSize,
                             TotalCount = ((from cha1 in db.ChamadoAnotacaos
                                            where cha1.ChamadoID == _ChamadoID

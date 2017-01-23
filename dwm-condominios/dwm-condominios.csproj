@@ -257,6 +257,7 @@
     <Compile Include="Models\BI\GerarTokenBI.cs" />
     <Compile Include="Models\BI\GrupoCondominoUsuarioBI.cs" />
     <Compile Include="Models\BI\HomeBI.cs" />
+    <Compile Include="Models\BI\CondominoCorrenteBI.cs" />
     <Compile Include="Models\BI\InformativoCadastrarBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />

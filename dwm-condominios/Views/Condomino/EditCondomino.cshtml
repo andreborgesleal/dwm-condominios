@@ -16,20 +16,29 @@
         @using (Ajax.BeginForm("EditCondomino", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-condomino-cad" }, new { @class = "form", @id = "form001" }))
         {
             @Html.Partial("_alerts")
-            @Html.ValidationSummary("", new { @class = "text-danger" })
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
             @Html.HiddenFor(info => info.CondominioID)
             @Html.HiddenFor(info => info.CondominoID)
             <div class="row">
-                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Nome, new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "40" })
-                    </div>
+                <div class="col-md-2 col-lg-2 hidden-xs">
+                    <span class="img-responsive">
+                        <img src="@Model.UsuarioViewModel.Avatar("106")" alt="..." class="profile_img margem-topo-20">
+                    </span>
                 </div>
-                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Email, new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                <div class="col-md-10 col-lg-10 col-xs-12 col-sm-12">
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Nome, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "40" })
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

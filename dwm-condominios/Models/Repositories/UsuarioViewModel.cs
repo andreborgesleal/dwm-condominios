@@ -21,34 +21,31 @@ namespace DWM.Models.Repositories
             return f.Extension;
         }
 
-        public string Avatar
+        public string Avatar(string size = "30")
         {
-            get
+            if (usuarioId == 0 || empresaId == 0)
             {
-                if (usuarioId == 0 || empresaId == 0)
-                {
-                    EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                    Sessao sessaoCorrente = security.getSessaoCorrente();
-                    empresaId = sessaoCorrente.empresaId;
-                    usuarioId = sessaoCorrente.usuarioId;
-                }
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                Sessao sessaoCorrente = security.getSessaoCorrente();
+                empresaId = sessaoCorrente.empresaId;
+                usuarioId = sessaoCorrente.usuarioId;
+            }
 
-                FileInfo f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".png");
+            FileInfo f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".png");
+            if (f.Exists)
+                return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".png";
+            else
+            {
+                f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".jpg");
                 if (f.Exists)
-                    return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".png";
+                    return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".jpg";
                 else
                 {
-                    f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".jpg");
+                    f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".bmp");
                     if (f.Exists)
-                        return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".jpg";
+                        return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".bmp";
                     else
-                    {
-                        f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + empresaId.ToString() + "\\Avatar\\" + usuarioId.ToString() + ".bmp");
-                        if (f.Exists)
-                            return "../Users_Data/Empresas/" + empresaId.ToString() + "/Avatar/" + usuarioId.ToString() + ".bmp";
-                        else
-                            return "http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=30";
-                    }
+                        return "http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=" + size;
                 }
             }
         }

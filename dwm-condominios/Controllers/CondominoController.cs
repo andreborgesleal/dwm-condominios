@@ -54,6 +54,7 @@ namespace DWM.Controllers
                 SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
 
                 ViewBag.empresaId = sessaoCorrente.empresaId;
+                ViewBag.CondominoID = SessaoLocal.CondominoID;
 
                 ListViewCondominoUnidade l = new ListViewCondominoUnidade();
                 if (SessaoLocal.CondominoID == 0)
@@ -486,29 +487,34 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult EditGrupoCondomino(GrupoCondominoUsuarioViewModel GrupoCondominoUsuarioViewModel, string Operacao)
         {
-            IEnumerable<GrupoCondominoUsuarioViewModel> Grupos = null;
-            try
+            if (ViewBag.ValidateRequest)
             {
-                #region Incluir/Excluir Grupo do Condômino
-                GrupoCondominoUsuarioViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
-                Factory<GrupoCondominoUsuarioViewModel, ApplicationContext> factory = new Factory<GrupoCondominoUsuarioViewModel, ApplicationContext>();
+                IEnumerable<GrupoCondominoUsuarioViewModel> Grupos = null;
+                try
+                {
+                    #region Incluir/Excluir Grupo do Condômino
+                    GrupoCondominoUsuarioViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                    Factory<GrupoCondominoUsuarioViewModel, ApplicationContext> factory = new Factory<GrupoCondominoUsuarioViewModel, ApplicationContext>();
 
-                Grupos = factory.Execute(new GrupoCondominoUsuarioBI(Operacao), GrupoCondominoUsuarioViewModel, GrupoCondominoUsuarioViewModel.CondominoID);
-                #endregion
-            }
-            catch (App_DominioException ex)
-            {
-                ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
-                Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
-            }
-            catch (Exception ex)
-            {
-                App_DominioException.saveError(ex, GetType().FullName);
-                ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
-                Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
-            }
+                    Grupos = factory.Execute(new GrupoCondominoUsuarioBI(Operacao), GrupoCondominoUsuarioViewModel, GrupoCondominoUsuarioViewModel.CondominoID);
+                    #endregion
+                }
+                catch (App_DominioException ex)
+                {
+                    ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+                    Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
+                catch (Exception ex)
+                {
+                    App_DominioException.saveError(ex, GetType().FullName);
+                    ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
+                    Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                }
 
-            return View("_GrupoCondomino", Grupos);
+                return View("_GrupoCondomino", Grupos);
+            }
+            else
+                return View();
         }
         #endregion
 
@@ -758,7 +764,7 @@ namespace DWM.Controllers
                 System.IO.File.Delete(fn);
                 // ... and save the new one.
 
-                string oldName = new UsuarioViewModel().Avatar;
+                string oldName = new UsuarioViewModel().Avatar();
                 if (oldName.Substring(0,4) != "http")
                     System.IO.File.Delete(Server.MapPath(oldName));
 

@@ -55,5 +55,7 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Situação")]
         public string IndSituacao { get; set; }
+
+        public UsuarioViewModel UsuarioViewModel { get; set; }
     }
 }

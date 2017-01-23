@@ -38,6 +38,8 @@ namespace DWM.Models.Repositories
         [DisplayName("Condômino")]
         public System.Nullable<int> CondominoID { get; set; }
 
+        public UsuarioViewModel UsuarioCondominoViewModel { get; set; }
+
         [DisplayName("Credenciado")]
         public System.Nullable<int> CredenciadoID { get; set; }
 

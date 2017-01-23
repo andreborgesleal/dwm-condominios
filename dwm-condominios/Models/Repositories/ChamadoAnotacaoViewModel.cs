@@ -24,5 +24,7 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Login")]
         public string Login { get; set; }
+
+        public UsuarioViewModel UsuarioViewModel { get; set; }
     }
 }

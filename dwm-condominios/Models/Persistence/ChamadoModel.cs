@@ -255,6 +255,23 @@ namespace DWM.Models.Persistence
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
 
+            if (entity.CondominoID.HasValue)
+            {
+                value.UsuarioCondominoViewModel = new UsuarioViewModel()
+                {
+                    empresaId = SessaoLocal.empresaId,
+                    usuarioId = db.Condominos.Find(entity.CondominoID).UsuarioID.Value
+                };
+            }
+            else if (entity.CredenciadoID.HasValue)
+            {
+                value.UsuarioCondominoViewModel = new UsuarioViewModel()
+                {
+                    empresaId = SessaoLocal.empresaId,
+                    usuarioId = db.Credenciados.Find(entity.CredenciadoID).UsuarioID.Value
+                };
+            }
+
             ListViewChamadoFila listChamadoFila = new ListViewChamadoFila(this.db, this.seguranca_db);
             ListViewChamadoAnotacao listChamadoAnotacao = new ListViewChamadoAnotacao(this.db, this.seguranca_db);
             ListViewChamadoAnexo listChamadoAnexo = new ListViewChamadoAnexo(this.db, this.seguranca_db);

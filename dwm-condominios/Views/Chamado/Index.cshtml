@@ -36,8 +36,17 @@
                         {
                             <li class="list-group-item">
                                 <h4><strong>Condômino</strong></h4>
-                                @Model.NomeCondomino
-                                <small class="text-enfatico">@(Model.DescricaoEdificacao + " " + Model.UnidadeID)</small>
+                                <div class="row clearfix">
+                                    <div class="col-md-2 col-lg-2 hidden-xs">
+                                        <span class="img-responsive">
+                                            <img src="@Model.UsuarioCondominoViewModel.Avatar("60")" height="45" class="profile_img">
+                                        </span>
+                                    </div>
+                                    <div class="col-md-10 col-lg-10 col-xs-12col-sm-12">
+                                        @Model.NomeCondomino<br />
+                                        <small class="text-enfatico">@(Model.DescricaoEdificacao + " " + Model.UnidadeID)</small>
+                                    </div>
+                                </div>
                             </li>
                         }
                         <li class="list-group-item">

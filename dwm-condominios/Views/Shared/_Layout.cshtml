@@ -11,7 +11,7 @@
     u.empresaId = usuario.empresaId;
 
     string[] nome = usuario.nome.Split();
-    string avatar = u.Avatar;
+    string avatar = u.Avatar();
 
     // alertas
     IEnumerable<AlertaRepository> alertas = security.getLast6Alertas();

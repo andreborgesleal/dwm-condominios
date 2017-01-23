@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="970978807" Data="22/01/2017 16:40:39">
+    <Sessao>mvlxcnqzalftls5fhirq32fo</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editgrupocondomino</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Entidades.DWMSessaoLocal.GetSessaoLocal(Sessao sessaoCorrente, DbContext _db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMSessaoLocal.cs:linha 60
+   em DWM.Models.Entidades.ListViewModelLocal`1.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\ListViewModelLocal.cs:linha 19
+   em DWM.Models.Persistence.ListViewGrupoCondominoUsuarios..ctor(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\GrupoCondominoUsuarioModel.cs:linha 90
+   em DWM.Models.BI.GrupoCondominoUsuarioBI.List(Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\GrupoCondominoUsuarioBI.cs:linha 132
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 51
+   em DWM.Controllers.CondominoController.EditGrupoCondomino(GrupoCondominoUsuarioViewModel GrupoCondominoUsuarioViewModel, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 497</StackTrace>
+  </LOG>
+  <LOG ID="572175242" Data="22/01/2017 16:41:35">
+    <Sessao>mvlxcnqzalftls5fhirq32fo</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcondomino</NameSpace>
+    <Context />
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 153
+   em DWM.Controllers.CondominoController.EditCondomino(Int32 CondominioID, Int32 CondominoID, String Nome, String Email, String IndFiscal, String IndSituacao, String TelParticular1, String TelParticular2, String DataNascimento, String Sexo, String IndProprietario, String IndAnimal, String ProfissaoID, String Observacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 168</StackTrace>
+  </LOG>
+</LOG>

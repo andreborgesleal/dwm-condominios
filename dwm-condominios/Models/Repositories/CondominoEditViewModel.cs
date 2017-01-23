@@ -7,7 +7,7 @@ namespace DWM.Models.Repositories
     {
         public CondominoPFViewModel CondominoPFViewModel { get; set; }
         public UnidadeViewModel UnidadeViewModel { get; set; }
-        public IEnumerable<CredenciadoViewModel> Credenciados{ get; set; }
+        public IEnumerable<CredenciadoViewModel> Credenciados { get; set; }
         public IEnumerable<VeiculoViewModel> Veiculos { get; set; }
         public IEnumerable<FuncionarioViewModel> Funcionarios { get; set; }
         public IEnumerable<GrupoCondominoUsuarioViewModel> GrupoCondominoUsuarios { get; set; }

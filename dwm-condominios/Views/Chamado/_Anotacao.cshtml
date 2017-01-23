@@ -13,10 +13,15 @@
         string[] _nome = anotacao.Nome.Split();
         <hr />
         <div class="row clearfix">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+            <div class="col-md-1 col-lg-1 hidden-xs">
+                <span class="img-responsive">
+                    <img src="@anotacao.UsuarioViewModel.Avatar("60")" height="45" class="profile_img">
+                </span>
+            </div>
+            <div class="col-md-11 col-lg-11 col-sm-12 col-xs-12">
                 <p>
-                    <strong class="text-mama-africa">@(_nome[0] + (_nome.Length > 1 ? " " + _nome[_nome.Length - 1] : ""))</strong>
-                    <span class="pull-right text-prateado">@anotacao.DataAnotacao.ToString("dd/MM/yyyy HH:mm")h.</span>
+                    <strong class="text-mama-africa">@(_nome[0] + (_nome.Length > 1 ? " " + _nome[_nome.Length - 1] : ""))</strong><br />
+                    <span class="text-prateado">@anotacao.DataAnotacao.ToString("dd/MM/yyyy HH:mm")h.</span>
                 </p>
             </div>
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">

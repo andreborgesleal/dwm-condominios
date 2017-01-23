@@ -54,10 +54,14 @@ namespace DWM.Models.Entidades
                 #endregion
 
                 #region Grupos do Condômino
-                int i = 0;
                 var _GrupoCondominoID = (from g in db.GrupoCondominoUsuarios where g.CondominoID == SessaoLocal.CondominoID select g.GrupoCondominoID).AsEnumerable();
-                foreach (int GrupoCondominoID in _GrupoCondominoID)
-                    SessaoLocal.GrupoCondominoID[i++] = GrupoCondominoID;
+                if (_GrupoCondominoID.Count() > 0)
+                {
+                    int i = 0;
+                    SessaoLocal.GrupoCondominoID = new int[_GrupoCondominoID.Count()];
+                    foreach (int GrupoCondominoID in _GrupoCondominoID)
+                        SessaoLocal.GrupoCondominoID[i++] = GrupoCondominoID;
+                }
                 #endregion
 
                 SessaoLocal.Unidades = (from uni in db.Unidades
