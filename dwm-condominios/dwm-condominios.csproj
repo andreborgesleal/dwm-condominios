@@ -252,6 +252,7 @@
     <Compile Include="Models\BI\EditarVeiculoBI.cs" />
     <Compile Include="Models\BI\EmailNotificacaoBI.cs" />
     <Compile Include="Models\BI\EnviarEmailBI.cs" />
+    <Compile Include="Models\BI\EsqueciMinhaSenhaBI.cs" />
     <Compile Include="Models\BI\FilaAtendimentoUsuarioBI.cs" />
     <Compile Include="Models\BI\FilaAtendimentoUsuarioCadastrarBI.cs" />
     <Compile Include="Models\BI\GerarTokenBI.cs" />
@@ -4124,6 +4125,7 @@
     <Content Include="Views\Chamado\_Anexo.cshtml" />
     <Content Include="Views\Condomino\Avatar.cshtml" />
     <Content Include="Views\AlterarSenha\Edit.cshtml" />
+    <Content Include="Views\Account\Forgot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

@@ -17,7 +17,8 @@ namespace DWM.Models.Enumeracoes
             HABILITA_EMAIL = 5,
             GRUPO_CREDENCIADO = 6,
             URL_CONDOMINIO = 7,
-            EMAIL_TEMPLATE_CHAMADO = 8
+            EMAIL_TEMPLATE_CHAMADO = 8,
+            ESQUECI_MINHA_SENHA = 9
         }
 
         public enum EmailTipo
@@ -45,6 +46,10 @@ namespace DWM.Models.Enumeracoes
             [StringDescription("Chamado")]
             [StringValue("6")]
             CHAMADO = 6,
+
+            [StringDescription("Esqueci minha senha")]
+            [StringValue("7")]
+            FORGOT = 7,
 
             [StringDescription("Outros")]
             [StringValue("9")]

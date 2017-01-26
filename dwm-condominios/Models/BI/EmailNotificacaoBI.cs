@@ -179,7 +179,8 @@ namespace DWM.Models.BI
                                        Email = cre.Email
                                    }).ToList();
             }
-            else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO)
+            else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO ||
+                    log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT)
             {
                 result.Add(log);
             }
@@ -231,6 +232,10 @@ namespace DWM.Models.BI
                 }
 
                 result.Add(l);
+            }
+            else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT)
+            {
+
             }
 
             return result;

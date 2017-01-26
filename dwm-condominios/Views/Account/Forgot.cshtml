@@ -1,0 +1,131 @@
+﻿@model DWM.Models.Repositories.UsuarioViewModel
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>DWM-Condomínios</title>
+    <!-- Bootstrap -->
+    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+
+
+    <!-- Custom Theme Style -->
+    <link href="../Content/production/css/custom.css" rel="stylesheet">
+
+    <!-- Site.css -->
+    <link href="../Content/Site.css" rel="stylesheet">
+
+    <!-- Sticky-footer-->
+    <link href="../Content/Css/sticky-footer.css" rel="stylesheet" />
+
+    <!-- Custom Theme Style -->
+    @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
+    <script type="text/javascript" src="../scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="~/scripts/jquery.maskedinput.js"></script>
+    <script type="text/javascript" src="~/scripts/inputs-jquery-ui.js"></script>
+</head>
+<body style="background:#cccccc;">
+    <nav class="navbar navbar-fixed-top navbar-default hidden-xs">
+        <div class="container-cadastro center-margin">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><img class="img-responsive" src="~/Content/images/parcparadiso.png" style="height: 80px" /></li>
+                </ul>
+                <ul class="nav navbar-nav" style="margin-top: 20px">
+                    <li><h3>&nbsp;&nbsp;&nbsp;Parc Paradiso Condomínio Resort</h3></li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li><a href="~/Account/Login">Acesso</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container-cadastro center-margin">
+        <div class="margem-topo-100 hidden-xs"></div>
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Esqueci minha Senha</h2>
+                <ul class="nav navbar-right panel_toolbox hidden-xs">
+                    <li>
+                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">Política de privacidade</a>
+                            </li>
+                            <li>
+                                <a href="#">Termos de Uso</a>
+                            </li>
+                        </ul>
+                    </li>
+                    @*<li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>*@
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content">
+                @using (Html.BeginForm("Forgot", "Account", FormMethod.Post))
+                {
+                    @Html.Partial("_alerts")
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.Hidden("empresaId",Request["id"])
+                    <div class="hidden-sm hidden-xs">
+                        <h4>Instruções:</h4>
+                        <p class="font-gray-dark">
+                            - Preencha o e-mail informado no cadastramento de sua unidade e clique no botão <strong>[Salvar]</strong>
+                        </p>
+                        <p class="font-gray-dark">
+                            - Em seguida, será enviado para o seu e-mail as instruções de atualização de sua senha.
+                        </p>
+                    </div>
+                    <div class="row margem-topo-30">
+                        <div class="col-md-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label>Login</label>
+                                <input type="email" class="form-control" maxlength="100" placeholder="Informe o seu e-mail de acesso ao sistema" id="login" name="login" required />
+                                @*@Html.TextBoxFor(m => m.login, new { @class = "form-control", @maxlength = "100", @placeholder = "Informe o seu e-mail de acesso ao sistema" })*@
+                            </div>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <div class="row clearfix">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-success" value="Salvar" />
+                                <input type="button" onclick="window.location = '../Account/Login'" class="btn btn-default" value="Cancelar" />
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <section class="footer text-white text-right" style="background-color: #000;">
+        <div class="container-fluid">
+            <p class="text-muted margem-top-10">Criado por <a href="http://www.dwmsistemas.com" class="text-danger">DWM SISTEMAS</a></p>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="../Content/vendors/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+</body>
+</html>
