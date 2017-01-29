@@ -1,9 +1,20 @@
 <?xml version="1.0"?>
-<doc>
+<doc xml:lang="en">
     <assembly>
         <name>Microsoft.AI.DependencyCollector</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.ApplicationInsights.DependencyCollector.HttpDependenciesParsingTelemetryInitializer">
+            <summary>
+            Telemetry Initializer that parses http dependencies into well-known types like Azure Storage.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.HttpDependenciesParsingTelemetryInitializer.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            If telemetry item is http dependency - converts it to the well-known type of the dependency.
+            </summary>
+            <param name="telemetry">Telemetry item to convert.</param>
+        </member>
         <member name="P:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ClientServerDependencyTracker.PretendProfilerIsAttached">
             <summary>
             Gets or sets a value indicating whether pretending the profiler is attached or not.
@@ -715,112 +726,55 @@
             Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing"/> class.
             </summary>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForExecuteReader(System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForOneParameter(System.Object)">
             <summary>
-            On begin callback for ExecuteReader.
+            On begin callback for methods with 1 parameter.
             </summary>
-            <param name="thisObj">This object.</param>
-            <param name="behavior">The callback parameter.</param>
-            <param name="method">The state parameter.</param>
-            <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForSync(System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForTwoParameters(System.Object,System.Object)">
             <summary>
-            On begin callback for sync methods except ExecuteReader.
+            On begin callback for methods with 2 parameter.
             </summary>
-            <param name="thisObj">This object.</param>        
-            <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForExecuteReader(System.Object,System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForThreeParameters(System.Object,System.Object,System.Object)">
             <summary>
-            On end callback for ExecuteReader.
+            On begin callback for methods with 3 parameters.
             </summary>
-            <param name="context">The context.</param>
-            <param name="returnValue">The return value.</param>
-            <param name="thisObj">This object.</param>
-            <param name="behavior">The callback parameter.</param>
-            <param name="method">The state parameter.</param>
-            <returns>The resulting return value.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForSync(System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForFourParameters(System.Object,System.Object,System.Object,System.Object)">
             <summary>
-            On end for sync methods except ExecuteReader callback.
+            On begin callback for methods with 4 parameter.
             </summary>
-            <param name="context">The context.</param>
-            <param name="returnValue">The return value.</param>
-            <param name="thisObj">This object.</param>        
-            <returns>The resulting return value.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForExecuteReader(System.Object,System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForOneParameter(System.Object,System.Object,System.Object)">
             <summary>
-            On exception callback for ExecuteReader.
+            On end callback for methods with 1 parameter.
             </summary>
-            <param name="context">The context.</param>
-            <param name="exception">The exception.</param>
-            <param name="thisObj">This object.</param>
-            <param name="behavior">The callback parameter.</param>
-            <param name="method">The state parameter.</param>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForSync(System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForTwoParameters(System.Object,System.Object,System.Object,System.Object)">
             <summary>
-            On end callback for sync methods except ExecuteReader.
+            On end callback for methods with 2 parameter.
             </summary>
-            <param name="context">The context.</param>
-            <param name="exception">The exception.</param>
-            <param name="thisObj">This object.</param>        
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForBeginExecuteNonQueryInternal(System.Object,System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForThreeParameters(System.Object,System.Object,System.Object,System.Object,System.Object)">
             <summary>
-            On begin for BeginExecuteNonQueryInternal callback.
+            On end callback for methods with 3 parameter.
             </summary>
-            <param name="thisObj">This object.</param>
-            <param name="callback">The callback parameter.</param>
-            <param name="stateObject">The stateObject parameter.</param>
-            <param name="timeout">The timeout parameter.</param>
-            <param name="asyncWrite">The asyncWrite parameter.</param>
-            <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForBeginExecuteReaderInternal(System.Object,System.Object,System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForOneParameter(System.Object,System.Object,System.Object)">
             <summary>
-            On begin for BeginExecuteReaderInternal callback.
+            On exception callback for methods with 1 parameter.
             </summary>
-            <param name="thisObj">This object.</param>
-            <param name="behavior">The behavior parameter.</param>
-            <param name="callback">The callback parameter.</param>
-            <param name="stateObject">The stateObject parameter.</param>
-            <param name="timeout">The timeout parameter.</param>
-            <param name="asyncWrite">The asyncWrite parameter.</param>
-            <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBeginForBeginExecuteXmlReaderInternal(System.Object,System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForTwoParameters(System.Object,System.Object,System.Object,System.Object)">
             <summary>
-            On begin for BeginExecuteXmlReaderInternal callback.
+            On exception callback for methods with 2 parameter.
             </summary>
-            <param name="thisObj">This object.</param>
-            <param name="callback">The callback parameter.</param>
-            <param name="stateObject">The stateObject parameter.</param>
-            <param name="timeout">The timeout parameter.</param>
-            <param name="asyncWrite">The asyncWrite parameter.</param>
-            <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEndForSqlAsync(System.Object,System.Object,System.Object,System.Object)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForThreeParameters(System.Object,System.Object,System.Object,System.Object,System.Object)">
             <summary>
-            On end for all SQL async callbacks.
+            On exception callback for methods with 3 parameter.
             </summary>
-            <param name="context">The context.</param>
-            <param name="returnValue">The return value.</param>
-            <param name="thisObj">This object.</param>
-            <param name="asyncResult">The asyncResult parameter.</param>
-            <returns>The context for end callback.</returns>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnExceptionForSqlAsync(System.Object,System.Object,System.Object,System.Object)">
-            <summary>
-            On exception for all SQL async callback.
-            </summary>
-            <param name="context">The context.</param>
-            <param name="exception">The exception.</param>
-            <param name="thisObj">This object.</param>
-            <param name="asyncResult">The asyncResult parameter.</param>
         </member>
         <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.GetResourceName(System.Object)">
             <summary>
@@ -837,22 +791,19 @@
             <param name="thisObj">The SQL command.</param>
             <returns>Returns the command text or empty.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBegin(System.Object,System.Boolean)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnBegin(System.Object)">
             <summary>
              Common helper for all Begin Callbacks.
             </summary>
             <param name="thisObj">This object.</param>
-            <param name="isAsyncCall">Is Async Invocation.</param>
             <returns>The context for end callback.</returns>
         </member>
-        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEnd(System.Object,System.Object,System.Object,System.Boolean)">
+        <member name="M:Microsoft.ApplicationInsights.DependencyCollector.Implementation.ProfilerSqlProcessing.OnEnd(System.Object,System.Object)">
             <summary>
              Common helper for all End Callbacks.
             </summary>
-            <param name="context">The context.</param>        
-            <param name="exception">The exception object if any.</param>
+            <param name="exceptionObj">The exception object if any.</param>
             <param name="thisObj">This object.</param>
-            <param name="isAsync">Whether the End is for an async invocation.</param>        
         </member>
         <member name="T:Microsoft.ApplicationInsights.DependencyCollector.DependencyTrackingTelemetryModule">
             <summary>
