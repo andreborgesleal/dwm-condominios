@@ -88,6 +88,22 @@ namespace DWM.Models.BI
                     UnidadeID = r.UnidadeViewModel.UnidadeID
                 };
 
+                if (SessaoLocal.CondominoID > 0)
+                {
+                    #region Valida permissão do usuário para editar o condômino
+                    if (r.CondominoPFViewModel.CondominoID != SessaoLocal.CondominoID)
+                        throw new App_DominioException("Acesso não permitido", "Error");
+                    bool flag = false;
+                    foreach (Unidade unidade in SessaoLocal.Unidades)
+                    {
+                        if (r.UnidadeViewModel.UnidadeID == unidade.UnidadeID && r.UnidadeViewModel.EdificacaoID == unidade.EdificacaoID)
+                            flag = true;
+                    }
+                    if (!flag)
+                        throw new App_DominioException("Acesso não permitido", "Error");
+                    #endregion
+                }
+
             }
             catch (ArgumentException ex)
             {
@@ -95,12 +111,12 @@ namespace DWM.Models.BI
             }
             catch (App_DominioException ex)
             {
-                result.CondominoPFViewModel.mensagem = ex.Result;
+                result.CondominoPFViewModel.mensagem.Code = 999;
 
                 if (ex.InnerException != null)
                     result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.InnerException.Message ?? ex.Message, GetType().FullName).Message;
                 else
-                    result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.Result.Message, GetType().FullName).Message;
+                    result.CondominoPFViewModel.mensagem.MessageBase = new App_DominioException(ex.Message, GetType().FullName).Message;
             }
             catch (DbUpdateException ex)
             {

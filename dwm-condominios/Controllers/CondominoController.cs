@@ -131,6 +131,9 @@ namespace DWM.Controllers
                     }
                 };
                 CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), value);
+                if (obj.CondominoPFViewModel.mensagem.Code > 0)
+                    obj = null;
+                    
                 return View(obj);
             }
             return View();
@@ -616,6 +619,8 @@ namespace DWM.Controllers
         {
             if (ViewBag.ValidateRequest)
             {
+                BindBreadCrumb("Condômino", ClearBreadCrumbOnBrowse());
+                //BindBreadCrumb(getBreadCrumbText("Condômino", null));
                 UnidadeModel UnidadeModel = new UnidadeModel();
                 UnidadeViewModel UnidadeViewModel = UnidadeModel.CreateRepository(Request);
                 return View(UnidadeViewModel);

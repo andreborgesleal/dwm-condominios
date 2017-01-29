@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="376154608" Data="28/01/2017 11:16:32">
+    <Sessao>gu5bzkcyczq0dfvjwjxdcdha</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Sessão expirada. Faça um novo login</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="ppTYIQbRsMoKiV3EBPyuVkXNlynxn1_usd6pLHXEyG3NKYwLaVweSAPqLDbZoc290PZE628-qwCsPvFpNnV3u1Atg3mID8WKpKJHjXKVfH41",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em App_Dominio.Entidades.DWMContext`1.Create(D _db, SecurityContext _seguranca_db) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Entidades\DWMContext.cs:linha 38
+   em DWM.Models.Entidades.DWMContextLocal.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMContextLocal.cs:linha 17
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 19
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 298</StackTrace>
+  </LOG>
+  <LOG ID="1029182097" Data="28/01/2017 11:17:38">
+    <Sessao>gu5bzkcyczq0dfvjwjxdcdha</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Sessão expirada. Faça um novo login</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="jJ98XQtVmyIJ4FCf-NJ-EbL2DwiX9XF9RxC-uISTmyvtaf7vcAElVcdzApWXN9Xy5wq5fHJo9buI3tzGIUeJSlNYZGIafKLOFhoDm4WPKPc1",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em App_Dominio.Entidades.DWMContext`1.Create(D _db, SecurityContext _seguranca_db) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Entidades\DWMContext.cs:linha 38
+   em DWM.Models.Entidades.DWMContextLocal.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMContextLocal.cs:linha 17
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 19
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 298</StackTrace>
+  </LOG>
+  <LOG ID="197831619" Data="28/01/2017 11:18:53">
+    <Sessao>gu5bzkcyczq0dfvjwjxdcdha</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Sessão expirada. Faça um novo login</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="KKOBXVjsSHXE40caalD03PPU9usklElRag23JWEPlGQBzH0bk9X_g6E9uiWbwkCDK-6sDzZzzPrPrk_qQ6ZsoP2L3hcoIErGl7vJeYfGWBY1",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em App_Dominio.Entidades.DWMContext`1.Create(D _db, SecurityContext _seguranca_db) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Entidades\DWMContext.cs:linha 38
+   em DWM.Models.Entidades.DWMContextLocal.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMContextLocal.cs:linha 17
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 19
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 298</StackTrace>
+  </LOG>
+  <LOG ID="864392079" Data="28/01/2017 11:29:54">
+    <Sessao>hkcd4g2ooxfad3qc2qjcqm3i</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Sessão expirada. Faça um novo login</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="wMHtZ5SPqN9VatiPM_e-R591EeVvQFcNyenry6ZAFq3BXjCuxpGEr2LTubhQlTCE-nA9UBaPI6pWMcU2vm43HSM1Pph11XBq7Cf5qXXQak01",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em App_Dominio.Entidades.DWMContext`1.Create(D _db, SecurityContext _seguranca_db) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Entidades\DWMContext.cs:linha 38
+   em DWM.Models.Entidades.DWMContextLocal.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMContextLocal.cs:linha 17
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 26
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 298</StackTrace>
+  </LOG>
+  <LOG ID="1689026375" Data="28/01/2017 11:46:34">
+    <Sessao>x5nopqlhtodeh4zx4ls5ppyo</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Sessão expirada. Faça um novo login</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="yrMNH5k0Q9_WPW2DxmjEef7k_Yr0YeS7T7MiSWplIrQRd3RRMgijlbiaa0MNZNnjTlAu2LypXcOzIVweqrbGrQkaRoJAgrAyZqAyALCjLuQ1",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em App_Dominio.Entidades.DWMContext`1.Create(D _db, SecurityContext _seguranca_db) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Entidades\DWMContext.cs:linha 38
+   em DWM.Models.Entidades.DWMContextLocal.Create(ApplicationContext _db, SecurityContext _seguranca_db) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Entidades\DWMContextLocal.cs:linha 17
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 26
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 298</StackTrace>
+  </LOG>
+  <LOG ID="932886951" Data="28/01/2017 12:04:28">
+    <Sessao>x5nopqlhtodeh4zx4ls5ppyo</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="G06pktzwju-oayclm0TXiZm82JAzF9kYU_fZJ9oKNC7NMsSLzgqlJqZW_M-Tg9EJU7_8LdB4FgtSkj07zJz5v0m0tg-zq63hC-udTt8N87Y1",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 299</StackTrace>
+  </LOG>
+  <LOG ID="666349290" Data="28/01/2017 12:36:32">
+    <Sessao>x5nopqlhtodeh4zx4ls5ppyo</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="jgAnGN0jz3I1SMMRoZoWCt4F89fkTi8j7-ZsHBgvuXirI-VDNBUyvArVXsc0-DKe0z98St0so3Vv1_PddU4sy8v5Pbg7g6XUMxXo7-HgYbM1",empresaId="3",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 299</StackTrace>
+  </LOG>
+  <LOG ID="603182200" Data="28/01/2017 14:32:15">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/esqueciminhasenha</NameSpace>
+    <Context>__RequestVerificationToken="IEFfrOE7nNF76QXpzeINFZKZ_Hw_WfLylyAVz185Ij1Ij1yKB3xvrsZlDx61q6NvDOJl3sk_1xmG75sRJGfMQQfQcxSBBatcH2wPP04TH4k1",usuarioId="74",keyword="81414543",login="afbleal@gmail.com",nome="ANDRÉ DE FREITAS BORGES LEAL",isAdmin="N",situacao="D",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 172</StackTrace>
+  </LOG>
+  <LOG ID="2051445459" Data="28/01/2017 19:51:49">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="2125398001" Data="28/01/2017 19:56:23">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1581935033" Data="28/01/2017 20:01:21">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="993200" Data="28/01/2017 20:02:33">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="473255767" Data="28/01/2017 20:04:38">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="473255767" Data="28/01/2017 20:04:38">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="953311906" Data="28/01/2017 20:05:56">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="64996888" Data="28/01/2017 20:06:47">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1259694056" Data="28/01/2017 20:08:14">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1700448319" Data="28/01/2017 20:09:45">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1349076428" Data="28/01/2017 20:09:45">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="518180714" Data="28/01/2017 20:11:16">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1288708642" Data="28/01/2017 20:11:16">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="825562953" Data="28/01/2017 20:11:33">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="825562953" Data="28/01/2017 20:11:33">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="758153056" Data="28/01/2017 21:02:41">
+    <Sessao>bdwbksgyis1jtx2mbjflvxy2</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Login inválido ou inexistente.</Mensagem>
+    <NameSpace>DWM.Models.BI.EsqueciMinhaSenhaBI =&gt; account/forgot</NameSpace>
+    <Context>__RequestVerificationToken="FCfMduIuJJ3wbkYdy6wB0T9aKo_WNQoLC36CN3gm7YB0iXbQ_27-eY5qa7M4GiWHNlUv9gD76vE7HrvbrVi9OVwfdYSSwLgarp7QPTdvzLk1",empresaId="3",login="ernan@jquert.com.br"</Context>
+    <StackTrace />
+  </LOG>
+</LOG>

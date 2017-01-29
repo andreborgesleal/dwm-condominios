@@ -19,9 +19,15 @@ namespace DWM.Models.Persistence
     {
         #region Constructor
         public EmailLogModel() { }
-        public EmailLogModel(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EmailLogModel(ApplicationContext _db, SecurityContext _seguranca_db, bool anonymous = false)
         {
-            this.Create(_db, _seguranca_db);
+            if (!anonymous)
+                Create(_db, _seguranca_db);
+            else
+            {
+                this.db = _db;
+                this.seguranca_db = _seguranca_db;
+            }
         }
         #endregion
 

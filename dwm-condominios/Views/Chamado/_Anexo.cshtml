@@ -24,35 +24,38 @@
         <hr />
     }
     //using (Ajax.BeginForm("Anexo", "Chamado", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-anexo" }, new { @class = "form", enctype = "multipart/form-data", @id = "form001", @name = "form001" }))
-    using (Html.BeginForm("Anexo", "Chamado", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+    if (Model.ChamadoStatusID != 3)
     {
-        <p><h5>Anexar novo arquivo</h5></p>
-        <small>Selecione o arquivo desejado. Em seguida clique no botão Salvar para adicionar o arquivo no chamado</small>
-        <p>&nbsp;</p>
-        <div class="row clearfix">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                @*@Html.Partial("_AjaxAlert", "panel-top")
-                @Html.Partial("_alerts")*@
-                @Html.HiddenFor(info => info.ChamadoID)
-                <div class="form-group">
-                    <input id="fileupload1" type="file" name="files1[]">
-                    @Html.Hidden("File1ID")
-                    @Html.Hidden("NomeOriginal1")
-                </div>
-                <div class="file_name" id="file_name1"></div>
-                <div class="progress" id="progress1">
-                    <div id="progress1-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                        <span class="sr-only">0% complete</span>
+        using (Html.BeginForm("Anexo", "Chamado", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+        {
+            <p><h5>Anexar novo arquivo</h5></p>
+            <small>Selecione o arquivo desejado. Em seguida clique no botão Salvar para adicionar o arquivo no chamado</small>
+            <p>&nbsp;</p>
+            <div class="row clearfix">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    @*@Html.Partial("_AjaxAlert", "panel-top")
+                        @Html.Partial("_alerts")*@
+                    @Html.HiddenFor(info => info.ChamadoID)
+                    <div class="form-group">
+                        <input id="fileupload1" type="file" name="files1[]">
+                        @Html.Hidden("File1ID")
+                        @Html.Hidden("NomeOriginal1")
                     </div>
-                </div>
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" />
+                    <div class="file_name" id="file_name1"></div>
+                    <div class="progress" id="progress1">
+                        <div id="progress1-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                            <span class="sr-only">0% complete</span>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
 }
 else

@@ -1,4 +1,4 @@
-﻿@model DWM.Models.Repositories.UsuarioViewModel
+﻿@model App_Dominio.Repositories.UsuarioRepository
 @{
     Layout = null;
 }
@@ -55,7 +55,7 @@
         <div class="margem-topo-100 hidden-xs"></div>
         <div class="x_panel">
             <div class="x_title">
-                <h2>Esqueci minha Senha</h2>
+                <h2>Recuperação de Senha</h2>
                 <ul class="nav navbar-right panel_toolbox hidden-xs">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -78,27 +78,49 @@
                 <div class="clearfix"></div>
             </div>
             <div class="x_content">
-                @using (Html.BeginForm("Forgot", "Account", FormMethod.Post))
+                @using (Html.BeginForm("EsqueciMinhaSenha", "Account", FormMethod.Post, new { @class = "form-horizontal form-label-left" }))
                 {
                     @Html.Partial("_alerts")
                     @Html.AntiForgeryToken()
-                    @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
-                    @Html.Hidden("empresaId",Request["id"])
+                    @Html.ValidationSummary("", new { @class = "text-danger" })
+                    @Html.HiddenFor(info => info.usuarioId)
+                    @Html.HiddenFor(info => info.keyword)
+                    @Html.HiddenFor(info => info.login)
+                    @Html.HiddenFor(info => info.nome)
+                    @Html.HiddenFor(info => info.isAdmin)
+                    @Html.HiddenFor(info => info.situacao)
+
                     <div class="hidden-sm hidden-xs">
-                        <h4>Instruções:</h4>
+                        <h4>Instruções de preenchimento</h4>
                         <p class="font-gray-dark">
-                            - Preencha o e-mail informado no cadastramento de sua unidade e clique no botão <strong>[Salvar]</strong>
-                        </p>
-                        <p class="font-gray-dark">
-                            - Em seguida, será enviado para o seu e-mail as instruções de atualização de sua senha.
+                            - Informe a senha e confirmação de senha e clique no botão <strong>[Salvar]</strong>
                         </p>
                     </div>
-                    <div class="row margem-topo-30">
-                        <div class="col-md-6 col-xs-12 col-sm-12">
+                    <div class="row clearfix">
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                             <div class="form-group">
-                                <label>Login</label>
-                                <input type="email" class="form-control" maxlength="100" placeholder="Informe o seu e-mail de acesso ao sistema" id="login" name="login" required />
-                                @*@Html.TextBoxFor(m => m.login, new { @class = "form-control", @maxlength = "100", @placeholder = "Informe o seu e-mail de acesso ao sistema" })*@
+                                @Html.LabelFor(m => m.nome, new { @class = "control-label" })
+                                <input type="text" class="form-control" id="name" name="name" disabled value="@Model.nome" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                            <div class="form-group">
+                                <label class="control-label" for="login">E-mail</label>
+                                <input type="text" class="form-control" id="email" name="email" disabled value="@Model.login" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.senha, new { @class = "control-label" })
+                                @Html.PasswordFor(m => m.senha, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.confirmacaoSenha, new { @class = "control-label" })
+                                @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
@@ -120,12 +142,10 @@
             <p class="text-muted margem-top-10">Criado por <a href="http://www.dwmsistemas.com" class="text-danger">DWM SISTEMAS</a></p>
         </div>
     </section>
-
     <!-- jQuery -->
     <script src="../Content/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
-
 </body>
 </html>
+

@@ -9,39 +9,42 @@
 
     t[1].url = "../Home/Default";
 }
-<h4>
-    @Model.CondominoPFViewModel.Nome
-    <small>
-        @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
-    </small>
-</h4>
-<div class="row">
-    <div class="col-md-6 col-sm-12 col-xs-12">
-        <div id="div-condomino-cad">
-            @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
-        </div>
-        <div id="div-condomino-automovel">
-            <div class="x_panel">
-                @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro complementar", Descricao = "", Transacao = t })
-                <div class="x_content">
-                    <div class="" role="tabpanel" data-example-id="togglable-tabs">
-                        <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
-                            <li role="presentation" class="active">
-                                <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Veículos</a>
-                            </li>
-                            <li role="presentation" class="">
-                                <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Funcionários</a>
-                            </li>
-                        </ul>
-                        <div id="myTabContent" class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
-                                <div id="div-veiculos">
-                                    @Html.Partial("_Veiculos", Model)
+@if (Model != null)
+{
+    <h4>
+        @Model.CondominoPFViewModel.Nome
+        <small>
+            @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
+        </small>
+    </h4>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div id="div-condomino-cad">
+                @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
+            </div>
+            <div id="div-condomino-automovel">
+                <div class="x_panel">
+                    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro complementar", Descricao = "", Transacao = t })
+                    <div class="x_content">
+                        <div class="" role="tabpanel" data-example-id="togglable-tabs">
+                            <ul id="myTab" class="nav nav-tabs bar_tabs" role="tablist">
+                                <li role="presentation" class="active">
+                                    <a href="#tab_content1" id="home-tab" role="tab" data-toggle="tab" aria-expanded="true">Veículos</a>
+                                </li>
+                                <li role="presentation" class="">
+                                    <a href="#tab_content2" role="tab" id="profile-tab" data-toggle="tab" aria-expanded="false">Funcionários</a>
+                                </li>
+                            </ul>
+                            <div id="myTabContent" class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade active in" id="tab_content1" aria-labelledby="home-tab">
+                                    <div id="div-veiculos">
+                                        @Html.Partial("_Veiculos", Model)
+                                    </div>
                                 </div>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
-                                <div id="div-funcionarios">
-                                    @Html.Partial("_Funcionarios", Model)
+                                <div role="tabpanel" class="tab-pane fade" id="tab_content2" aria-labelledby="profile-tab">
+                                    <div id="div-funcionarios">
+                                        @Html.Partial("_Funcionarios", Model)
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -49,13 +52,17 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6 col-sm-12 col-xs-12">
-        <div id="div-credenciado">
-            @Html.Partial("_Credenciado", Model)
+        <div class="col-md-6 col-sm-12 col-xs-12">
+            <div id="div-credenciado">
+                @Html.Partial("_Credenciado", Model)
+            </div>
+            <div id="div-grupo-condomino-usuario">
+                @Html.Partial("_GrupoCondomino", Model.GrupoCondominoUsuarios)
+            </div>
         </div>
-        <div id="div-grupo-condomino-usuario">
-            @Html.Partial("_GrupoCondomino", Model.GrupoCondominoUsuarios)
-        </div>
     </div>
-</div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
