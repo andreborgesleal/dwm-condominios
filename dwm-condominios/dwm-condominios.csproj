@@ -404,6 +404,7 @@
     <Content Include="Content\css\jquery.typeahead.css" />
     <Content Include="Content\css\SideBarMenu.css" />
     <Content Include="Content\css\simple-sidebar.css" />
+    <Content Include="Content\css\sticky-footer.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style.old.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
@@ -4126,6 +4127,7 @@
     <Content Include="Views\Condomino\Avatar.cshtml" />
     <Content Include="Views\AlterarSenha\Edit.cshtml" />
     <Content Include="Views\Account\Forgot.cshtml" />
+    <Content Include="Views\Account\EsqueciMInhaSenha.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

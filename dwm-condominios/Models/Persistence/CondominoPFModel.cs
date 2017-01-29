@@ -45,6 +45,7 @@ namespace DWM.Models.Persistence
             condominoViewModel.DataNascimento = entity.DataNascimento;
             condominoViewModel.Sexo = entity.Sexo;
             condominoViewModel.IndAnimal = entity.IndAnimal;
+            condominoViewModel.mensagem = new App_Dominio.Contratos.Validate() { Code = 0, Message = "Registro Incluído com sucesso!" };
 
             return condominoViewModel;
         }

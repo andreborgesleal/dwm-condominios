@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1054587313" Data="29/01/2017 10:16:38">
+    <Sessao>w3fatranfeai3ft3zqxjr2gx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1825115241" Data="29/01/2017 10:16:38">
+    <Sessao>w3fatranfeai3ft3zqxjr2gx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="429626106" Data="29/01/2017 10:16:46">
+    <Sessao>w3fatranfeai3ft3zqxjr2gx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="78254215" Data="29/01/2017 10:16:46">
+    <Sessao>w3fatranfeai3ft3zqxjr2gx</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="159749742" Data="29/01/2017 10:58:26">
+    <Sessao>oyv2wkdlag3jb5jud1u23wnt</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1546277103" Data="29/01/2017 11:01:04">
+    <Sessao>oyv2wkdlag3jb5jud1u23wnt</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1546277103" Data="29/01/2017 11:01:04">
+    <Sessao>oyv2wkdlag3jb5jud1u23wnt</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1140095954" Data="29/01/2017 11:01:46">
+    <Sessao>oyv2wkdlag3jb5jud1u23wnt</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>Error =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="788724063" Data="29/01/2017 11:01:46">
+    <Sessao>oyv2wkdlag3jb5jud1u23wnt</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Acesso não permitido</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCondominoBI =&gt; condomino/index</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>

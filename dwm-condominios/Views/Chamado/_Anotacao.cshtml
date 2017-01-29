@@ -29,54 +29,57 @@
             </div>
         </div>
     }
-    <hr />
-    using (Ajax.BeginForm("EditAnotacao", "Chamado", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-anotacao" }, new { @class = "form", @id = "form001", @name = "form001" }))
+    if (Model.ChamadoStatusID != 3)
     {
-        <div class="row clearfix">
-            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                @Html.Partial("_AjaxAlert", "panel-top")
-                @Html.Partial("_alerts")
-                @Html.HiddenFor(info => info.ChamadoID)
-                @Html.HiddenFor(info => info.DescricaoFilaAtendimento)
-                @Html.Hidden("FilaAtendimentoAtualID", Model.FilaAtendimentoID)
-                @Html.HiddenFor(info => info.DescricaoChamadoStatus)
-                @Html.HiddenFor(info => info.IsCondomino)
-                @Html.HiddenFor(info => info.IsUsuarioFila)
-                <div class="form-group">
-                    <label class="control-label">Nova Mensagem</label>
-                    <input type="hidden" name="Mensagem" id="Mensagem" />
-                    <div id="summernote1"></div>
-                </div>
-                @if (Model.IsUsuarioFila)
-                {
+        <hr />
+        using (Ajax.BeginForm("EditAnotacao", "Chamado", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-anotacao" }, new { @class = "form", @id = "form001", @name = "form001" }))
+        {
+            <div class="row clearfix">
+                <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                    @Html.Partial("_AjaxAlert", "panel-top")
+                    @Html.Partial("_alerts")
+                    @Html.HiddenFor(info => info.ChamadoID)
+                    @Html.HiddenFor(info => info.DescricaoFilaAtendimento)
+                    @Html.Hidden("FilaAtendimentoAtualID", Model.FilaAtendimentoID)
+                    @Html.HiddenFor(info => info.DescricaoChamadoStatus)
+                    @Html.HiddenFor(info => info.IsCondomino)
+                    @Html.HiddenFor(info => info.IsUsuarioFila)
                     <div class="form-group">
-                        <label class="control-label">Fila de atendimento:</label>
-                        @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("", Model.FilaAtendimentoID ?? 0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                        <label class="control-label">Nova Mensagem</label>
+                        <input type="hidden" name="Mensagem" id="Mensagem" />
+                        <div id="summernote1"></div>
                     </div>
-                }
-                else
-                {
-                    @Html.Hidden("_FilaAtendimentoID", Model.FilaAtendimentoID)
-                }
-                @if (!Model.IsCondomino)
-                {
-                    <div class="form-group">
-                        <label class="control-label">Situação:</label>
-                        @Html.ListBox("_ChamadoStatusID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoStatus("", 0).Where(info => info.Text != "Novo") , new { @class = "form-control", @size = "5", @id = "ChamadoStatusID" })
-                    </div>
-                }
-                else
-                {
-                    @Html.Hidden("_ChamadoStatusID", Model.ChamadoStatusID)
-                }
-                <hr />
-                <div class="row">
-                    <div class="col-md-12">
-                        <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" onclick="return Valida();" />
+                    @if (Model.IsUsuarioFila)
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Fila de atendimento:</label>
+                            @Html.ListBox("_FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("", Model.FilaAtendimentoID ?? 0), new { @class = "form-control", @size = "5", @id = "FilaAtendimentoID" })
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Hidden("_FilaAtendimentoID", Model.FilaAtendimentoID)
+                    }
+                    @if (!Model.IsCondomino)
+                    {
+                        <div class="form-group">
+                            <label class="control-label">Situação:</label>
+                            @Html.ListBox("_ChamadoStatusID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoStatus("", 0).Where(info => info.Text != "Novo"), new { @class = "form-control", @size = "5", @id = "ChamadoStatusID" })
+                        </div>
+                    }
+                    else
+                    {
+                        @Html.Hidden("_ChamadoStatusID", Model.ChamadoStatusID)
+                    }
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" class="btn btn-success" id="btn-salvar" value="Salvar" onclick="return Valida();" />
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     }
 }
 else

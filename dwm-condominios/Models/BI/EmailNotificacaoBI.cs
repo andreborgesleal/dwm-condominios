@@ -18,14 +18,25 @@ namespace DWM.Models.BI
 {
     public class EmailNotificacaoBI : DWMContextLocal, IProcess<EmailLogViewModel, ApplicationContext>
     {
+        private bool Anonymous { get; set; }
+
         #region Constructor
         public EmailNotificacaoBI() { }
 
-        public EmailNotificacaoBI(ApplicationContext _db, SecurityContext _seguranca_db)
+        public EmailNotificacaoBI(ApplicationContext _db, SecurityContext _seguranca_db, bool anonymous = false)
         {
-            Create(_db, _seguranca_db);
+            this.Anonymous = anonymous;
+            if (!anonymous)
+                Create(_db, _seguranca_db);
+            else
+            {
+                this.db = _db;
+                this.seguranca_db = _seguranca_db;
+            }
         }
         #endregion
+
+
 
         public EmailLogViewModel Run(Repository value)
         {
@@ -36,18 +47,18 @@ namespace DWM.Models.BI
             {
                 try
                 {
-                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
+                    EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db, this.Anonymous);
                     Validate Validate = Model.Validate(log, Crud.INCLUIR);
                     if (Validate.Code > 0)
                         throw new ArgumentException(Validate.Message);
 
-                    int _empresaId = SessaoLocal.empresaId;
+                    if (log.empresaId == 0)
+                        log.empresaId = SessaoLocal.empresaId;
+
                     int _sistemaId = int.Parse(db.Parametros.Find(log.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
 
                     Condominio condominio = db.Condominios.Find(log.CondominioID);
                     Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
-
-                    log.empresaId = _empresaId;
 
                     IEnumerable<EmailLogViewModel> EmailLogPessoas = List(log);
 

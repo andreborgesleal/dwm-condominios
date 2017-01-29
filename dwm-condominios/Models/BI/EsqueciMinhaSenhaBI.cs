@@ -22,9 +22,16 @@ namespace DWM.Models.BI
         #region Constructor
         public EsqueciMinhaSenhaBI() { }
 
+        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.db = _db;
+            this.seguranca_db = _seguranca_db;
+        }
+
         public EsqueciMinhaSenhaBI(ApplicationContext _db, SecurityContext _segurancaDb)
         {
-            this.Create(_db, _segurancaDb);
+            this.db = _db;
+            this.seguranca_db = _segurancaDb;
         }
         #endregion
 
@@ -66,12 +73,12 @@ namespace DWM.Models.BI
                 #endregion
 
                 #region Enviar e-mail 
-                int _sistemaId = int.Parse(db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
-                string _URL_CONDOMINIO = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
-                int EmailTipoID = (int)DWM.Models.Enumeracoes.Enumeradores.EmailTipo.FORGOT;
-                string EmailMensagem = db.EmailTemplates.Where(info => info.CondominioID == SessaoLocal.empresaId && info.EmailTipoID == EmailTipoID).FirstOrDefault().EmailMensagem;
-                EmailMensagem = EmailMensagem.Replace("@link_esqueci_minha_senha", "<p><a href=\"" + _URL_CONDOMINIO + "/Account/EsqueciMinhaSenha?id=" + u.usuarioId.ToString() + "&key=" + u.keyword + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + seguranca_db.Sistemas.Find(_sistemaId).descricao + "</span></a></p>");
-
+                int _sistemaId = int.Parse(db.Parametros.Find(r.empresaId, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+                string _URL_CONDOMINIO = db.Parametros.Find(r.empresaId, (int)Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
+                int EmailTipoID = (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT;
+                string EmailMensagem = db.EmailTemplates.Where(info => info.CondominioID == r.empresaId && info.EmailTipoID == EmailTipoID).FirstOrDefault().EmailMensagem;
+                EmailMensagem = EmailMensagem.Replace("@link_esqueci_minha_senha", "<p><a href=\"" + _URL_CONDOMINIO + "/Account/EsqueciMinhaSenha?id=" + u.usuarioId.ToString() + "&key=" + u.keyword + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">recuperar senha</span></a></p>");
+                EmailMensagem = EmailMensagem.Replace("@nome", u.nome).Replace("@email", u.login);
                 #region Verifica se o usuário é um condômino
                 CondominoUnidade cu = null;
                 int? _EdificacaoID = null;
@@ -109,7 +116,7 @@ namespace DWM.Models.BI
                     Email = u.login
                 };
 
-                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db);
+                EmailNotificacaoBI notificacaoBI = new EmailNotificacaoBI(this.db, this.seguranca_db, true);
                 EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
