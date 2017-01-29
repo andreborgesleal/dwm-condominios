@@ -32,7 +32,7 @@ namespace DWM.Models.BI
             ChamadoViewModel r = (ChamadoViewModel)value;
             ChamadoViewModel result = new ChamadoViewModel()
             {
-                mensagem = new Validate() { Code = -1, Message = "Registro processado com sucesso" }
+                mensagem = new Validate() { Code = -1, Message = "Registro processado com sucesso" } 
             };
             try
             {
@@ -49,7 +49,24 @@ namespace DWM.Models.BI
                        result.UsuarioID == SessaoLocal.usuarioId ||
                        result.UsuarioFilaID.HasValue && result.UsuarioFilaID == SessaoLocal.usuarioId ||
                        result.Rotas.Where(info => info.UsuarioID == SessaoLocal.usuarioId).Count() > 0)))
-                    result = null;
+                {
+                    // Verifica se o usuário está em alguma fila de atendimento
+                    bool HeIsAtTheFila = false;
+                    foreach (ChamadoFilaViewModel fil in result.Rotas)
+                    {
+                        int FilaAtendimentoID = fil.FilaAtendimentoID;
+                        if ((from fila in db.FilaAtendimentos
+                             join filaUsu in db.FilaAtendimentoUsuarios on fila.FilaAtendimentoID equals filaUsu.FilaAtendimentoID
+                             where fila.CondominioID == SessaoLocal.empresaId &&
+                                   fila.FilaAtendimentoID == FilaAtendimentoID &&
+                                   filaUsu.UsuarioID == SessaoLocal.usuarioId
+                             select fila).Count() > 0)
+                            HeIsAtTheFila = true;
+                    }
+                    if (!HeIsAtTheFila)
+                        result = null;
+                }
+                    
                 #endregion
             }
             catch (ArgumentException ex)

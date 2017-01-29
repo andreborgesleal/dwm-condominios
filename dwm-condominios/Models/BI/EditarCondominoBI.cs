@@ -40,6 +40,16 @@ namespace DWM.Models.BI
                 #region CondominoPF
                 CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
                 result.CondominoPFViewModel = condominoPFModel.getObject(r.CondominoPFViewModel);
+                if (result.CondominoPFViewModel == null)
+                {
+                    result.CondominoPFViewModel = new CondominoPFViewModel()
+                    {
+                        mensagem = new Validate()
+                    };
+
+                    throw new App_DominioException("Acesso não permitido", "Error");
+                }
+                    
                 #endregion
 
                 #region Credenciado

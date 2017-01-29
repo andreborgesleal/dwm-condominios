@@ -582,6 +582,9 @@ namespace DWM.Models.Persistence
         {
             int _FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db);
 
+
+
+
             return (from cha in db.Chamados
                     join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
                     join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
@@ -595,6 +598,7 @@ namespace DWM.Models.Persistence
                            mot.CondominioID == SessaoLocal.empresaId && 
                            cha.ChamadoStatusID != 3 && // 3-Encerrado
                            (cha.UsuarioID == SessaoLocal.usuarioId || cha.UsuarioFilaID == SessaoLocal.usuarioId ||
+                           (cha.CondominoID.HasValue && cha.CondominoID == SessaoLocal.CondominoID && SessaoLocal.CondominoID > 0) ||
                            (from usu in db.FilaAtendimentoUsuarios
                             where usu.FilaAtendimentoID == cha.FilaAtendimentoID
                             select usu.UsuarioID).Contains(SessaoLocal.usuarioId)) 
@@ -643,6 +647,7 @@ namespace DWM.Models.Persistence
                                               mot1.CondominioID == SessaoLocal.empresaId &&
                                               cha1.ChamadoStatusID != 3 && // 3-Encerrado
                                               (cha1.UsuarioID == SessaoLocal.usuarioId || cha1.UsuarioFilaID == SessaoLocal.usuarioId ||
+                                              (cha.CondominoID.HasValue && cha.CondominoID == SessaoLocal.CondominoID && SessaoLocal.CondominoID > 0) ||
                                               (from usu1 in db.FilaAtendimentoUsuarios
                                                where usu1.FilaAtendimentoID == cha1.FilaAtendimentoID
                                                select usu1.UsuarioID).Contains(SessaoLocal.usuarioId))
