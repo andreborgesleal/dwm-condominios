@@ -4032,7 +4032,9 @@
     <Content Include="Scripts\site.avatar.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Temp\teste.txt" />
-    <Content Include="Users_Data\Empresas\3\Avatar\68.png" />
+    <Content Include="Users_Data\Empresas\3\Avatar\68.jpg" />
+    <Content Include="Users_Data\Empresas\3\Avatar\74.jpg" />
+    <Content Include="Users_Data\Empresas\3\Avatar\75.jpg" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
