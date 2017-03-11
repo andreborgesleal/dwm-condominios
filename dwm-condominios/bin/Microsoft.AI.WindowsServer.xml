@@ -1,9 +1,31 @@
 <?xml version="1.0"?>
-<doc>
+<doc xml:lang="en">
     <assembly>
         <name>Microsoft.AI.WindowsServer</name>
     </assembly>
     <members>
+        <member name="T:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer">
+            <summary>
+            A telemetry initializer that will gather Azure Web App Role Environment context information.
+            </summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer.WebAppNameEnvironmentVariable">
+            <summary>Azure Web App name corresponding to the resource name.</summary>
+        </member>
+        <member name="F:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer.WebAppHostNameEnvironmentVariable">
+            <summary>Azure Web App Hostname. This will include the deployment slot, but will be same across instances of same slot.</summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer" /> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.ApplicationInsights.WindowsServer.AzureWebAppRoleEnvironmentTelemetryInitializer.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
+            <summary>
+            Initializes <see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetry" /> device context.
+            </summary>
+            <param name="telemetry">The telemetry to initialize.</param>
+        </member>
         <member name="T:Microsoft.ApplicationInsights.WindowsServer.AzureRoleEnvironmentTelemetryInitializer">
             <summary>
             A telemetry initializer that will gather Azure Role Environment context information.
@@ -75,17 +97,13 @@
         </member>
         <member name="T:Microsoft.ApplicationInsights.WindowsServer.DomainNameRoleInstanceTelemetryInitializer">
             <summary>
-            A telemetry context initializer that populates device context role instance name.
-            </summary>
-        </member>
-        <member name="M:Microsoft.ApplicationInsights.WindowsServer.DomainNameRoleInstanceTelemetryInitializer.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:Microsoft.ApplicationInsights.WindowsServer.DomainNameRoleInstanceTelemetryInitializer" /> class.
+            Obsolete. A telemetry context initializer that used to populate role instance name. Preserved for backward compatibility. 
+            Note that role instance will still be populated with the machine name as in the previous versions.
             </summary>
         </member>
         <member name="M:Microsoft.ApplicationInsights.WindowsServer.DomainNameRoleInstanceTelemetryInitializer.Initialize(Microsoft.ApplicationInsights.Channel.ITelemetry)">
             <summary>
-            Initializes <see cref="T:Microsoft.ApplicationInsights.Channel.ITelemetry" /> device context.
+            Obsolete method.
             </summary>
             <param name="telemetry">The telemetry to initialize.</param>
         </member>
