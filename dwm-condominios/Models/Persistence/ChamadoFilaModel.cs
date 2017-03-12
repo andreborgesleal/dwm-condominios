@@ -130,13 +130,16 @@ namespace DWM.Models.Persistence
 
     public class ListViewChamadoFila : ListViewModelLocal<ChamadoFilaViewModel>
     {
-        #region Constructor
-        public ListViewChamadoFila() { }
-
-        public ListViewChamadoFila(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewChamadoFila(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null) : base(_db, _seguranca_db, Token)
         {
-            this.Create(_db, _seguranca_db);
         }
+        #region Constructor
+        //public ListViewChamadoFila() { }
+
+        //public ListViewChamadoFila(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        //{
+        //    this.Create(_db, _seguranca_db, Token);
+        //}
 
         #endregion
 
