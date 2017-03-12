@@ -272,9 +272,9 @@ namespace DWM.Models.Persistence
                 };
             }
 
-            ListViewChamadoFila listChamadoFila = new ListViewChamadoFila(this.db, this.seguranca_db);
-            ListViewChamadoAnotacao listChamadoAnotacao = new ListViewChamadoAnotacao(this.db, this.seguranca_db);
-            ListViewChamadoAnexo listChamadoAnexo = new ListViewChamadoAnexo(this.db, this.seguranca_db);
+            ListViewChamadoFila listChamadoFila = new ListViewChamadoFila(this.db, this.seguranca_db, sessaoCorrente.sessaoId);
+            ListViewChamadoAnotacao listChamadoAnotacao = new ListViewChamadoAnotacao(this.db, this.seguranca_db, sessaoCorrente.sessaoId);
+            ListViewChamadoAnexo listChamadoAnexo = new ListViewChamadoAnexo(this.db, this.seguranca_db, sessaoCorrente.sessaoId);
 
             if (entity.ChamadoID > 0)
             {
@@ -287,7 +287,7 @@ namespace DWM.Models.Persistence
                 #region Rotas
                 value.Rotas = new List<ChamadoFilaViewModel>();
                 ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
-                ChamadoFilaModel.Create(this.db, this.seguranca_db);
+                ChamadoFilaModel.Create(this.db, this.seguranca_db, sessaoCorrente.sessaoId);
                 foreach (ChamadoFila fila in entity.Rotas)
                 {
                     ChamadoFilaViewModel ChamadoFilaViewModel = ChamadoFilaModel.MapToRepository(fila);
@@ -298,7 +298,7 @@ namespace DWM.Models.Persistence
                 #region Anexos
                 value.Anexos = new List<ChamadoAnexoViewModel>();
                 ChamadoAnexoModel ChamadoAnexoModel = new ChamadoAnexoModel();
-                ChamadoAnexoModel.Create(this.db, this.seguranca_db);
+                ChamadoAnexoModel.Create(this.db, this.seguranca_db,sessaoCorrente.sessaoId);
                 foreach (ChamadoAnexo anexo in entity.Anexos)
                 {
                     ChamadoAnexoViewModel ChamadoAnexoViewModel = ChamadoAnexoModel.MapToRepository(anexo);

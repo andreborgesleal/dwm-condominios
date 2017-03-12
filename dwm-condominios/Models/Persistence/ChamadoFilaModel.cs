@@ -133,11 +133,10 @@ namespace DWM.Models.Persistence
         #region Constructor
         public ListViewChamadoFila() { }
 
-        public ListViewChamadoFila(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewChamadoFila(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
         {
-            this.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db, Token);
         }
-
         #endregion
 
         #region Métodos da classe ListViewRepository

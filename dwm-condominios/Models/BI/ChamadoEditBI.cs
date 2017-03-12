@@ -15,7 +15,7 @@ using System.Data.Entity.Infrastructure;
 
 namespace DWM.Models.BI
 {
-    public class ChamadoEditBI : DWMContextLocal, IProcess<ChamadoViewModel, ApplicationContext>
+    public class ChamadoEditBI : DWMContextLocal, IProcessAPI<ChamadoViewModel, ApplicationContext>
     {
         #region Constructor
         public ChamadoEditBI() { }
@@ -66,6 +66,8 @@ namespace DWM.Models.BI
                     if (!HeIsAtTheFila)
                         result = null;
                 }
+
+                result.mensagem.Code = -1; // se for igual a zero vai executar no factorylocalhost o db.savechanges
                     
                 #endregion
             }

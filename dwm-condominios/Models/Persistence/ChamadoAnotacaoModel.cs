@@ -137,9 +137,9 @@ namespace DWM.Models.Persistence
         #region Constructor
         public ListViewChamadoAnotacao() { }
 
-        public ListViewChamadoAnotacao(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewChamadoAnotacao(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
         {
-            this.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db, Token);
         }
 
         #endregion

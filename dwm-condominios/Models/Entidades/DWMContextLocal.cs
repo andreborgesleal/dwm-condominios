@@ -18,7 +18,7 @@ namespace DWM.Models.Entidades
             SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
         }
 
-        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db, string Token)
+        public override void Create(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
         {
             base.Create(_db, _seguranca_db, Token);
             SessaoLocal = DWMSessaoLocal.GetSessaoLocal(this.sessaoCorrente, _db);
