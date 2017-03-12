@@ -3,12 +3,19 @@ using App_Dominio.Security;
 using DWM.Models.Interfaces;
 using System.IO;
 using System.Web;
-using System.Web;
 
 namespace DWM.Models.Repositories
 {
     public class UsuarioViewModel : App_Dominio.Repositories.UsuarioRepository, IPathArquivos
     {
+        public string getAvatar
+        {
+            get
+            {
+                return Avatar();
+            }
+        }
+
         public string Path()
         {
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();

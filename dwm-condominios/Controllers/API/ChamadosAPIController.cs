@@ -76,5 +76,58 @@ namespace DWM.Controllers.API
         }
 
 
+        public IEnumerable<FilaAtendimentoViewModel> ListFilaAtendimento(Auth value)
+        {
+            // Validar Token
+            Auth a = ValidarToken(value);
+            if (a.Code != 0)
+            {
+                FilaAtendimentoViewModel filaAtendimentoViewModel = new FilaAtendimentoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<FilaAtendimentoViewModel> ret = new List<FilaAtendimentoViewModel>();
+                ret.Add(filaAtendimentoViewModel);
+                return ret;
+            }
+
+
+            // Listar
+            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
+            Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext> facade = new Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext>();
+            IEnumerable<FilaAtendimentoViewModel> list = facade.List(new ListViewFilaAtendimento(), 0, int.Parse(PageSize), value.Token);
+
+
+            return list;
+
+        }
+
+        public ChamadoViewModel EditChamado(ChamadoViewModel value)
+        {
+            // Validar Token
+            ChamadoViewModel chamadoViewModel = (ChamadoViewModel)ValidarToken(value);
+            if (chamadoViewModel.mensagem.Code != 0)
+            {
+                ChamadoViewModel cvm = new ChamadoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = chamadoViewModel.mensagem.Code,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                return cvm;
+            }
+
+            Factory<ChamadoViewModel, ApplicationContext> factory = new Factory<ChamadoViewModel, ApplicationContext>();
+            ChamadoViewModel obj = factory.Execute(new ChamadoEditBI(), chamadoViewModel, chamadoViewModel.sessionId);
+            return obj;
+        }
+
+
     }
 }
