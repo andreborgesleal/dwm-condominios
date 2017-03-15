@@ -263,6 +263,7 @@
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
+    <Compile Include="Models\Entidades\Arquivo.cs" />
     <Compile Include="Models\Entidades\Chamado.cs" />
     <Compile Include="Models\Entidades\ChamadoAnexo.cs" />
     <Compile Include="Models\Entidades\ChamadoAnotacao.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Pattern\FacadeLocalhost.cs" />
     <Compile Include="Models\Pattern\FactoryLocalhost.cs" />
+    <Compile Include="Models\Persistence\ArquivoModel.cs" />
     <Compile Include="Models\Persistence\ChamadoAnexoModel.cs" />
     <Compile Include="Models\Persistence\ChamadoAnotacaoModel.cs" />
     <Compile Include="Models\Persistence\ChamadoFilaModel.cs" />
@@ -331,6 +333,7 @@
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
+    <Compile Include="Models\Repositories\ArquivoViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnexoViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnotacaoViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoFilaViewModel.cs" />

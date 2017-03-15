@@ -32,5 +32,6 @@ namespace DWM.Models.Entidades
         public DbSet<ChamadoFila> ChamadoFilas { get; set; }
         public DbSet<ChamadoAnexo> ChamadoAnexos { get; set; }
         public DbSet<ChamadoAnotacao> ChamadoAnotacaos { get; set; }
+        public DbSet<Arquivo> Arquivos { get; set; }
     }
 }
