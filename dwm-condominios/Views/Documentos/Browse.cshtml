@@ -1,0 +1,93 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Repositories
+@model PagedList<ArquivoViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Documentos/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+    t[0].exibir = "S";
+
+    t[1].url = "../Home/Default";
+}
+@if (Model != null)
+{
+    <div class="container-cadastro">
+        <div class="x_panel">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Documentos", Descricao = "", Transacao = t })
+            <div class="x_content">
+                @if ((int)ViewBag.CondominoID == 0)
+                {
+                    using (Ajax.BeginForm("ListParam", "Condomino", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-download" }, new { @role = "search", @id = "form0" }))
+                    {
+                        @*@Html.Partial("_alerts")*@
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        @Html.Hidden("CondominioID", (int)ViewBag.empresaId)
+                        <div class="row">
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Arquivo</label>
+                                    <div class="input-group col-md-12">
+                                        <input type="text" id="Nome" name="Nome" class="form-control" maxlength="40" placeholder="Informar o nome do arquivo (opcional)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Edificação</label>
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Unidade</label>
+                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Grupo/Condômino</label>
+                                    @Html.DropDownList("GrupoCondominoID", new DWM.Models.Enumeracoes.BindDropDownList().GrupoCondominos("Todos...", "", (int)ViewBag.empresaId), new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <input type="button" class="btn btn-primary" value="Buscar" onclick="Refresh(0, 25, '@Model.action', '@Model.DivId')" />
+                        <input type="button" onclick="window.location = '../Documentos/Create'" class="btn btn-default" value="Incluir" />
+                        <br />
+                    }
+                }
+                <div id="div-download">
+                    @if (Model != null && Model.Count() > 0)
+                    {
+                        @Html.Partial("ListParam", Model)
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+    $(function () {
+        $('#form0').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-download').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>
+

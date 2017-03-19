@@ -230,6 +230,7 @@
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
     <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
+    <Compile Include="Controllers\DocumentosController.cs" />
     <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\EnviarEmailController.cs" />
     <Compile Include="Controllers\FilaAtendimentoController.cs" />
@@ -4133,11 +4134,15 @@
     <Content Include="Views\AlterarSenha\Edit.cshtml" />
     <Content Include="Views\Account\Forgot.cshtml" />
     <Content Include="Views\Account\EsqueciMInhaSenha.cshtml" />
+    <Content Include="Views\Documentos\ListParam.cshtml" />
+    <Content Include="Views\Documentos\Browse.cshtml" />
+    <Content Include="Views\Documentos\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
     <Folder Include="Users_Data\Empresas\3\Chamados\" />
     <Folder Include="Users_Data\Empresas\3\Documentos\" />
+    <Folder Include="Users_Data\Empresas\3\download\" />
     <Folder Include="Users_Data\Empresas\3\Informativos\" />
   </ItemGroup>
   <ItemGroup>

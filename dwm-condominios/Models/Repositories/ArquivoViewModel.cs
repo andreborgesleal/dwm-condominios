@@ -17,11 +17,9 @@ namespace DWM.Models.Repositories
         public int CondominioID { get; set; }
 
         [DisplayName("Edificação")]
-        [Required(ErrorMessage = "Informe a Edificação")]
         public System.Nullable<int> EdificacaoID { get; set; }
 
         [DisplayName("Unidade")]
-        [Required(ErrorMessage = "Informe a Unidade")]
         public System.Nullable<int> UnidadeID { get; set; }
 
         [DisplayName("Condômino")]

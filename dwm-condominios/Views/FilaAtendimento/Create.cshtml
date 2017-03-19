@@ -15,6 +15,7 @@
 <link href="../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 
 <div class="container-cadastro">
+    @Html.Partial("_alerts")
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fila de Atendimento", Descricao = "Incluir Fila de Atendimento. Ex: Administração, Financeiro, Secretaria, etc", Transacao = t })
         <div class="x_content">

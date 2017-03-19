@@ -15,12 +15,12 @@
 <link href="../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
 
 <div class="container-cadastro">
+    @Html.Partial("_alerts")
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fila de Atendimento", Descricao = "Editar Fila de Atendimento.", Transacao = t })
         <div class="x_content">
             @using (Html.BeginForm("Edit", "FilaAtendimento", FormMethod.Post, new { @class = "form-horizontal" }))
             {
-                @Html.ValidationSummary("", new { @class = "text-danger" })
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.FilaAtendimentoID)
 

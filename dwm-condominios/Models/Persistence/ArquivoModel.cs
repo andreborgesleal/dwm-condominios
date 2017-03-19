@@ -21,6 +21,12 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe CrudContext
+        public override ArquivoViewModel BeforeInsert(ArquivoViewModel value)
+        {
+            value.Data = Funcoes.Brasilia();
+            return base.BeforeInsert(value);
+        }
+
         public override ArquivoViewModel AfterInsert(ArquivoViewModel value)
         {
             try
@@ -133,7 +139,7 @@ namespace DWM.Models.Persistence
             entity.Nome = value.Nome;
             entity.IndSempreVisivel = value.IndSempreVisivel;
 
-            if (entity.CondominioID > 0 && entity.EdificacaoID.HasValue && entity.UnidadeID.HasValue)
+            if (entity.EdificacaoID.HasValue && entity.UnidadeID.HasValue)
             {
                 entity.CondominoID = (from cu in db.CondominoUnidades
                                       where cu.CondominioID == entity.CondominioID
@@ -264,48 +270,152 @@ namespace DWM.Models.Persistence
         {
             System.DateTime _data1 = (DateTime)param[0];
             System.DateTime _data2 = (DateTime)param[1];
-            int? _EdificacaoID = (int?)param[2];
-            int? _UnidadeID = (int?)param[3];
-            int? _CondominoID = (int?)param[4];
-            int? _GrupoCondominoID = (int?)param[5];
+            int _EdificacaoID = (int)param[2];
+            int _UnidadeID = (int)param[3];
+            int _CondominoID = (int)param[4];
+            int _GrupoCondominoID = (int)param[5];
+            string _Nome = (string)param[6];
 
-            return (from arq in db.Arquivos join edi in db.Edificacaos on arq.EdificacaoID equals edi.EdificacaoID
-                    join gru in db.GrupoCondominos on arq.GrupoCondominoID equals gru.GrupoCondominoID
-                    join con in db.Condominos on arq.CondominoID equals con.CondominoID
-                    where arq.CondominioID == sessaoCorrente.empresaId
-                          && ((arq.Data >= _data1 && arq.Data <= _data2) || arq.IndSempreVisivel == "S")
-                          && (!_EdificacaoID.HasValue || arq.EdificacaoID == _EdificacaoID) 
-                          && (!_UnidadeID.HasValue || arq.UnidadeID == _UnidadeID)
-                          && (!_CondominoID.HasValue || arq.CondominoID == _CondominoID)
-                          && (!_GrupoCondominoID.HasValue || arq.GrupoCondominoID == _GrupoCondominoID)
-                    orderby arq.Data descending
-                    select new ArquivoViewModel()
-                    {
-                        empresaId = SessaoLocal.empresaId,
-                        CondominioID = SessaoLocal.empresaId,
-                        FileID = arq.FileID,
-                        EdificacaoID = arq.EdificacaoID,
-                        EdificacaoDescricao = edi.Descricao,
-                        UnidadeID = arq.UnidadeID,
-                        CondominoID = arq.CondominoID,
-                        CondominoNome = con.Nome,
-                        GrupoCondominoID = arq.GrupoCondominoID,
-                        GrupoCondominoDescricao = gru.Descricao,
-                        Nome = arq.Nome,
-                        Data = arq.Data,
-                        IndSempreVisivel = arq.IndSempreVisivel,
-                        PageSize = pageSize,
-                        TotalCount = ((from arq1 in db.Arquivos join edi1 in db.Edificacaos on arq1.EdificacaoID equals edi1.EdificacaoID
-                                        join gru1 in db.GrupoCondominos on arq1.GrupoCondominoID equals gru1.GrupoCondominoID
-                                        join con1 in db.Condominos on arq1.CondominoID equals con1.CondominoID
-                                        where arq1.CondominioID == sessaoCorrente.empresaId
-                                              && ((arq1.Data >= _data1 && arq1.Data <= _data2) || arq1.IndSempreVisivel == "S")
-                                              && (!_EdificacaoID.HasValue || arq1.EdificacaoID == _EdificacaoID)
-                                              && (!_UnidadeID.HasValue || arq1.UnidadeID == _UnidadeID)
-                                              && (!_CondominoID.HasValue || arq1.CondominoID == _CondominoID)
-                                              && (!_GrupoCondominoID.HasValue || arq1.GrupoCondominoID == _GrupoCondominoID)
-                                       select arq1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            IEnumerable<ArquivoViewModel> archive = new List<ArquivoViewModel>();
+            
+            if (_CondominoID > 0)
+            {
+                string _EdificacaoCondomino = "";
+
+                foreach (Unidade unidade in SessaoLocal.Unidades)
+                    _EdificacaoCondomino += unidade.EdificacaoID.ToString() + "|";
+
+                // arquivos do condômino
+                archive = (from arq in db.Arquivos
+                           join edi in db.Edificacaos on arq.EdificacaoID equals edi.EdificacaoID into EDI
+                           from edi in EDI.DefaultIfEmpty()
+                           join gru in db.GrupoCondominos on arq.GrupoCondominoID equals gru.GrupoCondominoID into GRU
+                           from gru in GRU.DefaultIfEmpty()
+                           join con in db.Condominos on arq.CondominoID equals con.CondominoID into CON
+                           from con in CON.DefaultIfEmpty()
+                           where arq.CondominioID == sessaoCorrente.empresaId
+                                 && ((arq.Data >= _data1 && arq.Data <= _data2) || arq.IndSempreVisivel == "S")
+                                 && (arq.CondominoID == _CondominoID)
+                                 && (_Nome == null || _Nome == "" || arq.Nome.Contains(_Nome))
+                           select new ArquivoViewModel()
+                           {
+                               empresaId = SessaoLocal.empresaId,
+                               CondominioID = SessaoLocal.empresaId,
+                               FileID = arq.FileID,
+                               EdificacaoID = arq.EdificacaoID,
+                               EdificacaoDescricao = edi.Descricao,
+                               UnidadeID = arq.UnidadeID,
+                               CondominoID = arq.CondominoID,
+                               CondominoNome = con.Nome,
+                               GrupoCondominoID = arq.GrupoCondominoID,
+                               GrupoCondominoDescricao = gru.Descricao,
+                               Nome = arq.Nome,
+                               Data = arq.Data,
+                               IndSempreVisivel = arq.IndSempreVisivel
+                           }).Union(from arq in db.Arquivos // arquivos com visibilidade pública
+                                    join edi in db.Edificacaos on arq.EdificacaoID equals edi.EdificacaoID into EDI
+                                    from edi in EDI.DefaultIfEmpty()
+                                    join gru in db.GrupoCondominos on arq.GrupoCondominoID equals gru.GrupoCondominoID into GRU
+                                    from gru in GRU.DefaultIfEmpty()
+                                    join con in db.Condominos on arq.CondominoID equals con.CondominoID into CON
+                                    from con in CON.DefaultIfEmpty()
+                                    where arq.CondominioID == sessaoCorrente.empresaId
+                                          && ((arq.Data >= _data1 && arq.Data <= _data2) || arq.IndSempreVisivel == "S")
+                                          && (!arq.EdificacaoID.HasValue || _EdificacaoCondomino.Contains(arq.EdificacaoID.ToString())
+                                          && !arq.UnidadeID.HasValue)
+                                          && !arq.CondominoID.HasValue
+                                          && (_GrupoCondominoID == 0 || arq.GrupoCondominoID == _GrupoCondominoID)
+                                          && (_Nome == null || _Nome == "" || arq.Nome.Contains(_Nome))
+                                    select new ArquivoViewModel()
+                                    {
+                                        empresaId = SessaoLocal.empresaId,
+                                        CondominioID = SessaoLocal.empresaId,
+                                        FileID = arq.FileID,
+                                        EdificacaoID = arq.EdificacaoID,
+                                        EdificacaoDescricao = edi.Descricao,
+                                        UnidadeID = arq.UnidadeID,
+                                        CondominoID = arq.CondominoID,
+                                        CondominoNome = con.Nome,
+                                        GrupoCondominoID = arq.GrupoCondominoID,
+                                        GrupoCondominoDescricao = gru.Descricao,
+                                        Nome = arq.Nome,
+                                        Data = arq.Data,
+                                        IndSempreVisivel = arq.IndSempreVisivel
+                                    });
+
+                archive = (from arch in archive
+                           orderby arch.IndSempreVisivel descending, arch.Data descending
+                           select new ArquivoViewModel()
+                           {
+                               empresaId = arch.empresaId,
+                               CondominioID = arch.empresaId,
+                               FileID = arch.FileID,
+                               EdificacaoID = arch.EdificacaoID,
+                               EdificacaoDescricao = arch.EdificacaoDescricao,
+                               UnidadeID = arch.UnidadeID,
+                               CondominoID = arch.CondominoID,
+                               CondominoNome = arch.Nome,
+                               GrupoCondominoID = arch.GrupoCondominoID,
+                               GrupoCondominoDescricao = arch.GrupoCondominoDescricao,
+                               Nome = arch.Nome,
+                               Data = arch.Data,
+                               IndSempreVisivel = arch.IndSempreVisivel,
+                               PageSize = pageSize,
+                               TotalCount = archive.Count()
+                           }
+                          ).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                archive = (from arq in db.Arquivos
+                           join edi in db.Edificacaos on arq.EdificacaoID equals edi.EdificacaoID into EDI
+                           from edi in EDI.DefaultIfEmpty()
+                           join gru in db.GrupoCondominos on arq.GrupoCondominoID equals gru.GrupoCondominoID into GRU
+                           from gru in GRU.DefaultIfEmpty()
+                           join con in db.Condominos on arq.CondominoID equals con.CondominoID into CON
+                           from con in CON.DefaultIfEmpty()
+                           where arq.CondominioID == sessaoCorrente.empresaId
+                                 && ((arq.Data >= _data1 && arq.Data <= _data2) || arq.IndSempreVisivel == "S")
+                                 && (_EdificacaoID == 0 || arq.EdificacaoID == _EdificacaoID)
+                                 && (_UnidadeID == 0 || arq.UnidadeID == _UnidadeID)
+                                 && (_GrupoCondominoID == 0 || arq.GrupoCondominoID == _GrupoCondominoID)
+                                 && (_Nome == null || _Nome == "" || arq.Nome.Contains(_Nome))
+                           orderby arq.IndSempreVisivel descending, arq.Data descending
+                           select new ArquivoViewModel()
+                           {
+                               empresaId = SessaoLocal.empresaId,
+                               CondominioID = SessaoLocal.empresaId,
+                               FileID = arq.FileID,
+                               EdificacaoID = arq.EdificacaoID,
+                               EdificacaoDescricao = edi.Descricao,
+                               UnidadeID = arq.UnidadeID,
+                               CondominoID = arq.CondominoID,
+                               CondominoNome = con.Nome,
+                               GrupoCondominoID = arq.GrupoCondominoID,
+                               GrupoCondominoDescricao = gru.Descricao,
+                               Nome = arq.Nome,
+                               Data = arq.Data,
+                               IndSempreVisivel = arq.IndSempreVisivel,
+                               PageSize = pageSize,
+                               TotalCount = ((from arq1 in db.Arquivos
+                                              join edi1 in db.Edificacaos on arq1.EdificacaoID equals edi1.EdificacaoID into EDI1
+                                              from edi1 in EDI1.DefaultIfEmpty()
+                                              join gru1 in db.GrupoCondominos on arq1.GrupoCondominoID equals gru1.GrupoCondominoID into GRU1
+                                              from gru1 in GRU1.DefaultIfEmpty()
+                                              join con1 in db.Condominos on arq1.CondominoID equals con1.CondominoID into CON1
+                                              from con1 in CON1.DefaultIfEmpty()
+                                              where arq1.CondominioID == sessaoCorrente.empresaId
+                                                     && ((arq1.Data >= _data1 && arq1.Data <= _data2) || arq1.IndSempreVisivel == "S")
+                                                     && (_EdificacaoID == 0 || arq1.EdificacaoID == _EdificacaoID)
+                                                     && (_UnidadeID == 0 || arq1.UnidadeID == _UnidadeID)
+                                                     && (_GrupoCondominoID == 0 || arq1.GrupoCondominoID == _GrupoCondominoID)
+                                                     && (_Nome == null || _Nome == "" || arq1.Nome.Contains(_Nome))
+                                              orderby arq1.IndSempreVisivel descending, arq1.Data descending
+                                              select arq1).Count())
+                           }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            }
+
+            return archive;
         }
 
         public override Repository getRepository(Object id)
