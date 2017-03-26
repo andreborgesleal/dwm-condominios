@@ -38,6 +38,7 @@ namespace DWM.Models.Persistence
             entity.Sexo = value.Sexo;
             entity.Observacao = value.Observacao;
             entity.UsuarioID = value.UsuarioID;
+            entity.IndVisitantePermanente = value.IndVisitantePermanente;
 
             return entity;
         }
@@ -54,6 +55,7 @@ namespace DWM.Models.Persistence
                 Sexo = entity.Sexo,
                 Observacao = entity.Observacao,
                 UsuarioID = entity.UsuarioID,
+                IndVisitantePermanente = entity.IndVisitantePermanente,
                 mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
             };
         }
@@ -136,6 +138,15 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                if (String.IsNullOrEmpty(value.IndVisitantePermanente))
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante Permanente").ToString();
+                    value.mensagem.MessageBase = "Informe se o dependente é visitante permanente";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
             }
 
 
@@ -146,6 +157,7 @@ namespace DWM.Models.Persistence
         {
             CredenciadoViewModel value = base.CreateRepository(Request);
             value.Sexo = "M";
+            value.IndVisitantePermanente = "N";
             value.TipoCredenciadoID = 0;
             return value;
         }
@@ -181,6 +193,7 @@ namespace DWM.Models.Persistence
                         Sexo = c.Sexo,
                         Observacao = c.Observacao,
                         UsuarioID = c.UsuarioID,
+                        IndVisitantePermanente = c.IndVisitantePermanente,
                         PageSize = pageSize,
                         TotalCount = ((from c1 in db.Credenciados
                                        where c1.CondominoID == _CondominoID

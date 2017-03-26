@@ -206,6 +206,7 @@ namespace DWM.Controllers
                 int CredenciadoViewModel_TipoCredenciadoID = CredenciadoViewModel.TipoCredenciadoID;
                 string CredenciadoViewModel_Observacao = CredenciadoViewModel.Observacao;
                 string CredenciadoViewModel_Sexo = CredenciadoViewModel.Sexo;
+                string CredenciadoViewModel_IndVisitantePermanente = CredenciadoViewModel.IndVisitantePermanente;
 
                 if (ViewBag.ValidateRequest)
                 {
@@ -227,6 +228,7 @@ namespace DWM.Controllers
                                 Sexo = CredenciadoViewModel_Sexo,
                                 Observacao = CredenciadoViewModel_Observacao,
                                 UsuarioID = CredenciadoViewModel_UsuarioID,
+                                IndVisitantePermanente = CredenciadoViewModel_IndVisitantePermanente,
                                 mensagem = new App_Dominio.Contratos.Validate() { Code = 0 }
                             },
                             mensagem = new App_Dominio.Contratos.Validate() {  Code = 0}

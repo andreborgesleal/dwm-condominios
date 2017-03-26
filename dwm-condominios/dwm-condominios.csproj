@@ -4137,6 +4137,9 @@
     <Content Include="Views\Documentos\ListParam.cshtml" />
     <Content Include="Views\Documentos\Browse.cshtml" />
     <Content Include="Views\Documentos\Create.cshtml" />
+    <Content Include="Views\Documentos\Edit.cshtml" />
+    <Content Include="Views\Documentos\Delete.cshtml" />
+    <Content Include="Views\Documentos\ListParamHome.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

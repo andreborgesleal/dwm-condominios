@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1120857872" Data="25/03/2017 14:14:55">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1653033461" Data="25/03/2017 14:15:13">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="371018642" Data="25/03/2017 14:15:54">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1868994374" Data="25/03/2017 14:16:43">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1592081574" Data="25/03/2017 14:17:44">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="765250759" Data="25/03/2017 14:18:53">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="2116373030" Data="25/03/2017 14:21:20">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="649944378" Data="25/03/2017 14:22:22">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="535431197" Data="25/03/2017 14:22:32">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1994391704" Data="25/03/2017 14:23:49">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1336467340" Data="25/03/2017 14:25:07">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="652463863" Data="25/03/2017 14:26:17">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="1600808231" Data="25/03/2017 14:27:30">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Models.Persistence.ListViewArquivo =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.Persistence.ListViewArquivo.Bind(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\Persistence\ArquivoModel.cs:linha 370
+   em App_Dominio.Component.ListViewModel`2.ListRepository(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 277
+   em App_Dominio.Component.ListViewModel`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 260</StackTrace>
+  </LOG>
+  <LOG ID="196476717" Data="25/03/2017 20:41:42">
+    <Sessao>ern3d4jxt2zsmeu43dn3q5ny</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Valor do campo obrigatório: Visitante Permanente</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>

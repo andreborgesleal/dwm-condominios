@@ -424,9 +424,31 @@ namespace DWM.Models.Persistence
         }
         #endregion
 
+        public override string action()
+        {
+            return "../Documentos/ListParam";
+        }
+
         public override string DivId()
         {
             return "div-download";
+        }
+    }
+
+    public class ListViewArquivoHome : ListViewArquivo
+    {
+        #region Constructor
+        public ListViewArquivoHome() { }
+
+        public ListViewArquivoHome(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
+
+        #endregion
+        public override string action()
+        {
+            return "../Documentos/ListParamHome";
         }
     }
 }

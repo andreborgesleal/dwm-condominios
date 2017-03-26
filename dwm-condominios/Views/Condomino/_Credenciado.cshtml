@@ -25,7 +25,7 @@
     if (Model.Credenciados.Count() > 0)
     {
         <div class="x_panel">
-            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Residentes", Descricao = "", Transacao = t })
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Dependentes", Descricao = "", Transacao = t })
             <div class="x_content">
                 <table class="table table-striped">
                     <thead>
@@ -33,6 +33,7 @@
                             <th>Nome</th>
                             <th>E-mail</th>
                             <th>Tipo</th>
+                            <th class="text-center">Visitante Perm</th>
                             <th>Ação</th>
                         </tr>
                     </thead>
@@ -46,6 +47,7 @@
                                     <td><small>@cre.Nome</small></td>
                                     <td><small>@cre.Email</small></td>
                                     <td><small>@cre.DescricaoTipoCredenciado</small></td>
+                                    <td class="text-center">@(cre.IndVisitantePermanente == "S" ? "SIM" : "NÃO")</td>
                                     <th scope="row">
                                         <a href="#" title="Editar" onclick="edit('@cre.CondominoID', '@cre.CredenciadoID', '@cre.UsuarioID', '@cre.Nome', '@cre.Email', '@cre.TipoCredenciadoID', '@cre.Sexo', '@contador')"><i class="fa fa-edit"></i></a>
                                         <a href="#" title="Excluir" onclick="del('@cre.CondominoID', '@cre.CredenciadoID', '@cre.UsuarioID', '@cre.Nome', '@cre.Email', '@cre.TipoCredenciadoID', '@cre.Sexo', '@contador')"><i class="fa fa-trash"></i></a>
@@ -60,12 +62,12 @@
         </div>
     }
     <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Residente", Descricao = "", Transacao = t1 })
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Dependente", Descricao = "", Transacao = t1 })
         <div class="x_content">
             @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
             {
                 @Html.Partial("_alerts")
-                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CredenciadoViewModel.CondominoID)
                 @Html.HiddenFor(info => info.CredenciadoViewModel.CredenciadoID)
                 @Html.HiddenFor(info => info.CredenciadoViewModel.UsuarioID)
@@ -91,10 +93,16 @@
                             @Html.DropDownListFor(m => m.CredenciadoViewModel.TipoCredenciadoID, new DWM.Models.Enumeracoes.BindDropDownList().TipoCredenciados("", Model.CredenciadoViewModel.TipoCredenciadoID.ToString()), new { @class = "form-control" })
                         </div>
                     </div>
-                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
                         <div class="form-group">
                             @Html.LabelFor(m => m.CredenciadoViewModel.Sexo, new { @class = "control-label" })
                             @Html.DropDownListFor(m => m.CredenciadoViewModel.Sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(Model.CredenciadoViewModel.Sexo, ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.CredenciadoViewModel.IndVisitantePermanente, new { @class = "control-label" })
+                            @Html.DropDownListFor(m => m.CredenciadoViewModel.IndVisitantePermanente, App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.CredenciadoViewModel.IndVisitantePermanente, ""), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>

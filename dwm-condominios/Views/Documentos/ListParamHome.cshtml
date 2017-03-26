@@ -1,0 +1,59 @@
+﻿@using App_Dominio.Models
+@model System.Web.Mvc.PagedList<DWM.Models.Repositories.ArquivoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null) 
+{
+    <div class="dashboard-widget-content">
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <tbody>
+                    @foreach (DWM.Models.Repositories.ArquivoViewModel download in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <i class="fa fa-download fa-2x dedo-indicador" title="Download" onclick="SaveToDisk('@download.MapFile().Replace("~","..")', '@download.FileID')"></i>
+                                <a href="#" id="@download.FileID" download></a>
+                            </td>
+                            <td>
+                                <span>
+                                    @download.Nome
+                                    <small class="text-prateado">@download.Data.ToString("dd/MM/yyyy")</small>
+                                </span>
+                                @if (download.Data.AddDays(3) > Funcoes.Brasilia().Date)
+                                {
+                                    <img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.Partial("Paginacao", Model)
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+    function SaveToDisk(fileName, FileID) {
+        var baixar = document.getElementById(FileID);
+        baixar.href = fileName;
+        baixar.click();
+        baixar.href = '#';
+    }
+</script>
+
+
+
+
+
+
+
+
+
+

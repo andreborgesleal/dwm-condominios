@@ -43,11 +43,7 @@ namespace DWM.Controllers
                 // Obter todos os Informativos
 
                 #region ListPanorama
-                HomeViewModel home = new HomeViewModel()
-                {
-                    concursoId = concursoId,
-                    data_ini = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1),
-                };
+                HomeViewModel home = new HomeViewModel();
 
                 Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();
                 return View(factory.Execute(new HomeBI(), home));

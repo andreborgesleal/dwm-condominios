@@ -1,20 +1,15 @@
-﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.ArquivoViewModel>
-
+﻿@using App_Dominio.Models
+@model System.Web.Mvc.PagedList<DWM.Models.Repositories.ArquivoViewModel>
 @{
     Layout = null;
 }
 @if (Model != null)
 {
     <div class="dashboard-widget-content">
-        <div class="col-md-5">
+        <p>
             Clique nos botões de <code>Ação</code> para executar a ação desejada
-        </div>
-        <div class="col-md-1">
             <a href="../Documentos/Create" class="text-primary">Incluir</a>
-        </div>
-        <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
-            <p>&nbsp;</p>
-        </div>
+        </p>
         <div class="table-responsive">
             <table class="table table-striped jambo_table bulk_action">
                 <thead>

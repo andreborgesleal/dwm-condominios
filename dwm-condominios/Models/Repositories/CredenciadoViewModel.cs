@@ -37,5 +37,9 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Usuario ID")]
         public int? UsuarioID { get; set; }
+
+        [DisplayName("Visitante Permanente")]
+        [Required(ErrorMessage = "Informa se o dependente é visitante permanente")]
+        public string IndVisitantePermanente { get; set; }
     }
 }

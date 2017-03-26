@@ -10,39 +10,40 @@
         _hidden = "hidden";
         _largura = "col-md-12 col-lg-12";
     }
+    ViewBag.VanessaDaMata = "S";
 }
 
 <!-- top tiles -->
 <div class="row tile_count">
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> Total Condôminos</span>
-        <div class="count">651</div>
-        <span class="count_bottom"><i class="green">4% </i> Última semana</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Unidades Cadastradas</span>
-        <div class="count">203</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>3% </i> Última semana</span>
+        <div class="count">@Model.TotalCondominos</div>
+        <span class="count_bottom"><i class="green">@Model.TotalUnidadesCadastradas </i> Unidades cadastradas</span>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
         <span class="count_top"><i class="fa fa-user"></i> Inadimplência</span>
-        <div class="count red">465 mil</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>23% </i> Outubro/2016</span>
+        <div class="count red">@Model.ValorInadimplenciaTotal.ToString("##0") mil</div>
+        <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@Model.ValorInadimplenciaCompetencia.ToString("##0") mil </i> @Model.ContabilidadeCompetencia</span>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i>Receita a Vencer</span>
-        <div class="count green">230 mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>12% </i> Próxima semana</span>
+        <span class="count_top"><i class="fa fa-clock-o"></i> Fluxo de caixa anterior</span>
+        <div class="count">@Model.ValorSaldoAnterior.ToString("##0") mil</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> anterior à @Model.ContabilidadeCompetencia</span>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Despesas mensais</span>
-        <div class="count">250 mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>34% </i> Outubro/2016</span>
+        <span class="count_top"><i class="fa fa-user"></i> Receitas</span>
+        <div class="count green">@Model.ValorReceitaCompetenciaRealizada.ToString("##0") mil</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>@(((Model.ValorReceitaCompetenciaRealizada / Model.ValorReceitaCompetenciaPlanejada)).ToString("##0%")) </i> Realizado @Model.ContabilidadeCompetencia</span>
     </div>
     <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Pagamentos</span>
-        <div class="count">33 mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i>14% </i> Próxima Semana</span>
+        <span class="count_top"><i class="fa fa-user"></i> Despesas</span>
+        <div class="count red">@Model.ValorDespesaCompetenciaRealizada.ToString("##0") mil</div>
+        <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@(((Model.ValorDespesaCompetenciaRealizada / Model.ValorReceitaCompetenciaRealizada)).ToString("##0%"))</i> da receita de @Model.ContabilidadeCompetencia</span>
+    </div>
+    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+        <span class="count_top"><i class="fa fa-user"></i> Fluxo de caixa atual</span>
+        <div class="count">@Model.ValorSaldoAtual.ToString("##0") mil</div>
+        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i> @Model.ContabilidadeCompetencia</span>
     </div>
 </div>
 <!-- /top tiles -->
@@ -117,65 +118,16 @@
             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                 <div class="dashboard_graph">
                     <div class="row x_title">
-                        <div class="col-md-6">
-                            <h3>Receita x Despesa <small>Exercício 2016</small></h3>
-                        </div>
-                        <div class="col-md-6">
-                            <div id="reportrange" class="pull-right" style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                                <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                                <span>December 30, 2015 - January 28, 2015</span> <b class="caret"></b>
-                            </div>
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <h3>Receita x Despesa <small>Exercício 2017</small></h3>
                         </div>
                     </div>
-                    <div class="col-md-9 col-sm-9 col-xs-12">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                         <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
                         <div style="width: 100%;">
                             <div id="canvas_dahs" class="demo-placeholder" style="width: 100%; height:270px;"></div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
-                        <div class="x_title">
-                            <h2>Receitas</h2>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-6">
-                            <div>
-                                <p>Taxa condominial junho/2016</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="80"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Aluguel de espaços</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="30"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 col-sm-12 col-xs-6">
-                            <div>
-                                <p>Recuperação de crédito</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="40"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <p>Inadimplência</p>
-                                <div class="">
-                                    <div class="progress progress_sm" style="width: 76%;">
-                                        <div class="progress-bar bg-green" role="progressbar" data-transitiongoal="50"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
@@ -209,57 +161,11 @@
                                 <div class="clearfix"></div>
                             </div>
                             <div class="x_content">
-                                <div class="">
-                                    <ul class="to_do">
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Regimento Interno
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Ata Assembléia extraordinária 15/08/2016
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Convocação Assembléia 15/08/2016
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Acordo Coletivo de Trabalho
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Proposta Conciliação GAFISA
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Laudo pericial Bombeiros 18/04/2016
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Convocação Assembléia 13/04/2016
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Have IT fix the network printer
-                                            </p>
-                                        </li>
-                                        <li>
-                                            <p>
-                                                <input type="checkbox" class="flat"> Copy backups to offsite location
-                                            </p>
-                                        </li>
-                                    </ul>
+                                <div id="div-download">
+                                    @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
                                 </div>
                             </div>
-                        </div>
+                        </div>  
                     </div>
                 </div>
                 <!-- End to do list -->

@@ -11,7 +11,7 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int CredenciadoID { get; set; }
 
-        [DisplayName("Condomino ID")]
+        [DisplayName("CondominoID")]
         public int CondominoID { get; set; }
 
         [StringLength(30, ErrorMessage = "Este campo só permite até 30 caracteres")]
@@ -32,7 +32,10 @@ namespace DWM.Models.Entidades
         [DisplayName("Observação")]
         public string Observacao { get; set; }
 
-        [DisplayName("Usuario ID")]
+        [DisplayName("UsuarioID")]
         public int? UsuarioID { get; set; }
+
+        [DisplayName("VisitantePermanente")]
+        public string IndVisitantePermanente { get; set; }
     }
 }

@@ -50,6 +50,7 @@ namespace DWM.Models.BI
                 Sexo = r.Sexo,
                 Observacao = r.Observacao,
                 UsuarioID = r.UsuarioID,
+                IndVisitantePermanente = r.IndVisitantePermanente,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso" }
             };
 
