@@ -1,0 +1,68 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.BalanceteViewModel>
+
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="col-md-5">
+            Clique nos botões de <code>Ação</code> para executar a ação desejada
+        </div>
+        <div class="col-md-1">
+            <a href="../Balancete/Create" class="text-primary">Incluir</a>
+        </div>
+        <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
+            @Html.Partial("Filtro")
+        </div>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title text-center">ID</th>
+                        <th class="column-title">Conta</th>
+                        <th class="column-title text-center">Natureza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.BalanceteViewModel bal in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <a href="Edit?CondominioID=@(bal.CondominioID)&planoContaID=@bal.planoContaID" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+                                <a href="Delete?CondominioID=@(bal.CondominioID)&planoContaID=@bal.planoContaID" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                            <td class="text-center">
+                                <span>@bal.planoContaID</span>
+                            </td>
+                            <td>
+                                <span>@bal.descricao</span>
+                            </td>
+                            <td class="text-center">
+                                @if (bal.Natureza == "D")
+                                {
+                                    <span class="label label-danger">Devedora</span>
+                                }
+                                else if (bal.Natureza == "C")
+                                {
+                                    <span class="label label-success">Credora</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        @Html.Partial("Paginacao", Model)
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+
+
+

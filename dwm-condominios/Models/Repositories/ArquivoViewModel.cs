@@ -3,8 +3,6 @@ using System.ComponentModel.DataAnnotations;
 using App_Dominio.Component;
 using App_Dominio.Security;
 using App_Dominio.Entidades;
-using System.IO;
-using System.Web;
 
 namespace DWM.Models.Repositories
 {

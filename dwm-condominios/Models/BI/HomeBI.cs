@@ -9,9 +9,17 @@ using System.Web.Mvc;
 using DWM.Models.Persistence;
 using App_Dominio.Models;
 using System.Linq;
+using App_Dominio.Enumeracoes;
 
 namespace dwm_condominios.Models.BI
 {
+    public class ChartJS
+    {
+        public string device { get; set; }
+        public decimal geekbench { get; set; }
+    }
+
+
     public class HomeBI : DWMContextLocal, IProcess<HomeViewModel, ApplicationContext>
     {
         #region Constructor
@@ -58,6 +66,30 @@ namespace dwm_condominios.Models.BI
 
                 home.ValorSaldoAtual = home.ValorSaldoAnterior + home.ValorReceitaCompetenciaRealizada - home.ValorDespesaCompetenciaRealizada;
 
+                home.DRE = (from bal in db.Balancetes
+                            where bal.CondominioID == sessaoCorrente.empresaId
+                            orderby bal.Natureza, bal.descricao
+                            select new BalanceteViewModel
+                            {
+                                empresaId = bal.CondominioID,
+                                CondominioID = bal.CondominioID,
+                                planoContaID = bal.planoContaID,
+                                descricao = bal.descricao,
+                                Natureza = bal.Natureza,
+                                SaldosContabeis = (from sal in db.SaldosContabeis
+                                                   where sal.CondominioID == bal.CondominioID
+                                                            && sal.planoContaID == bal.planoContaID
+                                                   orderby sal.Competencia descending
+                                                   select new SaldoContabilViewModel()
+                                                   {
+                                                       CondominioID = sal.CondominioID,
+                                                       planoContaID = sal.planoContaID,
+                                                       Competencia = sal.Competencia,
+                                                       ValorSaldo = Math.Round(sal.ValorSaldo / 1000, 0),
+                                                       mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
+                                                   }).Take(7)
+                            }).ToList();
+
                 home.TotalUnidadesCadastradas = (from cu in db.CondominoUnidades
                                                  where cu.CondominioID == sessaoCorrente.empresaId
                                                         && cu.DataFim == null
@@ -92,6 +124,27 @@ namespace dwm_condominios.Models.BI
                 else
                     home.Documentos = l.getPagedList(0, 12, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
                 #endregion
+
+                IList<ChartJS> js = new List<ChartJS>();
+                foreach (BalanceteViewModel bal in home.DRE)
+                    js.Add(new ChartJS() { device = bal.descricao.Length > 20 ? bal.descricao.Substring(0,15) : bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
+
+                //js.Add(new ChartJS() { device = "Taxa condominial", geekbench = 380 });
+                //js.Add(new ChartJS() { device = "Taxa extra", geekbench = 180 });
+                //js.Add(new ChartJS() { device = "Infração", geekbench = 980 });
+                //js.Add(new ChartJS() { device = "Aluguel espaço", geekbench = 80 });
+                //js.Add(new ChartJS() { device = "Fundo de reserva", geekbench = 280 });
+                //js.Add(new ChartJS() { device = "Acordo judicial", geekbench = 780 });
+                //js.Add(new ChartJS() { device = "Outros", geekbench = 880 });
+                //js.Add(new ChartJS() { device = "Fundo de reserva", geekbench = 280 });
+                //js.Add(new ChartJS() { device = "Acordo judicial", geekbench = 780 });
+                //js.Add(new ChartJS() { device = "Outros", geekbench = 880 });
+
+                home.js = new JsonResult()
+                {
+                    Data = js.ToList(),
+                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                };
             }
             catch (Exception ex)
             {

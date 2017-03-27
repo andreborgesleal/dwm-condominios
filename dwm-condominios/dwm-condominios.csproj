@@ -228,6 +228,7 @@
     <Compile Include="Controllers\API\DwmApiController.cs" />
     <Compile Include="Controllers\API\InformativosAPIController.cs" />
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
+    <Compile Include="Controllers\BalanceteController.cs" />
     <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
     <Compile Include="Controllers\DocumentosController.cs" />
@@ -265,6 +266,7 @@
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
     <Compile Include="Models\Entidades\Arquivo.cs" />
+    <Compile Include="Models\Entidades\Balancete.cs" />
     <Compile Include="Models\Entidades\Chamado.cs" />
     <Compile Include="Models\Entidades\ChamadoAnexo.cs" />
     <Compile Include="Models\Entidades\ChamadoAnotacao.cs" />
@@ -298,6 +300,7 @@
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
     <Compile Include="Models\Entidades\RamoAtividade.cs" />
+    <Compile Include="Models\Entidades\SaldoContabil.cs" />
     <Compile Include="Models\Entidades\SessaoLocal.cs" />
     <Compile Include="Models\Entidades\TipoConta.cs" />
     <Compile Include="Models\Entidades\TipoCredenciado.cs" />
@@ -313,6 +316,7 @@
     <Compile Include="Models\Pattern\FacadeLocalhost.cs" />
     <Compile Include="Models\Pattern\FactoryLocalhost.cs" />
     <Compile Include="Models\Persistence\ArquivoModel.cs" />
+    <Compile Include="Models\Persistence\BalanceteModel.cs" />
     <Compile Include="Models\Persistence\ChamadoAnexoModel.cs" />
     <Compile Include="Models\Persistence\ChamadoAnotacaoModel.cs" />
     <Compile Include="Models\Persistence\ChamadoFilaModel.cs" />
@@ -335,6 +339,7 @@
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
     <Compile Include="Models\Repositories\ArquivoViewModel.cs" />
+    <Compile Include="Models\Repositories\BalanceteViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnexoViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnotacaoViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoFilaViewModel.cs" />
@@ -367,6 +372,7 @@
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
     <Compile Include="Models\Repositories\RamoAtividadeViewModel.cs" />
+    <Compile Include="Models\Repositories\SaldoContabilViewModel.cs" />
     <Compile Include="Models\Repositories\TipoContaViewModel.cs" />
     <Compile Include="Models\Repositories\TipoCredenciadoViewModel.cs" />
     <Compile Include="Models\Repositories\TipoEdificacaoViewModel.cs" />
@@ -4140,6 +4146,11 @@
     <Content Include="Views\Documentos\Edit.cshtml" />
     <Content Include="Views\Documentos\Delete.cshtml" />
     <Content Include="Views\Documentos\ListParamHome.cshtml" />
+    <Content Include="Views\Balancete\Browse.cshtml" />
+    <Content Include="Views\Balancete\List.cshtml" />
+    <Content Include="Views\Balancete\Create.cshtml" />
+    <Content Include="Views\Balancete\Edit.cshtml" />
+    <Content Include="Views\Balancete\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

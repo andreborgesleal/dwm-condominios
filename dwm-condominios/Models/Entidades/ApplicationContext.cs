@@ -33,5 +33,7 @@ namespace DWM.Models.Entidades
         public DbSet<ChamadoAnexo> ChamadoAnexos { get; set; }
         public DbSet<ChamadoAnotacao> ChamadoAnotacaos { get; set; }
         public DbSet<Arquivo> Arquivos { get; set; }
+        public DbSet<Balancete> Balancetes { get; set; }
+        public DbSet<SaldoContabil> SaldosContabeis { get; set; }
     }
 }

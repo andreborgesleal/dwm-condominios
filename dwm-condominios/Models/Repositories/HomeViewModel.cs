@@ -23,15 +23,9 @@ namespace DWM.Models.Repositories
         public string isAdmin { get; set; }
         public IEnumerable<InformativoViewModel> Informativos { get; set; }
         public IPagedList Documentos { get; set; }
+        public IEnumerable<BalanceteViewModel> DRE { get; set; }
 
 
-        //public IEnumerable<PanoramaViewModel> Panorama { get; set; }
-        //public IEnumerable<MovimentoViewModel> Movimento { get; set; }
-        //public IEnumerable<ConcursoViewModel> Concurso { get; set; }
-        //public IEnumerable<VolanteViewModel> Volante { get; set; }
-        //public ApostaViewModel apostaViewModel { get; set; }
-        //public IEnumerable<MovimentoViewModel> Extrato { get; set; }
-        //public string NumerosApostados { get; set; }
-        //public IEnumerable<MensalidadeViewModel> Mensalidades { get; set; }
+        public JsonResult js { get; set; }
     }
 }

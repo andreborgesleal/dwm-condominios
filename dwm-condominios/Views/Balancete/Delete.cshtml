@@ -1,0 +1,55 @@
+﻿@using App_Dominio.Enumeracoes
+@using App_Dominio.Repositories
+@model DWM.Models.Repositories.BalanceteViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Balancete/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Demonstrativo Financeiro - Configuração", Descricao = "", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Delete", "Balancete", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.planoContaID)
+                <div class="row">
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.planoContaID, new { @class = "control-label" })
+                            <input type="number" disabled class="form-control" name="planoContaID" id="planoContaID" value="@Model.planoContaID" maxlength="6" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.descricao, new { @class = "control-label" })
+                            <input type="text" disabled class="form-control" name="descricao" id="descricao" value="@Model.descricao" maxlength="60" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-xs-12 col-sm-12 col-lg-3">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Natureza, new { @class = "control-label" })
+                            @Html.DropDownList("Natureza", DropDownListEnum.NaturezaOperacao(Model.Natureza), new { @class = "form-control", @disabled = "disabled" })
+                        </div>
+                    </div>
+                </div>
+                <div class="ln_solid"></div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-danger" value="Excluir" name="btn-excluir" id="btn-excluir" />
+                            <input type="button" onclick="window.location = '../Balancete/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
