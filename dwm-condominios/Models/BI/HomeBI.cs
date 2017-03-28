@@ -126,8 +126,8 @@ namespace dwm_condominios.Models.BI
                 #endregion
 
                 IList<ChartJS> js = new List<ChartJS>();
-                foreach (BalanceteViewModel bal in home.DRE)
-                    js.Add(new ChartJS() { device = bal.descricao.Length > 20 ? bal.descricao.Substring(0,15) : bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
+                foreach (BalanceteViewModel bal in home.DRE.Where(info => info.Natureza == "C"))
+                    js.Add(new ChartJS() { device = bal.descricao.Length > 10 ? bal.descricao.Substring(0,10) : bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
 
                 //js.Add(new ChartJS() { device = "Taxa condominial", geekbench = 380 });
                 //js.Add(new ChartJS() { device = "Taxa extra", geekbench = 180 });

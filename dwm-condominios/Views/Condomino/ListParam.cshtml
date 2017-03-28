@@ -3,16 +3,18 @@
 @{
     Layout = null;
 }
+
+<!-- Datatables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
 @if (Model != null)
 {
-    <br />
     <div class="row clearfix">
         <div class="col-md-12 col-sm-12 col-xs-12">
-            <p>Clique nos botões de <code>Ação</code> para executar a ação desejada</p>
             <div class="table-responsive">
-                <table class="table table-striped jambo_table bulk_action">
+                <table id="datatable" class="table table-striped table-bordered">
                     <thead>
-                        <tr class="headings">
+                        <tr>
                             <th class="column-title">Nome </th>
                             <th class="column-title">Edificação </th>
                             <th class="column-title">Unidade </th>
@@ -22,21 +24,18 @@
                             <th class="column-title no-link last text-center">
                                 <span class="nobr">Ação</span>
                             </th>
-                            <th class="bulk-actions" colspan="7">
-                                <a class="antoo" style="color:#fff; font-weight:500;">Bulk Actions ( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
-                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (CondominoUnidadeViewModel value in Model)
                         {
                             <tr class="even pointer">
-                                <td class="">@value.CondominoViewModel.Nome</td>
-                                <td class="">@value.EdificacaoDescricao </td>
-                                <td class="">@value.UnidadeID</td>
-                                <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
-                                <td class="">@value.CondominoViewModel.Email</td>
-                                <td class="">@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
+                                <td>@value.CondominoViewModel.Nome</td>
+                                <td>@value.EdificacaoDescricao </td>
+                                <td>@value.UnidadeID</td>
+                                <td>@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
+                                <td>@value.CondominoViewModel.Email</td>
+                                <td>@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
                                 @if ((int)ViewBag.CondominoID == 0)
                                 {
                                     <td class="text-center">
@@ -51,15 +50,11 @@
                                         <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                     </td>
                                 }
-                                @*<td class="last">
-                                    <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)">Editar</a>
-                                </td>*@
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
-            @Html.Partial("Paginacao", Model)
         </div>
     </div>
 }
@@ -68,6 +63,22 @@ else
     @Html.Partial("_AcessoNegadoModal")
 }
 
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Datatables -->
+<script>
+      $(document).ready(function() {
+        $('#datatable').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+            "language": {
+                "url": "../Scripts/DataTablePtBr.txt"
+            }
+        });
+      });
+</script>
+<!-- /Datatables -->
 
 
 

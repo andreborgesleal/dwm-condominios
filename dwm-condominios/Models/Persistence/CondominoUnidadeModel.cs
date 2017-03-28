@@ -308,18 +308,18 @@ namespace DWM.Models.Persistence
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
                              },
-                             PageSize = pageSize,
-                             TotalCount = (from c1 in db.CondominoUnidades
-                                           join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                                           where c1.CondominioID == sessaoCorrente.empresaId
-                                                 && c1.Condomino.IndFiscal.Length == 11
-                                                 && c1.Condomino.IndSituacao == "A"
-                                                 && (c1.CondominioID == sessaoCorrente.empresaId
-                                                     && c1.CondominoID == _CondominoID)
-                                                 && c1.DataFim == null
-                                           orderby c1.EdificacaoID, c1.UnidadeID
-                                           select c1).Count()
-                         }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
+                             //                        && c1.CondominoID == _CondominoID)
+                             //                    && c1.DataFim == null
+                             //              orderby c1.EdificacaoID, c1.UnidadeID
+                             //              select c1).Count()
+                         }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
             {
                 query = (from c in db.CondominoUnidades join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
@@ -351,19 +351,19 @@ namespace DWM.Models.Persistence
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
                              },
-                             PageSize = pageSize,
-                             TotalCount = (from c1 in db.CondominoUnidades
-                                           join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                                           where c1.CondominioID == sessaoCorrente.empresaId
-                                                 && c1.Condomino.IndFiscal.Length == 11
-                                                 && c1.Condomino.IndSituacao == "A"
-                                                 && (c1.CondominioID == sessaoCorrente.empresaId
-                                                     && c1.EdificacaoID == _EdificacaoID
-                                                     && c1.UnidadeID == _UnidadeID)
-                                                 && c1.DataFim == null
-                                           orderby c1.Condomino.Nome
-                                           select c1).Count()
-                         }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
+                             //                        && c1.EdificacaoID == _EdificacaoID
+                             //                        && c1.UnidadeID == _UnidadeID)
+                             //                    && c1.DataFim == null
+                             //              orderby c1.Condomino.Nome
+                             //              select c1).Count()
+                         }).ToList();
             }
             else
             {
@@ -400,22 +400,22 @@ namespace DWM.Models.Persistence
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
                              },
-                             PageSize = pageSize,
-                             TotalCount = (from c1 in db.CondominoUnidades
-                                           join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                                           where c1.CondominioID == sessaoCorrente.empresaId
-                                                 && c1.Condomino.IndFiscal.Length == 11
-                                                 && c1.Condomino.IndSituacao == "A"
-                                                 && (
-                                                       (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome))) ||
-                                                       (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
-                                                       (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome)) ||
-                                                       (_EdificacaoID == 0 && (_nome == null || _nome == ""))
-                                                    )
-                                                 && c1.DataFim == null
-                                           orderby c1.Condomino.Nome
-                                           select c1).Count()
-                         }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (
+                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome))) ||
+                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
+                             //                          (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome)) ||
+                             //                          (_EdificacaoID == 0 && (_nome == null || _nome == ""))
+                             //                       )
+                             //                    && c1.DataFim == null
+                             //              orderby c1.Condomino.Nome
+                             //              select c1).Count()
+                         }).ToList();
             }
             return query;
         }
