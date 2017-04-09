@@ -49,20 +49,20 @@ namespace dwm_condominios.Models.BI
             {
                 home.ContabilidadeCompetencia = "Janeiro/2017";
 
-                home.ValorInadimplenciaTotal = (decimal)468874.54;
-                home.ValorInadimplenciaCompetencia = (decimal)28274.29;
-                home.ValorSaldoAnterior = (decimal)18740.36;
-                home.ValorSaldoAtual = (decimal)12230.57;
-                home.ValorReceitaCompetenciaRealizada = (decimal)181569.97;
-                home.ValorReceitaCompetenciaPlanejada = (decimal)205409.69;
-                home.ValorDespesaCompetenciaRealizada = (decimal)188079.76;
+                home.ValorInadimplenciaTotal = 0; // (decimal)468874.54;
+                home.ValorInadimplenciaCompetencia = 0; // (decimal)28274.29;
+                home.ValorSaldoAnterior = 0; // (decimal)18740.36;
+                home.ValorSaldoAtual = 0; // (decimal)12230.57;
+                home.ValorReceitaCompetenciaRealizada = 0; // (decimal)181569.97;
+                home.ValorReceitaCompetenciaPlanejada = 0; // (decimal)205409.69;
+                home.ValorDespesaCompetenciaRealizada = 0; // (decimal)188079.76;
 
-                home.ValorInadimplenciaTotal = Math.Round(home.ValorInadimplenciaTotal/1000, 0);
-                home.ValorInadimplenciaCompetencia = Math.Round(home.ValorInadimplenciaCompetencia / 1000, 0);
-                home.ValorSaldoAnterior = Math.Round(home.ValorSaldoAnterior / 1000, 0);
-                home.ValorReceitaCompetenciaRealizada = Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
-                home.ValorReceitaCompetenciaPlanejada = Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
-                home.ValorDespesaCompetenciaRealizada = Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
+                home.ValorInadimplenciaTotal = 0; // Math.Round(home.ValorInadimplenciaTotal/1000, 0);
+                home.ValorInadimplenciaCompetencia = 0; // Math.Round(home.ValorInadimplenciaCompetencia / 1000, 0);
+                home.ValorSaldoAnterior = 0; // Math.Round(home.ValorSaldoAnterior / 1000, 0);
+                home.ValorReceitaCompetenciaRealizada = 0.01M; // Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
+                home.ValorReceitaCompetenciaPlanejada = 0.01M; // Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
+                home.ValorDespesaCompetenciaRealizada = 0.01M; // Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
 
                 home.ValorSaldoAtual = home.ValorSaldoAnterior + home.ValorReceitaCompetenciaRealizada - home.ValorDespesaCompetenciaRealizada;
 
@@ -120,14 +120,14 @@ namespace dwm_condominios.Models.BI
 
                 ListViewArquivoHome l = new ListViewArquivoHome(this.db, this.seguranca_db);
                 if (SessaoLocal.CondominoID == 0)
-                    home.Documentos = l.getPagedList(0, 12, _data1, _data2, _EdificacaoID, _UnidadeID, _CondominoID, _GrupoCondominoID, "");
+                    home.Documentos = l.getPagedList(0, 15, _data1, _data2, _EdificacaoID, _UnidadeID, _CondominoID, _GrupoCondominoID, "");
                 else
-                    home.Documentos = l.getPagedList(0, 12, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
+                    home.Documentos = l.getPagedList(0, 15, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
                 #endregion
 
                 IList<ChartJS> js = new List<ChartJS>();
-                foreach (BalanceteViewModel bal in home.DRE.Where(info => info.Natureza == "C"))
-                    js.Add(new ChartJS() { device = bal.descricao.Length > 10 ? bal.descricao.Substring(0,10) : bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
+                foreach (BalanceteViewModel bal in home.DRE.Where(info => info.Natureza == "D"))
+                    js.Add(new ChartJS() { device = bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
 
                 //js.Add(new ChartJS() { device = "Taxa condominial", geekbench = 380 });
                 //js.Add(new ChartJS() { device = "Taxa extra", geekbench = 180 });

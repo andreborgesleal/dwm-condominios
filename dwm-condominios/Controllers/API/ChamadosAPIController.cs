@@ -14,6 +14,8 @@ using System.Web.Http.Cors;
 using App_Dominio.Contratos;
 using App_Dominio.Component;
 using DWM.Models.BI;
+using System.Linq;
+using App_Dominio.Repositories;
 
 namespace DWM.Controllers.API
 {
@@ -75,7 +77,6 @@ namespace DWM.Controllers.API
             return obj;
         }
 
-
         public IEnumerable<FilaAtendimentoViewModel> ListFilaAtendimento(Auth value)
         {
             // Validar Token
@@ -106,26 +107,92 @@ namespace DWM.Controllers.API
 
         }
 
-        public ChamadoViewModel EditChamado(ChamadoViewModel value)
+
+        public Auth EditChamado(AnotacaoAPIModel value)
         {
-            // Validar Token
+
+            Auth auth = new Models.API.Auth()
+            {
+                Code = 0,
+                Mensagem = "Sucesso!"
+            };
+
             ChamadoViewModel chamadoViewModel = (ChamadoViewModel)ValidarToken(value);
             if (chamadoViewModel.mensagem.Code != 0)
             {
-                ChamadoViewModel cvm = new ChamadoViewModel()
+                Auth cvm = new Auth()
                 {
-                    mensagem = new Validate()
-                    {
-                        Code = chamadoViewModel.mensagem.Code,
-                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
-                    }
+                    Mensagem = "Acesso Negado.",
+                    Code = 202
                 };
                 return cvm;
             }
 
-            Factory<ChamadoViewModel, ApplicationContext> factory = new Factory<ChamadoViewModel, ApplicationContext>();
-            ChamadoViewModel obj = factory.Execute(new ChamadoEditBI(), chamadoViewModel, chamadoViewModel.sessionId);
-            return obj;
+
+            ChamadoViewModel result = null;
+            try
+            {
+                int? FilaAtendimentoID = null;
+                if (value.FilaAtendimentoAtualID != value.FilaAtendimentoID.ToString())
+                    FilaAtendimentoID = value.FilaAtendimentoID;
+
+                #region Incluir Anotação
+                result = new ChamadoViewModel()
+                {
+                    ChamadoID = value.ChamadoID,
+                    uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                    ChamadoAnexoViewModel = new ChamadoAnexoViewModel(),
+                    ChamadoFilaViewModel = new ChamadoFilaViewModel(),
+                    ChamadoAnotacaoViewModel = new ChamadoAnotacaoViewModel()
+                    {
+                        ChamadoID = value.ChamadoID,
+                        Mensagem = value.Anotacoes.FirstOrDefault().Mensagem
+                    },
+                    ChamadoStatusID = value.ChamadoStatusID,
+                    FilaAtendimentoID = FilaAtendimentoID,
+                    DescricaoFilaAtendimento = value.DescricaoFilaAtendimento,
+                    DescricaoChamadoStatus = value.DescricaoChamadoStatus,
+                    DataRedirecionamento = Funcoes.Brasilia(),
+                    Rotas = new List<ChamadoFilaViewModel>(),
+                    Anexos = new List<ChamadoAnexoViewModel>(),
+                    mensagem = new Validate() { Code = 0 }
+                };
+                if (value.FilaAtendimentoAtualID == value.FilaAtendimentoID.ToString())
+                    result.IsUsuarioFila = false;
+                else
+                    result.IsUsuarioFila = true;
+
+                result.ChamadoAnotacaoViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                Factory<ChamadoAnotacaoViewModel, ApplicationContext> factory = new Factory<ChamadoAnotacaoViewModel, ApplicationContext>();
+                factory.Execute(new ChamadoAnotacaoBI(), result, value.sessionId);
+                if (factory.Mensagem.Code > 0)
+                    throw new App_DominioException(factory.Mensagem);
+                
+                #endregion
+
+                #region Emitir Alerta e enviar o e-mail para a fila destinatária
+                FactoryLocalhost<AlertaRepository, ApplicationContext> factoryAlert = new FactoryLocalhost<AlertaRepository, ApplicationContext>();
+                AlertaBI bi = new AlertaBI();
+                AlertaRepository a = factoryAlert.Execute(new AlertaBI(), result);
+                if (a.mensagem.Code > 0)
+                    throw new Exception(a.mensagem.Message);
+                #endregion
+
+                #region Recupera o ChamadoViewModel
+                FactoryLocalhost<ChamadoViewModel, ApplicationContext> factoryChamado = new FactoryLocalhost<ChamadoViewModel, ApplicationContext>();
+                result = factoryChamado.Execute(new ChamadoEditBI(), result);
+                #endregion
+            }
+            catch (App_DominioException ex)
+            {
+                ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
+            }
+            catch (Exception ex)
+            {
+                App_DominioException.saveError(ex, GetType().FullName);
+            }
+
+            return auth;
         }
 
 

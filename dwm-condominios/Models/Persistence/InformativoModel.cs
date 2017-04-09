@@ -23,9 +23,20 @@ namespace DWM.Models.Persistence
         {
             this.Create(_db, _seguranca_db);
         }
+
+        public InformativoModel(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
+
         #endregion
 
         #region Métodos da classe CrudModel
+        public override InformativoViewModel BeforeInsert(InformativoViewModel value)
+        {
+            value.CondominioID = sessaoCorrente.empresaId;
+            return base.BeforeInsert(value);
+        }
 
         public override InformativoViewModel AfterInsert(InformativoViewModel value)
         {
@@ -142,7 +153,7 @@ namespace DWM.Models.Persistence
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
-            else if (value.CondominioID == 0)
+            else if (!value.CondominioID.HasValue || value.CondominioID == 0)
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Condomínio").ToString();

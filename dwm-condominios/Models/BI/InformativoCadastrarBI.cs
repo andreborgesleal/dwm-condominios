@@ -15,7 +15,7 @@ using App_Dominio.Models;
 
 namespace DWM.Models.BI
 {
-    public class InformativoCadastrarBI : DWMContextLocal, IProcess<InformativoViewModel, ApplicationContext>
+    public class InformativoCadastrarBI : DWMContextLocal, IProcessAPI<InformativoViewModel, ApplicationContext>
     {
         #region Constructor
         public InformativoCadastrarBI() { }
@@ -71,7 +71,7 @@ namespace DWM.Models.BI
             try
             {
                 #region Passo 1: Incluir o informativo
-                InformativoModel InformativoModel = new InformativoModel(this.db, this.seguranca_db);
+                InformativoModel InformativoModel = new InformativoModel(this.db, this.seguranca_db, value.sessionId);
                 if (result.InformativoID == 0)
                     result = InformativoModel.Insert(result);
                 else
@@ -93,7 +93,7 @@ namespace DWM.Models.BI
                 db.SaveChanges();
                 seguranca_db.SaveChanges();
 
-                result.mensagem.Code = 0; 
+                result.mensagem.Code = -1; 
             }
             catch (ArgumentException ex)
             {

@@ -12,6 +12,7 @@ using DWM.Models.Pattern;
 using App_Dominio.Security;
 using System.Web.Http.Cors;
 using App_Dominio.Contratos;
+using DWM.Models.BI;
 
 namespace DWM.Controllers.API
 {
@@ -66,13 +67,28 @@ namespace DWM.Controllers.API
         }
 
         [HttpPost]
+        [ResponseType(typeof(InformativoViewModel))]
+        public InformativoViewModel Create(InformativoViewModel value)
+        {
+            value = (InformativoViewModel)ValidarToken(value);
+            if (value.mensagem.Code != 0)
+                return value;
+
+            value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+            FactoryLocalhost<InformativoViewModel, ApplicationContext> facade = new FactoryLocalhost<InformativoViewModel, ApplicationContext>();
+            return facade.Execute(new InformativoCadastrarBI(), value, value.sessionId);
+        }
+
+        [HttpPost]
         [ResponseType(typeof(InformativoComentarioViewModel))]
-        public InformativoComentarioViewModel Create(InformativoComentarioViewModel value)
+        public InformativoComentarioViewModel Append(InformativoComentarioViewModel value)
         {
             // Validar Token
             value = (InformativoComentarioViewModel)ValidarToken(value);
             if (value.mensagem.Code != 0)
                 return value;
+
+            
 
             // Insert
             value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();

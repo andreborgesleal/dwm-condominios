@@ -226,6 +226,8 @@
     <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\API\ChamadosAPIController.cs" />
     <Compile Include="Controllers\API\DwmApiController.cs" />
+    <Compile Include="Controllers\API\EdificacaoAPIController.cs" />
+    <Compile Include="Controllers\API\GrupoCondominoAPIController.cs" />
     <Compile Include="Controllers\API\InformativosAPIController.cs" />
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
     <Compile Include="Controllers\BalanceteController.cs" />
@@ -243,6 +245,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\API\AnotacaoAPIModel.cs" />
     <Compile Include="Models\API\Auth.cs" />
     <Compile Include="Models\BI\AlertaBI.cs" />
     <Compile Include="Models\BI\ChamadoAnotacaoBI.cs" />
@@ -326,6 +329,7 @@
     <Compile Include="Models\Persistence\CondominoModel.cs" />
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
+    <Compile Include="Models\Persistence\EdificacaoModel.cs" />
     <Compile Include="Models\Persistence\EmailLogModel.cs" />
     <Compile Include="Models\Persistence\EmailTemplateModel.cs" />
     <Compile Include="Models\Persistence\FilaAtendimentoModel.cs" />
