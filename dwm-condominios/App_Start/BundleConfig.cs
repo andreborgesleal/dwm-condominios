@@ -17,8 +17,7 @@ namespace dwm_condominios
                       "~/Content/vendors/select2/dist/css/select2.min.css",
                       "~/Content/production/css/custom.css",
                       "~/Scripts/css/datepicker.css",
-                      "~/Content/Site.css",
-                      "~/Content/vendors/summernote/css/summernote.css"));
+                      "~/Content/Site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Content/vendors/jquery/dist/jquery.min.js"));

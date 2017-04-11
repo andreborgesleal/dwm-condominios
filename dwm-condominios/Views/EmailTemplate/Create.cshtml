@@ -8,6 +8,8 @@
 
     t[1].url = "../Home/Default";
 }
+<link href="~/Content/vendors/summernote/css/summernote.css" rel="stylesheet">
+
 <div class="container-cadastro">
     <div class="x_panel">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Modelos de E-mail", Descricao = "Incluir", Transacao = t })

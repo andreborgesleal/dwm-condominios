@@ -47,22 +47,22 @@ namespace dwm_condominios.Models.BI
             
             try
             {
-                home.ContabilidadeCompetencia = "Janeiro/2017";
+                home.ContabilidadeCompetencia = "Fevereiro/2017";
 
                 home.ValorInadimplenciaTotal = 0; // (decimal)468874.54;
                 home.ValorInadimplenciaCompetencia = 0; // (decimal)28274.29;
                 home.ValorSaldoAnterior = 0; // (decimal)18740.36;
                 home.ValorSaldoAtual = 0; // (decimal)12230.57;
-                home.ValorReceitaCompetenciaRealizada = 0; // (decimal)181569.97;
-                home.ValorReceitaCompetenciaPlanejada = 0; // (decimal)205409.69;
-                home.ValorDespesaCompetenciaRealizada = 0; // (decimal)188079.76;
+                home.ValorReceitaCompetenciaRealizada = (decimal)528196.31;
+                home.ValorReceitaCompetenciaPlanejada = (decimal)550000.0;
+                home.ValorDespesaCompetenciaRealizada = (decimal)253331.33;
 
                 home.ValorInadimplenciaTotal = 0; // Math.Round(home.ValorInadimplenciaTotal/1000, 0);
                 home.ValorInadimplenciaCompetencia = 0; // Math.Round(home.ValorInadimplenciaCompetencia / 1000, 0);
                 home.ValorSaldoAnterior = 0; // Math.Round(home.ValorSaldoAnterior / 1000, 0);
-                home.ValorReceitaCompetenciaRealizada = 0.01M; // Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
-                home.ValorReceitaCompetenciaPlanejada = 0.01M; // Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
-                home.ValorDespesaCompetenciaRealizada = 0.01M; // Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
+                home.ValorReceitaCompetenciaRealizada = Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
+                home.ValorReceitaCompetenciaPlanejada = Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
+                home.ValorDespesaCompetenciaRealizada = Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
 
                 home.ValorSaldoAtual = home.ValorSaldoAnterior + home.ValorReceitaCompetenciaRealizada - home.ValorDespesaCompetenciaRealizada;
 
