@@ -4228,6 +4228,7 @@
     <Content Include="Views\Shared\_defaultListButtons.cshtml" />
     <Content Include="Views\EmailTemplate\Delete.cshtml" />
     <Content Include="Views\EmailTemplate\Edit.cshtml" />
+    <Content Include="Views\Condomino\ListCondominoMobile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

@@ -24,7 +24,7 @@
 {
     if (Model.Funcionarios.Count() > 0)
     {
-        <table class="table table-striped" id="cad-funcionario">
+        <table class="table table-striped hidden-xs" id="cad-func">
             <thead>
                 <tr>
                     <th>Nome</th>
@@ -93,16 +93,95 @@
                             <td><small>@fun.HoraInicial</small></td>
                             <td><small>@fun.HoraFinal</small></td>
                             <th scope="row">
-                                <a href="#cad-funcionario" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
-                                <a href="#cad-funcionario" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
+                                <a href="#cad-func" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-edit"></i></a>
+                                <a href="#cad-func" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-trash"></i></a>
                             </th>
                         </tr>
                     }
                 }
             </tbody>
         </table>
+        <!-- Mobile -->
+        <table class="table table-striped hidden-lg hidden-md hidden-sm">
+            <tbody>
+                @{
+                    foreach (FuncionarioViewModel fun in Model.Funcionarios)
+                    {
+                        <tr>
+                            <td>
+                                <span class="h4">@fun.Nome</span><small class="pull-right">@fun.Funcao</small>
+                                <p>&nbsp;</p>
+                                <div class="row clearfix" style="border-bottom: 1px solid #b1b1b1">
+                                    <div class="col-xs-1 text-left">Do</div>
+                                    <div class="col-xs-2 text-left">Se</div>
+                                    <div class="col-xs-2 text-left">Te</div>
+                                    <div class="col-xs-2 text-left">Qu</div>
+                                    <div class="col-xs-2 text-left">Qu</div>
+                                    <div class="col-xs-2 text-left">Se</div>
+                                    <div class="col-xs-1 text-left">Sa</div>
+                                </div>
+                                <br />
+                                <div class="row clearfix">
+                                    <div class="col-xs-1 text-left">
+                                        @if (fun.Dia.Substring(0, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-2 text-left">
+                                        @if (fun.Dia.Substring(1, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-2 text-left">
+                                        @if (fun.Dia.Substring(2, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-2 text-left">
+                                        @if (fun.Dia.Substring(3, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-2 text-left">
+                                        @if (fun.Dia.Substring(4, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-2 text-left">
+                                        @if (fun.Dia.Substring(5, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                    <div class="col-xs-1 text-left">
+                                        @if (fun.Dia.Substring(6, 1) == "S")
+                                        {
+                                            <span class="badge bg-green">&nbsp;</span>
+                                        }
+                                    </div>
+                                </div>
+                                <p>&nbsp;</p>
+                                <div class="well well-sm">
+                                    <h4 class="text-center">Horário: <strong>@fun.HoraInicial às @fun.HoraFinal</strong></h4>
+                                </div>
+                                <p>&nbsp;</p>
+                                <p>
+                                    <a href="#cad-funcionario" title="Editar" onclick="editFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-2x fa-edit"></i></a>
+                                    <a href="#cad-funcionario" title="Excluir" onclick="delFun('@fun.FuncionarioID', '@fun.CondominioID', '@fun.EdificacaoID', '@fun.UnidadeID','@fun.CondominoID','@fun.Nome', '@fun.Funcao','@fun.Sexo', '@fun.Dia', '@fun.HoraInicial', '@fun.HoraFinal', '@fun.RG')"><i class="fa fa-2x fa-trash"></i></a>
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
     }
-    <div class="x_panel">
+    <div class="x_panel" id="cad-funcionario">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Funcionário", Descricao = "", Transacao = t1 })
         <div class="x_content">
             @using (Ajax.BeginForm("EditFuncionario", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-funcionarios" }, new { @class = "form", @id = "form004", @name = "form004" }))
@@ -150,8 +229,6 @@
                                     <th><small>QUI</small></th>
                                     <th><small>SEX</small></th>
                                     <th><small>SÁB</small></th>
-                                    <th><small>Início</small></th>
-                                    <th><small>Fim</small></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -254,27 +331,27 @@
                                             </label>
                                         </div>
                                     </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <p>
-                                                <input type="text" class="form-control" name="FuncionarioViewModel.HoraInicial" id="FuncionarioViewModel_HoraInicial" value="@Model.FuncionarioViewModel.HoraInicial" />
-                                            </p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="form-group">
-                                            <p>
-                                                <input type="text" class="form-control" name="FuncionarioViewModel.HoraFinal" id="FuncionarioViewModel_HoraFinal" value="@Model.FuncionarioViewModel.HoraFinal" />
-                                            </p>
-                                        </div>
-                                    </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-4 col-xs-6 col-sm-6 col-lg-4">
+                    <div class="col-xs-6 col-md-4 col-lg-4 col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Hora Início</label>
+                            <input type="text" class="form-control" name="FuncionarioViewModel.HoraInicial" id="FuncionarioViewModel_HoraInicial" value="@Model.FuncionarioViewModel.HoraInicial" />
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-4 col-lg-4 col-sm-4">
+                        <div class="form-group">
+                            <label class="control-label">Hora Fim</label>
+                            <input type="text" class="form-control" name="FuncionarioViewModel.HoraFinal" id="FuncionarioViewModel_HoraFinal" value="@Model.FuncionarioViewModel.HoraFinal" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                         <div class="form-group">
                             @Html.LabelFor(m => m.FuncionarioViewModel.RG, new { @class = "control-label" })
                             <input type="text" class="form-control" name="FuncionarioViewModel.RG" id="FuncionarioViewModel_RG" value="@Model.FuncionarioViewModel.RG" maxlength="20" />
@@ -287,6 +364,7 @@
                         <div class="form-group">
                             <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-funcionario" id="btn-salvar-funcionario" onclick="return ValidaFun();" />
                             <input type="button" onclick="insFunc(@(Model.FuncionarioViewModel.CondominioID), @(Model.FuncionarioViewModel.EdificacaoID),@(Model.FuncionarioViewModel.UnidadeID),@(Model.FuncionarioViewModel.CondominoID), '','','','','','','')" class="btn btn-default" value="Cancelar" />
+                            <span class="text-prateado" id="msg-salvando-fun">Salvando...</span>
                         </div>
                     </div>
                 </div>
@@ -300,6 +378,7 @@ else
 }
 
 <script type="text/javascript">
+    $('#msg-salvando-fun').hide()
     $("#OperacaoFunc").val("I");
     $("#FuncionarioViewModel_HoraInicial").mask("99:99");
     $("#FuncionarioViewModel_HoraFinal").mask("99:99");
@@ -358,6 +437,7 @@ else
         else
             _Dia += "S";
         $("#FuncionarioViewModel_Dia").val(_Dia);
+        $('#msg-salvando-fun').show()
         return true;
     }
 

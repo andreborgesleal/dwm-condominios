@@ -1,0 +1,85 @@
+﻿@using DWM.Models.Repositories
+@model PagedList<CondominoUnidadeViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <br />
+    <div class="row clearfix">
+        <div class="col-xs-12">
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <tbody>
+                        @{
+                            int idxMob = 0;
+                            foreach (CondominoUnidadeViewModel value in Model)
+                            {
+                                <tr class="even pointer" id="lineMob_@idxMob">
+                                    <td>
+                                        <p>
+                                            <small>@value.CondominoViewModel.Nome</small>
+                                            <span class="small pull-right">
+                                                <input type="checkbox" name="checkMob_@idxMob" id="checkMob_@idxMob" class="icheckbox_flat-green" onclick="SelecionaMob('@value.CondominoID','@value.EdificacaoID', '@value.UnidadeID','@idxMob', this)" />
+                                            </span>
+                                        </p>
+                                        <p class="text-enfatico">
+                                            <small>@value.EdificacaoDescricao @value.UnidadeID</small>
+                                        </p>
+                                    </td>
+                                </tr>
+                                idxMob++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("Paginacao", Model)
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<script>
+
+    function SelecionaMob(CondominoID,EdificacaoID, UnidadeID, indice, obj)
+    {
+        if (obj.checked == true)
+            $('#lineMob_' + indice).css('background-color', 'cornsilk');
+        else
+            $('#lineMob_' + indice).css('background-color', '');
+
+        if (indice != _indice)
+        {
+            $('#checkMob_' + _indice).prop("checked", false);
+            $('#lineMob_' + _indice).css('background-color', '');
+        }
+
+        _indice = indice;
+
+        _EdificacaoID = EdificacaoID;
+        _UnidadeID = UnidadeID;
+        _CondominoID = CondominoID;
+    }
+
+    function setTotalCountMob(total, CondominoID, EdificacaoID, UnidadeID, indice) {
+        if (total == 1)
+        {
+            $('#checkMob_0').prop("checked", true);
+            $('#lineMob_' + indice).css('background-color', 'cornsilk');
+
+            _indice = 0;
+
+            _EdificacaoID = EdificacaoID;
+            _UnidadeID = UnidadeID;
+            _CondominoID = CondominoID;
+        }
+    }
+</script>
+
+
+
+

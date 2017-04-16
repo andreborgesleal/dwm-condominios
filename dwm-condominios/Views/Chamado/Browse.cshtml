@@ -17,6 +17,7 @@
 <div class="x_panel">
     @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Meus chamados", Descricao = "Meus chamados", Transacao = t })
     <div class="x_content">
+        @Html.Partial("_alerts")
         <div id="div-chamado">
             @Html.Partial("List", Model)
         </div>

@@ -285,13 +285,27 @@
 @foreach (InformativoViewModel inf in Model.Informativos)
 {
     <div id="@inf.InformativoID" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content hidden-xs">
+        <div class="modal-dialog modal-lg hidden-xs">
+            <div class="modal-content">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
                     <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
                 </div>
-                <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                <div class="modal-body" id="myModal1-body-preview" style="height: 700px">
+                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                </div>
+            </div>
+        </div>
+        <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                </div>
+                <div class="modal-body Scroll" id="myModal1-body-preview">
                     <p>@Html.Raw(inf.MensagemDetalhada)</p>
                 </div>
                 <div class="modal-footer">

@@ -134,3 +134,4 @@ C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.ReaderWriter.d
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XmlDocument.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\obj\Release\dwm-condominios.csprojResolveAssemblyReference.cache

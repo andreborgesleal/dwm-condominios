@@ -11,13 +11,68 @@
 }
 @if (Model != null)
 {
-    <div class="x_panel">
+    <div class="x_panel hidden-xs">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro de Condôminos", Descricao = "", Transacao = t })
-        <div class="x_content">
+        <div class="x_content hidden-xs">
             <div id="div-condomino-pf">
                 @if (Model != null)
                 {
                     @Html.Partial("ListParam", Model)
+                }
+            </div>
+        </div>
+    </div>
+    <!-- Visão mobile -->
+    <div class="x_panel hidden-lg hidden-md hidden-sm">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Condôminos", Descricao = "", Transacao = t })
+        <div class="x_content">
+            <div id="div-condomino-pf">
+                @if (Model != null)
+                {
+                    @*@Html.Partial("ListParam", Model)*@
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <table id="datatable" class="table table-striped table-bordered">
+                                <tbody>
+                                    @foreach (CondominoUnidadeViewModel value in Model)
+                                    {
+                                        <tr class="even pointer">
+                                            <td>
+                                                <p class="text-bold">
+                                                    @value.CondominoViewModel.Nome
+                                                    <small>
+                                                        @value.EdificacaoDescricao
+                                                        @value.UnidadeID
+                                                    </small>
+                                                </p>
+                                                <p>@value.CondominoViewModel.Email</p>
+                                                <p>
+                                                    @App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)
+                                                    <small class="pull-right">
+                                                        @value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")
+                                                    </small>
+                                                </p>
+                                                @if ((int)ViewBag.CondominoID == 0)
+                                                {
+                                                    <p class="pull-right">
+                                                        <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                                        <a href="~/Condomino/Append?CondominoID=@(value.CondominoID)" title="Adicionar unidade ao condômino"><i class="fa fa-2x fa-plus-circle"></i></a>&nbsp;
+                                                        <a href="~/Condomino/Desativar?CondominioID=@(value.CondominioID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&CondominoID=@(value.CondominoID)" title="Desativar condômino da unidade"><i class="fa fa-2x fa-trash"></i></a>
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="pull-right">
+                                                        <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                                    </p>
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 }
             </div>
         </div>

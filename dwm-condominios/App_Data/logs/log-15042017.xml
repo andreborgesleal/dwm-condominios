@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="1484430063" Data="15/04/2017 13:50:13">
+    <Sessao>evkd1jgoi2ntsmi2fsonc2jp</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.CondominoController =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.EditarCredenciadoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\EditarCredenciadoBI.cs:linha 362
+   em App_Dominio.Pattern.Factory`2.Execute(IProcess`2 proc, Repository value, Object[] param) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Factory.cs:linha 72
+   em DWM.Controllers.CondominoController.EditCredenciado(CredenciadoViewModel CredenciadoViewModel, String Operacao) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\CondominoController.cs:linha 239</StackTrace>
+  </LOG>
+  <LOG ID="88386163" Data="15/04/2017 19:31:59">
+    <Sessao>4o0rseh51s3lzntzpmpqfzxf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>An error occurred while starting a transaction on the provider connection. See the inner exception for details.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="88386163" Data="15/04/2017 19:31:59">
+    <Sessao>4o0rseh51s3lzntzpmpqfzxf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>An error occurred while starting a transaction on the provider connection. See the inner exception for details.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; home/default</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+</LOG>

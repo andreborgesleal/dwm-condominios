@@ -16,14 +16,24 @@
                                 <i class="fa fa-download fa-2x dedo-indicador" title="Download" onclick="SaveToDisk('@download.MapFile().Replace("~","..")', '@download.FileID')"></i>
                                 <a href="#" id="@download.FileID" download></a>
                             </td>
-                            <td>
-                                <span>
+                            <td class="hidden-lg hidden-md hidden-sm">
+                                <p>
                                     @download.Nome
-                                    <small class="text-prateado">@download.Data.ToString("dd/MM/yyyy")</small>
-                                </span>
+                                </p>
+                                <small class="text-prateado">@download.Data.ToString("dd/MM/yyyy")</small>
                                 @if (download.Data.AddDays(3) > Funcoes.Brasilia().Date)
                                 {
                                     <img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right hidden-xs" />
+                                }
+                            </td>
+                            <td class="hidden-xs">
+                                <span>
+                                    @download.Nome
+                                </span>
+                                <small class="text-prateado">@download.Data.ToString("dd/MM/yyyy")</small>
+                                @if (download.Data.AddDays(3) > Funcoes.Brasilia().Date)
+                                {
+                                    <img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
                                 }
                             </td>
                         </tr>

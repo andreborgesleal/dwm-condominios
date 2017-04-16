@@ -24,7 +24,7 @@
 {
     if (Model.Credenciados.Count() > 0)
     {
-        <div class="x_panel">
+        <div class="x_panel hidden-xs">
             @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Lista de Dependentes", Descricao = "", Transacao = t })
             <div class="x_content">
                 <table class="table table-striped">
@@ -60,8 +60,40 @@
                 </table>
             </div>
         </div>
+        <!-- Mobile -->
+        <div class="x_panel hidden-lg hidden-md hidden-sm">
+            @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Dependentes", Descricao = "", Transacao = t })
+            <div class="x_content">
+                <table class="table table-striped">
+                    <tbody>
+                        @{
+                            int contadorD = 0;
+                            foreach (CredenciadoViewModel cre in Model.Credenciados)
+                            {
+                                <tr>
+                                    @Html.Hidden("obs" + contador.ToString(), cre.Observacao)
+                                    <td>
+                                        @cre.Nome
+                                        <small class="pull-right">@cre.DescricaoTipoCredenciado</small>
+                                        <small>@cre.Email</small>
+                                        @if(cre.IndVisitantePermanente == "S")
+                                        {
+                                            <p class="text-prateado">Visitante Permanente</p>
+                                        }
+                                        <p>&nbsp;</p>
+                                        <a href="#dep" title="Editar" onclick="edit('@cre.CondominoID', '@cre.CredenciadoID', '@cre.UsuarioID', '@cre.Nome', '@cre.Email', '@cre.TipoCredenciadoID', '@cre.Sexo', '@contador')"><i class="fa fa-2x fa-edit"></i></a>
+                                        <a href="#dep" title="Excluir" onclick="del('@cre.CondominoID', '@cre.CredenciadoID', '@cre.UsuarioID', '@cre.Nome', '@cre.Email', '@cre.TipoCredenciadoID', '@cre.Sexo', '@contador')"><i class="fa fa-2x fa-trash"></i></a>
+                                    </td>
+                                </tr>
+                                contadorD++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
     }
-    <div class="x_panel">
+    <div class="x_panel" id="dep">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Dependente", Descricao = "", Transacao = t1 })
         <div class="x_content">
             @using (Ajax.BeginForm("EditCredenciado", "Condomino", new AjaxOptions { HttpMethod = "GET", UpdateTargetId = "div-credenciado" }, new { @class = "form", @id = "form002", @name = "form002" }))
@@ -118,8 +150,9 @@
                 <div class="row clearfix">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-credenciado" id="btn-salvar-credenciado" />
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-credenciado" id="btn-salvar-credenciado"  onclick="$('#msg-salvando-dep').show()" />
                             <input type="button" onclick="ins(@(Model.CredenciadoViewModel.CondominoID))" class="btn btn-default" value="Cancelar" />
+                            <span class="text-prateado" id="msg-salvando-dep">Salvando...</span>
                         </div>
                     </div>
                 </div>
@@ -136,6 +169,7 @@ else
 <script type="text/javascript">
     $("#Operacao").val("S");
     $("#CredenciadoViewModel_CredenciadoID").val("0");
+    $('#msg-salvando-dep').hide()
 
     $(function () {
         $('#form002').submit(function () {

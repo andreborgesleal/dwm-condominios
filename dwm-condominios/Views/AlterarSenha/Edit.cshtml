@@ -25,11 +25,11 @@
                     @Html.HiddenFor(m => m.situacao)
                     @Html.HiddenFor(m => m.isAdmin)
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.login, "Login", new { @class = "col-md-2 control-label" })
-                                <div class="col-md-8">
-                                    <div class="input-group col-md-4">
+                                <div class="col-md-8 col-xs-12">
+                                    <div class="input-group col-md-4 col-xs-12">
                                         @Html.TextBoxFor(m => m.login, new { @class = "form-control input-sm", @disabled = "disable" })<br />
                                     </div>
                                 </div>
@@ -37,11 +37,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => ((AlterarSenhaRepository)m).senhaAtual, "Senha Atual", new { @class = "col-md-2 control-label" })
-                                <div class="col-md-8">
-                                    <div class="input-group col-md-4">
+                                <div class="col-md-8 col-xs-12">
+                                    <div class="input-group col-md-4 col-xs-12">
                                         @Html.PasswordFor(m => ((AlterarSenhaRepository)m).senhaAtual, new { @class = "form-control input-sm" })<br />
                                     </div>
                                 </div>
@@ -49,11 +49,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.senha, "Nova Senha", new { @class = "col-md-2 control-label" })
-                                <div class="col-md-8">
-                                    <div class="input-group col-md-4">
+                                <div class="col-md-8 col-xs-12">
+                                    <div class="input-group col-md-4 col-xs-12">
                                         @Html.PasswordFor(m => m.senha, new { @class = "form-control input-sm" })<br />
                                     </div>
                                 </div>
@@ -61,11 +61,11 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-12 col-xs-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.confirmacaoSenha, "Confirmação de Senha", new { @class = "col-md-2 control-label" })
-                                <div class="col-md-8">
-                                    <div class="input-group col-md-4">
+                                <div class="col-md-8 col-xs-12">
+                                    <div class="input-group col-md-4 col-xs-12">
                                         @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control input-sm" })
                                     </div>
                                 </div>

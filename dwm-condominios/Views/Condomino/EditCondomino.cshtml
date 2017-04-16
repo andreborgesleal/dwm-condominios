@@ -106,7 +106,7 @@
             </div>
             @*<div class="ln_solid"></div>*@
             <div class="row">
-                <div class="col-md-12 col-lg-12">
+                <div class="col-md-12 col-lg-12 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Observação</label>
                         @Html.TextAreaFor(info => info.Observacao, 5, 1, new { @class = "form-control" })
@@ -117,8 +117,9 @@
             <div class="row clearfix">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" />
+                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" onclick="$('#msg-salvando-cond').show()"  />
                         <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
+                        <span class="text-prateado" id="msg-salvando-cond">Salvando...</span>
                     </div>
                 </div>
             </div>
@@ -127,6 +128,8 @@
 </div>
 
 <script type="text/javascript">
+    $('#msg-salvando-cond').hide()
+
     $(function () {
         $('#form001').submit(function () {
             if ($(this).valid()) {

@@ -3,13 +3,16 @@
 @{
     Layout = null;
 }
+<!-- Datatables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
 @if (Model != null)
 {
     <br />
     <div class="row clearfix">
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="table-responsive">
-                <table class="table table-striped jambo_table bulk_action">
+                <table id="datatable" class="table table-striped jambo_table bulk_action">
                     <thead>
                         <tr class="headings">
                             <th class="column-title">Nome </th>
@@ -55,12 +58,23 @@ else
     @Html.Partial("_AcessoNegadoModal")
 }
 
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- Datatables -->
 <script>
+      $(document).ready(function() {
+        $('#datatable').DataTable({
+            "lengthMenu": [[15, 25, 50, -1], [15, 25, 50, "Todos"]],
+            "language": {
+                "url": "../Scripts/DataTablePtBr.txt"
+            }
+        });
+      });
+</script>
+<!-- /Datatables -->
 
-    _CondominoID = '';
-    _EdificacaoID = '';
-    _UnidadeID = '';
-
+<script>
     function Seleciona(CondominoID,EdificacaoID, UnidadeID, indice, obj)
     {
         if (obj.checked == true)
@@ -86,6 +100,9 @@ else
         {
             $('#check_0').prop("checked", true);
             $('#line_' + indice).css('background-color', 'cornsilk');
+
+            $('#checkMob_0').prop("checked", true);
+            $('#lineMob_' + indice).css('background-color', 'cornsilk');
 
             _indice = 0;
 

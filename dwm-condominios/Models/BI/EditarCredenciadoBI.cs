@@ -114,6 +114,7 @@ namespace DWM.Models.BI
                         seguranca_db.SaveChanges();
 
                         result.UsuarioID = user.usuarioId;
+                        EnviaEmail = true;
                     }
                     #endregion
 
@@ -121,8 +122,6 @@ namespace DWM.Models.BI
                     result = CredenciadoModel.Insert(result);
                     result.mensagem.Field = _keyword;
                     #endregion
-
-                    EnviaEmail = true;
                 }
                 else if (Operacao == "S") // Alterar credenciado
                 {
@@ -226,17 +225,20 @@ namespace DWM.Models.BI
                     #endregion
 
                     #region Exclui o cadastro do usuário
-                    int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
-                    
-                    // Exclui o usuário do Grupo
-                    UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
-                    seguranca_db.Set<UsuarioGrupo>().Remove(ug);
+                    if (result.UsuarioID.HasValue && result.UsuarioID.Value > 0)
+                    {
+                        int _grupoId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_CREDENCIADO).Valor);
 
-                    // Exclui o usuário 
-                    Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
-                    seguranca_db.Set<Usuario>().Remove(user);
+                        // Exclui o usuário do Grupo
+                        UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
+                        seguranca_db.Set<UsuarioGrupo>().Remove(ug);
 
-                    seguranca_db.SaveChanges();
+                        // Exclui o usuário 
+                        Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
+                        seguranca_db.Set<Usuario>().Remove(user);
+
+                        seguranca_db.SaveChanges();
+                    }
                     #endregion
 
                     #region Alterar credenciado
