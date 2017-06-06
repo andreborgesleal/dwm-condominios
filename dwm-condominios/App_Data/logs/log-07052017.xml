@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="520528726" Data="07/05/2017 13:49:13">
+    <Sessao>c30n5ef5x1p5izcusgamzz4g</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Registro já existente: CPF/CNPJ: 373.238.652-04</Mensagem>
+    <NameSpace>DWM.Models.BI.RegisterBI =&gt; account/register</NameSpace>
+    <Context>__RequestVerificationToken="cLi4e3wUdLEBrNEcBGLnDijEgEWxO3SHkfUBSvOtwkToW6sh-mvz3eMbXidjRCx1ucBGzz5JSNLpEawOZEHjnjo4NM2kUdv2Ecgh13zqAc81",CondominioID="3",Nome="Eduardo Dusek Patavinas da Silva",Email="afbleal@uol.com.br",EdificacaoID="1",UnidadeID="302",IndFiscal="373.238.652-04",ProfissaoID="9",TelParticular1="(91)99985-1809",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1145355423" Data="07/05/2017 14:47:24">
+    <Sessao>c30n5ef5x1p5izcusgamzz4g</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/register</NameSpace>
+    <Context>__RequestVerificationToken="vQhyxbMHKrv1qgcdH-ZQsksxqasXs80Z_hxvr5rr4pA3F0_lRkTL1OjCdxDekeK-kom7Oc-Dr2K2d9miR4uqagPdefBCFi0HxG46_CZ5n8I1",CondominioID="3",Nome="Eduardo Dusek Patavinas da Silva",Email="afbleal@uol.com.br",EdificacaoID="1",UnidadeID="302",IndFiscal="043.166.422-60",ProfissaoID="9",TelParticular1="(91)99985-1809",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace>   em DWM.Models.BI.EnviarEmailBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\Models\BI\EnviarEmailBI.cs:linha 32
+   em DWM.Controllers.AccountController.Register(RegisterViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 149</StackTrace>
+  </LOG>
+  <LOG ID="1948482054" Data="07/05/2017 15:00:01">
+    <Sessao>c30n5ef5x1p5izcusgamzz4g</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>The operation cannot be completed because the DbContext has been disposed.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; account/register</NameSpace>
+    <Context>__RequestVerificationToken="mUQ5-2n3E6cU3sFRRTWvTZL_RHZitY7ChCyfzQeRYvheHR6XnqHtTJ21shC16KA1Wb2ELtwY7_ws61AOCsN4cd-cBkK2kSk9C32kvBiEoqA1",CondominioID="3",Nome="Eduardo Dusek Patavinas da Silva",Email="afbleal@uol.com.br",EdificacaoID="1",UnidadeID="302",IndFiscal="043.166.422-60",ProfissaoID="9",TelParticular1="(91)99985-1809",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace>   em System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   em System.Data.Entity.Internal.LazyInternalContext.get_ObjectContext()
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+</LOG>

@@ -143,10 +143,22 @@ namespace DWM.Controllers
                         throw new ArgumentException(value.mensagem.MessageBase);
 
                     #region Enviar E-mail
-                    value = factory.Execute(new EnviarEmailBI(), value);
+                    //value = factory.Execute(new EnviarEmailRegisterBI());
+                    //if (value.mensagem.Code > 0)
+                    //    throw new ArgumentException(value.mensagem.MessageBase);
 
-                    if (value.mensagem.Code > 0)
-                        throw new ArgumentException(value.mensagem.MessageBase);
+                    using (ApplicationContext db = new ApplicationContext())
+                    {
+                        using (SecurityContext seguranca_db = new SecurityContext())
+                        {
+                            var mail = new EnviarEmailRegisterBI(db, seguranca_db);
+
+                            value = mail.Run(value);
+
+                            if (value.mensagem.Code > 0)
+                                throw new ArgumentException(value.mensagem.MessageBase);
+                        }
+                    }
                     #endregion
 
                     Success("Seu cadastro foi realizado com sucesso.");

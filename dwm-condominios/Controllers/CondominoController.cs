@@ -66,6 +66,33 @@ namespace DWM.Controllers
                 return View();
         }
 
+        [AuthorizeFilter]
+        public ActionResult ListDesativados(int? index, int? pageSize = 25, string EdificacaoID = null, string UnidadeID = null, string Nome = null)
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                int _EdificacaoID = EdificacaoID == null || EdificacaoID == "" ? 0 : int.Parse(EdificacaoID);
+                int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
+
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                Sessao sessaoCorrente = security.getSessaoCorrente();
+                SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+
+                ViewBag.empresaId = sessaoCorrente.empresaId;
+                ViewBag.CondominoID = SessaoLocal.CondominoID;
+
+                ListViewCondominosDesativados l = new ListViewCondominosDesativados();
+                if (SessaoLocal.CondominoID == 0)
+                    return this._List(index, pageSize, "Browse", l, _EdificacaoID, _UnidadeID, Nome);
+                else
+                    return this._List(index, pageSize, "Browse", l, SessaoLocal.CondominoID);
+            }
+            else
+                return View();
+        }
+
+
         /// <summary>
         /// Este método é acionado pelo funcionalidade CHAMADO
         /// </summary>

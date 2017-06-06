@@ -126,6 +126,15 @@ namespace DWM.Models.BI
 
     }
 
+    public class EnviarEmailRegisterBI : EnviarEmailBI
+    {
+        public EnviarEmailRegisterBI(ApplicationContext _db, SecurityContext _segurancaDb)
+        {
+            this.db = _db;
+            this.seguranca_db = _segurancaDb;
+        }
+    }
+
     public class EnviarEmailCredenciadoBI : DWMContext<ApplicationContext>, IProcess<CredenciadoViewModel, ApplicationContext>
     {
         #region Constructor

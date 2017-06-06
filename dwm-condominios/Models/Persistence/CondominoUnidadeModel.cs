@@ -437,6 +437,195 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
+    public class ListViewCondominosDesativados : ListViewModelLocal<CondominoUnidadeViewModel>
+    {
+        #region Constructor
+        public ListViewCondominosDesativados() { }
+        public ListViewCondominosDesativados(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
+        {
+            int? _CondominoID = null;
+            int _EdificacaoID = 0;
+            int _UnidadeID = 0;
+            string _nome = null;
+
+            if (param.Count() == 1)
+                _CondominoID = (int)param[0];
+            else
+            {
+                _EdificacaoID = (int)param[0];
+                _UnidadeID = (int)param[1];
+                _nome = param != null && param[2] != null && param[2].ToString() != "" ? param[2].ToString() : null;
+            }
+
+            IEnumerable<CondominoUnidadeViewModel> query = null;
+
+            if (_CondominoID.HasValue)
+                query = (from c in db.CondominoUnidades
+                         join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         where c.CondominioID == sessaoCorrente.empresaId
+                               && c.Condomino.IndFiscal.Length == 11
+                               && c.Condomino.IndSituacao == "D"
+                               && (c.CondominioID == sessaoCorrente.empresaId
+                                   && c.CondominoID == _CondominoID)
+                               && c.DataFim == null
+                         orderby c.EdificacaoID, c.UnidadeID
+                         select new CondominoUnidadeViewModel()
+                         {
+                             CondominioID = c.CondominioID,
+                             EdificacaoID = c.EdificacaoID,
+                             UnidadeID = c.UnidadeID,
+                             CondominoID = c.CondominoID,
+                             DataInicio = c.DataInicio,
+                             EdificacaoDescricao = e.Descricao,
+                             CondominoViewModel = new CondominoPFViewModel()
+                             {
+                                 Nome = c.Condomino.Nome,
+                                 IndFiscal = c.Condomino.IndFiscal,
+                                 IndProprietario = c.Condomino.IndProprietario,
+                                 TelParticular1 = c.Condomino.TelParticular1,
+                                 TelParticular2 = c.Condomino.TelParticular2,
+                                 Email = c.Condomino.Email,
+                                 UsuarioID = c.Condomino.UsuarioID,
+                                 DataCadastro = c.Condomino.DataCadastro,
+                                 Avatar = c.Condomino.Avatar,
+                             },
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
+                             //                        && c1.CondominoID == _CondominoID)
+                             //                    && c1.DataFim == null
+                             //              orderby c1.EdificacaoID, c1.UnidadeID
+                             //              select c1).Count()
+                         }).ToList();
+            else if (_EdificacaoID > 0 && _UnidadeID > 0)
+            {
+                query = (from c in db.CondominoUnidades
+                         join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         where c.CondominioID == sessaoCorrente.empresaId
+                               && c.Condomino.IndFiscal.Length == 11
+                               && c.Condomino.IndSituacao == "D"
+                               && (c.CondominioID == sessaoCorrente.empresaId
+                                   && c.EdificacaoID == _EdificacaoID
+                                   && c.UnidadeID == _UnidadeID)
+                               && c.DataFim == null
+                         orderby c.Condomino.Nome
+                         select new CondominoUnidadeViewModel()
+                         {
+                             CondominioID = c.CondominioID,
+                             EdificacaoID = c.EdificacaoID,
+                             UnidadeID = c.UnidadeID,
+                             CondominoID = c.CondominoID,
+                             DataInicio = c.DataInicio,
+                             EdificacaoDescricao = e.Descricao,
+                             CondominoViewModel = new CondominoPFViewModel()
+                             {
+                                 Nome = c.Condomino.Nome,
+                                 IndFiscal = c.Condomino.IndFiscal,
+                                 IndProprietario = c.Condomino.IndProprietario,
+                                 TelParticular1 = c.Condomino.TelParticular1,
+                                 TelParticular2 = c.Condomino.TelParticular2,
+                                 Email = c.Condomino.Email,
+                                 UsuarioID = c.Condomino.UsuarioID,
+                                 DataCadastro = c.Condomino.DataCadastro,
+                                 Avatar = c.Condomino.Avatar,
+                             },
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
+                             //                        && c1.EdificacaoID == _EdificacaoID
+                             //                        && c1.UnidadeID == _UnidadeID)
+                             //                    && c1.DataFim == null
+                             //              orderby c1.Condomino.Nome
+                             //              select c1).Count()
+                         }).ToList();
+            }
+            else
+            {
+                query = (from c in db.CondominoUnidades
+                         join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         where c.CondominioID == sessaoCorrente.empresaId
+                               && c.Condomino.IndFiscal.Length == 11
+                               && c.Condomino.IndSituacao == "D"
+                               && (
+                                     (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome))) ||
+                                     (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
+                                     (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome)) ||
+                                     (_EdificacaoID == 0 && (_nome == null || _nome == ""))
+                                  )
+                               && c.DataFim == null
+                         orderby c.Condomino.Nome
+                         select new CondominoUnidadeViewModel()
+                         {
+                             CondominioID = c.CondominioID,
+                             EdificacaoID = c.EdificacaoID,
+                             UnidadeID = c.UnidadeID,
+                             CondominoID = c.CondominoID,
+                             DataInicio = c.DataInicio,
+                             EdificacaoDescricao = e.Descricao,
+                             CondominoViewModel = new CondominoPFViewModel()
+                             {
+                                 Nome = c.Condomino.Nome,
+                                 IndFiscal = c.Condomino.IndFiscal,
+                                 IndProprietario = c.Condomino.IndProprietario,
+                                 TelParticular1 = c.Condomino.TelParticular1,
+                                 TelParticular2 = c.Condomino.TelParticular2,
+                                 Email = c.Condomino.Email,
+                                 UsuarioID = c.Condomino.UsuarioID,
+                                 DataCadastro = c.Condomino.DataCadastro,
+                                 Avatar = c.Condomino.Avatar,
+                             },
+                             //PageSize = pageSize,
+                             //TotalCount = (from c1 in db.CondominoUnidades
+                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
+                             //              where c1.CondominioID == sessaoCorrente.empresaId
+                             //                    && c1.Condomino.IndFiscal.Length == 11
+                             //                    && c1.Condomino.IndSituacao == "A"
+                             //                    && (
+                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome))) ||
+                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
+                             //                          (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome)) ||
+                             //                          (_EdificacaoID == 0 && (_nome == null || _nome == ""))
+                             //                       )
+                             //                    && c1.DataFim == null
+                             //              orderby c1.Condomino.Nome
+                             //              select c1).Count()
+                         }).ToList();
+            }
+            return query;
+        }
+
+        public override string action()
+        {
+            return "../Condomino/ListViewCondominosDesativados";
+        }
+
+        public override string DivId()
+        {
+            return "div-condomino-pf";
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new CondominoPFModel().getObject((CondominoPFViewModel)id);
+        }
+        #endregion
+    }
+
     public class ListViewCondominoUnidadeChamado : ListViewCondominoUnidade
     {
         public ListViewCondominoUnidadeChamado() { }

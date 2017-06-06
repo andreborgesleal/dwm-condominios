@@ -30,6 +30,7 @@ namespace dwm_condominios.Controllers
 
         public ActionResult ListParam(int? index, int? pageSize = 50, string data1 = "", string data2 = "")
         {
+            ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
                 if (data1 == null || data1 == "")
