@@ -281,6 +281,7 @@ namespace DWM.Models.Persistence
             if (_CondominoID.HasValue)
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
                          where c.CondominioID == sessaoCorrente.empresaId
                                && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
@@ -307,6 +308,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
                              },
                              //PageSize = pageSize,
                              //TotalCount = (from c1 in db.CondominoUnidades
@@ -323,6 +325,7 @@ namespace DWM.Models.Persistence
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
             {
                 query = (from c in db.CondominoUnidades join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
                          where c.CondominioID == sessaoCorrente.empresaId
                                && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
@@ -350,6 +353,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
                              },
                              //PageSize = pageSize,
                              //TotalCount = (from c1 in db.CondominoUnidades
@@ -369,6 +373,7 @@ namespace DWM.Models.Persistence
             {
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
                          where c.CondominioID == sessaoCorrente.empresaId
                                && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
@@ -399,6 +404,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
                              },
                              //PageSize = pageSize,
                              //TotalCount = (from c1 in db.CondominoUnidades

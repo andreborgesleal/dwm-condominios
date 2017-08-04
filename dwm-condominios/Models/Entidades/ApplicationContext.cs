@@ -35,5 +35,9 @@ namespace DWM.Models.Entidades
         public DbSet<Arquivo> Arquivos { get; set; }
         public DbSet<Balancete> Balancetes { get; set; }
         public DbSet<SaldoContabil> SaldosContabeis { get; set; }
+        public DbSet<Visitante> Visitantes { get; set; }
+        public DbSet<VisitanteUnidade> VisitanteUnidades { get; set; }
+        public DbSet<VisitanteAcesso> VisitanteAcessos { get; set; }
+        public DbSet<VisitanteAcessoUnidade> VisitanteAcessoUnidades { get; set; }
     }
 }

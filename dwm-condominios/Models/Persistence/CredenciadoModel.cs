@@ -178,28 +178,68 @@ namespace DWM.Models.Persistence
         {
             int _CondominoID = param != null && param.Count() > 0 && param[0] != null ? int.Parse(param[0].ToString()) : 0;
 
-            return (from c in db.Credenciados join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
-                    where c.CondominoID == _CondominoID
-                    orderby c.Nome
-                    select new CredenciadoViewModel
-                    {
-                        empresaId = sessaoCorrente.empresaId,
-                        CredenciadoID = c.CredenciadoID,
-                        CondominoID = c.CondominoID,
-                        Nome = c.Nome,
-                        Email = c.Email,
-                        TipoCredenciadoID = c.TipoCredenciadoID,
-                        DescricaoTipoCredenciado = t.Descricao,
-                        Sexo = c.Sexo,
-                        Observacao = c.Observacao,
-                        UsuarioID = c.UsuarioID,
-                        IndVisitantePermanente = c.IndVisitantePermanente,
-                        PageSize = pageSize,
-                        TotalCount = ((from c1 in db.Credenciados
-                                       where c1.CondominoID == _CondominoID
-                                       orderby c1.Nome
-                                       select c1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            if (_CondominoID != 0)
+            {
+                return (from c in db.Credenciados
+                        join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
+                        join con in db.Condominos on c.CondominoID equals con.CondominoID
+                        join cu in db.CondominoUnidades on con.CondominoID equals cu.CondominoID
+                        join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                        where c.CondominoID == _CondominoID
+                        orderby c.Nome
+                        select new CredenciadoViewModel
+                        {
+                            empresaId = sessaoCorrente.empresaId,
+                            CredenciadoID = c.CredenciadoID,
+                            CondominoID = c.CondominoID,
+                            Nome = c.Nome,
+                            Email = c.Email,
+                            TipoCredenciadoID = c.TipoCredenciadoID,
+                            DescricaoTipoCredenciado = t.Descricao,
+                            Sexo = c.Sexo,
+                            Observacao = c.Observacao,
+                            UsuarioID = c.UsuarioID,
+                            IndVisitantePermanente = c.IndVisitantePermanente,
+                            DescricaoEdificacao = ed.Descricao,
+                            UnidadeID = cu.UnidadeID,
+                            PageSize = pageSize,
+                            TotalCount = ((from c1 in db.Credenciados
+                                           where c1.CondominoID == _CondominoID
+                                           orderby c1.Nome
+                                           select c1).Count())
+                        }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                return (from c in db.Credenciados
+                        join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
+                        join con in db.Condominos on c.CondominoID equals con.CondominoID
+                        join cu in db.CondominoUnidades on con.CondominoID equals cu.CondominoID
+                        join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                        orderby c.Nome
+                        select new CredenciadoViewModel
+                        {
+                            empresaId = sessaoCorrente.empresaId,
+                            CredenciadoID = c.CredenciadoID,
+                            CondominoID = c.CondominoID,
+                            Nome = c.Nome,
+                            Email = c.Email,
+                            TipoCredenciadoID = c.TipoCredenciadoID,
+                            DescricaoTipoCredenciado = t.Descricao,
+                            Sexo = c.Sexo,
+                            Observacao = c.Observacao,
+                            UsuarioID = c.UsuarioID,
+                            IndVisitantePermanente = c.IndVisitantePermanente,
+                            DescricaoEdificacao = ed.Descricao,
+                            UnidadeID = cu.UnidadeID,
+                            PageSize = pageSize,
+                            TotalCount = ((from c1 in db.Credenciados
+                                           where c1.CondominoID == _CondominoID
+                                           orderby c1.Nome
+                                           select c1).Count())
+                        }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+            }
+            
         }
 
         public override Repository getRepository(Object id)

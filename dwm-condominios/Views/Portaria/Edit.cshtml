@@ -1,0 +1,180 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.VisitanteViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Portaria/Edit";
+    t[0].nomeCurto = "Editar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Portaria", Descricao = "Editar Visitante", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Edit", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.VisitanteID)
+
+                if (ViewBag.unidades == null)
+                {
+                    @Html.Hidden("Unidades", "")
+                }
+                else
+                {
+                    @Html.Hidden("PrestadorCondominio", "N")
+                    @Html.Hidden("Unidades", "n")
+                }
+
+
+
+                //if (ViewBag.unidades == null)
+                //{
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Edificação</label>
+                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidades</label>
+                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todos...", "", 0, Model.CondominioID), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                    @*}*@
+
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Nome</label>
+                                <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">RG</label>
+                                <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Órgão Emissor</label>
+                                <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">CPF</label>
+                                <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" />
+                            </div>
+                        </div>
+                    </div>
+                if (ViewBag.unidades == null)
+                {
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Prestador do Condomínio</label>
+                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Sexo</label>
+                            @Html.DropDownList("Sexo", new DWM.Models.Enumeracoes.BindDropDownList().Sexo(), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" class="form-control" name="Telefone" id="Telefone" value="@Model.Telefone" maxlength="60" />
+                        </div>
+                    </div>
+                </div>
+
+                if (ViewBag.unidades == null)
+                {
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Fotografia</label>
+                                <input type="file" name="Fotografia" value="@Model.Fotografia" />
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Enviar" class="btn btn-primary" onclick="return Valida();" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Telefone").mask("(99)9999?9-9999");
+        $("#CPF").mask("999.999.999-99");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function Valida() {
+        if ($('#Unidades').val() == null || $('#Unidades').val() == '') {
+            var edificacao = $('#EdificacaoID').val();
+            var unidade = $('#UnidadeID').val();
+            var prestadorCondominio = $('#PrestadorCondominio').val();
+
+            if (prestadorCondominio == "N")
+            {
+                if (edificacao == null || edificacao == "") {
+                    ShowMessageAjaxAlert('É preciso informar a Edificação para salvar o visitante', 'warning');
+                    return false;
+                }
+
+                if (unidade == null || unidade == "") {
+                    ShowMessageAjaxAlert('É preciso informar a Unidade para salvar o visitante', 'warning');
+                    return false;
+                }
+            }
+
+            return true;
+        }
+        return true;
+    }
+</script>
+
+

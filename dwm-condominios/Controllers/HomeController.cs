@@ -46,7 +46,9 @@ namespace DWM.Controllers
                 HomeViewModel home = new HomeViewModel();
 
                 Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();
-                return View(factory.Execute(new HomeBI(), home));
+                home = factory.Execute(new HomeBI(), home);
+                ViewBag.UsuarioPortaria = home.UsuarioGrupos.Find(x => x.descricao == "Portaria") != null;
+                return View(home);
                 #endregion
             }
             else

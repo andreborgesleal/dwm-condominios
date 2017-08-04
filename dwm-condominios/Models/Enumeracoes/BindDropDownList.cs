@@ -31,21 +31,38 @@ namespace DWM.Models.Enumeracoes
             using (ApplicationContext db = new ApplicationContext())
             {
                 IList<SelectListItem> q = new List<SelectListItem>();
+                IEnumerable<Unidade> Unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
 
-                if (cabecalho != "")
-                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+                if (Unidades == null)
+                {
+                    if (cabecalho != "")
+                        q.Add(new SelectListItem() { Value = "", Text = cabecalho });
 
-                q = q.Union(from u in db.Unidades.AsEnumerable()
-                            where u.CondominioID.Equals(_CondominioID) && u.EdificacaoID.Equals(_EdificacaoID)
-                            orderby u.UnidadeID
-                            select new SelectListItem()
-                            {
-                                Value = u.UnidadeID.ToString(),
-                                Text = u.UnidadeID.ToString(),
-                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
-                            }).ToList();
+                    q = q.Union(from u in db.Unidades.AsEnumerable()
+                                where u.CondominioID.Equals(_CondominioID) && u.EdificacaoID.Equals(_EdificacaoID)
+                                orderby u.UnidadeID
+                                select new SelectListItem()
+                                {
+                                    Value = u.UnidadeID.ToString(),
+                                    Text = u.UnidadeID.ToString(),
+                                    Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
+                                }).ToList();
 
-                return q.AsEnumerable().ToList();
+                    return q;
+                }
+                else
+                {
+                    q = q.Union(from u in Unidades
+                                orderby u.UnidadeID
+                                select new SelectListItem()
+                                {
+                                    Value = u.UnidadeID.ToString(),
+                                    Text = u.UnidadeID.ToString(),
+                                    Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
+                                }).ToList();
+
+                    return q;
+                }
             }
         }
 
@@ -69,20 +86,40 @@ namespace DWM.Models.Enumeracoes
             {
                 IList<SelectListItem> q = new List<SelectListItem>();
 
-                if (cabecalho != "")
-                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+                
 
-                q = q.Union(from e in db.Edificacaos.AsEnumerable()
-                            where e.CondominioID == _CondominioID
-                            orderby e.Descricao
-                            select new SelectListItem()
-                            {
-                                Value = e.EdificacaoID.ToString(),
-                                Text = e.Descricao,
-                                Selected = (selectedValue != "" ? e.EdificacaoID.ToString() == selectedValue : false)
-                            }).ToList();
+                IEnumerable<Unidade> Unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
 
-                return q;
+                if (Unidades == null)
+                {
+                    if (cabecalho != "")
+                        q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                    q = q.Union(from e in db.Edificacaos.AsEnumerable()
+                                where e.CondominioID == _CondominioID
+                                orderby e.Descricao
+                                select new SelectListItem()
+                                {
+                                    Value = e.EdificacaoID.ToString(),
+                                    Text = e.Descricao,
+                                    Selected = (selectedValue != "" ? e.EdificacaoID.ToString() == selectedValue : false)
+                                }).ToList();
+
+                    return q;
+                }
+                else
+                {
+                    q = q.Union(from e in Unidades
+                                orderby e.EdificacaoID
+                                select new SelectListItem()
+                                {
+                                    Value = e.EdificacaoID.ToString(),
+                                    Text = db.Edificacaos.Find(e.EdificacaoID).Descricao,
+                                    Selected = (selectedValue != "" ? e.EdificacaoID.ToString() == selectedValue : false)
+                                }).ToList();
+
+                    return q;
+                }
             }
         }
 
@@ -265,7 +302,7 @@ namespace DWM.Models.Enumeracoes
             string selectedValue = param[1].ToString();
 
             EmpresaSecurity<SecurityContext> Security = new EmpresaSecurity<SecurityContext>();
-            
+
 
             using (ApplicationContext db = new ApplicationContext())
             {
@@ -415,7 +452,7 @@ namespace DWM.Models.Enumeracoes
                     else
                     {
                         q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
-                                    where f.CondominioID == SessaoLocal.empresaId 
+                                    where f.CondominioID == SessaoLocal.empresaId
                                     orderby f.Descricao
                                     select new SelectListItem()
                                     {
@@ -505,7 +542,7 @@ namespace DWM.Models.Enumeracoes
                     q = q.Union(from f in db.FilaAtendimentos.AsEnumerable()
                                 join u in db.FilaAtendimentoUsuarios.AsEnumerable() on f.FilaAtendimentoID equals u.FilaAtendimentoID
                                 where f.CondominioID == sessaoCorrente.empresaId &&
-                                      f.FilaAtendimentoID == FilaAtendimentoID &&  
+                                      f.FilaAtendimentoID == FilaAtendimentoID &&
                                       u.Situacao == "A"
                                 orderby u.Nome
                                 select new SelectListItem()
@@ -520,5 +557,43 @@ namespace DWM.Models.Enumeracoes
                 q[0].Selected = true;
             return q;
         }
+
+
+        public IEnumerable<SelectListItem> PrestadorCondominio()
+        {
+            IList<SelectListItem> q = new List<SelectListItem>();
+            q.Add(new SelectListItem() { Value = "N", Text = "Não" });
+            q.Add(new SelectListItem() { Value = "S", Text = "Sim" });
+            return q;
+        }
+        public IEnumerable<SelectListItem> Sexo()
+        {
+            IList<SelectListItem> q = new List<SelectListItem>();
+            q.Add(new SelectListItem() { Value = "M", Text = "Masculino" });
+            q.Add(new SelectListItem() { Value = "F", Text = "Feminino" });
+            return q;
+        }
+
+        public IEnumerable<SelectListItem> SituacaoVisitante(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q.Add(new SelectListItem() { Value = "A", Text = "Ativo" });
+                q.Add(new SelectListItem() { Value = "D", Text = "Desativado" });
+
+                return q;
+            }
+        }
+
+
     }
 }

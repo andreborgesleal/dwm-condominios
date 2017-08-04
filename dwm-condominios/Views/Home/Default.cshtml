@@ -1,330 +1,484 @@
 ﻿@using DWM.Models.Repositories
 @using App_Dominio.Models
 @model DWM.Models.Repositories.HomeViewModel
-@{ 
-        string _hidden = "";
-        string _largura = "col-md-8 col-lg-8";
+@{
+    string _hidden = "";
+    string _largura = "col-md-8 col-lg-8";
 
-        if (Model.Informativos.Count() == 0)
-        {
-            _hidden = "hidden";
-            _largura = "col-md-12 col-lg-12";
-        }
+    if (Model.Informativos.Count() == 0)
+    {
+        _hidden = "hidden";
+        _largura = "col-md-12 col-lg-12";
+    }
 
-        string[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
-        string mes = meses[int.Parse(Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(4, 2)) - 1] + "/" +
-                     Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(0, 4);
+    string[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+    string mes = meses[int.Parse(Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(4, 2)) - 1] + "/" +
+                 Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(0, 4);
 
 }
-<!-- top tiles -->
-<div class="row tile_count">
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Total Condôminos</span>
-        <div class="count">@Model.TotalCondominos</div>
-        <span class="count_bottom"><i class="green">@Model.TotalUnidadesCadastradas </i> Unidades cadastradas</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Inadimplência</span>
-        <div class="count red">@Model.ValorInadimplenciaTotal.ToString("##0") mil</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@Model.ValorInadimplenciaCompetencia.ToString("##0") mil </i> @Model.ContabilidadeCompetencia</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-clock-o"></i> Fluxo de caixa anterior</span>
-        <div class="count">@Model.ValorSaldoAnterior.ToString("##0") mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> anterior à @Model.ContabilidadeCompetencia</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Receitas</span>
-        <div class="count green">@Model.ValorReceitaCompetenciaRealizada.ToString("##0") mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>@(((Model.ValorReceitaCompetenciaRealizada / Model.ValorReceitaCompetenciaPlanejada)).ToString("##0%")) </i> Realizado @Model.ContabilidadeCompetencia</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Despesas</span>
-        <div class="count red">@Model.ValorDespesaCompetenciaRealizada.ToString("##0") mil</div>
-        <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@(((Model.ValorDespesaCompetenciaRealizada / Model.ValorReceitaCompetenciaRealizada)).ToString("##0%"))</i> da receita de @Model.ContabilidadeCompetencia</span>
-    </div>
-    <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-        <span class="count_top"><i class="fa fa-user"></i> Fluxo de caixa atual</span>
-        <div class="count">@Model.ValorSaldoAtual.ToString("##0") mil</div>
-        <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i> @Model.ContabilidadeCompetencia</span>
-    </div>
-</div>
-<!-- /top tiles -->
-<div class="row">
-    <div class="col-md-4 col-sm-4 col-xs-12" @_hidden>
-        <!-- Informativos -->
-        <div class="x_panel">
-            <div class="x_title">
-                <h2>Informativos</h2>
-                <ul class="nav navbar-right panel_toolbox">
-                    <li>
-                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>
-                                <a href="#">Settings 1</a>
-                            </li>
-                            <li>
-                                <a href="#">Settings 2</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <div class="x_content">
-                <div class="dashboard-widget-content">
-                    <ul class="list-unstyled timeline widget">
-                        @foreach (InformativoViewModel inf in Model.Informativos)
+
+
+<!-- Datatables -->
+
+@if (ViewBag.UsuarioPortaria)
+{
+
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#condominos">Condôminos</a></li>
+        <li><a data-toggle="tab" href="#visitantes">Visitantes</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="condominos" class="tab-pane fade in active">
+            <div style="margin-top: 30px">
+                <table class="table table-striped jambo_table bulk_action table-responsive display">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title text-center">Ação</th>
+                            <th class="column-title text-center">Edificação</th>
+                            <th class="column-title text-center">Unidade</th>
+                            <th class="column-title">Nome</th>
+                            <th class="column-title text-center">Sexo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (CondominoUnidadeViewModel value in Model.Condominos)
                         {
-                            <li>
-                                <div class="block">
-                                    <div class="row clearfix">
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="block_content">
-                                                <h2 class="title">
-                                                    @if (inf.DataPublicacao.AddDays(3) > Funcoes.Brasilia().Date)
-                                                    {
-                                                        <a id="prev_title">@inf.Cabecalho</a><img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
-                                                    }
-                                                    else
-                                                    {
-                                                        <a id="prev_title">@inf.Cabecalho</a>
-                                                    }
-                                                </h2>
-                                                <div class="byline">
-                                                    <span id="prev_data">@inf.DataPublicacao.ToShortDateString()</span>
+                            <tr class="even pointer">
+                                <td>
+                                    Lupa
+                                </td>
+                                <td align="center">
+                                    @value.EdificacaoDescricao
+                                </td>
+                                <td align="center">
+                                    @value.UnidadeID
+                                </td>
+                                <td>
+                                    @value.CondominoViewModel.Nome
+                                </td>
+                                <td align="center">
+                                    @(((CondominoPFViewModel)value.CondominoViewModel).Sexo)
+                                </td>
+                            </tr>
+                        }
+                        @foreach (CredenciadoViewModel cred in Model.Credenciados)
+                        {
+                            <tr class="even pointer">
+                                <td>
+                                    Lupa
+                                </td>
+                                <td align="center">
+                                    @cred.DescricaoEdificacao
+                                </td>
+                                <td align="center">
+                                    @cred.UnidadeID
+                                </td>
+                                <td>
+                                    @cred.Nome
+                                </td>
+                                <td align="center">
+                                    @cred.Sexo
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div id="visitantes" class="tab-pane fade">
+            <div style="margin-top: 30px">
+                <table class="table table-striped jambo_table bulk_action table-responsive display">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title">Identificador de Acesso</th>
+                            <th class="column-title">Nome</th>
+                            <th class="column-title text-center">Sexo</th>
+                            <th class="column-title text-center">RG</th>
+                            <th class="column-title text-center">CPF</th>
+                            <th class="column-title text-center">Data de Autorização</th>
+                            <th class="column-title text-center">Hora início</th>
+                            <th class="column-title text-center">Hora Limite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (VisitanteViewModel value in Model.Visitantes)
+                        {
+                            <tr class="even pointer">
+                                <td align="center">
+                                    @if (value.VisitanteAcessoViewModel != null)
+                                    {
+                                        @value.VisitanteAcessoViewModel.AcessoID
+                                    }
+                                </td>
+                                <td align="center">
+                                    @value.Nome
+                                </td>
+                                <td>
+                                    @value.Sexo
+                                </td>
+                                <td align="center">
+                                    @value.RG
+                                </td>
+                                <td align="center">
+                                    @value.CPF
+                                </td>
+                                <td align="center">
+                                    @if (value.VisitanteAcessoViewModel != null)
+                                    {
+                                        @value.VisitanteAcessoViewModel.DataAutorizacao
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (value.VisitanteAcessoViewModel != null)
+                                    {
+                                        @value.VisitanteAcessoViewModel.HoraInicio
+                                    }
+                                </td>
+                                <td align="center">
+                                    @if (value.VisitanteAcessoViewModel != null)
+                                    {
+                                        @value.VisitanteAcessoViewModel.HoraLimite
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <!-- top tiles -->
+    <div class="row tile_count">
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Total Condôminos</span>
+            <div class="count">@Model.TotalCondominos</div>
+            <span class="count_bottom"><i class="green">@Model.TotalUnidadesCadastradas </i> Unidades cadastradas</span>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Inadimplência</span>
+            <div class="count red">@Model.ValorInadimplenciaTotal.ToString("##0") mil</div>
+            <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@Model.ValorInadimplenciaCompetencia.ToString("##0") mil </i> @Model.ContabilidadeCompetencia</span>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-clock-o"></i> Fluxo de caixa anterior</span>
+            <div class="count">@Model.ValorSaldoAnterior.ToString("##0") mil</div>
+            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> anterior à @Model.ContabilidadeCompetencia</span>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Receitas</span>
+            <div class="count green">@Model.ValorReceitaCompetenciaRealizada.ToString("##0") mil</div>
+            <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>@(((Model.ValorReceitaCompetenciaRealizada / Model.ValorReceitaCompetenciaPlanejada)).ToString("##0%")) </i> Realizado @Model.ContabilidadeCompetencia</span>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Despesas</span>
+            <div class="count red">@Model.ValorDespesaCompetenciaRealizada.ToString("##0") mil</div>
+            <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@(((Model.ValorDespesaCompetenciaRealizada / Model.ValorReceitaCompetenciaRealizada)).ToString("##0%"))</i> da receita de @Model.ContabilidadeCompetencia</span>
+        </div>
+        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Fluxo de caixa atual</span>
+            <div class="count">@Model.ValorSaldoAtual.ToString("##0") mil</div>
+            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i> @Model.ContabilidadeCompetencia</span>
+        </div>
+    </div>
+    <!-- /top tiles -->
+    <div class="row">
+        <div class="col-md-4 col-sm-4 col-xs-12" @_hidden>
+            <!-- Informativos -->
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Informativos</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li>
+                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>
+                                    <a href="#">Settings 1</a>
+                                </li>
+                                <li>
+                                    <a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="dashboard-widget-content">
+                        <ul class="list-unstyled timeline widget">
+                            foreach (InformativoViewModel inf in Model.Informativos)
+                            {
+                                <li>
+                                    <div class="block">
+                                        <div class="row clearfix">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <div class="block_content">
+                                                    <h2 class="title">
+                                                        if (inf.DataPublicacao.AddDays(3) > Funcoes.Brasilia().Date)
+                                                        {
+                                                            <a id="prev_title">inf.Cabecalho</a><img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
+                                                        }
+                                                        else
+                                                        {
+                                                            <a id="prev_title">inf.Cabecalho</a>
+                                                        }
+                                                    </h2>
+                                                    <div class="byline">
+                                                        <span id="prev_data">inf.DataPublicacao.ToShortDateString()</span>
+                                                    </div>
+                                                    <p class="excerpt">
+                                                        Html.Raw(inf.Resumo)
+                                                    </p>
+                                                    <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#inf.InformativoID">Leia mais...</code></p>
                                                 </div>
-                                                <p class="excerpt">
-                                                    @Html.Raw(inf.Resumo)
-                                                </p>
-                                                <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#@inf.InformativoID">Leia mais...</code></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Fim-Informativos -->
+        </div>
+        <div class="@_largura col-sm-12 col-xs-12">
+            <div class="row clearfix">
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="row clearfix">
+                        <!-- Principas Receitas -->
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="x_panel tile fixed_height_320 overflow_hidden">
+                                <div class="x_title">
+                                    <h2>Receitas <small>@mes</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <table class="" style="width:100%">
+                                        <tr>
+                                            <td>
+                                                <canvas id="canvas1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
+                                            </td>
+                                            <td>
+                                                <table class="tile_info">
+                                                    @{
+                                                        string[] color = { "#8A0808", "#FF0000", "#A901DB", "#6E6E6E", "#2E2EFE", "#BFFF00" };
+                                                        string[] labels = { "", "", "", "", "", "" };
+                                                        string[] data = { "", "", "", "", "", "" };
+                                                        int index = 0;
+                                                        foreach (BalanceteViewModel bal in Model.DRE.Where(info => info.Natureza == "C"))
+                                                        {
+                                                            if (bal.SaldosContabeis.FirstOrDefault().ValorSaldo > 0 && index <= 5)
+                                                            {
+                                                                labels[index] = bal.descricao;
+                                                                data[index] = bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0");
+                                                                <tr>
+                                                                    <td>
+                                                                        <p><i class="fa fa-square" style="color: @color[index++]"></i><small>@bal.descricao</small> </p>
+                                                                    </td>
+                                                                    <td class="pull-right"><small>@bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0") K</small> </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    }
+                                                </table>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Principais Receitas-->
+                        <!-- Receitas x Despesas -->
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <div class="x_panel tile fixed_height_390 overflow_hidden">
+                                <div class="x_title">
+                                    <h3>Receita x Despesa <small>Exercício 2017</small></h3>
+                                </div>
+                                <div class="x_content">
+                                    <div class="dashboard_graph">
+                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                            <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
+                                            <div style="width: 100%;">
+                                                <div id="canvas_dahs" class="demo-placeholder" style="width: 100%; height:270px;"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <!-- Fim-Informativos -->
-    </div>
-    <div class="@_largura col-sm-12 col-xs-12">
-        <div  class="row clearfix">
-            <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                <div class="row clearfix">
-                    <!-- Principas Receitas -->
-                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                        <div class="x_panel tile fixed_height_320 overflow_hidden">
-                            <div class="x_title">
-                                <h2>Receitas <small>@mes</small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#">Settings 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Settings 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <table class="" style="width:100%">
-                                    <tr>
-                                        <td>
-                                            <canvas id="canvas1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                                        </td>
-                                        <td>
-                                            <table class="tile_info">
-                                                @{
-                                                    string[] color = { "#8A0808", "#FF0000", "#A901DB", "#6E6E6E", "#2E2EFE", "#BFFF00" };
-                                                    string[] labels = { "", "", "", "", "", "" };
-                                                    string[] data = { "", "", "", "", "", "" };
-                                                    int index = 0;
-                                                    foreach (BalanceteViewModel bal in Model.DRE.Where(info => info.Natureza == "C"))
-                                                    {
-                                                        if (bal.SaldosContabeis.FirstOrDefault().ValorSaldo > 0 && index <= 5)
-                                                        {
-                                                            labels[index] = bal.descricao;
-                                                            data[index] = bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0");
-                                                            <tr>
-                                                                <td>
-                                                                    <p><i class="fa fa-square" style="color: @color[index++]"></i><small>@bal.descricao</small> </p>
-                                                                </td>
-                                                                <td class="pull-right"><small>@bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0") K</small> </td>
-                                                            </tr>
-                                                        }
-                                                    }
-                                                }
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </table>
                             </div>
                         </div>
+                        <!-- /Receitas x Despesas-->
                     </div>
-                    <!-- /Principais Receitas-->
-
-                    <!-- Receitas x Despesas -->
-                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                        <div class="x_panel tile fixed_height_390 overflow_hidden">
-                            <div class="x_title">
-                                <h3>Receita x Despesa <small>Exercício 2017</small></h3>
-                            </div>
-                            <div class="x_content">
-                                <div class="dashboard_graph">
-                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                        <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
-                                        <div style="width: 100%;">
-                                            <div id="canvas_dahs" class="demo-placeholder" style="width: 100%; height:270px;"></div>
-                                        </div>
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                    <!-- Documentos p/ download -->
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <div class="x_panel">
+                                <div class="x_title">
+                                    <h2>Documentos <small>Download</small></h2>
+                                    <ul class="nav navbar-right panel_toolbox">
+                                        <li>
+                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li>
+                                                    <a href="#">Settings 1</a>
+                                                </li>
+                                                <li>
+                                                    <a href="#">Settings 2</a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <a class="close-link"><i class="fa fa-close"></i></a>
+                                        </li>
+                                    </ul>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="x_content">
+                                    <div id="div-download">
+                                        @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /Receitas x Despesas-->
+                    <!-- /Documentos p/ download -->
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
-                <!-- Documentos p/ download -->
-                <div class="row clearfix">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="x_panel">
-                            <div class="x_title">
-                                <h2>Documentos <small>Download</small></h2>
-                                <ul class="nav navbar-right panel_toolbox">
-                                    <li>
-                                        <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                    </li>
-                                    <li class="dropdown">
-                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li>
-                                                <a href="#">Settings 1</a>
-                                            </li>
-                                            <li>
-                                                <a href="#">Settings 2</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a class="close-link"><i class="fa fa-close"></i></a>
-                                    </li>
-                                </ul>
-                                <div class="clearfix"></div>
-                            </div>
-                            <div class="x_content">
-                                <div id="div-download">
-                                    @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
-                                </div>
-                            </div>
+            <div class="row clearfix hidden-xs">
+                <!-- bar chart -->
+                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Despesas <small>@mes</small></h2>
+                            <ul class="nav navbar-right panel_toolbox">
+                                <li>
+                                    <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <a href="#">Settings 1</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Settings 2</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a class="close-link"><i class="fa fa-close"></i></a>
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <div id="graph_bar" style="width:100%; height:300px;"></div>
                         </div>
                     </div>
                 </div>
-                <!-- /Documentos p/ download -->
+                <!-- /bar charts -->
             </div>
-        </div>
-        <div class="row clearfix hidden-xs">
-            <!-- bar chart -->
-            <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
-                <div class="x_panel">
-                    <div class="x_title">
-                        <h2>Despesas <small>@mes</small></h2>
-                        <ul class="nav navbar-right panel_toolbox">
-                            <li>
-                                <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li>
-                                        <a href="#">Settings 1</a>
-                                    </li>
-                                    <li>
-                                        <a href="#">Settings 2</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a class="close-link"><i class="fa fa-close"></i></a>
-                            </li>
-                        </ul>
-                        <div class="clearfix"></div>
-                    </div>
-                    <div class="x_content">
-                        <div id="graph_bar" style="width:100%; height:300px;"></div>
-                    </div>
-                </div>
-            </div>
-            <!-- /bar charts -->
         </div>
     </div>
-</div>
-<br />
+    <br />
 
-@* Modal *@
-@foreach (InformativoViewModel inf in Model.Informativos)
-{
-    <div id="@inf.InformativoID" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
-        <div class="modal-dialog modal-lg hidden-xs">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+    @* Modal *@
+    foreach (InformativoViewModel inf in Model.Informativos)
+    {
+        <div id="@inf.InformativoID" class="modal fade" role="dialog" aria-labelledby="myModalLabelPreview" aria-hidden="true">
+            <div class="modal-dialog modal-lg hidden-xs">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                        <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                    </div>
+                    <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    </div>
                 </div>
-                <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
-                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+            <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                        <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                    </div>
+                    <div class="modal-body Scroll" id="myModal1-body-preview">
+                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
-                </div>
-                <div class="modal-body Scroll" id="myModal1-body-preview">
-                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
+    @* Fim do Modal *@
 }
-@* Fim do Modal *@
 
-<!-- morris.js -->
-<script src="../Content/vendors/raphael/raphael.min.js"></script>
-<script src="../Content/vendors/morris.js/morris.min.js"></script>
-<!-- Custom Theme Scripts -->
-@*<script src="../Content/production/js/custom.js"></script>*@
-<!-- morris.js -->
 
+
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script>
+    $('table.display').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+        autoWidth: false,
+    });
+</script>
+
+@if (!ViewBag.UsuarioPortaria)
+{
+    <!-- morris.js -->
+    <script src="../Content/vendors/raphael/raphael.min.js"></script>
+    <script src="../Content/vendors/morris.js/morris.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    @*<script src="../Content/production/js/custom.js"></script>*@
+    <!-- morris.js -->
+
+
+    <script>
+    
 
     var viewModel = @Html.Raw(Json.Encode(Model.js.Data))
 
@@ -343,33 +497,34 @@
         });
     });
 
-</script>
+    </script>
 
-<!-- Doughnut Chart -->
-<script>
-      $(document).ready(function(){
-        var options = {
-          legend: true,
-          responsive: false
-        };
+    <!-- Doughnut Chart -->
+    @*<script>
+              $(document).ready(function(){
+                var options = {
+                  legend: true,
+                  responsive: false
+                };
 
-        var _data = @Html.Raw(Json.Encode(data));
-        var _labels = @Html.Raw(Json.Encode(labels));
-        var _backgroundColor = @Html.Raw(Json.Encode(color));
+                var _data = @Html.Raw(Json.Encode(data));
+                var _labels = @Html.Raw(Json.Encode(labels));
+                var _backgroundColor = @Html.Raw(Json.Encode(color));
 
-        new Chart(document.getElementById("canvas1"), {
-          type: 'doughnut',
-          tooltipFillColor: "rgba(51, 51, 51, 0.55)",
-          data: {
-            labels: _labels,
-            datasets: [{
-              data: _data,
-              backgroundColor: _backgroundColor,
-              //hoverBackgroundColor: _backgroundColor
-            }]
-          },
-          options: options
-        });
-      });
-</script>
-<!-- /Doughnut Chart -->
+                new Chart(document.getElementById("canvas1"), {
+                  type: 'doughnut',
+                  tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+                  data: {
+                    labels: _labels,
+                    datasets: [{
+                      data: _data,
+                      backgroundColor: _backgroundColor,
+                      //hoverBackgroundColor: _backgroundColor
+                    }]
+                  },
+                  options: options
+                });
+              });
+        </script>*@
+    <!-- /Doughnut Chart -->
+}

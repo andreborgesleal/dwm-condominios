@@ -41,5 +41,9 @@ namespace DWM.Models.Repositories
         [DisplayName("Visitante Permanente")]
         [Required(ErrorMessage = "Informa se o dependente é visitante permanente")]
         public string IndVisitantePermanente { get; set; }
+
+        public string DescricaoEdificacao { get; set; }
+
+        public int UnidadeID { get; set; }
     }
 }

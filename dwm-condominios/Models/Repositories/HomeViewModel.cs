@@ -1,4 +1,5 @@
 ﻿using App_Dominio.Component;
+using App_Dominio.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
@@ -24,6 +25,10 @@ namespace DWM.Models.Repositories
         public IEnumerable<InformativoViewModel> Informativos { get; set; }
         public IPagedList Documentos { get; set; }
         public IEnumerable<BalanceteViewModel> DRE { get; set; }
+        public List<Grupo> UsuarioGrupos { get; set; }
+        public List<CondominoUnidadeViewModel> Condominos { get; set; }
+        public List<CredenciadoViewModel> Credenciados { get; set; }
+        public List<VisitanteViewModel> Visitantes { get; set; }
 
 
         public JsonResult js { get; set; }

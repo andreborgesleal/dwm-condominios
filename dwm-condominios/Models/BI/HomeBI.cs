@@ -10,6 +10,7 @@ using DWM.Models.Persistence;
 using App_Dominio.Models;
 using System.Linq;
 using App_Dominio.Enumeracoes;
+using App_Dominio.Security;
 
 namespace dwm_condominios.Models.BI
 {
@@ -44,9 +45,13 @@ namespace dwm_condominios.Models.BI
         public HomeViewModel Run(Repository value)
         {
             HomeViewModel home = (HomeViewModel) value;
-            
+            EmpresaSecurity<SecurityContext> es = new EmpresaSecurity<SecurityContext>();
+
             try
             {
+                es.seguranca_db = this.seguranca_db;
+                home.UsuarioGrupos = es._getUsuarioGrupo(SessaoLocal.usuarioId).ToList();
+
                 home.ContabilidadeCompetencia = "Fevereiro/2017";
 
                 home.ValorInadimplenciaTotal = 0; // (decimal)468874.54;
@@ -108,6 +113,21 @@ namespace dwm_condominios.Models.BI
                 string data2 = Funcoes.Brasilia().Date.ToString("dd/MM/yyyy");
 
                 home.Informativos = listViewInformativo.Bind(0, 6, Funcoes.StringToDate(data1).Value, Funcoes.StringToDate(data2).Value, SessaoLocal.GrupoCondominoID, SessaoLocal.Unidades);
+                #endregion
+
+                #region Condominos
+                ListViewCondominoUnidade listViewCondominos = new ListViewCondominoUnidade(this.db, this.seguranca_db);
+                home.Condominos = listViewCondominos.Bind(0, 10000, 0, 0, null).ToList();
+                #endregion
+
+                #region Credenciados
+                ListViewCredenciados listViewCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
+                home.Credenciados = listViewCredenciados.Bind(0, 10000, 0, 0, null).ToList();
+                #endregion
+
+                #region Visitantes
+                ListViewVisitante listViewVisitantes = new ListViewVisitante(this.db, this.seguranca_db);
+                home.Visitantes = listViewVisitantes.Bind(0, 10000).ToList();
                 #endregion
 
                 #region Documentos p/ download

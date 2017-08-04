@@ -241,6 +241,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PortariaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -310,6 +311,10 @@
     <Compile Include="Models\Entidades\TipoEdificacao.cs" />
     <Compile Include="Models\Entidades\Unidade.cs" />
     <Compile Include="Models\Entidades\Veiculo.cs" />
+    <Compile Include="Models\Entidades\Visitante.cs" />
+    <Compile Include="Models\Entidades\VisitanteAcesso.cs" />
+    <Compile Include="Models\Entidades\VisitanteAcessoUnidade.cs" />
+    <Compile Include="Models\Entidades\VisitanteUnidade.cs" />
     <Compile Include="Models\Enumeracoes\BindDropDownList.cs" />
     <Compile Include="Models\Enumeracoes\DwmCondominiosEnum.cs" />
     <Compile Include="Models\Enumeracoes\Enumeradores.cs" />
@@ -342,6 +347,8 @@
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
+    <Compile Include="Models\Persistence\VisitanteModel.cs" />
+    <Compile Include="Models\Persistence\VisitanteUnidadeModel.cs" />
     <Compile Include="Models\Repositories\ArquivoViewModel.cs" />
     <Compile Include="Models\Repositories\BalanceteViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnexoViewModel.cs" />
@@ -383,6 +390,10 @@
     <Compile Include="Models\Repositories\UnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\UsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\VeiculoViewModel.cs" />
+    <Compile Include="Models\Repositories\VisitanteAcessoUnidadeViewModel.cs" />
+    <Compile Include="Models\Repositories\VisitanteAcessoViewModel.cs" />
+    <Compile Include="Models\Repositories\VisitanteUnidadeViewModel.cs" />
+    <Compile Include="Models\Repositories\VisitanteViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -448,6 +459,7 @@
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style.old.css" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
     <Content Include="Content\images\PARC-PARADISO-LOGO.png" />
     <Content Include="Content\images\parcparadiso.png" />
@@ -4230,6 +4242,10 @@
     <Content Include="Views\EmailTemplate\Edit.cshtml" />
     <Content Include="Views\Condomino\ListCondominoMobile.cshtml" />
     <Content Include="Views\Condomino\ListDesativados.cshtml" />
+    <Content Include="Views\Portaria\ListParam.cshtml" />
+    <Content Include="Views\Portaria\Browse.cshtml" />
+    <Content Include="Views\Portaria\Create.cshtml" />
+    <Content Include="Views\Portaria\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

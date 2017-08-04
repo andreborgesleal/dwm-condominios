@@ -1,0 +1,102 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.VisitanteViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        @if (ViewBag.unidades == null)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>RG/CPF</code> para buscar o Visitante
+                </div>
+            </div>
+            <p>&nbsp;</p>
+        }
+        
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Nome</th>
+                        <th class="column-title">RG</th>
+                        <th class="column-title">Órgão Emissor</th>
+                        <th class="column-title">CPF</th>
+                        <th class="column-title">Edificação</th>
+                        <th class="column-title">Unidade</th>
+                        <th class="column-title">Sexo</th>
+                        <th class="column-title">Telefone</th>
+                        <th class="column-title">Data de Inclusão</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.VisitanteViewModel vis in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?visitanteID=@vis.VisitanteID'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@vis.VisitanteID'"></button>
+                            </td>
+                            <td align="center">
+                                @if (vis.Fotografia == null || vis.Fotografia == "")
+                                {
+                                    <span><img src="~/Content/images/avatar.png" width="16" /> @vis.Nome</span>
+                                }
+                                else
+                                {
+                                    <span><img src="@vis.Fotografia" /> @vis.Nome</span><br />
+                                }
+                            </td>
+                            <td align="center">
+                                <small>@vis.RG</small>
+                            </td>
+                            <td align="center">
+                                <span>@vis.OrgaoEmissor</span><br />
+                            </td>
+                            <td align="center">
+                                <span>@App_Dominio.Models.Funcoes.FormataCPFCNPJ(vis.CPF)</span>
+                            </td>
+                            <td align="center">
+                                <span>@vis.DescricaoEdificacao</span><br />
+                            </td>
+                            <td align="center">
+                                <small>@vis.UnidadeID</small>
+                            </td>
+                            <td align="center">
+                                <small>@vis.Sexo</small>
+                            </td>
+                            <td align="center">
+                                <span>@App_Dominio.Models.Funcoes.FormataTelefone(vis.Telefone)</span>
+                            </td>
+                            <td align="center">
+                                <span>@vis.DataInclusao</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
