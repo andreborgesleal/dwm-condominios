@@ -31,49 +31,6 @@ namespace DWM.Models.Persistence
         }
 
         #region Métodos da classe CrudContext
-        public override VisitanteAcessoViewModel BeforeUpdate(VisitanteAcessoViewModel value)
-        {
-            return BeforeInsert(value);
-        }
-
-        public override VisitanteAcessoViewModel BeforeInsert(VisitanteAcessoViewModel value)
-        {
-            value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
-
-            if (IsUserAdm())
-            {
-                var _EdificacaoID = value.EdificacaoID.GetValueOrDefault();
-                var _UnidadeID = value.UnidadeID.GetValueOrDefault();
-
-                var _condominoID = (from c in db.CondominoUnidades
-                                    where c.EdificacaoID == _EdificacaoID
-                                             && c.CondominioID == value.CondominioID
-                                             && c.UnidadeID == _UnidadeID
-                                             && c.DataFim == null
-                                    select new CondominoUnidadeViewModel
-                                    {
-                                        CondominoID = c.CondominoID
-                                    }).FirstOrDefault();
-
-                // Valida se existe um condômino para a edificação e a unidade desejada
-                if (_condominoID == null)
-                {
-                    value.mensagem = new Validate() { Code = 997, Message = MensagemPadrao.Message(997).ToString() };
-                    value.mensagem.Code = 997;
-                    value.mensagem.Message = MensagemPadrao.Message(35).ToString();
-                    value.mensagem.MessageBase = "Não existe um condômino registrado para essa edificação/unidade";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                }
-                else
-                {
-                    if (value.VisitanteAcessoUnidadeViewModel.Count() > 0)
-                        value.VisitanteAcessoUnidadeViewModel.ElementAt(0).CondominoID = _condominoID.CondominoID;
-                }
-            }
-
-            return base.BeforeInsert(value);
-        }
-
         public override VisitanteAcesso MapToEntity(VisitanteAcessoViewModel value)
         {
             VisitanteAcesso entity = Find(value);
@@ -106,6 +63,7 @@ namespace DWM.Models.Persistence
                     EdificacaoID = value.EdificacaoID.Value,
                     UnidadeID = value.UnidadeID.Value,
                     CondominoID = value.VisitanteAcessoUnidadeViewModel.FirstOrDefault().CondominoID,
+                    VisitanteAcesso = entity
                 });
             }
             else
@@ -116,7 +74,8 @@ namespace DWM.Models.Persistence
                     EdificacaoID = value.EdificacaoID.Value,
                     UnidadeID = value.UnidadeID.Value,
                     CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID,
-                    CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID
+                    CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID,
+                    VisitanteAcesso = entity
                 });
             }
             #endregion
@@ -146,6 +105,9 @@ namespace DWM.Models.Persistence
 
             foreach (VisitanteAcessoUnidade und in entity.VisitanteAcessoUnidade)
             {
+                v.EdificacaoID = und.EdificacaoID;
+                v.UnidadeID = und.UnidadeID;
+
                 VisitanteAcessoUnidadeViewModel item = new VisitanteAcessoUnidadeViewModel()
                 {
                     AcessoID = und.AcessoID,
@@ -155,6 +117,7 @@ namespace DWM.Models.Persistence
                     UnidadeID = und.UnidadeID,
                     CondominoID = und.CondominoID,
                     CredenciadoID = und.CredenciadoID,
+                    VisitanteAcessoViewModel = v,
                     mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
                 };
 
@@ -330,11 +293,14 @@ namespace DWM.Models.Persistence
                     acesso.UnidadeID = int.Parse(Request["UnidadeID"]);
                     VisitanteModel model = new VisitanteModel();
                 }
+
+                //acesso.Visitantes = 
             }
             else
             {
                 acesso.EdificacaoID = SessaoLocal.Unidades.FirstOrDefault().EdificacaoID;
                 acesso.UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
+                //acesso.Visitantes = 
             }
             acesso.DataAcesso = null;
 

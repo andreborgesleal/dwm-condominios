@@ -61,9 +61,6 @@
                                             <small>@value.RG</small>
                                         </td>
                                         <td>
-                                            <small>@value.RG</small>
-                                        </td>
-                                        <td>
                                             <small>@value.OrgaoEmissor</small>
                                         </td>
                                         <td>
@@ -76,7 +73,7 @@
                                             <small>@value.UnidadeID</small>
                                         </td>
                                         <td>
-                                            <small>@value.Nome</small>
+                                            <small>@value.NomeCondomino</small>
                                         </td>
                                         <td>
                                             <small>@value.DescricaoTipoPrestador</small>
@@ -86,7 +83,7 @@
                                         </td>
                                         <td>
                                             <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-plus-circle"></i></a>&nbsp;
-                                            <a href="#div-detail" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao')"></i>&nbsp;</a>
+                                            <a href="#div-detail" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino')"></i>&nbsp;</a>
                                         </td>
                                     </tr>
                                 }
@@ -139,7 +136,7 @@
                     <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Observação</label>
-                            @Html.TextAreaFor(info => info.Observacao, 3, 1, new { @class = "form-control" })
+                            @Html.TextAreaFor(info => info.Observacao, 3, 1, new { @class = "form-control", @MaxLength = 300 })
                         </div>
                     </div>
                 </div>
@@ -182,12 +179,12 @@
             this.submit(); // If all the validations succeeded
     });
 
-    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao) {
+    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino) {
         $('#VisitanteID').val(VisitanteID);
         $('#EdificacaoID').val(EdificacaoID);
         $('#UnidadeID').val(UnidadeID);
         $('#div-visitante').html('<span class="label label-default">' + VisitanteID + '-' + Nome + '</span>');
-        $('#div-visitante').html('<span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + '</span>');
+        $('#div-visitante').html('<span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino + '</span>');
     }
 
     function Valida() {

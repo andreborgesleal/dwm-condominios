@@ -52,44 +52,6 @@ namespace DWM.Controllers
         }
         #endregion
 
-
-        #region Create
-        public override void BeforeCreate(ref VisitanteAcessoViewModel value, FormCollection collection)
-        {
-            //if (value.PrestadorCondominio == "N")
-            //{
-            //    value.VisitanteUnidadeViewModel = new List<VisitanteUnidadeViewModel>
-            //    {
-            //        new VisitanteUnidadeViewModel()
-            //        {
-            //            CondominioID = DWMSessaoLocal.GetSessaoLocal().empresaId,
-            //            EdificacaoID = value.EdificacaoID.GetValueOrDefault(),
-            //            UnidadeID = value.UnidadeID.GetValueOrDefault(),
-            //            empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId,
-            //        }
-            //    };
-            //}
-        }
-
-        [AuthorizeFilter]
-        public override ActionResult Create()
-        {
-            ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
-            ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-
-            if (ViewBag.ValidateRequest)
-            {
-                Facade<VisitanteViewModel, VisitanteModel, ApplicationContext> facade = new Facade<VisitanteViewModel, VisitanteModel, ApplicationContext>();
-                GetCreate();
-                return View(facade.CreateRepository(Request));
-            }
-            else
-                return null;
-        }
-        #endregion
-
-
-
         #region Retorna as Unidades de uma dada Edificação
         [AllowAnonymous]
         public JsonResult GetNames(string term, int tag)
