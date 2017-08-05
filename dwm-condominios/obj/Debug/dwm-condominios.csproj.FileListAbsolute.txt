@@ -260,7 +260,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.S
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.pdb
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.WebForms.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\SendGridMail.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.ReportViewer.Common.dll
@@ -270,7 +269,6 @@ C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Report
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.SqlServer.Types.dll
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.pdb
 C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml
-C:\sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe.config
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csc.rsp
 C:\Users\Daniel\Documents\Visual Studio 2015\Projects\DWM-Sistemas\dwm-condominios\dwm-condominios\bin\roslyn\csi.exe
@@ -479,3 +477,49 @@ C:\Users\Daniel\Projects\DotNet\dwm-condominios\dwm-condominios\bin\roslyn\Syste
 C:\Users\Daniel\Projects\DotNet\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.dll
 C:\Users\Daniel\Projects\DotNet\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.XDocument.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csc.exe.config
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csc.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csi.exe
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csi.exe.config
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\csi.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\Microsoft.Win32.Primitives.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.AppContext.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Console.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Diagnostics.Process.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.Compression.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.DriveInfo.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.IO.Pipes.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.AccessControl.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Claims.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Threading.Thread.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.ValueTuple.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\vbc.exe.config
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\roslyn\vbc.rsp
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Cors.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.dll
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Net.Http.Formatting.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.Cors.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\System.Web.Http.WebHost.xml
+C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Debug\dwm-condominios.csprojResolveAssemblyReference.cache
