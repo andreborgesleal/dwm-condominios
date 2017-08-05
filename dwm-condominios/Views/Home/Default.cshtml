@@ -1,5 +1,6 @@
 ﻿@using DWM.Models.Repositories
 @using App_Dominio.Models
+@using App_Dominio.Repositories
 @model DWM.Models.Repositories.HomeViewModel
 @{
     string _hidden = "";
@@ -14,15 +15,11 @@
     string[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
     string mes = meses[int.Parse(Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(4, 2)) - 1] + "/" +
                  Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(0, 4);
-
 }
 
-
 <!-- Datatables -->
-
 @if (ViewBag.UsuarioPortaria)
 {
-
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#condominos">Condôminos</a></li>
         <li><a data-toggle="tab" href="#visitantes">Visitantes</a></li>
@@ -45,8 +42,11 @@
                         @foreach (CondominoUnidadeViewModel value in Model.Condominos)
                         {
                             <tr class="even pointer">
-                                <td>
-                                    Lupa
+                                <td class="center">
+                                    <button type="button" class="btn btn-warning btn-xs">
+                                        <i class="fa fa-search" aria-hidden="true"></i>
+                                    </button>
+                                    
                                 </td>
                                 <td align="center">
                                     @value.EdificacaoDescricao
@@ -91,55 +91,43 @@
                 <table class="table table-striped jambo_table bulk_action table-responsive display">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title">Identificador de Acesso</th>
+                            <th class="column-title text-center">Identificador de Acesso</th>
                             <th class="column-title">Nome</th>
-                            <th class="column-title text-center">Sexo</th>
-                            <th class="column-title text-center">RG</th>
-                            <th class="column-title text-center">CPF</th>
-                            <th class="column-title text-center">Data de Autorização</th>
-                            <th class="column-title text-center">Hora início</th>
-                            <th class="column-title text-center">Hora Limite</th>
+                            <th class="column-title">Sexo</th>
+                            <th class="column-title">RG</th>
+                            <th class="column-title">CPF</th>
+                            <th class="column-title">Data de Autorização</th>
+                            <th class="column-title">Hora início</th>
+                            <th class="column-title">Hora Limite</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (VisitanteViewModel value in Model.Visitantes)
                         {
                             <tr class="even pointer">
-                                <td align="center">
-                                    @if (value.VisitanteAcessoViewModel != null)
-                                    {
-                                        @value.VisitanteAcessoViewModel.AcessoID
-                                    }
+                                <td class="center">
+                                    @value.VisitanteAcessoViewModel.AcessoID
                                 </td>
-                                <td align="center">
+                                <td>
                                     @value.Nome
                                 </td>
                                 <td>
                                     @value.Sexo
                                 </td>
-                                <td align="center">
+                                <td>
                                     @value.RG
                                 </td>
-                                <td align="center">
+                                <td>
                                     @value.CPF
                                 </td>
-                                <td align="center">
-                                    @if (value.VisitanteAcessoViewModel != null)
-                                    {
-                                        @value.VisitanteAcessoViewModel.DataAutorizacao
-                                    }
+                                <td>
+                                    @value.VisitanteAcessoViewModel.DataAutorizacao
                                 </td>
-                                <td align="center">
-                                    @if (value.VisitanteAcessoViewModel != null)
-                                    {
-                                        @value.VisitanteAcessoViewModel.HoraInicio
-                                    }
+                                <td>
+                                    @value.VisitanteAcessoViewModel.HoraInicio
                                 </td>
-                                <td align="center">
-                                    @if (value.VisitanteAcessoViewModel != null)
-                                    {
-                                        @value.VisitanteAcessoViewModel.HoraLimite
-                                    }
+                                <td>
+                                    @value.VisitanteAcessoViewModel.HoraLimite
                                 </td>
                             </tr>
                         }

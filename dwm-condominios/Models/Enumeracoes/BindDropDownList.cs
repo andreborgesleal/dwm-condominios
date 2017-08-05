@@ -11,6 +11,29 @@ namespace DWM.Models.Enumeracoes
 {
     public class BindDropDownList
     {
+        public IEnumerable<SelectListItem> TiposPrestadores(params object[] param)
+        {
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != null)
+                    q.Add(new SelectListItem() { Text = cabecalho, Value = "" });
+
+                q = q.Union(from tp in db.PrestadorTipos.AsEnumerable()
+                            orderby tp.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = tp.PrestadorTipoID.ToString(),
+                                Text = tp.Descricao.ToString()
+                            }).ToList();
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Unidades(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

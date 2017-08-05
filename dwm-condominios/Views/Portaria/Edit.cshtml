@@ -33,10 +33,6 @@
                     @Html.Hidden("Unidades", "n")
                 }
 
-
-
-                //if (ViewBag.unidades == null)
-                //{
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
@@ -51,51 +47,35 @@
                         </div>
                     </div>
                 </div>
-                    @*}*@
 
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Nome</label>
-                                <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" />
-                            </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Nome</label>
+                            <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">RG</label>
-                                <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" />
-                            </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">RG</label>
+                            <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Órgão Emissor</label>
-                                <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" />
-                            </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Órgão Emissor</label>
+                            <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" />
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">CPF</label>
-                                <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" />
-                            </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">CPF</label>
+                            <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" />
                         </div>
                     </div>
-                if (ViewBag.unidades == null)
-                {
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Prestador do Condomínio</label>
-                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                }
+                </div>
 
                 <div class="row">
                     <div class="col-md-4 col-lg-4 col-xs-12">
@@ -104,8 +84,6 @@
                             @Html.DropDownList("Sexo", new DWM.Models.Enumeracoes.BindDropDownList().Sexo(), new { @class = "form-control" })
                         </div>
                     </div>
-                </div>
-                <div class="row">
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Telefone</label>
@@ -119,12 +97,27 @@
                     <div class="row">
                         <div class="col-md-4 col-lg-4 col-xs-12">
                             <div class="form-group">
+                                <label class="control-label">Prestador do Condomínio</label>
+                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @*<div class="col-md-4 col-lg-4 col-xs-12">
+                            <div class="form-group">
                                 <label class="control-label">Fotografia</label>
                                 <input type="file" name="Fotografia" value="@Model.Fotografia" />
                             </div>
-                        </div>
+                        </div>*@
                     </div>
                 }
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de Prestador</label>
+                            @Html.DropDownList("PrestadorTipoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposPrestadores("Selecione...", ""), new { @class = "form-control", @data_toggle = "tooltip", @data_placement = "right", @title = "Não selecione, caso não seja um prestador" })
+                        </div>
+                    </div>
+                </div>
 
                 <hr />
                 <div class="row">
@@ -157,9 +150,9 @@
             var edificacao = $('#EdificacaoID').val();
             var unidade = $('#UnidadeID').val();
             var prestadorCondominio = $('#PrestadorCondominio').val();
+            var prestadorTipo = $("#PrestadorTipoID").val();
 
-            if (prestadorCondominio == "N")
-            {
+            if (prestadorCondominio == "N") {
                 if (edificacao == null || edificacao == "") {
                     ShowMessageAjaxAlert('É preciso informar a Edificação para salvar o visitante', 'warning');
                     return false;
@@ -167,6 +160,12 @@
 
                 if (unidade == null || unidade == "") {
                     ShowMessageAjaxAlert('É preciso informar a Unidade para salvar o visitante', 'warning');
+                    return false;
+                }
+            }
+            else {
+                if (prestadorTipo == "") {
+                    ShowMessageAjaxAlert('É preciso informar o tipo de prestador do condomínio', 'warning');
                     return false;
                 }
             }

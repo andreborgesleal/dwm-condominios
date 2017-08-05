@@ -300,6 +300,7 @@
     <Compile Include="Models\Entidades\Informativo.cs" />
     <Compile Include="Models\Entidades\ListViewModelLocal.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
+    <Compile Include="Models\Entidades\PrestadorTipo.cs" />
     <Compile Include="Models\Entidades\Profissao.cs" />
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="Models\Repositories\InformativoComentarioViewModel.cs" />
     <Compile Include="Models\Repositories\InformativoViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
+    <Compile Include="Models\Repositories\PrestadorTipoViewModel.cs" />
     <Compile Include="Models\Repositories\ProfissaoViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
@@ -458,6 +460,9 @@
     <Content Include="Content\css\sticky-footer.css" />
     <Content Include="Content\css\style.css" />
     <Content Include="Content\css\style.old.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
@@ -1410,6 +1415,8 @@
     <Content Include="Content\vendors\Flot\jquery.flot.time.js" />
     <Content Include="Content\vendors\Flot\jquery.js" />
     <Content Include="Content\vendors\Flot\LICENSE.txt" />
+    <Content Include="Content\vendors\font-awesome.css" />
+    <Content Include="Content\vendors\font-awesome.min.css" />
     <Content Include="Content\vendors\font-awesome\.gitignore" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.css" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.min.css" />
@@ -3195,6 +3202,7 @@
     <Content Include="Content\vendors\validator\validator.js" />
     <Content Include="Content\vendors\validator\validator.min.js" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -4100,6 +4108,16 @@
     <Content Include="Content\assets\font-awesome\scss\_variables.scss" />
     <Content Include="Content\assets\ico\Thumbs.db" />
     <Content Include="Content\assets\img\backgrounds\Thumbs.db" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\meucondominio - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\meucondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />

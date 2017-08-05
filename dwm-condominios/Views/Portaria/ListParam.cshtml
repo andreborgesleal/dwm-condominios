@@ -39,7 +39,7 @@
                                 <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?visitanteID=@vis.VisitanteID'"></button>
                                 <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@vis.VisitanteID'"></button>
                             </td>
-                            <td align="center">
+                            <td>
                                 @if (vis.Fotografia == null || vis.Fotografia == "")
                                 {
                                     <span><img src="~/Content/images/avatar.png" width="16" /> @vis.Nome</span>
@@ -49,28 +49,28 @@
                                     <span><img src="@vis.Fotografia" /> @vis.Nome</span><br />
                                 }
                             </td>
-                            <td align="center">
+                            <td>
                                 <small>@vis.RG</small>
                             </td>
-                            <td align="center">
+                            <td>
                                 <span>@vis.OrgaoEmissor</span><br />
                             </td>
-                            <td align="center">
+                            <td>
                                 <span>@App_Dominio.Models.Funcoes.FormataCPFCNPJ(vis.CPF)</span>
                             </td>
-                            <td align="center">
+                            <td>
                                 <span>@vis.DescricaoEdificacao</span><br />
                             </td>
-                            <td align="center">
+                            <td>
                                 <small>@vis.UnidadeID</small>
                             </td>
-                            <td align="center">
+                            <td>
                                 <small>@vis.Sexo</small>
                             </td>
-                            <td align="center">
+                            <td>
                                 <span>@App_Dominio.Models.Funcoes.FormataTelefone(vis.Telefone)</span>
                             </td>
-                            <td align="center">
+                            <td>
                                 <span>@vis.DataInclusao</span>
                             </td>
                         </tr>
