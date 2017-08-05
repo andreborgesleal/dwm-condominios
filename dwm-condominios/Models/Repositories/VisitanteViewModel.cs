@@ -88,11 +88,15 @@ namespace DWM.Models.Repositories
         #region Atributos de Outras Tabelas
         public string DescricaoEdificacao { get; set; }
 
+        public string DescricaoTipoPrestador { get; set; }
+
         public int? EdificacaoID { get; set; }
 
         public int? UnidadeID { get; set; }
 
-        public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
+        public string NomeCondomino { get; set; }
+
+        //public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
 
         public virtual IEnumerable<VisitanteUnidadeViewModel> VisitanteUnidadeViewModel { get; set; }
         #endregion

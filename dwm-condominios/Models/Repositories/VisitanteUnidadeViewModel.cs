@@ -28,5 +28,9 @@ namespace DWM.Models.Repositories
         public System.Nullable<int> CredenciadoID { get; set; }
 
         public virtual VisitanteViewModel VisitanteViewModel { get; set; }
+
+        #region Atributos de Outras Tabelas
+        
+        #endregion
     }
 }

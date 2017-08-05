@@ -1,0 +1,206 @@
+﻿@using App_Dominio.Repositories
+@using App_Dominio.Models
+@using DWM.Models.Repositories
+@model DWM.Models.Repositories.VisitanteAcessoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Visitante/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+    t[0].exibir = "S";
+
+    t[1].url = "../Home/Default";
+}
+
+<!-- DataTables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Visitante", Descricao = "Inclusão de Acesso", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Create", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.EdificacaoID)
+                @Html.HiddenFor(info => info.UnidadeID)
+                @Html.HiddenFor(info => info.VisitanteID)
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <table class="table table-striped jambo_table bulk_action table-responsive display">
+                            <thead>
+                                <tr class="headings">
+                                    <th class="column-title">Visitante/Prestador</th>
+                                    <th class="column-title">Sexo</th>
+                                    <th class="column-title">RG</th>
+                                    <th class="column-title">O.Emissor</th>
+                                    <th class="column-title">CPF</th>
+                                    <th class="column-title">Edificação</th>
+                                    <th class="column-title">Unidade</th>
+                                    <th class="column-title">Profissão</th>
+                                    <th class="column-title">Placa</th>
+                                    <th class="column-title">Ação</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (VisitanteViewModel value in Model.Visitantes)
+                                {
+                                    <tr class="even pointer">
+                                        <td>
+                                            <small>@value.Nome</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.Sexo</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.RG</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.RG</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.OrgaoEmissor</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.CPF</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.DescricaoEdificacao</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.UnidadeID</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.Nome</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.DescricaoTipoPrestador</small>
+                                        </td>
+                                        <td>
+                                            <small>@value.Placa</small>
+                                        </td>
+                                        <td>
+                                            <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-plus-circle"></i></a>&nbsp;
+                                            <a href="#div-detail" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao')"></i>&nbsp;</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="row" id="div-detail">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Visitante/Prestador</label>
+                            <div id="div-visitante"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidade</label>
+                            <div id="div-unidade"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label" title="Portaria deve interfonar para o condômino antes de autorizar o acesso">Interfona p/ condômino</label>
+                            @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data</label>
+                            <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
+                            <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" title="Informar a hora Limite de acesso (preenchimento opcional)">Limite</label>
+                            <input type="text" class="form-control" name="HoraLimite" id="HoraLimite" value="@Model.HoraLimite" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Observação</label>
+                            @Html.TextAreaFor(info => info.Observacao, 3, 1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('table.display').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+        autoWidth: false,
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#HoraInicio").mask("99:99");
+        $("#HoraLimite").mask("99:99");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao) {
+        $('#VisitanteID').val(VisitanteID);
+        $('#EdificacaoID').val(EdificacaoID);
+        $('#UnidadeID').val(UnidadeID);
+        $('#div-visitante').html('<span class="label label-default">' + VisitanteID + '-' + Nome + '</span>');
+        $('#div-visitante').html('<span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + '</span>');
+    }
+
+    function Valida() {
+        var visitante = $('#VisitanteID').val();
+
+        if ((visitante == null || visitante == "")) {
+            ShowMessageAjaxAlert('Favor selecionar o visitante para registrar o acesso', 'warning');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+

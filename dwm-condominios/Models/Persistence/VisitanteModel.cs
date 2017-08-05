@@ -346,13 +346,10 @@ namespace DWM.Models.Persistence
             var q = (from v in db.Visitantes
                      join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft from vu in vleft.DefaultIfEmpty()
                      join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft from ed in vuleft.DefaultIfEmpty()
-                     join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
                      where v.CondominioID == _CondominioID
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
-                           && (vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day)
-                           && vac.DataAutorizacao.Day == dataHoje.Day
                      orderby v.DataInclusao, v.Nome
                      select new VisitanteViewModel
                      {
@@ -372,15 +369,7 @@ namespace DWM.Models.Persistence
                          Telefone = v.Telefone,
                          UnidadeID = vu.UnidadeID,
                          DescricaoEdificacao = ed.Descricao,
-                         VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
-                         {
-                            AcessoID = vac.AcessoID,
-                            HoraInicio = vac.HoraInicio,
-                            HoraLimite = vac.HoraLimite,
-                            DataAcesso = vac.DataAcesso,
-                            DataAutorizacao = vac.DataAutorizacao,
-                        },
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                    }).ToList();
 
             return q;
         }

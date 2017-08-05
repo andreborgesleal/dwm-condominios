@@ -241,6 +241,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PortariaController.cs" />
     <Compile Include="Controllers\VisitanteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -268,6 +269,7 @@
     <Compile Include="Models\BI\InformativoCadastrarBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />
+    <Compile Include="Models\Entidades\AluguelEspaco.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
     <Compile Include="Models\Entidades\Arquivo.cs" />
     <Compile Include="Models\Entidades\Balancete.cs" />
@@ -278,6 +280,7 @@
     <Compile Include="Models\Entidades\ChamadoMotivo.cs" />
     <Compile Include="Models\Entidades\ChamadoStatus.cs" />
     <Compile Include="Models\Entidades\Cidade.cs" />
+    <Compile Include="Models\Entidades\EspacoComum.cs" />
     <Compile Include="Models\Entidades\InformativoComentario.cs" />
     <Compile Include="Models\Entidades\Condominio.cs" />
     <Compile Include="Models\Entidades\Condomino.cs" />
@@ -348,8 +351,10 @@
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
+    <Compile Include="Models\Persistence\VisitanteAcessoModel.cs" />
     <Compile Include="Models\Persistence\VisitanteModel.cs" />
     <Compile Include="Models\Persistence\VisitanteUnidadeModel.cs" />
+    <Compile Include="Models\Repositories\AluguelEspacoViewModel.cs" />
     <Compile Include="Models\Repositories\ArquivoViewModel.cs" />
     <Compile Include="Models\Repositories\BalanceteViewModel.cs" />
     <Compile Include="Models\Repositories\ChamadoAnexoViewModel.cs" />
@@ -370,6 +375,7 @@
     <Compile Include="Models\Repositories\EmailLogViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTemplateViewModel.cs" />
     <Compile Include="Models\Repositories\EmailTipoViewModel.cs" />
+    <Compile Include="Models\Repositories\EspacoComumViewModel.cs" />
     <Compile Include="Models\Repositories\FilaAtendimentoUsuarioEditViewModel.cs" />
     <Compile Include="Models\Repositories\FilaAtendimentoUsuarioViewModel.cs" />
     <Compile Include="Models\Repositories\FilaAtendimentoViewModel.cs" />
@@ -4260,6 +4266,7 @@
     <Content Include="Views\Visitante\Browse.cshtml" />
     <Content Include="Views\Visitante\Create.cshtml" />
     <Content Include="Views\Visitante\Edit.cshtml" />
+    <Content Include="Views\Portaria\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

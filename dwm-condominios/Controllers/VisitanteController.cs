@@ -1,15 +1,11 @@
 ﻿using App_Dominio.Controllers;
-using App_Dominio.Models;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace DWM.Controllers
