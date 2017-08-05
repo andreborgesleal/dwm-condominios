@@ -284,12 +284,12 @@ build/
 
 #### DEBUG -- DANIEL
 .vs/dwm-condominios/v14/.suo
-dwm-condominios/bin/dwm-condominios.dll
-dwm-condominios/bin/dwm-condominios.pdb
-dwm-condominios/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
-dwm-condominios/obj/Debug/dwm-condominios.csprojResolveAssemblyReference.cache
-dwm-condominios/obj/Debug/dwm-condominios.dll
-dwm-condominios/obj/Debug/dwm-condominios.pdb
+/dwm-condominios/bin/dwm-condominios.dll
+/dwm-condominios/bin/dwm-condominios.pdb
+/dwm-condominios/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+/dwm-condominios/obj/Debug/dwm-condominios.csprojResolveAssemblyReference.cache
+/dwm-condominios/obj/Debug/dwm-condominios.dll
+/dwm-condominios/obj/Debug/dwm-condominios.pdb
 /dwm-condominios/App_Data/logs/log-23072017.xml
 /dwm-condominios/App_Data/logs/log-20072017.xml
 /dwm-condominios/App_Data/logs/log-18072017.xml
@@ -298,3 +298,10 @@ dwm-condominios/obj/Debug/dwm-condominios.pdb
 /dwm-condominios/App_Data/logs/log-08072017.xml
 /dwm-condominios/App_Data/logs/log-06072017.xml
 /dwm-condominios/App_Data/logs
+
+dwm-condominios/bin/dwm-condominios.dll
+dwm-condominios/bin/dwm-condominios.pdb
+dwm-condominios/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+dwm-condominios/obj/Debug/dwm-condominios.csprojResolveAssemblyReference.cache
+dwm-condominios/obj/Debug/dwm-condominios.dll
+dwm-condominios/obj/Debug/dwm-condominios.pdb
