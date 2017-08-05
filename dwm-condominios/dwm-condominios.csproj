@@ -241,7 +241,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\PortariaController.cs" />
+    <Compile Include="Controllers\VisitanteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -300,6 +300,7 @@
     <Compile Include="Models\Entidades\Informativo.cs" />
     <Compile Include="Models\Entidades\ListViewModelLocal.cs" />
     <Compile Include="Models\Entidades\Parametro.cs" />
+    <Compile Include="Models\Entidades\PrestadorTipo.cs" />
     <Compile Include="Models\Entidades\Profissao.cs" />
     <Compile Include="Models\Entidades\Proprietario.cs" />
     <Compile Include="Models\Entidades\ProprietarioUnidade.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="Models\Repositories\InformativoComentarioViewModel.cs" />
     <Compile Include="Models\Repositories\InformativoViewModel.cs" />
     <Compile Include="Models\Repositories\ParametroViewModel.cs" />
+    <Compile Include="Models\Repositories\PrestadorTipoViewModel.cs" />
     <Compile Include="Models\Repositories\ProfissaoViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\ProprietarioViewModel.cs" />
@@ -460,6 +462,7 @@
     <Content Include="Content\css\style.old.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
@@ -1412,6 +1415,8 @@
     <Content Include="Content\vendors\Flot\jquery.flot.time.js" />
     <Content Include="Content\vendors\Flot\jquery.js" />
     <Content Include="Content\vendors\Flot\LICENSE.txt" />
+    <Content Include="Content\vendors\font-awesome.css" />
+    <Content Include="Content\vendors\font-awesome.min.css" />
     <Content Include="Content\vendors\font-awesome\.gitignore" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.css" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.min.css" />
@@ -4104,10 +4109,11 @@
     <Content Include="Content\assets\ico\Thumbs.db" />
     <Content Include="Content\assets\img\backgrounds\Thumbs.db" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\meucondominio - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\meucondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -4250,10 +4256,10 @@
     <Content Include="Views\EmailTemplate\Edit.cshtml" />
     <Content Include="Views\Condomino\ListCondominoMobile.cshtml" />
     <Content Include="Views\Condomino\ListDesativados.cshtml" />
-    <Content Include="Views\Portaria\ListParam.cshtml" />
-    <Content Include="Views\Portaria\Browse.cshtml" />
-    <Content Include="Views\Portaria\Create.cshtml" />
-    <Content Include="Views\Portaria\Edit.cshtml" />
+    <Content Include="Views\Visitante\ListParam.cshtml" />
+    <Content Include="Views\Visitante\Browse.cshtml" />
+    <Content Include="Views\Visitante\Create.cshtml" />
+    <Content Include="Views\Visitante\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

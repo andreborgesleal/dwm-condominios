@@ -57,6 +57,18 @@ namespace DWM.Models.Entidades
         [DisplayName("Situacao")]
         public string Situacao { get; set; }
 
+        [DisplayName("Placa")]
+        public string Placa { get; set; }
+
+        [DisplayName("Cor")]
+        public string Cor { get; set; }
+
+        [DisplayName("Descricao")]
+        public string Descricao { get; set; }
+
+        [DisplayName("Marca")]
+        public string Marca { get; set; }
+
         public virtual ICollection<VisitanteUnidade> VisitanteUnidade { get; set; }
     }
 }

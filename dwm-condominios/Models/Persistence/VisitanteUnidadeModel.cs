@@ -39,6 +39,7 @@ namespace dwm_condominios.Models.Persistence
             entity.VisitanteID = value.VisitanteID;
             entity.CondominioID = value.CondominioID;
             entity.CondominoID = value.CondominoID;
+            entity.CredenciadoID = value.CredenciadoID;
             entity.EdificacaoID = value.EdificacaoID;
             entity.UnidadeID = value.UnidadeID;
 
@@ -52,6 +53,7 @@ namespace dwm_condominios.Models.Persistence
                 CondominioID = entity.CondominioID,
                 EdificacaoID = entity.EdificacaoID,
                 CondominoID = entity.CondominoID,
+                CredenciadoID = entity.CredenciadoID,
                 UnidadeID = entity.UnidadeID,
                 VisitanteID = entity.VisitanteID,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }

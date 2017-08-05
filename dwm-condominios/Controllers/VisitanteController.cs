@@ -12,9 +12,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace dwm_condominios.Controllers
+namespace DWM.Controllers
 {
-    public class PortariaController : DwmRootController<VisitanteViewModel, VisitanteModel, ApplicationContext>
+    public class VisitanteController : DwmRootController<VisitanteViewModel, VisitanteModel, ApplicationContext>
     {
         #region Inheritance
         public override int _sistema_id() { return (int)DWM.Models.Enumeracoes.Sistema.DWMCONDOMINIOS; }

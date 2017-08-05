@@ -2,7 +2,7 @@
 @model PagedList<DWM.Models.Repositories.VisitanteViewModel>
 @{
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../Portaria/Create";
+    t[0].url = "../Visitante/Create";
     t[0].nomeCurto = "Incluir";
     t[0].exibir = "S";
     t[0].referencia = "";
@@ -18,7 +18,7 @@
         <div class="x_title">
             <div class="row">
                 <div class="col-md-11">
-                    <h2>Visitantes</h2>
+                    <h2>Visitantes/Prestadores de Serviço</h2>
                 </div>
                 <div class="col-md-1">
                     <ul class="nav navbar-right panel_toolbox pull-right">
@@ -61,7 +61,7 @@
         </div>
 
         <div class="x_content">
-            @using (Ajax.BeginForm("ListParam", "Portaria", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
+            @using (Ajax.BeginForm("ListParam", "Visitante", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
             {
                 @Html.HiddenFor(info => info.FirstOrDefault().CondominioID)
                 @Html.HiddenFor(info => info.FirstOrDefault().empresaId)
@@ -97,7 +97,7 @@
                 @Html.Partial("ListParam", Model)
             </div>
             <div class="altura-35">
-                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Portaria", buttonType = "link" } })
+                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Visitante", buttonType = "link" } })
             </div>
         </div>
     </div>

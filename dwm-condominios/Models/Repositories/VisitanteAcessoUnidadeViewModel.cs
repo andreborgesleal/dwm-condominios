@@ -8,7 +8,7 @@ using System.Web;
 
 namespace DWM.Models.Repositories
 {
-    public class VisitanteAcessoUnidade : Repository
+    public class VisitanteAcessoUnidadeViewModel : Repository
     {
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
@@ -28,5 +28,11 @@ namespace DWM.Models.Repositories
         [DisplayName("CondominoID")]
         [Required]
         public int CondominoID { get; set; }
+
+        [DisplayName("CredenciadoID")]
+        public System.Nullable<int> CredenciadoID { get; set; }
+
+        public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
+
     }
 }

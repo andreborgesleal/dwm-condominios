@@ -39,5 +39,6 @@ namespace DWM.Models.Entidades
         public DbSet<VisitanteUnidade> VisitanteUnidades { get; set; }
         public DbSet<VisitanteAcesso> VisitanteAcessos { get; set; }
         public DbSet<VisitanteAcessoUnidade> VisitanteAcessoUnidades { get; set; }
+        public DbSet<PrestadorTipo> PrestadorTipos { get; set; }
     }
 }

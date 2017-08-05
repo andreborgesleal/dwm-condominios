@@ -23,5 +23,10 @@ namespace DWM.Models.Repositories
 
         [DisplayName("CondominoID")]
         public int CondominoID { get; set; }
+
+        [DisplayName("CredenciadoID")]
+        public System.Nullable<int> CredenciadoID { get; set; }
+
+        public virtual VisitanteViewModel VisitanteViewModel { get; set; }
     }
 }

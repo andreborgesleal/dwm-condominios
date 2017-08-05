@@ -10,6 +10,11 @@ namespace DWM.Models.Repositories
 {
     public class VisitanteAcessoViewModel : Repository
     {
+        public VisitanteAcessoViewModel()
+        {
+            VisitanteAcessoUnidadeViewModel = new HashSet<VisitanteAcessoUnidadeViewModel>();
+        }
+
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
 
@@ -39,5 +44,18 @@ namespace DWM.Models.Repositories
 
         [DisplayName("DataAcesso")]
         public DateTime? DataAcesso { get; set; }
+
+        [DisplayName("Interfona")]
+        public string Interfona { get; set; }
+
+        [DisplayName("Observação")]
+        [StringLength(300, ErrorMessage ="Observação deve possuir no máximo 300 caracteres")]
+        public string Observacao { get; set; }
+
+        [DisplayName("AluguelID")]
+        public int AluguelID { get; set; }
+
+        public virtual IEnumerable<VisitanteAcessoUnidadeViewModel> VisitanteAcessoUnidadeViewModel { get; set; }
+
     }
 }

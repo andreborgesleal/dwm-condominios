@@ -28,15 +28,15 @@ namespace DWM.Models.Repositories
 
         [DisplayName("Nome")]
         [Required]
-        [StringLength(40)]
+        [StringLength(40, ErrorMessage = "Nome do visitante/prestador deve possuir no máximo 40 caracteres")]
         public string Nome { get; set; }
 
         [DisplayName("RG")]
-        [StringLength(20)]
+        [StringLength(20, ErrorMessage = "RG deve possuir no máximo 20 caracteres")]
         public string RG { get; set; }
 
         [DisplayName("OrgaoEmissor")]
-        [StringLength(15)]
+        [StringLength(15, ErrorMessage = "Órgão Emissor deve possuir no máximo 15 caracteres")]
         public string OrgaoEmissor { get; set; }
 
         [DisplayName("CPF")]
@@ -60,14 +60,30 @@ namespace DWM.Models.Repositories
         [StringLength(100)]
         public string Fotografia { get; set; }
 
-        [DisplayName("Prestador Condominio")]
+        [DisplayName("Prestador Condomínio")]
         [StringLength(1)]
         [Required]
         public string PrestadorCondominio { get; set; }
 
-        [DisplayName("Situacao")]
+        [DisplayName("Situação")]
         [StringLength(1)]
         public string Situacao { get; set; }
+
+        [DisplayName("Placa")]
+        [StringLength(7, ErrorMessage = "Placa do veículo deve possuir no máximo 7 caracteres")]
+        public string Placa { get; set; }
+
+        [DisplayName("Cor")]
+        [StringLength(15, ErrorMessage = "Cor do veículo deve possuir no máximo 15 caracteres")]
+        public string Cor { get; set; }
+
+        [DisplayName("Descrição")]
+        [StringLength(20, ErrorMessage = "Descrição do veículo deve possuir no máximo 20 caracteres")]
+        public string Descricao { get; set; }
+
+        [DisplayName("Marca")]
+        [StringLength(20, ErrorMessage = "Marca do veículo deve possuir no máximo 20 caracteres")]
+        public string Marca { get; set; }
 
         #region Atributos de Outras Tabelas
         public string DescricaoEdificacao { get; set; }

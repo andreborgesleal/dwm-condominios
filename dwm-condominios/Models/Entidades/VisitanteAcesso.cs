@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace DWM.Models.Entidades
 {
     [Table("VisitanteAcesso")]
     public class VisitanteAcesso
     {
+        public VisitanteAcesso()
+        {
+            VisitanteAcessoUnidade = new HashSet<VisitanteAcessoUnidade>();
+        }
+
         [Key]
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
@@ -35,5 +38,16 @@ namespace DWM.Models.Entidades
 
         [DisplayName("DataAcesso")]
         public DateTime? DataAcesso { get; set; }
+
+        [DisplayName("Interfona")]
+        public string Interfona { get; set; }
+
+        [DisplayName("Observacao")]
+        public string Observacao { get; set; }
+
+        [DisplayName("AluguelID")]
+        public int AluguelID { get; set; }
+
+        public virtual ICollection<VisitanteAcessoUnidade> VisitanteAcessoUnidade { get; set; }
     }
 }

@@ -27,7 +27,6 @@ namespace DWM.Models.Persistence
         }
         #endregion
 
-
         private bool IsUserAdm()
         {
             return DWMSessaoLocal.GetSessaoLocal().Unidades == null;
@@ -106,6 +105,16 @@ namespace DWM.Models.Persistence
                     value.VisitanteUnidadeViewModel.ElementAt(0).CondominoID = _condominoID.CondominoID;
                 }
             }
+            else if (value.PrestadorCondominio == "S")
+            {
+                if (!value.PrestadorTipoID.HasValue)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Tipo de Prestador").ToString();
+                    value.mensagem.MessageBase = "O Tipo do prestador deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                }
+            }
 
             return base.BeforeInsert(value);
         }
@@ -130,7 +139,10 @@ namespace DWM.Models.Persistence
             entity.Fotografia = value.Fotografia;
             entity.PrestadorCondominio = value.PrestadorCondominio;
             entity.Situacao = "A";
-
+            entity.Placa = value.Placa;
+            entity.Descricao = value.Descricao;
+            entity.Marca = value.Marca;
+            entity.Cor = value.Cor;
 
             #region VisitanteUnidadeViewModel
             if (entity.VisitanteID == 0 && value.PrestadorCondominio == "N") // Se for uma inclusão
@@ -152,7 +164,8 @@ namespace DWM.Models.Persistence
                         CondominioID = value.CondominioID,
                         EdificacaoID = value.EdificacaoID.Value,
                         UnidadeID = value.UnidadeID.Value,
-                        CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID
+                        CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID,
+                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal().CredenciadoID
                     });
                 }
             }
@@ -178,6 +191,10 @@ namespace DWM.Models.Persistence
                 Fotografia = entity.Fotografia,
                 PrestadorCondominio = entity.PrestadorCondominio,
                 Situacao = entity.Situacao,
+                Placa = entity.Placa,
+                Descricao = entity.Descricao,
+                Cor = entity.Cor,
+                Marca = entity.Marca,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
         }
@@ -313,6 +330,7 @@ namespace DWM.Models.Persistence
             int _CondominioID = sessaoCorrente.empresaId;
             int _EdificacaoID;
             int _UnidadeID;
+            DateTime dataHoje = Funcoes.Brasilia();
 
             if (SessaoLocal.CondominoID > 0)
             {
@@ -328,18 +346,20 @@ namespace DWM.Models.Persistence
             var q = (from v in db.Visitantes
                      join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft from vu in vleft.DefaultIfEmpty()
                      join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft from ed in vuleft.DefaultIfEmpty()
-                                                                                                         //join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID into valeft from vac in valeft.DefaultIfEmpty()
+                     join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
                      where v.CondominioID == _CondominioID
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
+                           && (vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day)
+                           && vac.DataAutorizacao.Day == dataHoje.Day
                      orderby v.DataInclusao, v.Nome
                      select new VisitanteViewModel
                      {
                          empresaId = sessaoCorrente.empresaId,
                          CondominioID = v.CondominioID,
                          Nome = v.Nome,
-                         Sexo = v.Sexo,
+                         Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
                          RG = v.RG,
                          CPF = v.CPF,
                          DataInclusao = v.DataInclusao,
@@ -352,25 +372,14 @@ namespace DWM.Models.Persistence
                          Telefone = v.Telefone,
                          UnidadeID = vu.UnidadeID,
                          DescricaoEdificacao = ed.Descricao,
-                         VisitanteAcessoViewModel = (from x in db.VisitanteAcessos where x.VisitanteID == v.VisitanteID 
-                                                     && x.DataAcesso == null
-                                                     && x.DataAutorizacao == DateTime.Now
-                            select new VisitanteAcessoViewModel
-                            {
-                                AcessoID = x.AcessoID,
-                                HoraInicio = x.HoraInicio,
-                                HoraLimite = x.HoraLimite,
-                                DataAcesso = x.DataAcesso,
-                                DataAutorizacao = x.DataAutorizacao,
-                            }).FirstOrDefault(),
-                        //VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
-                        //{
-                        //  AcessoID = vac.AcessoID,
-                        //  HoraInicio = vac.HoraInicio,
-                        //  HoraLimite = vac.HoraLimite,
-                        //  DataAcesso = vac.DataAcesso,
-                        //  DataAutorizacao = vac.DataAutorizacao,
-                        //},
+                         VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
+                         {
+                            AcessoID = vac.AcessoID,
+                            HoraInicio = vac.HoraInicio,
+                            HoraLimite = vac.HoraLimite,
+                            DataAcesso = vac.DataAcesso,
+                            DataAutorizacao = vac.DataAutorizacao,
+                        },
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
 
             return q;
