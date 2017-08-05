@@ -4260,6 +4260,7 @@
     <Content Include="Views\Visitante\Browse.cshtml" />
     <Content Include="Views\Visitante\Create.cshtml" />
     <Content Include="Views\Visitante\Edit.cshtml" />
+    <Content Include="Views\Visitante\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

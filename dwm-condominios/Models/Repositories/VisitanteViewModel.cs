@@ -13,7 +13,7 @@ namespace DWM.Models.Repositories
     {
         public VisitanteViewModel()
         {
-            VisitanteUnidadeViewModel = new HashSet<VisitanteUnidadeViewModel>();
+            VisitanteUnidadeViewModel = new List<VisitanteUnidadeViewModel>();
         }
 
         [DisplayName("VisitanteID")]

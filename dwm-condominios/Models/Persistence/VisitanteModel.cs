@@ -29,7 +29,7 @@ namespace DWM.Models.Persistence
 
         private bool IsUserAdm()
         {
-            return DWMSessaoLocal.GetSessaoLocal().Unidades == null;
+            return DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).Unidades == null;
         }
 
         #region Métodos da classe CrudContext
@@ -71,6 +71,13 @@ namespace DWM.Models.Persistence
             return base.BeforeUpdate(value);
         }
 
+        public override VisitanteViewModel BeforeDelete(VisitanteViewModel value)
+        {
+            Visitante v = Find(value);
+            VisitanteViewModel vm = MapToRepository(v);
+            vm.uri = value.uri;
+            return vm;
+        }
 
         public override VisitanteViewModel BeforeInsert(VisitanteViewModel value)
         {
@@ -176,9 +183,10 @@ namespace DWM.Models.Persistence
 
         public override VisitanteViewModel MapToRepository(Visitante entity)
         {
-            return new VisitanteViewModel()
+            VisitanteViewModel v = new VisitanteViewModel()
             {
                 CondominioID = entity.CondominioID,
+                empresaId = entity.CondominioID,
                 PrestadorTipoID = entity.PrestadorTipoID,
                 VisitanteID = entity.VisitanteID,
                 Nome = entity.Nome,
@@ -197,6 +205,25 @@ namespace DWM.Models.Persistence
                 Marca = entity.Marca,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
+
+            foreach (VisitanteUnidade vu in entity.VisitanteUnidade)
+            {
+                v.EdificacaoID = vu.EdificacaoID;
+                v.UnidadeID = vu.UnidadeID;
+                VisitanteUnidadeViewModel item = new VisitanteUnidadeViewModel()
+                {
+                    CondominioID = vu.CondominioID,
+                    CondominoID = vu.CondominoID,
+                    VisitanteID = vu.VisitanteID,
+                    CredenciadoID = vu.CredenciadoID,
+                    EdificacaoID = vu.EdificacaoID,
+                    UnidadeID = vu.UnidadeID,
+                    VisitanteViewModel = v
+                };
+                ((List<VisitanteUnidadeViewModel>)v.VisitanteUnidadeViewModel).Add(item);
+            }
+
+            return v;
         }
 
         public override Visitante Find(VisitanteViewModel key)
@@ -227,72 +254,103 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (operation == Crud.ALTERAR || operation == Crud.EXCLUIR)
+            if (operation == Crud.ALTERAR)
+            {
                 if (value.VisitanteID == 0)
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Visitante").ToString();
-                value.mensagem.MessageBase = "Visitante deve ser informada";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante").ToString();
+                    value.mensagem.MessageBase = "Visitante deve ser informada";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                if (value.Nome.Trim().Length == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Nome do Visitante").ToString();
+                    value.mensagem.MessageBase = "Nome do Condômino deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                if (value.Sexo.Trim().Length == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Sexo").ToString();
+                    value.mensagem.MessageBase = "Sexo do Condômino deve ser informado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                if (DWMSessaoLocal.GetSessaoLocal().Unidades == null)
+                {
+                    if (!value.EdificacaoID.HasValue && value.PrestadorCondominio == "N")
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Edificação").ToString();
+                        value.mensagem.MessageBase = "A Edificação deve ser informada";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (!value.UnidadeID.HasValue && value.PrestadorCondominio == "N")
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                        value.mensagem.MessageBase = "A Unidade deve ser informada";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (String.IsNullOrEmpty(value.RG))
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "RG").ToString();
+                        value.mensagem.MessageBase = "O RG deve ser informado";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (String.IsNullOrEmpty(value.OrgaoEmissor))
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Órgão Emissor").ToString();
+                        value.mensagem.MessageBase = "O Órgão Emissor deve ser informado";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                }
             }
 
-            if (value.Nome.Trim().Length == 0)
+            if (operation == Crud.EXCLUIR)
             {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Nome do Visitante").ToString();
-                value.mensagem.MessageBase = "Nome do Condômino deve ser informado";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (value.Sexo.Trim().Length == 0)
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Sexo").ToString();
-                value.mensagem.MessageBase = "Sexo do Condômino deve ser informado";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (DWMSessaoLocal.GetSessaoLocal().Unidades == null)
-            {
-                if (!value.EdificacaoID.HasValue && value.PrestadorCondominio == "N")
+                if (value.VisitanteID == 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Edificação").ToString();
-                    value.mensagem.MessageBase = "A Edificação deve ser informada";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante").ToString();
+                    value.mensagem.MessageBase = "Visitante deve ser informado";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
 
-                if (!value.UnidadeID.HasValue && value.PrestadorCondominio == "N")
+                if (value.EdificacaoID == 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
-                    value.mensagem.MessageBase = "A Unidade deve ser informada";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante").ToString();
+                    value.mensagem.MessageBase = "Edificacao deve ser informada";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
-
-                if (String.IsNullOrEmpty(value.RG))
+                if (value.UnidadeID == 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "RG").ToString();
-                    value.mensagem.MessageBase = "O RG deve ser informado";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante").ToString();
+                    value.mensagem.MessageBase = "Unidade deve ser informada";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
-
-                if (String.IsNullOrEmpty(value.OrgaoEmissor))
-                {
-                    value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "Órgão Emissor").ToString();
-                    value.mensagem.MessageBase = "O Órgão Emissor deve ser informado";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                    return value.mensagem;
-                }
-
             }
 
             if (operation == Crud.INCLUIR && value.PrestadorCondominio == "N")
@@ -344,15 +402,14 @@ namespace DWM.Models.Persistence
             }
 
             var q = (from v in db.Visitantes
-                     join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft from vu in vleft.DefaultIfEmpty()
-                     join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft from ed in vuleft.DefaultIfEmpty()
-                     join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
+                     join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft
+                     from vu in vleft.DefaultIfEmpty()
+                     join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft
+                     from ed in vuleft.DefaultIfEmpty()
                      where v.CondominioID == _CondominioID
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
-                           && (vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day)
-                           && vac.DataAutorizacao.Day == dataHoje.Day
                      orderby v.DataInclusao, v.Nome
                      select new VisitanteViewModel
                      {
@@ -372,15 +429,51 @@ namespace DWM.Models.Persistence
                          Telefone = v.Telefone,
                          UnidadeID = vu.UnidadeID,
                          DescricaoEdificacao = ed.Descricao,
-                         VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
-                         {
-                            AcessoID = vac.AcessoID,
-                            HoraInicio = vac.HoraInicio,
-                            HoraLimite = vac.HoraLimite,
-                            DataAcesso = vac.DataAcesso,
-                            DataAutorizacao = vac.DataAutorizacao,
-                        },
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                         Placa = v.Placa,
+                         Cor = v.Cor,
+                         Descricao = v.Descricao,
+                         Marca = v.Marca,
+                     }).ToList();
+
+
+            //var q = (from v in db.Visitantes
+            //         join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft from vu in vleft.DefaultIfEmpty()
+            //         join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft from ed in vuleft.DefaultIfEmpty()
+            //         join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
+            //         where v.CondominioID == _CondominioID
+            //               && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
+            //               && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
+            //               && v.Situacao == "A"
+            //               && vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day
+            //               && vac.DataAutorizacao.Day == dataHoje.Day
+            //         orderby v.DataInclusao, v.Nome
+            //         select new VisitanteViewModel
+            //         {
+            //             empresaId = sessaoCorrente.empresaId,
+            //             CondominioID = v.CondominioID,
+            //             Nome = v.Nome,
+            //             Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
+            //             RG = v.RG,
+            //             CPF = v.CPF,
+            //             DataInclusao = v.DataInclusao,
+            //             Fotografia = v.Fotografia,
+            //             OrgaoEmissor = v.OrgaoEmissor,
+            //             VisitanteID = v.VisitanteID,
+            //             PrestadorCondominio = v.PrestadorCondominio,
+            //             PrestadorTipoID = v.PrestadorTipoID,
+            //             Situacao = v.Situacao,
+            //             Telefone = v.Telefone,
+            //             UnidadeID = vu.UnidadeID,
+            //             DescricaoEdificacao = ed.Descricao,
+            //             VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
+            //             {
+            //                AcessoID = vac.AcessoID,
+            //                HoraInicio = vac.HoraInicio,
+            //                HoraLimite = vac.HoraLimite,
+            //                DataAcesso = vac.DataAcesso,
+            //                DataAutorizacao = vac.DataAutorizacao,
+            //            },
+            //        }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
 
             return q;
         }
