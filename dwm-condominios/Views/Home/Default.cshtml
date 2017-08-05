@@ -25,6 +25,25 @@
         <li><a data-toggle="tab" href="#visitantes">Visitantes</a></li>
     </ul>
 
+    <!-- Modal -->
+    <div class="modal fade" id="visitanteInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="tab-content">
         <div id="condominos" class="tab-pane fade in active">
             <div style="margin-top: 30px">
@@ -43,7 +62,7 @@
                         {
                             <tr class="even pointer">
                                 <td class="center">
-                                    <button type="button" class="btn btn-warning btn-xs">
+                                    <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#visitanteInfo">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>
                                     

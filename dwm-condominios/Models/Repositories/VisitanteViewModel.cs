@@ -13,7 +13,7 @@ namespace DWM.Models.Repositories
     {
         public VisitanteViewModel()
         {
-            VisitanteUnidadeViewModel = new HashSet<VisitanteUnidadeViewModel>();
+            VisitanteUnidadeViewModel = new List<VisitanteUnidadeViewModel>();
         }
 
         [DisplayName("VisitanteID")]
@@ -96,7 +96,7 @@ namespace DWM.Models.Repositories
 
         public string NomeCondomino { get; set; }
 
-        //public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
+        public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
 
         public virtual IEnumerable<VisitanteUnidadeViewModel> VisitanteUnidadeViewModel { get; set; }
         #endregion

@@ -126,7 +126,7 @@ namespace dwm_condominios.Models.BI
                 #endregion
 
                 #region Visitantes
-                ListViewVisitante listViewVisitantes = new ListViewVisitante(this.db, this.seguranca_db);
+                ListViewVisitanteAcesso listViewVisitantes = new ListViewVisitanteAcesso(this.db, this.seguranca_db);
                 home.Visitantes = listViewVisitantes.Bind(0, 10000).ToList();
                 #endregion
 

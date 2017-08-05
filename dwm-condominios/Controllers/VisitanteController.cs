@@ -1,11 +1,16 @@
 ﻿using App_Dominio.Controllers;
+using App_Dominio.Models;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
+using dwm_condominios.Models.Persistence;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace DWM.Controllers
@@ -120,16 +125,6 @@ namespace DWM.Controllers
 
         #region Callbacks Filters
         public override void OnCreateError(ref VisitanteViewModel value, FormCollection collection)
-        {
-            if (value.PrestadorCondominio == "N")
-            {
-                value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-                value.UnidadeID = int.Parse(collection["UnidadeID"]);
-                ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-            }
-        }
-
-        public override void OnDeleteError(ref VisitanteViewModel value, FormCollection collection)
         {
             if (value.PrestadorCondominio == "N")
             {

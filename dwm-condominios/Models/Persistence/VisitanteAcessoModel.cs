@@ -9,6 +9,8 @@ using System.Web;
 using App_Dominio.Security;
 using dwm_condominios.Models.Persistence;
 using System.Collections.Generic;
+using System;
+using App_Dominio.Component;
 
 namespace DWM.Models.Persistence
 {
@@ -307,5 +309,100 @@ namespace DWM.Models.Persistence
             return acesso;
         }
         #endregion
+    }
+
+    public class ListViewVisitanteAcesso : ListViewModelLocal<VisitanteViewModel>
+    {
+        #region Constructor
+        public ListViewVisitanteAcesso() { }
+        public ListViewVisitanteAcesso(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<VisitanteViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            int _CondominioID = sessaoCorrente.empresaId;
+            int _EdificacaoID;
+            int _UnidadeID;
+            DateTime dataHoje = Funcoes.Brasilia();
+
+            if (SessaoLocal.CondominoID > 0)
+            {
+                _EdificacaoID = db.Edificacaos.Where(x => x.CondominioID == _CondominioID).FirstOrDefault().EdificacaoID;
+                _UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
+            }
+            else
+            {
+                _EdificacaoID = param != null && param.Count() > 1 && param[1] != null ? int.Parse(param[1].ToString()) : 0;
+                _UnidadeID = param != null && param.Count() > 2 && param[2] != null ? int.Parse(param[2].ToString()) : 0;
+            }
+
+            var q = (from v in db.Visitantes
+                     join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft
+                     from vu in vleft.DefaultIfEmpty()
+                     join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft
+                     from ed in vuleft.DefaultIfEmpty()
+                     join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
+                     join con in db.Condominos on vu.CondominoID equals con.CondominoID into conleft
+                     from con in conleft.DefaultIfEmpty()
+                     join tp in db.PrestadorTipos on v.PrestadorTipoID equals tp.PrestadorTipoID into tpleft
+                     from tp in tpleft.DefaultIfEmpty()
+                     where v.CondominioID == _CondominioID
+                           && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
+                           && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
+                           && v.Situacao == "A"
+                           && vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day
+                           && vac.DataAutorizacao.Day == dataHoje.Day
+                     orderby v.DataInclusao, v.Nome
+                     select new VisitanteViewModel
+                     {
+                         empresaId = sessaoCorrente.empresaId,
+                         CondominioID = v.CondominioID,
+                         Nome = v.Nome,
+                         Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
+                         RG = v.RG,
+                         CPF = v.CPF,
+                         DataInclusao = v.DataInclusao,
+                         Fotografia = v.Fotografia,
+                         OrgaoEmissor = v.OrgaoEmissor,
+                         VisitanteID = v.VisitanteID,
+                         PrestadorCondominio = v.PrestadorCondominio,
+                         PrestadorTipoID = v.PrestadorTipoID,
+                         Situacao = v.Situacao,
+                         Telefone = v.Telefone,
+                         UnidadeID = vu.UnidadeID,
+                         DescricaoEdificacao = ed.Descricao,
+                         NomeCondomino = con.Nome,
+                         DescricaoTipoPrestador = tp.Descricao,
+                         Placa = v.Placa,
+                         Cor = v.Cor,
+                         Descricao = v.Descricao,
+                         Marca = v.Marca,
+                         VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
+                         {
+                             AcessoID = vac.AcessoID,
+                             HoraInicio = vac.HoraInicio,
+                             HoraLimite = vac.HoraLimite,
+                             DataAcesso = vac.DataAcesso,
+                             DataAutorizacao = vac.DataAutorizacao,
+                         },
+                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+
+            return q;
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new FuncionarioModel().getObject((FuncionarioViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-visitantes";
+        }
     }
 }

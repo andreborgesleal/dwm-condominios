@@ -13,15 +13,23 @@
     @Html.Partial("_alerts")
     @Html.Partial("_AjaxAlert", "panel-top")
     <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Visitante", Descricao = "Editar Visitante", Transacao = t })
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Visitante", Descricao = "Excluir Visitante", Transacao = t })
         <div class="x_content">
             <!-- Smart Wizard -->
-            @using (Html.BeginForm("Edit", "Visitante", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            @using (Html.BeginForm("Delete", "Visitante", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
             {
                 @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.empresaId)
                 @Html.HiddenFor(info => info.VisitanteID)
+                @Html.HiddenFor(info => info.Nome)
+                @Html.HiddenFor(info => info.Sexo)
+                @Html.HiddenFor(info => info.DataInclusao)
+                @Html.HiddenFor(info => info.PrestadorCondominio)
+                @Html.HiddenFor(info => info.Situacao)
+                @Html.HiddenFor(info => info.EdificacaoID)
+                @Html.HiddenFor(info => info.UnidadeID)
+
 
                 if (ViewBag.unidades == null)
                 {
@@ -37,13 +45,13 @@
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Edificação</label>
-                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')", @disabled = "disabled" })
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Unidades</label>
-                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todos...", "", 0, Model.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todos...", "", 0, Model.CondominioID), new { @class = "form-control", @disabled = "disabled" })
                         </div>
                     </div>
                 </div>
@@ -52,13 +60,13 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Nome</label>
-                            <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" />
+                            <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" disabled />
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">RG</label>
-                            <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" />
+                            <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" disabled />
                         </div>
                     </div>
                 </div>
@@ -66,13 +74,13 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Órgão Emissor</label>
-                            <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" />
+                            <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" disabled />
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">CPF</label>
-                            <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" />
+                            <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" disabled />
                         </div>
                     </div>
                 </div>
@@ -81,13 +89,13 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Sexo</label>
-                            @Html.DropDownList("Sexo", new DWM.Models.Enumeracoes.BindDropDownList().Sexo(), new { @class = "form-control" })
+                            @Html.DropDownList("Sexo", new DWM.Models.Enumeracoes.BindDropDownList().Sexo(), new { @class = "form-control", @disabled = "disabled" })
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Telefone</label>
-                            <input type="text" class="form-control" name="Telefone" id="Telefone" value="@Model.Telefone" maxlength="60" />
+                            <input type="text" class="form-control" name="Telefone" id="Telefone" value="@Model.Telefone" maxlength="60" disabled />
                         </div>
                     </div>
                 </div>
@@ -98,19 +106,19 @@
                         <div class="col-md-4 col-lg-4 col-xs-12">
                             <div class="form-group">
                                 <label class="control-label">Prestador do Condomínio</label>
-                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
+                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control", @disabled = "disabled" })
                             </div>
                         </div>
                         @*<div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Fotografia</label>
-                                <input type="file" name="Fotografia" value="@Model.Fotografia" />
-                            </div>
-                        </div>*@
+                                <div class="form-group">
+                                    <label class="control-label">Fotografia</label>
+                                    <input type="file" name="Fotografia" value="@Model.Fotografia" />
+                                </div>
+                            </div>*@
                         <div class="col-md-6 col-lg-4 col-xs-12">
                             <div class="form-group">
                                 <label class="control-label">Tipo de Prestador</label>
-                                @Html.DropDownList("PrestadorTipoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposPrestadores("Selecione...", ""), new { @class = "form-control", @data_toggle = "tooltip", @data_placement = "right", @title = "Não selecione, caso não seja um prestador" })
+                                @Html.DropDownList("PrestadorTipoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposPrestadores("Selecione...", ""), new { @class = "form-control", @data_toggle = "tooltip", @data_placement = "right", @title = "Não selecione, caso não seja um prestador", @disabled = "disabled" })
                             </div>
                         </div>
                     </div>
@@ -119,7 +127,8 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
-                        <input type="submit" value="Enviar" class="btn btn-primary" onclick="return Valida();" />
+                        <input type="submit" class="btn btn-danger" value="Excluir"  />
+                        <input type="button" onclick="window.location = '../Visitante/Browse'" class="btn btn-default" value="Cancelar" />
                     </div>
                 </div>
             }
@@ -133,44 +142,6 @@
         $("#Telefone").mask("(99)9999?9-9999");
         $("#CPF").mask("999.999.999-99");
     });
-
-    $('#form1').submit(function (ev) {
-        ev.preventDefault(); // to stop the form from submitting
-
-        if (Valida())
-            /* Validations go here */
-            this.submit(); // If all the validations succeeded
-    });
-
-    function Valida() {
-        if ($('#Unidades').val() == null || $('#Unidades').val() == '') {
-            var edificacao = $('#EdificacaoID').val();
-            var unidade = $('#UnidadeID').val();
-            var prestadorCondominio = $('#PrestadorCondominio').val();
-            var prestadorTipo = $("#PrestadorTipoID").val();
-
-            if (prestadorCondominio == "N") {
-                if (edificacao == null || edificacao == "") {
-                    ShowMessageAjaxAlert('É preciso informar a Edificação para salvar o visitante', 'warning');
-                    return false;
-                }
-
-                if (unidade == null || unidade == "") {
-                    ShowMessageAjaxAlert('É preciso informar a Unidade para salvar o visitante', 'warning');
-                    return false;
-                }
-            }
-            else {
-                if (prestadorTipo == "") {
-                    ShowMessageAjaxAlert('É preciso informar o tipo de prestador do condomínio', 'warning');
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        return true;
-    }
 </script>
 
 

@@ -14,7 +14,7 @@ namespace DWM.Models.Entidades
     {
         public Visitante()
         {
-            VisitanteUnidade = new HashSet<VisitanteUnidade>();
+            VisitanteUnidade = new List<VisitanteUnidade>();
         }
 
         [Key]

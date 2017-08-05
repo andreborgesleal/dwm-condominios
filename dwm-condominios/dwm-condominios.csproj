@@ -4266,6 +4266,7 @@
     <Content Include="Views\Visitante\Browse.cshtml" />
     <Content Include="Views\Visitante\Create.cshtml" />
     <Content Include="Views\Visitante\Edit.cshtml" />
+    <Content Include="Views\Visitante\Delete.cshtml" />
     <Content Include="Views\Portaria\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>

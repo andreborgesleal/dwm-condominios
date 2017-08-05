@@ -23,6 +23,7 @@ namespace dwm_condominios.Models.Persistence
         }
         #endregion
 
+
         #region Métodos da classe CrudContext
         public override VisitanteUnidade Find(VisitanteUnidadeViewModel key)
         {
