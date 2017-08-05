@@ -57,5 +57,16 @@ namespace DWM.Models.Repositories
 
         public virtual IEnumerable<VisitanteAcessoUnidadeViewModel> VisitanteAcessoUnidadeViewModel { get; set; }
 
+        #region Atributos fora da classe
+        public int? EdificacaoID { get; set; }
+
+        public int? UnidadeID { get; set; }
+
+        public string DescricaoEdificacao { get; set; }
+
+        public string NomeVisitante { get; set; }
+
+        public IEnumerable<VisitanteViewModel> Visitantes { get; set; }
+        #endregion
     }
 }

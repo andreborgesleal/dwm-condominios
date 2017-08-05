@@ -581,7 +581,6 @@ namespace DWM.Models.Enumeracoes
             return q;
         }
 
-
         public IEnumerable<SelectListItem> PrestadorCondominio()
         {
             IList<SelectListItem> q = new List<SelectListItem>();
@@ -589,6 +588,7 @@ namespace DWM.Models.Enumeracoes
             q.Add(new SelectListItem() { Value = "S", Text = "Sim" });
             return q;
         }
+
         public IEnumerable<SelectListItem> Sexo()
         {
             IList<SelectListItem> q = new List<SelectListItem>();
@@ -616,7 +616,5 @@ namespace DWM.Models.Enumeracoes
                 return q;
             }
         }
-
-
     }
 }

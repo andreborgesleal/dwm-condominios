@@ -328,7 +328,7 @@ namespace DWM.Models.Persistence
                 {
                     acesso.EdificacaoID = int.Parse(Request["EdificacaoID"]);
                     acesso.UnidadeID = int.Parse(Request["UnidadeID"]);
-                    VisitanteModel model = new VisitanteModel()
+                    VisitanteModel model = new VisitanteModel();
                 }
             }
             else
@@ -337,9 +337,6 @@ namespace DWM.Models.Persistence
                 acesso.UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
             }
             acesso.DataAcesso = null;
-
-
-
 
             return acesso;
         }
