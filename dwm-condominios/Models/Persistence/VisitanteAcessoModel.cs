@@ -293,16 +293,29 @@ namespace DWM.Models.Persistence
                 {
                     acesso.EdificacaoID = int.Parse(Request["EdificacaoID"]);
                     acesso.UnidadeID = int.Parse(Request["UnidadeID"]);
-                    VisitanteModel model = new VisitanteModel();
                 }
 
-                //acesso.Visitantes = 
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    using (SecurityContext seguranca_db = new SecurityContext())
+                    {
+                        ListViewVisitante list = new ListViewVisitante(db, seguranca_db);
+                        acesso.Visitantes = list.Bind(0, 25, 0, 0);
+                    }
+                }
             }
             else
             {
                 acesso.EdificacaoID = SessaoLocal.Unidades.FirstOrDefault().EdificacaoID;
                 acesso.UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
-                //acesso.Visitantes = 
+                using (ApplicationContext db = new ApplicationContext())
+                {
+                    using (SecurityContext seguranca_db = new SecurityContext())
+                    {
+                        ListViewVisitante list = new ListViewVisitante(db, seguranca_db);
+                        acesso.Visitantes = list.Bind(0, 25, acesso.EdificacaoID, acesso.UnidadeID);
+                    }
+                }
             }
             acesso.DataAcesso = null;
 
@@ -311,7 +324,7 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewVisitanteAcesso : ListViewModelLocal<VisitanteViewModel>
+    public class ListViewVisitanteAcesso : ListViewModelLocal<VisitanteAcessoViewModel>
     {
         #region Constructor
         public ListViewVisitanteAcesso() { }
@@ -322,12 +335,12 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe ListViewRepository
-        public override IEnumerable<VisitanteViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        public override IEnumerable<VisitanteAcessoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
             int _CondominioID = sessaoCorrente.empresaId;
             int _EdificacaoID;
             int _UnidadeID;
-            DateTime dataHoje = Funcoes.Brasilia();
+            DateTime dataHoje = Funcoes.Brasilia().Date;
 
             if (SessaoLocal.CondominoID > 0)
             {
@@ -354,42 +367,43 @@ namespace DWM.Models.Persistence
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
-                           && vac.DataAcesso == null || vac.DataAcesso.Value.Day == dataHoje.Day
-                           && vac.DataAutorizacao.Day == dataHoje.Day
-                     orderby v.DataInclusao, v.Nome
-                     select new VisitanteViewModel
+                           && vac.DataAutorizacao == dataHoje
+                     orderby v.Nome
+                     select new VisitanteAcessoViewModel
                      {
                          empresaId = sessaoCorrente.empresaId,
                          CondominioID = v.CondominioID,
-                         Nome = v.Nome,
-                         Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
-                         RG = v.RG,
-                         CPF = v.CPF,
-                         DataInclusao = v.DataInclusao,
-                         Fotografia = v.Fotografia,
-                         OrgaoEmissor = v.OrgaoEmissor,
-                         VisitanteID = v.VisitanteID,
-                         PrestadorCondominio = v.PrestadorCondominio,
-                         PrestadorTipoID = v.PrestadorTipoID,
-                         Situacao = v.Situacao,
-                         Telefone = v.Telefone,
-                         UnidadeID = vu.UnidadeID,
-                         DescricaoEdificacao = ed.Descricao,
-                         NomeCondomino = con.Nome,
-                         DescricaoTipoPrestador = tp.Descricao,
-                         Placa = v.Placa,
-                         Cor = v.Cor,
-                         Descricao = v.Descricao,
-                         Marca = v.Marca,
-                         VisitanteAcessoViewModel = new VisitanteAcessoViewModel()
+                         AcessoID = vac.AcessoID,
+                         HoraInicio = vac.HoraInicio,
+                         HoraLimite = vac.HoraLimite,
+                         DataInclusao = vac.DataInclusao,
+                         DataAcesso = vac.DataAcesso,
+                         DataAutorizacao = vac.DataAutorizacao,
+                         Interfona = vac.Interfona,
+                         Visitante = new VisitanteViewModel()
                          {
-                             AcessoID = vac.AcessoID,
-                             HoraInicio = vac.HoraInicio,
-                             HoraLimite = vac.HoraLimite,
-                             DataAcesso = vac.DataAcesso,
-                             DataAutorizacao = vac.DataAutorizacao,
-                         },
-                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                             Nome = v.Nome,
+                             Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
+                             RG = v.RG,
+                             CPF = v.CPF,
+                             DataInclusao = v.DataInclusao,
+                             Fotografia = v.Fotografia,
+                             OrgaoEmissor = v.OrgaoEmissor,
+                             VisitanteID = v.VisitanteID,
+                             PrestadorCondominio = v.PrestadorCondominio,
+                             PrestadorTipoID = v.PrestadorTipoID,
+                             Situacao = v.Situacao,
+                             Telefone = v.Telefone,
+                             UnidadeID = vu.UnidadeID,
+                             DescricaoEdificacao = ed.Descricao,
+                             NomeCondomino = con.Nome,
+                             DescricaoTipoPrestador = tp.Descricao,
+                             Placa = v.Placa,
+                             Cor = v.Cor,
+                             Descricao = v.Descricao,
+                             Marca = v.Marca,
+                         }
+                     }).ToList();
 
             return q;
         }

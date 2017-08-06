@@ -17,7 +17,7 @@ namespace DWM.Controllers
 
         public override string getListName()
         {
-            return "Listar Acesso de Visitantes e Prestadores";
+            return "Listar Acesso";
         }
         #endregion
 
@@ -40,11 +40,9 @@ namespace DWM.Controllers
         public ActionResult ListParam(int? index, int? pageSize = 50, string descricao = null,
                                         int? edificacaoId = null, int? unidadeId = null)
         {
-            ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
-            ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
             if (ViewBag.ValidateRequest)
             {
-                ListViewVisitante l = new ListViewVisitante();
+                ListViewVisitanteAcesso l = new ListViewVisitanteAcesso();
                 return this._List(index, pageSize, "Browse", l, null, edificacaoId, unidadeId);
             }
             else

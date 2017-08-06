@@ -121,32 +121,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (VisitanteViewModel value in Model.Visitantes)
+                        @foreach (VisitanteAcessoViewModel value in Model.Acessos)
                         {
                             <tr class="even pointer">
                                 <td class="center">
-                                    @value.VisitanteAcessoViewModel.AcessoID
+                                    @value.AcessoID
                                 </td>
                                 <td>
-                                    @value.Nome
+                                    @value.Visitante.Nome
                                 </td>
                                 <td>
-                                    @value.Sexo
+                                    @value.Visitante.Sexo
                                 </td>
                                 <td>
-                                    @value.RG
+                                    @value.Visitante.RG
                                 </td>
                                 <td>
-                                    @value.CPF
+                                    @value.Visitante.CPF
                                 </td>
                                 <td>
-                                    @value.VisitanteAcessoViewModel.DataAutorizacao
+                                    @value.DataAutorizacao
                                 </td>
                                 <td>
-                                    @value.VisitanteAcessoViewModel.HoraInicio
+                                    @value.HoraInicio
                                 </td>
                                 <td>
-                                    @value.VisitanteAcessoViewModel.HoraLimite
+                                    @value.HoraLimite
                                 </td>
                             </tr>
                         }

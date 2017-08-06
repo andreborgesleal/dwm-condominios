@@ -1,0 +1,108 @@
+﻿@using DWM.Models.Repositories
+@model System.Web.Mvc.PagedList<DWM.Models.Repositories.VisitanteAcessoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>RG/CPF</code> para buscar o Visitante
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action table-responsive display">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title text-center">#ID</th>
+                        <th class="column-title">Visitante/Prestador</th>
+                        <th class="column-title">Sexo</th>
+                        <th class="column-title">RG</th>
+                        <th class="column-title">CPF</th>
+                        <th class="column-title">Edificação</th>
+                        <th class="column-title">Unidade</th>
+                        <th class="column-title">Condômino</th>
+                        <th class="column-title">Profissão</th>
+                        <th class="column-title">Placa</th>
+                        <th class="column-title">Hora início</th>
+                        <th class="column-title">Hora Limite</th>
+                        <th class="column-title">Ação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (VisitanteAcessoViewModel value in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="center">
+                                <small>@value.AcessoID</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.Nome</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.Sexo</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.RG</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.CPF</small>
+                            </td>
+                            <td>
+                                <small>@value.DescricaoEdificacao</small>
+                            </td>
+                            <td>
+                                <small>@value.UnidadeID</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.NomeCondomino</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.DescricaoTipoPrestador</small>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.Placa</small>
+                            </td>
+                            <td>
+                                <small>@value.HoraInicio</small>
+                            </td>
+                            <td>
+                                <small>@value.HoraLimite</small>
+                            </td>
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+
+
+
+

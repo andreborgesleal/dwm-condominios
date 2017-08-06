@@ -28,8 +28,7 @@ namespace DWM.Models.Repositories
         public List<Grupo> UsuarioGrupos { get; set; }
         public List<CondominoUnidadeViewModel> Condominos { get; set; }
         public List<CredenciadoViewModel> Credenciados { get; set; }
-        public List<VisitanteViewModel> Visitantes { get; set; }
-
+        public List<VisitanteAcessoViewModel> Acessos { get; set; }
 
         public JsonResult js { get; set; }
     }

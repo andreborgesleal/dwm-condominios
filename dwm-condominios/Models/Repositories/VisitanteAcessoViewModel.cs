@@ -64,7 +64,7 @@ namespace DWM.Models.Repositories
 
         public string DescricaoEdificacao { get; set; }
 
-        public string NomeVisitante { get; set; }
+        public VisitanteViewModel Visitante { get; set; }
 
         public IEnumerable<VisitanteViewModel> Visitantes { get; set; }
         #endregion

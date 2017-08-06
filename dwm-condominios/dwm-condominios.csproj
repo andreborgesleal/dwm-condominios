@@ -4268,6 +4268,8 @@
     <Content Include="Views\Visitante\Edit.cshtml" />
     <Content Include="Views\Visitante\Delete.cshtml" />
     <Content Include="Views\Portaria\Create.cshtml" />
+    <Content Include="Views\Portaria\Browse.cshtml" />
+    <Content Include="Views\Portaria\ListParam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
