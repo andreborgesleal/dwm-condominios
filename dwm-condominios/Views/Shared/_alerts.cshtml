@@ -6,8 +6,8 @@
 {
     <div class="alert alert-dismissable alert-warning">
         <a class="close" data-dismiss="alert" href="#" aria-hidden="true">x</a>
-        <h4 class="alert-heading">Atenção!</h4>
-        @TempData[Alerts.ATTENTION]
+        <h4 class="alert-heading text-mama-africa">Atenção!</h4>
+        <span class="text-mama-africa">@TempData[Alerts.ATTENTION]</span>
     </div>
 }
 @foreach (string key in Alerts.ALL.Except(new[] { Alerts.ATTENTION }))

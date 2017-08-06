@@ -1,10 +1,14 @@
-﻿using App_Dominio.Controllers;
+﻿using App_Dominio.Contratos;
+using App_Dominio.Controllers;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
+using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
+using DWM.Models.Pattern;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -66,15 +70,40 @@ namespace DWM.Controllers
         #endregion
 
         #region Callbacks Filters
-        //public override void OnCreateError(ref VisitanteAcessoViewModel value, FormCollection collection)
-        //{
-        //    if (value.PrestadorCondominio == "N")
-        //    {
-        //        value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-        //        value.UnidadeID = int.Parse(collection["UnidadeID"]);
-        //        ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-        //    }
-        //}
+        public override ActionResult AfterCreate(VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            if (!value.IsPortaria)
+                try
+                {
+                    FactoryLocalhost<VisitanteAcessoViewModel, ApplicationContext> factory = new FactoryLocalhost<VisitanteAcessoViewModel, ApplicationContext>();
+                    EmailPortariaBI bi = new EmailPortariaBI();
+                    value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                    VisitanteAcessoViewModel a = factory.Execute(new EmailPortariaBI(), value);
+                    if (a.mensagem.Code > 0)
+                        throw new Exception(a.mensagem.Message);
+                }
+                catch (Exception ex)
+                {
+                    Error(ex.Message);
+                }
+
+            return RedirectToAction("Browse");
+        }
+
+        public override void OnCreateError(ref VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            Validate error = value.mensagem;
+            Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext> facade = new Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext>();
+            GetCreate();
+            value = facade.CreateRepository(Request);
+            value.Interfona = collection["Interfona"];
+            value.HoraInicio = collection["HoraInicio"];
+            value.HoraLimite = collection["HoraLimite"];
+            value.Observacao = collection["Observacao"];
+            if (collection["DataAutorizacao"] != null && collection["DataAutorizacao"] != "")
+                value.DataAutorizacao = DateTime.Parse(collection["DataAutorizacao"]);
+            value.mensagem = error;
+        }
 
         //public override void OnDeleteError(ref VisitanteAcessoViewModel value, FormCollection collection)
         //{

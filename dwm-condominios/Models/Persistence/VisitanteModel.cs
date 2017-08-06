@@ -431,6 +431,7 @@ namespace DWM.Models.Persistence
                          PrestadorTipoID = v.PrestadorTipoID,
                          Situacao = v.Situacao,
                          Telefone = v.Telefone,
+                         EdificacaoID = vu.EdificacaoID,
                          UnidadeID = vu.UnidadeID,
                          DescricaoEdificacao = ed.Descricao,
                          Placa = v.Placa,

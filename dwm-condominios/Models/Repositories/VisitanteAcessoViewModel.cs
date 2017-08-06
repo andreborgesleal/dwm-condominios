@@ -10,11 +10,6 @@ namespace DWM.Models.Repositories
 {
     public class VisitanteAcessoViewModel : Repository
     {
-        public VisitanteAcessoViewModel()
-        {
-            VisitanteAcessoUnidadeViewModel = new HashSet<VisitanteAcessoUnidadeViewModel>();
-        }
-
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
 
@@ -53,9 +48,9 @@ namespace DWM.Models.Repositories
         public string Observacao { get; set; }
 
         [DisplayName("AluguelID")]
-        public int AluguelID { get; set; }
+        public System.Nullable<int> AluguelID { get; set; }
 
-        public virtual IEnumerable<VisitanteAcessoUnidadeViewModel> VisitanteAcessoUnidadeViewModel { get; set; }
+        public virtual VisitanteAcessoUnidadeViewModel VisitanteAcessoUnidadeViewModel { get; set; }
 
         #region Atributos fora da classe
         public int? EdificacaoID { get; set; }
@@ -63,6 +58,8 @@ namespace DWM.Models.Repositories
         public int? UnidadeID { get; set; }
 
         public string DescricaoEdificacao { get; set; }
+
+        public bool IsPortaria { get; set; }
 
         public VisitanteViewModel Visitante { get; set; }
 
