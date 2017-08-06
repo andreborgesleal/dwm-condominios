@@ -18,7 +18,9 @@ namespace DWM.Models.Enumeracoes
             GRUPO_CREDENCIADO = 6,
             URL_CONDOMINIO = 7,
             EMAIL_TEMPLATE_CHAMADO = 8,
-            ESQUECI_MINHA_SENHA = 9
+            ESQUECI_MINHA_SENHA = 9,
+            GRUPO_PORTARIA = 10,
+            EMAIL_TEMPLATE_PORTARIA = 11,
         }
 
         public enum EmailTipo

@@ -91,37 +91,80 @@
                         </div>
                     </div>
                 </div>
-                
-                
-               
-                if(ViewBag.unidades == null)
-                {
-                    <div class="row">
-                        <div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Prestador do Condomínio</label>
-                                @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        @*<div class="col-md-4 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Fotografia</label>
-                                <input type="file" name="Fotografia" value="@Model.Fotografia" />
-                            </div>
-                        </div>*@
-                        <div class="col-md-6 col-lg-4 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label">Tipo de Prestador</label>
-                                @Html.DropDownList("PrestadorTipoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposPrestadores("Selecione...", ""), new { @class = "form-control", @data_toggle = "tooltip", @data_placement = "right", @title = "Não selecione, caso não seja um prestador" })
-                            </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input type="email" class="form-control" name="Email" id="Email" value="@Model.Email" maxlength="100" />
                         </div>
                     </div>
-                }
+                </div>
+
+                <div class="row">
+                    @if(ViewBag.unidades == null)
+                    {
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Prestador do Condomínio</label>
+                            @Html.DropDownList("PrestadorCondominio", new DWM.Models.Enumeracoes.BindDropDownList().PrestadorCondominio(), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    @*<div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Fotografia</label>
+                            <input type="file" name="Fotografia" value="@Model.Fotografia" />
+                        </div>
+                    </div>*@
+                    }
+                    <div class="col-md-6 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de Prestador</label>
+                            @Html.DropDownList("PrestadorTipoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposPrestadores("Selecione...", ""), new { @class = "form-control", @data_toggle = "tooltip", @data_placement = "right", @title = "Não selecione, caso não seja um prestador" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="x_title margem-topo-30">
+                    <h2>Dados do Veículo</h2>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Placa</label>
+                            <input type="text" class="form-control" name="Placa" id="Placa" value="@Model.Placa" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Cor</label>
+                            <input type="text" class="form-control" name="Cor" id="Cor" value="@Model.Cor" maxlength="60" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Descrição</label>
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="20" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Marca</label>
+                            <input type="text" class="form-control" name="Marca" id="Marca" value="@Model.Marca" maxlength="20" />
+                        </div>
+                    </div>
+                </div>
 
                 <hr />
                 <div class="row">
                     <div class="col-md-12">
                         <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                        <input type="button" onclick="window.location = '../Visitante/Browse'" class="btn btn-default" value="Cancelar" />
                     </div>
                 </div>
             }
@@ -134,7 +177,7 @@
     $(document).ready(function () {
         $("#Telefone").mask("(99)9999?9-9999");
         $("#CPF").mask("999.999.999-99");
-        //$('#PrestadorCondominio').val('N')
+        $("#Placa").mask("aaa-9999");
     });
 
     $('#form1').submit(function (ev) {

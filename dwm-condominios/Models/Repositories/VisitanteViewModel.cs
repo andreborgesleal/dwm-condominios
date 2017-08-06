@@ -70,7 +70,7 @@ namespace DWM.Models.Repositories
         public string Situacao { get; set; }
 
         [DisplayName("Placa")]
-        [StringLength(7, ErrorMessage = "Placa do veículo deve possuir no máximo 7 caracteres")]
+        //[StringLength(7, ErrorMessage = "Placa do veículo deve possuir no máximo 7 caracteres")]
         public string Placa { get; set; }
 
         [DisplayName("Cor")]
@@ -84,6 +84,9 @@ namespace DWM.Models.Repositories
         [DisplayName("Marca")]
         [StringLength(20, ErrorMessage = "Marca do veículo deve possuir no máximo 20 caracteres")]
         public string Marca { get; set; }
+
+        [DisplayName("Email")]
+        public string Email { get; set; }
 
         #region Atributos de Outras Tabelas
         public string DescricaoEdificacao { get; set; }
