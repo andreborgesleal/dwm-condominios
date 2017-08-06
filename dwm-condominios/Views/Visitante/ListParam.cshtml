@@ -9,7 +9,7 @@
         {
             <div class="row">
                 <div class="col-md-8">
-                    Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>RG/CPF</code> para buscar o Visitante
+                    Clique nos botões de <code>Ação</code> para executar a ação desejada
                 </div>
             </div>
             <p>&nbsp;</p>
@@ -51,7 +51,7 @@
                                 }
                             </td>
                             <td>
-                                <small>@vis.RG</small>
+                                <span>@vis.RG</span>
                             </td>
                             <td>
                                 <span>@vis.OrgaoEmissor</span><br />
@@ -63,16 +63,16 @@
                                 <span>@vis.DescricaoEdificacao</span><br />
                             </td>
                             <td>
-                                <small>@vis.UnidadeID</small>
+                                <span>@vis.UnidadeID</span>
                             </td>
                             <td>
-                                <small>@vis.Sexo</small>
+                                <span>@vis.Sexo</span>
                             </td>
                             <td>
                                 <span>@App_Dominio.Models.Funcoes.FormataTelefone(vis.Telefone)</span>
                             </td>
                             <td>
-                                <span>@vis.DataInclusao</span>
+                                <span>@vis.DataInclusao.ToString("dd/MM/yyyy")</span>
                             </td>
                             <td>
                                 <span>@vis.Placa</span>

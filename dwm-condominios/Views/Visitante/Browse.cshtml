@@ -65,32 +65,7 @@
             {
                 @Html.HiddenFor(info => info.FirstOrDefault().CondominioID)
                 @Html.HiddenFor(info => info.FirstOrDefault().empresaId)
-
-                if (ViewBag.unidades == null)
-                {
-                    <div class="row clearfix">
-                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Edificação</label>
-                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", (int)ViewBag.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
-                            </div>
-                        </div>
-                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Unidades</label>
-                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todos...", "", 0, (int)ViewBag.empresaId), new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row clearfix">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary" value="Buscar" />
-                            </div>
-                        </div>
-                    </div>
-                }
+              
             }
 
             <div id="div-list">

@@ -11,6 +11,7 @@ using App_Dominio.Models;
 using System.Web;
 using App_Dominio.Security;
 using dwm_condominios.Models.Persistence;
+using App_Dominio.Repositories;
 
 namespace DWM.Models.Persistence
 {
@@ -30,6 +31,15 @@ namespace DWM.Models.Persistence
         private bool IsUserAdm()
         {
             return DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).Unidades == null;
+        }
+
+        private bool IsPortaria()
+        {
+            string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+
+            return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }
 
         #region Métodos da classe CrudContext
@@ -146,10 +156,11 @@ namespace DWM.Models.Persistence
             entity.Fotografia = value.Fotografia;
             entity.PrestadorCondominio = value.PrestadorCondominio;
             entity.Situacao = "A";
-            entity.Placa = value.Placa;
+            entity.Placa = value.Placa?.Replace("-","").ToUpper();
             entity.Descricao = value.Descricao;
             entity.Marca = value.Marca;
             entity.Cor = value.Cor;
+            entity.Email = value.Email;
 
             #region VisitanteUnidadeViewModel
             if (entity.VisitanteID == 0 && value.PrestadorCondominio == "N") // Se for uma inclusão
@@ -172,7 +183,7 @@ namespace DWM.Models.Persistence
                         EdificacaoID = value.EdificacaoID.Value,
                         UnidadeID = value.UnidadeID.Value,
                         CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID,
-                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal().CredenciadoID
+                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal().CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal().CredenciadoID
                     });
                 }
             }
@@ -183,6 +194,13 @@ namespace DWM.Models.Persistence
 
         public override VisitanteViewModel MapToRepository(Visitante entity)
         {
+            string _nomeCondomino = (from con in db.Condominos
+                                     join vis in db.VisitanteUnidades on con.CondominoID equals vis.CondominoID
+                                     where vis.CondominoID == con.CondominoID
+                                     select con.Nome).FirstOrDefault();
+
+            string _descricaoPrestador = (from tp in db.PrestadorTipos where tp.PrestadorTipoID == entity.PrestadorTipoID select tp.Descricao).FirstOrDefault();
+
             VisitanteViewModel v = new VisitanteViewModel()
             {
                 CondominioID = entity.CondominioID,
@@ -203,6 +221,9 @@ namespace DWM.Models.Persistence
                 Descricao = entity.Descricao,
                 Cor = entity.Cor,
                 Marca = entity.Marca,
+                NomeCondomino = _nomeCondomino,
+                DescricaoTipoPrestador = _descricaoPrestador,
+                Email = entity.Email,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
 
@@ -210,6 +231,7 @@ namespace DWM.Models.Persistence
             {
                 v.EdificacaoID = vu.EdificacaoID;
                 v.UnidadeID = vu.UnidadeID;
+
                 VisitanteUnidadeViewModel item = new VisitanteUnidadeViewModel()
                 {
                     CondominioID = vu.CondominioID,
@@ -222,6 +244,7 @@ namespace DWM.Models.Persistence
                 };
                 ((List<VisitanteUnidadeViewModel>)v.VisitanteUnidadeViewModel).Add(item);
             }
+           
 
             return v;
         }
@@ -254,6 +277,31 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+
+            if (value.CPF != null)
+            {
+                if (!Funcoes.ValidaCpf(value.CPF.Replace(".", "").Replace(".", "").Replace("-", "")))
+                {
+                    value.mensagem.Code = 4;
+                    value.mensagem.Message = MensagemPadrao.Message(4, "Condomínio").ToString();
+                    value.mensagem.MessageBase = "O CPF Digitado é inválido";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+
+            if (IsPortaria())
+            {
+                if (value.CPF == null && (value.RG == null || value.OrgaoEmissor == null))
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "RG").ToString();
+                    value.mensagem.MessageBase = "Deve ser informado o CPF ou o RG/Órgão Emissor";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+
             if (operation == Crud.ALTERAR)
             {
                 if (value.VisitanteID == 0)
@@ -283,7 +331,7 @@ namespace DWM.Models.Persistence
                     return value.mensagem;
                 }
 
-                if (DWMSessaoLocal.GetSessaoLocal().Unidades == null)
+                if (IsUserAdm())
                 {
                     if (!value.EdificacaoID.HasValue && value.PrestadorCondominio == "N")
                     {
@@ -302,25 +350,6 @@ namespace DWM.Models.Persistence
                         value.mensagem.MessageType = MsgType.WARNING;
                         return value.mensagem;
                     }
-
-                    if (String.IsNullOrEmpty(value.RG))
-                    {
-                        value.mensagem.Code = 5;
-                        value.mensagem.Message = MensagemPadrao.Message(5, "RG").ToString();
-                        value.mensagem.MessageBase = "O RG deve ser informado";
-                        value.mensagem.MessageType = MsgType.WARNING;
-                        return value.mensagem;
-                    }
-
-                    if (String.IsNullOrEmpty(value.OrgaoEmissor))
-                    {
-                        value.mensagem.Code = 5;
-                        value.mensagem.Message = MensagemPadrao.Message(5, "Órgão Emissor").ToString();
-                        value.mensagem.MessageBase = "O Órgão Emissor deve ser informado";
-                        value.mensagem.MessageType = MsgType.WARNING;
-                        return value.mensagem;
-                    }
-
                 }
             }
 
