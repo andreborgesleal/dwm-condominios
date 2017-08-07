@@ -34,6 +34,40 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> EspacosComuns(params object[] param)
+        {
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            int _CondominioID = 0;
+
+            if (param.Count() > 2)
+                _CondominioID = (int)param[2];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != null)
+                    q.Add(new SelectListItem() { Text = cabecalho, Value = "" });
+
+                q = q.Union(from ec in db.EspacoComums.AsEnumerable()
+                            where ec.CondominioID == _CondominioID
+                            orderby ec.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = ec.EspacoID.ToString(),
+                                Text = ec.Descricao.ToString()
+                            }).ToList();
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Unidades(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)
