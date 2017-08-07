@@ -1,0 +1,137 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@using App_Dominio.Models
+@model DWM.Models.Repositories.AluguelEspacoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Aluguel/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Aluguel", Descricao = "Inclusão de Aluguel de Espaço", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Create", "Aluguel", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+
+                if (ViewBag.unidades == null)
+                {
+                    @Html.Hidden("Unidades", "")
+                }
+                else
+                {
+                    @Html.Hidden("Unidades", "n")
+                }
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Edificação</label>
+                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidades</label>
+                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", Model.UnidadeID, Model.EdificacaoID, Model.CondominioID), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Espaço Comum</label>
+                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("Selecione...", "", Model.CondominioID), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data do Evento</label>
+                            <input type="date" class="form-control" name="DataEvento" id="DataEvento" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Observação</label>
+                            <input type="text" class="form-control" name="Observacao" id="Observacao" value="@Model.Observacao" maxlength="60" />
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                        <input type="button" onclick="window.location = '../Aluguel/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Telefone").mask("(99)9999?9-9999");
+        $("#CPF").mask("999.999.999-99");
+        $("#Placa").mask("aaa-9999");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function Valida() {
+        if ($('#Unidades').val() == null || $('#Unidades').val() == '') {
+            var prestadorCondominio = $('#PrestadorCondominio').val();
+            var edificacao = $('#EdificacaoID').val();
+            var unidade = $('#UnidadeID').val();
+            var prestadorTipo = $("#PrestadorTipoID").val();
+
+            if (prestadorCondominio == "N")
+            {
+                if ((edificacao == null || edificacao == "") && prestadorCondominio == 'N') {
+                    ShowMessageAjaxAlert('É preciso informar a Edificação para salvar o Aluguel', 'warning');
+                    return false;
+                }
+
+                if ((unidade == null || unidade == "") && prestadorCondominio == 'N') {
+                    ShowMessageAjaxAlert('É preciso informar a Unidade para salvar o Aluguel', 'warning');
+                    return false;
+                }
+            }
+            else
+            {
+                if (prestadorTipo == "") {
+                    ShowMessageAjaxAlert('É preciso informar o tipo de prestador do condomínio', 'warning');
+                    return false;
+                }
+            }
+
+
+            return true;
+        }
+        return true;
+    }
+</script>
+
+
+

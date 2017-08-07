@@ -1,7 +1,9 @@
 ﻿using App_Dominio.Component;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DWM.Models.Repositories
 {
@@ -52,6 +54,12 @@ namespace DWM.Models.Repositories
         #region Atributos fora da classe
         public int LimitePessoas { get; set; }
         public string DescricaoEspaco { get; set; }
+
+        public string DescricaoEdificacao { get; set; }
+
+        public string NomeCondomino { get; set; }
+
+        public string NomeCredenciado { get; set; }
         #endregion
     }
 }
