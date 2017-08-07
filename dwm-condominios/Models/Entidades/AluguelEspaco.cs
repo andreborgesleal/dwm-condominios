@@ -9,10 +9,10 @@ namespace DWM.Models.Entidades
     [Table("AluguelEspaco")]
     public class AluguelEspaco
     {
-        public AluguelEspaco()
-        {
-            VisitanteAcessos = new List<VisitanteAcesso>();
-        }
+        //public AluguelEspaco()
+        //{
+        //    VisitanteAcessos = new List<VisitanteAcesso>();
+        //}
 
         [Key]
         [DisplayName("AluguelID")]
@@ -54,15 +54,15 @@ namespace DWM.Models.Entidades
         public string Observacao { get; set; }
 
         #region Virtuals
-        public virtual Condominio Condominio { get; set; }
+        //public virtual Condominio Condominio { get; set; }
 
-        public virtual CondominoUnidade CondominoUnidade { get; set; }
+        //public virtual CondominoUnidade CondominoUnidade { get; set; }
 
-        public virtual Credenciado Credenciado { get; set; }
+        //public virtual Credenciado Credenciado { get; set; }
 
-        public virtual EspacoComum EspacoComum { get; set; }
+        //public virtual EspacoComum EspacoComum { get; set; }
 
-        public virtual ICollection<VisitanteAcesso> VisitanteAcessos { get; set; }
+        //public virtual ICollection<VisitanteAcesso> VisitanteAcessos { get; set; }
         #endregion
 
     }
