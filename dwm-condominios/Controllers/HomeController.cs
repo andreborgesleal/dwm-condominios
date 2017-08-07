@@ -43,6 +43,7 @@ namespace DWM.Controllers
                 // Obter todos os Informativos
 
                 #region ListPanorama
+                ViewBag.SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
                 HomeViewModel home = new HomeViewModel();
 
                 Factory<HomeViewModel, ApplicationContext> factory = new Factory<HomeViewModel, ApplicationContext>();

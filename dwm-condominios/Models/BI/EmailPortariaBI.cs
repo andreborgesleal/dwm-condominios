@@ -55,10 +55,11 @@ namespace DWM.Models.BI
                                   where vac.VisitanteID == a.VisitanteID
                                         && System.Data.Entity.DbFunctions.TruncateTime(vac.DataInclusao) == _hoje
                                   select vac.AcessoID).Max();
-
-                    VisitanteAcessoModel AcessoModel = new VisitanteAcessoModel(this.db, this.seguranca_db);
-                    a = AcessoModel.getObject(a);
                 }
+
+                VisitanteAcessoModel AcessoModel = new VisitanteAcessoModel(this.db, this.seguranca_db);
+                a = AcessoModel.getObject(a);
+
                 #endregion
 
                 #region Enviar E-mail de notificação
@@ -105,7 +106,7 @@ namespace DWM.Models.BI
                         sistemaId = sessaoCorrente.sistemaId,
                         dt_emissao = Funcoes.Brasilia(),
                         linkText = "Convite - " + a.Visitante.Nome,
-                        url = "../Portaria/Edit?id=" + a.AcessoID.ToString(),
+                        url = "../Portaria/Edit?AcessoID=" + a.AcessoID.ToString(),
                         mensagem = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>Convite - " + a.Visitante.Nome + "</p>"
                     };
 

@@ -52,59 +52,59 @@ namespace dwm_condominios.Models.BI
                 es.seguranca_db = this.seguranca_db;
                 home.UsuarioGrupos = es._getUsuarioGrupo(SessaoLocal.usuarioId).ToList();
 
-                home.ContabilidadeCompetencia = "Fevereiro/2017";
+                //home.ContabilidadeCompetencia = "Fevereiro/2017";
 
-                home.ValorInadimplenciaTotal = 0; // (decimal)468874.54;
-                home.ValorInadimplenciaCompetencia = 0; // (decimal)28274.29;
-                home.ValorSaldoAnterior = 0; // (decimal)18740.36;
-                home.ValorSaldoAtual = 0; // (decimal)12230.57;
-                home.ValorReceitaCompetenciaRealizada = (decimal)528196.31;
-                home.ValorReceitaCompetenciaPlanejada = (decimal)550000.0;
-                home.ValorDespesaCompetenciaRealizada = (decimal)253331.33;
+                //home.ValorInadimplenciaTotal = 0; // (decimal)468874.54;
+                //home.ValorInadimplenciaCompetencia = 0; // (decimal)28274.29;
+                //home.ValorSaldoAnterior = 0; // (decimal)18740.36;
+                //home.ValorSaldoAtual = 0; // (decimal)12230.57;
+                //home.ValorReceitaCompetenciaRealizada = (decimal)528196.31;
+                //home.ValorReceitaCompetenciaPlanejada = (decimal)550000.0;
+                //home.ValorDespesaCompetenciaRealizada = (decimal)253331.33;
 
-                home.ValorInadimplenciaTotal = 0; // Math.Round(home.ValorInadimplenciaTotal/1000, 0);
-                home.ValorInadimplenciaCompetencia = 0; // Math.Round(home.ValorInadimplenciaCompetencia / 1000, 0);
-                home.ValorSaldoAnterior = 0; // Math.Round(home.ValorSaldoAnterior / 1000, 0);
-                home.ValorReceitaCompetenciaRealizada = Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
-                home.ValorReceitaCompetenciaPlanejada = Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
-                home.ValorDespesaCompetenciaRealizada = Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
+                //home.ValorInadimplenciaTotal = 0; // Math.Round(home.ValorInadimplenciaTotal/1000, 0);
+                //home.ValorInadimplenciaCompetencia = 0; // Math.Round(home.ValorInadimplenciaCompetencia / 1000, 0);
+                //home.ValorSaldoAnterior = 0; // Math.Round(home.ValorSaldoAnterior / 1000, 0);
+                //home.ValorReceitaCompetenciaRealizada = Math.Round(home.ValorReceitaCompetenciaRealizada / 1000, 0);
+                //home.ValorReceitaCompetenciaPlanejada = Math.Round(home.ValorReceitaCompetenciaPlanejada / 1000, 0);
+                //home.ValorDespesaCompetenciaRealizada = Math.Round(home.ValorDespesaCompetenciaRealizada / 1000, 0);
 
-                home.ValorSaldoAtual = home.ValorSaldoAnterior + home.ValorReceitaCompetenciaRealizada - home.ValorDespesaCompetenciaRealizada;
+                //home.ValorSaldoAtual = home.ValorSaldoAnterior + home.ValorReceitaCompetenciaRealizada - home.ValorDespesaCompetenciaRealizada;
 
-                home.DRE = (from bal in db.Balancetes
-                            where bal.CondominioID == sessaoCorrente.empresaId
-                            orderby bal.Natureza, bal.descricao
-                            select new BalanceteViewModel
-                            {
-                                empresaId = bal.CondominioID,
-                                CondominioID = bal.CondominioID,
-                                planoContaID = bal.planoContaID,
-                                descricao = bal.descricao,
-                                Natureza = bal.Natureza,
-                                SaldosContabeis = (from sal in db.SaldosContabeis
-                                                   where sal.CondominioID == bal.CondominioID
-                                                            && sal.planoContaID == bal.planoContaID
-                                                   orderby sal.Competencia descending
-                                                   select new SaldoContabilViewModel()
-                                                   {
-                                                       CondominioID = sal.CondominioID,
-                                                       planoContaID = sal.planoContaID,
-                                                       Competencia = sal.Competencia,
-                                                       ValorSaldo = Math.Round(sal.ValorSaldo / 1000, 0),
-                                                       mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
-                                                   }).Take(7)
-                            }).ToList();
+                //home.DRE = (from bal in db.Balancetes
+                //            where bal.CondominioID == sessaoCorrente.empresaId
+                //            orderby bal.Natureza, bal.descricao
+                //            select new BalanceteViewModel
+                //            {
+                //                empresaId = bal.CondominioID,
+                //                CondominioID = bal.CondominioID,
+                //                planoContaID = bal.planoContaID,
+                //                descricao = bal.descricao,
+                //                Natureza = bal.Natureza,
+                //                SaldosContabeis = (from sal in db.SaldosContabeis
+                //                                   where sal.CondominioID == bal.CondominioID
+                //                                            && sal.planoContaID == bal.planoContaID
+                //                                   orderby sal.Competencia descending
+                //                                   select new SaldoContabilViewModel()
+                //                                   {
+                //                                       CondominioID = sal.CondominioID,
+                //                                       planoContaID = sal.planoContaID,
+                //                                       Competencia = sal.Competencia,
+                //                                       ValorSaldo = Math.Round(sal.ValorSaldo / 1000, 0),
+                //                                       mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
+                //                                   }).Take(7)
+                //            }).ToList();
 
-                home.TotalUnidadesCadastradas = (from cu in db.CondominoUnidades
-                                                 where cu.CondominioID == sessaoCorrente.empresaId
-                                                        && cu.DataFim == null
-                                                 select cu).Count();
-                home.TotalCondominos = (from cu in db.CondominoUnidades
-                                        join cre in db.Credenciados on cu.CondominoID equals cre.CondominoID
-                                        where cu.CondominioID == sessaoCorrente.empresaId
-                                                && cu.DataFim == null
-                                                && cre.IndVisitantePermanente != "S"
-                                        select cre).Count() + home.TotalUnidadesCadastradas; // total de credenciados diferentes de visitantes permanentes + total de titulares
+                //home.TotalUnidadesCadastradas = (from cu in db.CondominoUnidades
+                //                                 where cu.CondominioID == sessaoCorrente.empresaId
+                //                                        && cu.DataFim == null
+                //                                 select cu).Count();
+                //home.TotalCondominos = (from cu in db.CondominoUnidades
+                //                        join cre in db.Credenciados on cu.CondominoID equals cre.CondominoID
+                //                        where cu.CondominioID == sessaoCorrente.empresaId
+                //                                && cu.DataFim == null
+                //                                && cre.IndVisitantePermanente != "S"
+                //                        select cre).Count() + home.TotalUnidadesCadastradas; // total de credenciados diferentes de visitantes permanentes + total de titulares
 
                 #region Informativo
                 ListViewInformativo listViewInformativo = new ListViewInformativo(this.db, this.seguranca_db);
@@ -127,7 +127,7 @@ namespace dwm_condominios.Models.BI
 
                 #region Visitantes
                 ListViewVisitanteAcesso listViewAcessos = new ListViewVisitanteAcesso(this.db, this.seguranca_db);
-                home.Acessos = listViewAcessos.Bind(0, 10000).ToList();
+                home.Acessos = listViewAcessos.getPagedList(0, 10000);
                 #endregion
 
                 #region Documentos p/ download

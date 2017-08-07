@@ -80,7 +80,7 @@ namespace DWM.Controllers
         {
             ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
             ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-            ViewBag.op = (Request["op"] != null && Request["op"] == "I")  ? Request["op"] : "";
+            ViewBag.op = (Request["op"] != null && "IU".Contains(Request["op"]))  ? Request["op"] : "";
 
             if (ViewBag.ValidateRequest)
             {
@@ -96,6 +96,8 @@ namespace DWM.Controllers
         {
             if (collection["op"] != null && collection["op"] == "I")
                 return RedirectToAction("Create", "Portaria");
+            else if (collection["op"] != null && collection["op"] == "U")
+                return RedirectToAction("Edit", "Portaria");
             else
                 return base.AfterCreate(value, collection);
         }

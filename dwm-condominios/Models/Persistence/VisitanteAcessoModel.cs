@@ -46,6 +46,10 @@ namespace DWM.Models.Persistence
         public override VisitanteAcessoViewModel BeforeInsert(VisitanteAcessoViewModel value)
         {
             value.mensagem = new App_Dominio.Contratos.Validate() { Code = 0, Message = "Registro processado com sucesso !" };
+
+
+
+            
             if (IsPortaria())
                 value.DataAcesso = Funcoes.Brasilia();
             return base.BeforeInsert(value);
@@ -56,6 +60,19 @@ namespace DWM.Models.Persistence
             return BeforeInsert(value);
         }
 
+        public override VisitanteAcessoViewModel BeforeDelete(VisitanteAcessoViewModel value)
+        {
+            value.mensagem = new App_Dominio.Contratos.Validate() { Code = 0, Message = "Registro processado com sucesso !" };
+
+            #region Exclui o VisitanteAcessoUnidade
+            VisitanteAcessoUnidade entity = db.VisitanteAcessoUnidades.Find(value.AcessoID);
+            if (entity != null)
+                this.db.Set<VisitanteAcessoUnidade>().Remove(entity);
+            #endregion
+
+            return base.BeforeDelete(value);
+        }
+
         public override VisitanteAcesso MapToEntity(VisitanteAcessoViewModel value)
         {
             VisitanteAcesso entity = Find(value);
@@ -64,8 +81,7 @@ namespace DWM.Models.Persistence
             {
                 entity = new VisitanteAcesso();
                 value.DataInclusao = Funcoes.Brasilia();
-                entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade();
-            }   
+            }
 
             entity.CondominioID = value.CondominioID;
             entity.VisitanteID = value.VisitanteID;
@@ -79,14 +95,19 @@ namespace DWM.Models.Persistence
             entity.AluguelID = value.AluguelID == 0 ? null : value.AluguelID;
 
             #region VisitanteAcessoUnidadeViewModel
-            if (value.EdificacaoID != null)
+            if (value.EdificacaoID != null && entity.VisitanteAcessoUnidade == null)
+            {
+                entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade();
                 if (IsUserAdm())
                 {
                     entity.VisitanteAcessoUnidade.AcessoID = value.AcessoID;
                     entity.VisitanteAcessoUnidade.CondominioID = value.CondominioID;
                     entity.VisitanteAcessoUnidade.EdificacaoID = value.EdificacaoID.Value;
                     entity.VisitanteAcessoUnidade.UnidadeID = value.UnidadeID.Value;
-                    entity.VisitanteAcessoUnidade.CondominoID = value.VisitanteAcessoUnidadeViewModel.CondominoID;
+                    if (value.VisitanteAcessoUnidadeViewModel == null)
+                        entity.VisitanteAcessoUnidade.CondominoID = db.CondominoUnidades.Where(info => info.CondominioID == value.CondominioID && info.EdificacaoID == value.EdificacaoID && info.UnidadeID == value.UnidadeID && info.DataFim == null).FirstOrDefault().CondominoID;
+                    else
+                        entity.VisitanteAcessoUnidade.CondominoID = value.VisitanteAcessoUnidadeViewModel.CondominoID;
                     entity.VisitanteAcessoUnidade.CredenciadoID = null;
                 }
                 else
@@ -98,6 +119,7 @@ namespace DWM.Models.Persistence
                     entity.VisitanteAcessoUnidade.CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID;
                     entity.VisitanteAcessoUnidade.CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID;
                 }
+            }
             #endregion
 
             return entity;
@@ -193,130 +215,148 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (SessaoLocal.Unidades != null && (value.EdificacaoID == 0 || value.UnidadeID == 0))
+            #region Valida exclusão => Não permitir excluir se o visitante já tiver acessado o condomínio
+            if (operation == Crud.EXCLUIR)
             {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
-                value.mensagem.MessageBase = "Unidade deve ser informada";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (value.VisitanteID == 0)
-            {
-                value.mensagem.Code = 5;
-                value.mensagem.Message = MensagemPadrao.Message(5, "Visitante/Prestador").ToString();
-                value.mensagem.MessageBase = "Visitante/Prestador deve ser informado";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            if (value.DataAutorizacao < Funcoes.Brasilia().Date)
-            {
-                value.mensagem.Code = 7;
-                value.mensagem.Message = MensagemPadrao.Message(8, "Data da Autorização").ToString();
-                value.mensagem.MessageBase = "Data de Autorização inválida";
-                value.mensagem.MessageType = MsgType.WARNING;
-                return value.mensagem;
-            }
-
-            #region valida hoa início e hora fim
-            if (value.HoraInicio != null && value.HoraInicio.Trim().Length > 0)
-            {
-                if (value.HoraInicio.Trim().Length < 5)
+                if (db.VisitanteAcessos.Find(value.AcessoID).DataAcesso != null)
                 {
-                    value.mensagem.Code = 4;
-                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Início", value.HoraInicio).ToString();
-                    value.mensagem.MessageBase = "Hora de Inicio inválida";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                    return value.mensagem;
-                }
-                if (!Funcoes.ValidaHora(value.HoraInicio))
-                {
-                    value.mensagem.Code = 4;
-                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Início", value.HoraInicio).ToString();
-                    value.mensagem.MessageBase = "Hora de Inicio inválida";
+                    value.mensagem.Code = 56;
+                    value.mensagem.Message = MensagemPadrao.Message(56).ToString();
+                    value.mensagem.MessageBase = "Registro não pode ser excluído porque o visitante/prestador já acessou o condomínio";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
             }
-
-            if (value.HoraLimite != null && value.HoraLimite.Trim().Length > 0)
-            {
-                if (value.HoraLimite.Trim().Length < 5)
-                {
-                    value.mensagem.Code = 4;
-                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Limite", value.HoraLimite).ToString();
-                    value.mensagem.MessageBase = "Hora Limite inválida";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                    return value.mensagem;
-                }
-
-                if (!Funcoes.ValidaHora(value.HoraLimite))
-                {
-                    value.mensagem.Code = 4;
-                    value.mensagem.Message = MensagemPadrao.Message(4, "Hora Limite", value.HoraInicio).ToString();
-                    value.mensagem.MessageBase = "Hora Limite inválida";
-                    value.mensagem.MessageType = MsgType.WARNING;
-                    return value.mensagem;
-                }
-            }
-
             #endregion
 
-            #region valida quantidade de visitantes => aluguel de espaço
-            var _DataAtual = Funcoes.Brasilia();
-            var _qte_acessos = 0;
-            IEnumerable<AluguelEspacoViewModel> alugueis = (from a in db.AluguelEspacos join e in db.EspacoComums on a.EspacoID equals e.EspacoID
-                                                           where a.CondominioID == value.CondominioID
-                                                                 && a.EdificacaoID == value.EdificacaoID
-                                                                 && a.UnidadeID == value.UnidadeID
-                                                                 && a.DataEvento >= _DataAtual
-                                                                 && a.DataAutorizacao.HasValue
-                                                           select new AluguelEspacoViewModel()
-                                                           {
-                                                               DataEvento = a.DataEvento,
-                                                               LimitePessoas = e.LimitePessoas,
-                                                               DescricaoEspaco = e.Descricao
-                                                           }).ToList();
-
-            foreach (AluguelEspacoViewModel aluguel in alugueis)
+            if (operation != Crud.EXCLUIR)
             {
-                _qte_acessos = (from v in db.VisitanteAcessos
-                                join u in db.VisitanteAcessoUnidades on v.AcessoID equals u.AcessoID
-                                join prest in db.Visitantes on v.VisitanteID equals prest.VisitanteID
-                                where u.CondominioID == value.CondominioID
-                                      && u.EdificacaoID == value.EdificacaoID
-                                      && u.UnidadeID == value.UnidadeID
-                                      && v.DataAutorizacao == aluguel.DataEvento
-                                      && !prest.PrestadorTipoID.HasValue
-                                select v).Count();
-
-                if (_qte_acessos > aluguel.LimitePessoas)
+                if (SessaoLocal.Unidades != null && (value.EdificacaoID == 0 || value.UnidadeID == 0))
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(53, aluguel.LimitePessoas.ToString()).ToString();
-                    value.mensagem.MessageBase = "Quantidade de visitantes excede o limite permitido para acesso a(o) " + aluguel.DescricaoEspaco;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                    value.mensagem.MessageBase = "Unidade deve ser informada";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
-            }
-            #endregion
 
-            #region valida se o visitante preencheu a RG ou CPF (somente se usuário for do grupo Portaria)
-            if (IsPortaria())
-            {
-                Visitante v = db.Visitantes.Find(value.VisitanteID);
-                if (String.IsNullOrEmpty(v.RG) && String.IsNullOrEmpty(v.CPF))
+                if (value.VisitanteID == 0)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "RG ou CPF do Visitante/Prestador").ToString();
-                    value.mensagem.MessageBase = "RG ou CPF do visitante/prestador deve ser informado para registrar o seu acesso ao condomínio";
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Visitante/Prestador").ToString();
+                    value.mensagem.MessageBase = "Visitante/Prestador deve ser informado";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                if (value.DataAutorizacao < Funcoes.Brasilia().Date)
+                {
+                    value.mensagem.Code = 7;
+                    value.mensagem.Message = MensagemPadrao.Message(8, "Data da Autorização").ToString();
+                    value.mensagem.MessageBase = "Data de Autorização inválida";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                #region valida hoa início e hora fim
+                if (value.HoraInicio != null && value.HoraInicio.Trim().Length > 0)
+                {
+                    if (value.HoraInicio.Trim().Length < 5)
+                    {
+                        value.mensagem.Code = 4;
+                        value.mensagem.Message = MensagemPadrao.Message(4, "Hora Início", value.HoraInicio).ToString();
+                        value.mensagem.MessageBase = "Hora de Inicio inválida";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                    if (!Funcoes.ValidaHora(value.HoraInicio))
+                    {
+                        value.mensagem.Code = 4;
+                        value.mensagem.Message = MensagemPadrao.Message(4, "Hora Início", value.HoraInicio).ToString();
+                        value.mensagem.MessageBase = "Hora de Inicio inválida";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                }
+
+                if (value.HoraLimite != null && value.HoraLimite.Trim().Length > 0)
+                {
+                    if (value.HoraLimite.Trim().Length < 5)
+                    {
+                        value.mensagem.Code = 4;
+                        value.mensagem.Message = MensagemPadrao.Message(4, "Hora Limite", value.HoraLimite).ToString();
+                        value.mensagem.MessageBase = "Hora Limite inválida";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (!Funcoes.ValidaHora(value.HoraLimite))
+                    {
+                        value.mensagem.Code = 4;
+                        value.mensagem.Message = MensagemPadrao.Message(4, "Hora Limite", value.HoraInicio).ToString();
+                        value.mensagem.MessageBase = "Hora Limite inválida";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                }
+
+                #endregion
+
+                #region valida quantidade de visitantes => aluguel de espaço
+                var _DataAtual = Funcoes.Brasilia();
+                var _qte_acessos = 0;
+                IEnumerable<AluguelEspacoViewModel> alugueis = (from a in db.AluguelEspacos
+                                                                join e in db.EspacoComums on a.EspacoID equals e.EspacoID
+                                                                where a.CondominioID == value.CondominioID
+                                                                      && a.EdificacaoID == value.EdificacaoID
+                                                                      && a.UnidadeID == value.UnidadeID
+                                                                      && a.DataEvento >= _DataAtual
+                                                                      && a.DataAutorizacao.HasValue
+                                                                select new AluguelEspacoViewModel()
+                                                                {
+                                                                    DataEvento = a.DataEvento,
+                                                                    LimitePessoas = e.LimitePessoas,
+                                                                    DescricaoEspaco = e.Descricao
+                                                                }).ToList();
+
+                foreach (AluguelEspacoViewModel aluguel in alugueis)
+                {
+                    _qte_acessos = (from v in db.VisitanteAcessos
+                                    join u in db.VisitanteAcessoUnidades on v.AcessoID equals u.AcessoID
+                                    join prest in db.Visitantes on v.VisitanteID equals prest.VisitanteID
+                                    where u.CondominioID == value.CondominioID
+                                          && u.EdificacaoID == value.EdificacaoID
+                                          && u.UnidadeID == value.UnidadeID
+                                          && v.DataAutorizacao == aluguel.DataEvento
+                                          && !prest.PrestadorTipoID.HasValue
+                                    select v).Count();
+
+                    if (_qte_acessos > aluguel.LimitePessoas)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(53, aluguel.LimitePessoas.ToString()).ToString();
+                        value.mensagem.MessageBase = "Quantidade de visitantes excede o limite permitido para acesso a(o) " + aluguel.DescricaoEspaco;
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                }
+                #endregion
+
+                #region valida se o visitante preencheu a RG ou CPF (somente se usuário for do grupo Portaria)
+                if (IsPortaria())
+                {
+                    Visitante v = db.Visitantes.Find(value.VisitanteID);
+                    if (String.IsNullOrEmpty(v.RG) && String.IsNullOrEmpty(v.CPF))
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "RG ou CPF do Visitante/Prestador").ToString();
+                        value.mensagem.MessageBase = "RG ou CPF do visitante/prestador deve ser informado para registrar o seu acesso ao condomínio";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                }
+                #endregion
             }
-            #endregion
 
             return value.mensagem;
         }
@@ -377,6 +417,16 @@ namespace DWM.Models.Persistence
         }
         #endregion
 
+        private bool IsPortaria()
+        {
+            string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+
+            return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
+        }
+
+
         #region Métodos da classe ListViewRepository
         public override IEnumerable<VisitanteAcessoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
@@ -397,6 +447,8 @@ namespace DWM.Models.Persistence
                 _EdificacaoID = param != null && param.Count() > 1 && param[1] != null ? int.Parse(param[1].ToString()) : 0;
                 _UnidadeID = param != null && param.Count() > 2 && param[2] != null ? int.Parse(param[2].ToString()) : 0;
             }
+
+            bool _IsPortaria = IsPortaria();
 
             var q = (from v in db.Visitantes
                      join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft
@@ -425,6 +477,7 @@ namespace DWM.Models.Persistence
                          DataAcesso = vac.DataAcesso,
                          DataAutorizacao = vac.DataAutorizacao,
                          Interfona = vac.Interfona,
+                         IsPortaria = _IsPortaria,
                          Visitante = new VisitanteViewModel()
                          {
                              Nome = v.Nome,

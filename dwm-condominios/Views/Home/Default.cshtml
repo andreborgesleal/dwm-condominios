@@ -1,4 +1,5 @@
 ﻿@using DWM.Models.Repositories
+@using DWM.Models.Entidades
 @using App_Dominio.Models
 @using App_Dominio.Repositories
 @model DWM.Models.Repositories.HomeViewModel
@@ -12,17 +13,20 @@
         _largura = "col-md-12 col-lg-12";
     }
 
-    string[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
-    string mes = meses[int.Parse(Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(4, 2)) - 1] + "/" +
-                 Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(0, 4);
+    SessaoLocal s = (SessaoLocal)ViewBag.SessaoLocal;
+    var riscado = "";
+
+    //string[] meses = { "Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro" };
+    //string mes = meses[int.Parse(Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(4, 2)) - 1] + "/" +
+    //             Model.DRE.FirstOrDefault().SaldosContabeis.FirstOrDefault().Competencia.ToString().Substring(0, 4);
 }
 
 <!-- Datatables -->
 @if (ViewBag.UsuarioPortaria)
 {
     <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#condominos">Condôminos</a></li>
-        <li><a data-toggle="tab" href="#visitantes">Visitantes</a></li>
+        <li class="active"><a data-toggle="tab" href="#visitantes">Visitantes</a></li>
+        <li><a data-toggle="tab" href="#condominos">Condôminos</a></li>
     </ul>
 
     <!-- Modal -->
@@ -45,7 +49,112 @@
     </div>
 
     <div class="tab-content">
-        <div id="condominos" class="tab-pane fade in active">
+        <div id="visitantes" class="tab-pane fade in active">
+            <div style="margin-top: 30px">
+                @*@Html.Partial("../Portaria/ListParam", Model.Acessos)*@
+                <table class="table table-striped jambo_table bulk_action table-responsive display" id="datatable">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title text-center">Ação</th>
+                            <th class="column-title text-center">#ID</th>
+                            <th class="column-title">Visitante/Prestador</th>
+                            <th class="column-title">Sexo</th>
+                            <th class="column-title">RG</th>
+                            <th class="column-title">CPF</th>
+                            <th class="column-title">Edificação</th>
+                            <th class="column-title text-center">Unidade</th>
+                            @if (s.CondominoID > 0)
+                            {
+                                <th class="column-title">Data</th>
+                            }
+                            else
+                            {
+                                <th class="column-title">Condômino</th>
+                            }
+                            <th class="column-title">Profissão</th>
+                            <th class="column-title">Placa</th>
+                            <th class="column-title text-center">Hora início</th>
+                            <th class="column-title text-center">Hora Limite</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (VisitanteAcessoViewModel value in (PagedList<VisitanteAcessoViewModel>)Model.Acessos)
+                        {
+                            if (value.DataAcesso != null)
+                            {
+                                riscado = "line-through";
+                            }
+                            else
+                            {
+                                riscado = "";
+                            }
+                            <tr class="even pointer">
+                                <td class="text-center">
+                                    @if (value.DataAcesso == null)
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='../Portaria/Edit?AcessoID=@value.AcessoID'"></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>
+                                    }
+                                </td>
+                                <td class="center">
+                                    <small>@value.AcessoID</small>
+                                </td>
+                                <td>
+                                    <small style="text-decoration: @riscado">@value.Visitante.Nome</small>
+                                </td>
+                                <td>
+                                    <small>@value.Visitante.Sexo</small>
+                                </td>
+                                <td>
+                                    <small>@value.Visitante.RG</small>
+                                </td>
+                                <td>
+                                    <small>@value.Visitante.CPF</small>
+                                </td>
+                                <td>
+                                    <small>@value.Visitante.DescricaoEdificacao</small>
+                                </td>
+                                <td class="text-center">
+                                    <small>@value.Visitante.UnidadeID</small>
+                                </td>
+                                @if (s.CondominoID > 0)
+                                {
+                                    <td>
+                                        <small>@value.DataAutorizacao.ToString("dd/MM/yyyy")</small>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        <small>@value.Visitante.NomeCondomino</small>
+                                    </td>
+                                }
+                                <td>
+                                    <small>@value.Visitante.DescricaoTipoPrestador</small>
+                                </td>
+                                <td>
+                                    <small>@value.Visitante.Placa</small>
+                                </td>
+                                <td class="text-center">
+                                    <small>@value.HoraInicio</small>
+                                </td>
+                                <td class="text-center">
+                                    <small>@value.HoraLimite</small>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="altura-35">
+                    @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Portaria", buttonType = "link" } })
+                </div>
+
+            </div>
+        </div>
+        <div id="condominos" class="tab-pane fade">
             <div style="margin-top: 30px">
                 <table class="table table-striped jambo_table bulk_action table-responsive display">
                     <thead>
@@ -105,95 +214,12 @@
                 </table>
             </div>
         </div>
-        <div id="visitantes" class="tab-pane fade">
-            <div style="margin-top: 30px">
-                <table class="table table-striped jambo_table bulk_action table-responsive display">
-                    <thead>
-                        <tr class="headings">
-                            <th class="column-title text-center">Identificador de Acesso</th>
-                            <th class="column-title">Nome</th>
-                            <th class="column-title">Sexo</th>
-                            <th class="column-title">RG</th>
-                            <th class="column-title">CPF</th>
-                            <th class="column-title">Data de Autorização</th>
-                            <th class="column-title">Hora início</th>
-                            <th class="column-title">Hora Limite</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (VisitanteAcessoViewModel value in Model.Acessos)
-                        {
-                            <tr class="even pointer">
-                                <td class="center">
-                                    @value.AcessoID
-                                </td>
-                                <td>
-                                    @value.Visitante.Nome
-                                </td>
-                                <td>
-                                    @value.Visitante.Sexo
-                                </td>
-                                <td>
-                                    @value.Visitante.RG
-                                </td>
-                                <td>
-                                    @value.Visitante.CPF
-                                </td>
-                                <td>
-                                    @value.DataAutorizacao
-                                </td>
-                                <td>
-                                    @value.HoraInicio
-                                </td>
-                                <td>
-                                    @value.HoraLimite
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 }
 else
 {
-    <!-- top tiles -->
-    <div class="row tile_count">
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-user"></i> Total Condôminos</span>
-            <div class="count">@Model.TotalCondominos</div>
-            <span class="count_bottom"><i class="green">@Model.TotalUnidadesCadastradas </i> Unidades cadastradas</span>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-user"></i> Inadimplência</span>
-            <div class="count red">@Model.ValorInadimplenciaTotal.ToString("##0") mil</div>
-            <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@Model.ValorInadimplenciaCompetencia.ToString("##0") mil </i> @Model.ContabilidadeCompetencia</span>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-clock-o"></i> Fluxo de caixa anterior</span>
-            <div class="count">@Model.ValorSaldoAnterior.ToString("##0") mil</div>
-            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i></i> anterior à @Model.ContabilidadeCompetencia</span>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-user"></i> Receitas</span>
-            <div class="count green">@Model.ValorReceitaCompetenciaRealizada.ToString("##0") mil</div>
-            <span class="count_bottom"><i class="green"><i class="fa fa-sort-desc"></i>@(((Model.ValorReceitaCompetenciaRealizada / Model.ValorReceitaCompetenciaPlanejada)).ToString("##0%")) </i> Realizado @Model.ContabilidadeCompetencia</span>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-user"></i> Despesas</span>
-            <div class="count red">@Model.ValorDespesaCompetenciaRealizada.ToString("##0") mil</div>
-            <span class="count_bottom"><i class="red"><i class="fa fa-sort-asc"></i>@(((Model.ValorDespesaCompetenciaRealizada / Model.ValorReceitaCompetenciaRealizada)).ToString("##0%"))</i> da receita de @Model.ContabilidadeCompetencia</span>
-        </div>
-        <div class="col-md-2 col-sm-4 col-xs-6 tile_stats_count">
-            <span class="count_top"><i class="fa fa-user"></i> Fluxo de caixa atual</span>
-            <div class="count">@Model.ValorSaldoAtual.ToString("##0") mil</div>
-            <span class="count_bottom"><i class="green"><i class="fa fa-sort-asc"></i> </i> @Model.ContabilidadeCompetencia</span>
-        </div>
-    </div>
-    <!-- /top tiles -->
     <div class="row">
-        <div class="col-md-4 col-sm-4 col-xs-12" @_hidden>
+        <div class="col-md-6 col-sm-6 col-xs-12" @_hidden>
             <!-- Informativos -->
             <div class="x_panel">
                 <div class="x_title">
@@ -222,7 +248,7 @@ else
                 <div class="x_content">
                     <div class="dashboard-widget-content">
                         <ul class="list-unstyled timeline widget">
-                            foreach (InformativoViewModel inf in Model.Informativos)
+                            @foreach (InformativoViewModel inf in Model.Informativos)
                             {
                                 <li>
                                     <div class="block">
@@ -230,22 +256,22 @@ else
                                             <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
                                                 <div class="block_content">
                                                     <h2 class="title">
-                                                        if (inf.DataPublicacao.AddDays(3) > Funcoes.Brasilia().Date)
+                                                        @if (inf.DataPublicacao.AddDays(3) > Funcoes.Brasilia().Date)
                                                         {
-                                                            <a id="prev_title">inf.Cabecalho</a><img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
+                                                            <a id="prev_title">@inf.Cabecalho</a><img src="http://www.ultimodesconto.com/img/novo.gif" alt="" class="pull-right" />
                                                         }
                                                         else
                                                         {
-                                                            <a id="prev_title">inf.Cabecalho</a>
+                                                            <a id="prev_title">@inf.Cabecalho</a>
                                                         }
                                                     </h2>
                                                     <div class="byline">
-                                                        <span id="prev_data">inf.DataPublicacao.ToShortDateString()</span>
+                                                        <span id="prev_data">@inf.DataPublicacao.ToShortDateString()</span>
                                                     </div>
                                                     <p class="excerpt">
-                                                        Html.Raw(inf.Resumo)
+                                                        @Html.Raw(inf.Resumo)
                                                     </p>
-                                                    <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#inf.InformativoID">Leia mais...</code></p>
+                                                    <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#@inf.InformativoID">Leia mais...</code></p>
                                                 </div>
                                             </div>
                                         </div>
@@ -258,138 +284,13 @@ else
             </div>
             <!-- Fim-Informativos -->
         </div>
-        <div class="@_largura col-sm-12 col-xs-12">
+        <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+            <!-- Documentos p/ download -->
             <div class="row clearfix">
-                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
-                    <div class="row clearfix">
-                        <!-- Principas Receitas -->
-                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                            <div class="x_panel tile fixed_height_320 overflow_hidden">
-                                <div class="x_title">
-                                    <h2>Receitas <small>@mes</small></h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="#">Settings 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Settings 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="close-link"><i class="fa fa-close"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <table class="" style="width:100%">
-                                        <tr>
-                                            <td>
-                                                <canvas id="canvas1" height="140" width="140" style="margin: 15px 10px 10px 0"></canvas>
-                                            </td>
-                                            <td>
-                                                <table class="tile_info">
-                                                    @{
-                                                        string[] color = { "#8A0808", "#FF0000", "#A901DB", "#6E6E6E", "#2E2EFE", "#BFFF00" };
-                                                        string[] labels = { "", "", "", "", "", "" };
-                                                        string[] data = { "", "", "", "", "", "" };
-                                                        int index = 0;
-                                                        foreach (BalanceteViewModel bal in Model.DRE.Where(info => info.Natureza == "C"))
-                                                        {
-                                                            if (bal.SaldosContabeis.FirstOrDefault().ValorSaldo > 0 && index <= 5)
-                                                            {
-                                                                labels[index] = bal.descricao;
-                                                                data[index] = bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0");
-                                                                <tr>
-                                                                    <td>
-                                                                        <p><i class="fa fa-square" style="color: @color[index++]"></i><small>@bal.descricao</small> </p>
-                                                                    </td>
-                                                                    <td class="pull-right"><small>@bal.SaldosContabeis.FirstOrDefault().ValorSaldo.ToString("###,###,##0") K</small> </td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    }
-                                                </table>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Principais Receitas-->
-                        <!-- Receitas x Despesas -->
-                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
-                            <div class="x_panel tile fixed_height_390 overflow_hidden">
-                                <div class="x_title">
-                                    <h3>Receita x Despesa <small>Exercício 2017</small></h3>
-                                </div>
-                                <div class="x_content">
-                                    <div class="dashboard_graph">
-                                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                            <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
-                                            <div style="width: 100%;">
-                                                <div id="canvas_dahs" class="demo-placeholder" style="width: 100%; height:270px;"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /Receitas x Despesas-->
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
-                    <!-- Documentos p/ download -->
-                    <div class="row clearfix">
-                        <div class="col-md-12 col-sm-12 col-xs-12">
-                            <div class="x_panel">
-                                <div class="x_title">
-                                    <h2>Documentos <small>Download</small></h2>
-                                    <ul class="nav navbar-right panel_toolbox">
-                                        <li>
-                                            <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                        </li>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                            <ul class="dropdown-menu" role="menu">
-                                                <li>
-                                                    <a href="#">Settings 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Settings 2</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li>
-                                            <a class="close-link"><i class="fa fa-close"></i></a>
-                                        </li>
-                                    </ul>
-                                    <div class="clearfix"></div>
-                                </div>
-                                <div class="x_content">
-                                    <div id="div-download">
-                                        @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /Documentos p/ download -->
-                </div>
-            </div>
-            <div class="row clearfix hidden-xs">
-                <!-- bar chart -->
-                <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+                <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>Despesas <small>@mes</small></h2>
+                            <h2>Documentos <small>Download</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li>
                                     <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -412,12 +313,14 @@ else
                             <div class="clearfix"></div>
                         </div>
                         <div class="x_content">
-                            <div id="graph_bar" style="width:100%; height:300px;"></div>
+                            <div id="div-download">
+                                @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
+                            </div>
                         </div>
                     </div>
                 </div>
-                <!-- /bar charts -->
             </div>
+            <!-- /Documentos p/ download -->
         </div>
     </div>
     <br />
@@ -430,31 +333,34 @@ else
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                        <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
-                    </div>
-                    <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
-                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-                    </div>
+                        <h3 class="modal-title" id="my
+                        LabelPreview">
+                            @inf.Cabecalho
+                    </h3>
                 </div>
-            </div>
-            <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                        <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
-                    </div>
-                    <div class="modal-body Scroll" id="myModal1-body-preview">
-                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-                    </div>
+                <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
+                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
                 </div>
             </div>
         </div>
+        <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
+            <div class="modal-content">
+                <div class="modal-header bg-primary">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                </div>
+                <div class="modal-body Scroll" id="myModal1-body-preview">
+                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
     }
     @* Fim do Modal *@
 }
@@ -487,22 +393,22 @@ else
     <script>
     
 
-    var viewModel = @Html.Raw(Json.Encode(Model.js.Data))
+    @*var viewModel = @Html.Raw(Json.Encode(Model.js.Data))*@
 
-    $(document).ready(function () {
-        Morris.Bar({
-            element: 'graph_bar',
-            data: viewModel,
-            xkey: 'device',
-            ykeys: ['geekbench'],
-            labels: ['Valor'],
-            barRatio: 0.9,
-            barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
-            xLabelAngle: 0,
-            hideHover: 'auto',
-            resize: false
-        });
-    });
+    //$(document).ready(function () {
+    //    Morris.Bar({
+    //        element: 'graph_bar',
+    //        data: viewModel,
+    //        xkey: 'device',
+    //        ykeys: ['geekbench'],
+    //        labels: ['Valor'],
+    //        barRatio: 0.9,
+    //        barColors: ['#26B99A', '#34495E', '#ACADAC', '#3498DB'],
+    //        xLabelAngle: 0,
+    //        hideHover: 'auto',
+    //        resize: false
+    //    });
+    //});
 
     </script>
 

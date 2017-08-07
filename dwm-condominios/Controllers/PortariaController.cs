@@ -59,13 +59,15 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult Edit(int AcessoID)
         {
-            //ViewBag.op = (Request["op"] != null && Request["op"] == "I") ? Request["op"] : "";
             return _Edit(new VisitanteAcessoViewModel() { AcessoID = AcessoID });
         }
+        #endregion
 
-        public override ActionResult AfterEdit(VisitanteAcessoViewModel value, FormCollection collection)
+        #region Delete
+        [AuthorizeFilter]
+        public ActionResult Delete(int AcessoID)
         {
-            return AfterCreate(value, collection);
+            return Edit(AcessoID);
         }
         #endregion
 
@@ -120,25 +122,25 @@ namespace DWM.Controllers
             value.mensagem = error;
         }
 
-        //public override void OnDeleteError(ref VisitanteAcessoViewModel value, FormCollection collection)
-        //{
-        //    if (value.PrestadorCondominio == "N")
-        //    {
-        //        value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-        //        value.UnidadeID = int.Parse(collection["UnidadeID"]);
-        //        ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-        //    }
-        //}
+        public override void OnDeleteError(ref VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            OnEditError(ref value, collection);
+        }
 
-        //public override void OnEditError(ref VisitanteAcessoViewModel value, FormCollection collection)
-        //{
-        //    if (value.PrestadorCondominio == "N")
-        //    {
-        //        value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-        //        value.UnidadeID = int.Parse(collection["UnidadeID"]);
-        //        ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-        //    }
-        //}
+        public override void OnEditError(ref VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            Validate error = value.mensagem;
+            Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext> facade = new Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext>();
+            GetCreate();
+            value = facade.getObject(new VisitanteAcessoViewModel() { AcessoID = value.AcessoID });
+            value.Interfona = collection["Interfona"];
+            value.HoraInicio = collection["HoraInicio"];
+            value.HoraLimite = collection["HoraLimite"];
+            value.Observacao = collection["Observacao"];
+            if (collection["DataAutorizacao"] != null && collection["DataAutorizacao"] != "")
+                value.DataAutorizacao = DateTime.Parse(collection["DataAutorizacao"]);
+            value.mensagem = error;
+        }
         #endregion
     }
 }

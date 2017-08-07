@@ -3,18 +3,13 @@
 @using DWM.Models.Repositories
 @model DWM.Models.Repositories.VisitanteAcessoViewModel
 @{
-    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository(), new TransacaoRepository() };
-    t[0].url = "../Visitante/Create?op=U";
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Visitante/Create?op=I";
     t[0].nomeCurto = "Incluir Visitante";
     t[0].referencia = "";
     t[0].exibir = "S";
 
-    t[1].url = "../Visitante/Edit?VisitanteID=" + Model.VisitanteID.ToString() + "&op=U";
-    t[1].nomeCurto = "Editar Visitante";
-    t[1].referencia = "";
-    t[1].exibir = "S";
-
-    t[2].url = "../Home/Default";
+    t[1].url = "../Home/Default";
 
     var _max = "";
 
@@ -24,16 +19,13 @@
     }
 }
 
-<!-- DataTables -->
-<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
-
 @Html.Partial("_alerts")
 @Html.Partial("_AjaxAlert", "panel-top")
 <div class="x_panel">
     @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Acesso do Visitante/Prestador de Serviço", Descricao = "Inclusão de Acesso", Transacao = t })
     <div class="x_content">
         <!-- Smart Wizard -->
-        @using (Html.BeginForm("Edit", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+        @using (Html.BeginForm("Delete", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
         {
             @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
             @Html.HiddenFor(info => info.AcessoID)
@@ -44,7 +36,6 @@
             @Html.HiddenFor(info => info.VisitanteID)
             @Html.HiddenFor(info => info.IsPortaria)
             @Html.HiddenFor(info => info.DataInclusao)
-            @Html.HiddenFor(info => info.DataAutorizacao)
             <div id="div-detail">
                 <p><h3>Dados de Acesso</h3></p>
             </div>
@@ -59,15 +50,7 @@
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Unidade</label>
-                        @if (Model.UnidadeID != null && Model.UnidadeID > 0)
-                        {
-                            <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
-                        }
-                        else
-                        {
-                            <div id="div-unidade"><h3><span class="label label-default">Administração</span></h3></div>
-                        }
-
+                        <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
                     </div>
                 </div>
             </div>
@@ -75,13 +58,13 @@
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label" title="Portaria deve interfonar para o condômino antes de autorizar o acesso">Interfona p/ condômino</label>
-                        @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control" })
+                        @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control", @Disabled = "disabled" })
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
-                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" disabled />
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" disabled value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" />
                     </div>
                 </div>
             </div>
@@ -89,13 +72,13 @@
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
-                        <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
+                        <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" disabled />
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora Limite de acesso (preenchimento opcional)">Limite</label>
-                        <input type="text" class="form-control" name="HoraLimite" id="HoraLimite" value="@Model.HoraLimite" />
+                        <input type="text" class="form-control" name="HoraLimite" id="HoraLimite" value="@Model.HoraLimite" disabled />
                     </div>
                 </div>
             </div>
@@ -103,33 +86,20 @@
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Observação</label>
-                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1">@Model.Observacao</textarea>
+                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1" disabled>@Model.Observacao</textarea>
                     </div>
                 </div>
             </div>
             <hr />
             <div class="row">
                 <div class="col-md-12">
-                    <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                    <input type="submit" value="Excluir" class="btn btn-danger" />
                 </div>
             </div>
         }
     </div>
 </div>
 
-<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
-<script>
-    $('table.display').DataTable({
-        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
-        iDisplayLength: 15,
-        language: {
-            "url": "../Scripts/DataTablePtBr.txt"
-        },
-        autoWidth: false,
-    });
-</script>
 
 <script>
     $(document).ready(function () {
@@ -139,34 +109,11 @@
 
     $('#form1').submit(function (ev) {
         ev.preventDefault(); // to stop the form from submitting
-
-        if (Valida())
-            /* Validations go here */
-            this.submit(); // If all the validations succeeded
+        this.submit(); // If all the validations succeeded
     });
 
-    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino) {
-        $('#VisitanteID').val(VisitanteID);
-        $('#EdificacaoID').val(EdificacaoID);
-        $('#UnidadeID').val(UnidadeID);
-        $('#div-visitante').html('<h3><span class="label label-default">' + VisitanteID + '-' + Nome + '</span></h3>');
-        if (DescricaoEdificacao === '')
-            $('#div-unidade').html('<h3><span class="label label-default">Prestador de serviço do condomínio</span></h3>');
-        else
-            $('#div-unidade').html('<h3><span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino + '</span></h3>');
-    }
-
-    function Valida() {
-        var visitante = $('#VisitanteID').val();
-
-        if ((visitante == null || visitante == "")) {
-            ShowMessageAjaxAlert('Favor selecionar o visitante para registrar o acesso', 'warning');
-            return false;
-        }
-
-        return true;
-    }
 </script>
+
 
 
 

@@ -50,7 +50,7 @@
   <Context key="53" value="Quantidade de itens excede o limite permitido: {0}" type="Error"></Context>
   <Context key="54" value="Registro já existente. Existe algum campo prenchido no formulário que está violando a regra de chave única. Este campo já foi cadastrado anteriormente e não pode ser novamente incluído." type="Error"></Context>
   <Context key="55" value="Data inválida." type="Error"></Context>
-  <Context key="56" value="Registro não pode ser alterado ou excluído pois pertence a um lote já fechado." type="Error"></Context>
+  <Context key="56" value="Registro não pode ser alterado ou excluído pois pertence a uma operação já concluída." type="Error"></Context>
   <Context key="57" value="A unidade informada está ocupada por outro condômino." type="Error"></Context>
   <Context key="58" value="Código de ativação inválido." type="Error"></Context>
   <Context key="59" value="Este registro não pode ser excluído nem alterado porque é de uso interno do sistema." type="Error"></Context>

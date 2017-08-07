@@ -4,6 +4,7 @@
 @{
     Layout = null;
     SessaoLocal s = (SessaoLocal)ViewBag.SessaoLocal;
+    var riscado = "";
 }
 @if (Model != null)
 {
@@ -18,6 +19,7 @@
             <table class="table table-striped jambo_table bulk_action table-responsive display" id="datatable">
                 <thead>
                     <tr class="headings">
+                        <th class="column-title text-center">Ação</th>
                         <th class="column-title text-center">#ID</th>
                         <th class="column-title">Visitante/Prestador</th>
                         <th class="column-title">Sexo</th>
@@ -37,18 +39,51 @@
                         <th class="column-title">Placa</th>
                         <th class="column-title text-center">Hora início</th>
                         <th class="column-title text-center">Hora Limite</th>
-                        <th class="column-title text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (VisitanteAcessoViewModel value in Model)
                     {
+                        if (value.DataAcesso != null)
+                        {
+                            riscado = "line-through";
+                        }
+                        else
+                        {
+                            riscado = "";
+                        }
                         <tr class="even pointer">
+                            <td class="text-center">
+                                @if (value.IsPortaria)
+                                {
+                                    if (value.DataAcesso == null)
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>
+                                    }
+                                }
+                                else
+                                {
+                                    if (value.DataAcesso == null)
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                        <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>
+                                        <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Visitante já acessou o condomínio. Exclusão não permitida"></button>
+                                    }
+                                }
+                            </td>
                             <td class="center">
-                                <small>@value.AcessoID</small>
+                                <small style="text-decoration: @riscado">@value.AcessoID</small>
                             </td>
                             <td>
-                                <small>@value.Visitante.Nome</small>
+                                <small style="text-decoration: @riscado">@value.Visitante.Nome</small>
                             </td>
                             <td>
                                 <small>@value.Visitante.Sexo</small>
@@ -89,17 +124,6 @@
                             <td class="text-center">
                                 <small>@value.HoraLimite</small>
                             </td>
-                            <td class="text-center">
-                                @if (s.CondominoID > 0)
-                                {
-                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
-                                }
-                                else
-                                {
-                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Update?AcessoID=@value.AcessoID'"></button>
-                                }
-                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
-                            </td>
                         </tr>
                     }
                 </tbody>
@@ -126,7 +150,6 @@ else
         },
     });
 </script>
-
 
 
 
