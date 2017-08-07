@@ -1,7 +1,9 @@
 ﻿@using DWM.Models.Repositories
+@using DWM.Models.Entidades
 @model System.Web.Mvc.PagedList<DWM.Models.Repositories.VisitanteAcessoViewModel>
 @{
     Layout = null;
+    SessaoLocal s = (SessaoLocal)ViewBag.SessaoLocal;
 }
 @if (Model != null)
 {
@@ -22,13 +24,20 @@
                         <th class="column-title">RG</th>
                         <th class="column-title">CPF</th>
                         <th class="column-title">Edificação</th>
-                        <th class="column-title">Unidade</th>
-                        <th class="column-title">Condômino</th>
+                        <th class="column-title text-center">Unidade</th>
+                        @if (s.CondominoID > 0)
+                        {
+                            <th class="column-title">Data</th>
+                        }
+                        else
+                        {
+                            <th class="column-title">Condômino</th>
+                        }
                         <th class="column-title">Profissão</th>
                         <th class="column-title">Placa</th>
-                        <th class="column-title">Hora início</th>
-                        <th class="column-title">Hora Limite</th>
-                        <th class="column-title">Ação</th>
+                        <th class="column-title text-center">Hora início</th>
+                        <th class="column-title text-center">Hora Limite</th>
+                        <th class="column-title text-center">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,26 +62,42 @@
                             <td>
                                 <small>@value.Visitante.DescricaoEdificacao</small>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <small>@value.Visitante.UnidadeID</small>
                             </td>
-                            <td>
-                                <small>@value.Visitante.NomeCondomino</small>
-                            </td>
+                            @if (s.CondominoID > 0)
+                            {
+                                <td>
+                                    <small>@value.DataAutorizacao.ToString("dd/MM/yyyy")</small>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <small>@value.Visitante.NomeCondomino</small>
+                                </td>
+                            }
                             <td>
                                 <small>@value.Visitante.DescricaoTipoPrestador</small>
                             </td>
                             <td>
                                 <small>@value.Visitante.Placa</small>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <small>@value.HoraInicio</small>
                             </td>
-                            <td>
+                            <td class="text-center">
                                 <small>@value.HoraLimite</small>
                             </td>
                             <td class="text-center">
-                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                @if (s.CondominoID > 0)
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Update?AcessoID=@value.AcessoID'"></button>
+                                }
                                 <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
                             </td>
                         </tr>

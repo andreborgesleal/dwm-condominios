@@ -22,6 +22,7 @@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.empresaId)
                 @Html.HiddenFor(info => info.VisitanteID)
+                @Html.Hidden("op", (string)ViewBag.op)
 
                 if (ViewBag.unidades == null)
                 {

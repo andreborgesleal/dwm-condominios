@@ -64,7 +64,8 @@ namespace DWM.Models.Persistence
             {
                 entity = new VisitanteAcesso();
                 value.DataInclusao = Funcoes.Brasilia();
-            }
+                entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade();
+            }   
 
             entity.CondominioID = value.CondominioID;
             entity.VisitanteID = value.VisitanteID;
@@ -81,26 +82,21 @@ namespace DWM.Models.Persistence
             if (value.EdificacaoID != null)
                 if (IsUserAdm())
                 {
-                    entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade()
-                    {
-                        CondominioID = value.CondominioID,
-                        EdificacaoID = value.EdificacaoID.Value,
-                        UnidadeID = value.UnidadeID.Value,
-                        CondominoID = value.VisitanteAcessoUnidadeViewModel.CondominoID,
-                        //VisitanteAcesso = entity
-                    };
+                    entity.VisitanteAcessoUnidade.AcessoID = value.AcessoID;
+                    entity.VisitanteAcessoUnidade.CondominioID = value.CondominioID;
+                    entity.VisitanteAcessoUnidade.EdificacaoID = value.EdificacaoID.Value;
+                    entity.VisitanteAcessoUnidade.UnidadeID = value.UnidadeID.Value;
+                    entity.VisitanteAcessoUnidade.CondominoID = value.VisitanteAcessoUnidadeViewModel.CondominoID;
+                    entity.VisitanteAcessoUnidade.CredenciadoID = null;
                 }
                 else
                 {
-                    entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade()
-                    {
-                        CondominioID = value.CondominioID,
-                        EdificacaoID = value.EdificacaoID.Value,
-                        UnidadeID = value.UnidadeID.Value,
-                        CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID,
-                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID,
-                        //VisitanteAcesso = entity
-                    };
+                    entity.VisitanteAcessoUnidade.AcessoID = value.AcessoID;
+                    entity.VisitanteAcessoUnidade.CondominioID = value.CondominioID;
+                    entity.VisitanteAcessoUnidade.EdificacaoID = value.EdificacaoID.Value;
+                    entity.VisitanteAcessoUnidade.UnidadeID = value.UnidadeID.Value;
+                    entity.VisitanteAcessoUnidade.CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID;
+                    entity.VisitanteAcessoUnidade.CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID;
                 }
             #endregion
 
@@ -134,6 +130,7 @@ namespace DWM.Models.Persistence
             {
                 v.EdificacaoID = entity.VisitanteAcessoUnidade.EdificacaoID;
                 v.UnidadeID = entity.VisitanteAcessoUnidade.UnidadeID;
+                v.DescricaoEdificacao = db.Edificacaos.Where(info => info.EdificacaoID == v.EdificacaoID && info.CondominioID == v.CondominioID).FirstOrDefault().Descricao;
 
                 v.VisitanteAcessoUnidadeViewModel = new VisitanteAcessoUnidadeViewModel()
                 {
@@ -147,6 +144,12 @@ namespace DWM.Models.Persistence
                     VisitanteAcessoViewModel = v,
                     mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
                 };
+            }
+
+            if (SessaoLocal.Unidades != null)
+            {
+                ListViewVisitante list = new ListViewVisitante(db, seguranca_db);
+                v.Visitantes = list.Bind(0, 25, v.EdificacaoID, v.UnidadeID);
             }
 
             return v;
@@ -380,12 +383,14 @@ namespace DWM.Models.Persistence
             int _CondominioID = sessaoCorrente.empresaId;
             int _EdificacaoID;
             int _UnidadeID;
+            bool IsCondomino = false;
             DateTime dataHoje = Funcoes.Brasilia().Date;
 
             if (SessaoLocal.CondominoID > 0)
             {
                 _EdificacaoID = db.Edificacaos.Where(x => x.CondominioID == _CondominioID).FirstOrDefault().EdificacaoID;
                 _UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
+                IsCondomino = true;
             }
             else
             {
@@ -407,7 +412,7 @@ namespace DWM.Models.Persistence
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
-                           && vac.DataAutorizacao == dataHoje
+                           && ((!IsCondomino && vac.DataAutorizacao == dataHoje) || (IsCondomino && vac.DataAutorizacao >= dataHoje))
                      orderby v.Nome
                      select new VisitanteAcessoViewModel
                      {

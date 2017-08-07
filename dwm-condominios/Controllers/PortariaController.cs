@@ -44,6 +44,7 @@ namespace DWM.Controllers
         public ActionResult ListParam(int? index, int? pageSize = 50, string descricao = null,
                                         int? edificacaoId = null, int? unidadeId = null)
         {
+            ViewBag.SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
             if (ViewBag.ValidateRequest)
             {
                 ListViewVisitanteAcesso l = new ListViewVisitanteAcesso();
@@ -51,6 +52,20 @@ namespace DWM.Controllers
             }
             else
                 return View();
+        }
+        #endregion
+
+        #region Edit
+        [AuthorizeFilter]
+        public ActionResult Edit(int AcessoID)
+        {
+            //ViewBag.op = (Request["op"] != null && Request["op"] == "I") ? Request["op"] : "";
+            return _Edit(new VisitanteAcessoViewModel() { AcessoID = AcessoID });
+        }
+
+        public override ActionResult AfterEdit(VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            return AfterCreate(value, collection);
         }
         #endregion
 

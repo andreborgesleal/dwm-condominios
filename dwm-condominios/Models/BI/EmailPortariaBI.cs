@@ -82,8 +82,9 @@ namespace DWM.Models.BI
                     UnidadeID = a.UnidadeID ?? 0,
                     GrupoCondominoID = null,
                     DataEmail = Funcoes.Brasilia(),
-                    Nome = _Nome + _Edificacao,
-                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.PORTARIA, sessaoCorrente.empresaId).Assunto + " " + a.AcessoID.ToString() + " - " + db.Condominios.Find(a.CondominioID).RazaoSocial,
+                    Descricao_Edificacao = a.DescricaoEdificacao,
+                    Nome = _Nome,
+                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.PORTARIA, sessaoCorrente.empresaId).Assunto + " " + a.AcessoID.ToString(),
                     EmailMensagem = db.EmailTemplates.Find(EmailTemplateID).EmailMensagem.Replace("@ID",a.AcessoID.ToString()).Replace("@NomeVisitante", a.Visitante.Nome).Replace("@data",a.DataAutorizacao.ToString("dd/MM/yyyy")),
                     Repository = a
                 };
@@ -92,6 +93,7 @@ namespace DWM.Models.BI
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
 
+                EmailLogViewModel.Repository = a;
                 IEnumerable<EmailLogViewModel> EmailLogPessoas = notificacaoBI.List(EmailLogViewModel);
                 #endregion
 
@@ -102,9 +104,9 @@ namespace DWM.Models.BI
                         usuarioId = log.UsuarioID.Value,
                         sistemaId = sessaoCorrente.sistemaId,
                         dt_emissao = Funcoes.Brasilia(),
-                        linkText = "Identificador de acesso - " + a.Visitante.Nome,
+                        linkText = "Convite - " + a.Visitante.Nome,
                         url = "../Portaria/Edit?id=" + a.AcessoID.ToString(),
-                        mensagem = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>Identificador de acesso - " + a.Visitante.Nome + "</p>"
+                        mensagem = "<b>" + Funcoes.Brasilia().ToString("dd/MM/yyyy HH:mm") + "h</b><p>Convite - " + a.Visitante.Nome + "</p>"
                     };
 
                     seguranca_db.Alertas.Add(alerta);

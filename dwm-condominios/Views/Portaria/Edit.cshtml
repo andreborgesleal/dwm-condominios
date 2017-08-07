@@ -28,15 +28,17 @@
     @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Acesso do Visitante/Prestador de Serviço", Descricao = "Inclusão de Acesso", Transacao = t })
     <div class="x_content">
         <!-- Smart Wizard -->
-        @using (Html.BeginForm("Create", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+        @using (Html.BeginForm("Edit", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
         {
             @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            @Html.HiddenFor(info => info.AcessoID)
             @Html.HiddenFor(info => info.CondominioID)
             @Html.HiddenFor(info => info.empresaId)
             @Html.HiddenFor(info => info.EdificacaoID)
             @Html.HiddenFor(info => info.UnidadeID)
             @Html.HiddenFor(info => info.VisitanteID)
             @Html.HiddenFor(info => info.IsPortaria)
+            @Html.HiddenFor(info => info.DataInclusao)
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <table class="table table-striped jambo_table bulk_action table-responsive display">
@@ -107,13 +109,13 @@
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Visitante/Prestador</label>
-                        <div id="div-visitante"><h3><span class="label label-default">Nenhum Visitante selecionado</span></h3></div>
+                        <div id="div-visitante"><h3><span class="label label-default">@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)</span></h3></div>
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Unidade</label>
-                        <div id="div-unidade"><h3><span class="label label-default">Nenhum Condômino selecionado</span></h3></div>
+                        <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
                     </div>
                 </div>
             </div>
@@ -127,7 +129,7 @@
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
-                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max"/>
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" />
                     </div>
                 </div>
             </div>
@@ -162,7 +164,6 @@
         }
     </div>
 </div>
-
 
 <script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
@@ -214,6 +215,7 @@
         return true;
     }
 </script>
+
 
 
 
