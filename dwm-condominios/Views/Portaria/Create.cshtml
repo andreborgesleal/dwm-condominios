@@ -10,6 +10,13 @@
     t[0].exibir = "S";
 
     t[1].url = "../Home/Default";
+
+    var _max = "";
+
+    if (Model.IsPortaria)
+    {
+        _max = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    }
 }
 
 <!-- DataTables -->
@@ -29,11 +36,13 @@
             @Html.HiddenFor(info => info.EdificacaoID)
             @Html.HiddenFor(info => info.UnidadeID)
             @Html.HiddenFor(info => info.VisitanteID)
+            @Html.HiddenFor(info => info.IsPortaria)
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <table class="table table-striped jambo_table bulk_action table-responsive display">
                         <thead>
                             <tr class="headings">
+                                <th class="column-title">Ação</th>
                                 <th class="column-title">Visitante/Prestador</th>
                                 <th class="column-title">Sexo</th>
                                 <th class="column-title">RG</th>
@@ -44,13 +53,16 @@
                                 <th class="column-title">Condômino</th>
                                 <th class="column-title">Profissão</th>
                                 <th class="column-title">Placa</th>
-                                <th class="column-title">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (VisitanteViewModel value in Model.Visitantes)
                             {
                                 <tr class="even pointer">
+                                    <td>
+                                        <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                        <a href="#div-detail" title="Selecionar Visitante/Prestador"><i class="fa fa-2x fa-check" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino')"></i>&nbsp;</a>
+                                    </td>
                                     <td>
                                         <small>@value.Nome</small>
                                     </td>
@@ -80,10 +92,6 @@
                                     </td>
                                     <td>
                                         <small>@value.Placa</small>
-                                    </td>
-                                    <td>
-                                        <a href="#div-detail" title="Selecionar Visitante/Prestador"><i class="fa fa-2x fa-check" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino')"></i>&nbsp;</a>
-                                        <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                     </td>
                                 </tr>
                             }
@@ -119,7 +127,7 @@
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
-                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max"/>
                     </div>
                 </div>
             </div>
@@ -141,7 +149,7 @@
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Observação</label>
-                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1"></textarea>
+                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1">@Model.Observacao</textarea>
                     </div>
                 </div>
             </div>

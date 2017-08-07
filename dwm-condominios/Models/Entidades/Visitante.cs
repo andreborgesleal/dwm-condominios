@@ -30,6 +30,9 @@ namespace DWM.Models.Entidades
         [DisplayName("Nome")]
         public string Nome { get; set; }
 
+        [DisplayName("Email")]
+        public string Email { get; set; }
+
         [DisplayName("RG")]
         public string RG { get; set; }
 

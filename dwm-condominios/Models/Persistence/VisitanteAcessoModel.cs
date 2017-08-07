@@ -11,6 +11,7 @@ using dwm_condominios.Models.Persistence;
 using System.Collections.Generic;
 using System;
 using App_Dominio.Component;
+using App_Dominio.Repositories;
 
 namespace DWM.Models.Persistence
 {
@@ -29,10 +30,32 @@ namespace DWM.Models.Persistence
 
         private bool IsUserAdm()
         {
-            return DWMSessaoLocal.GetSessaoLocal().Unidades == null;
+            return SessaoLocal.Unidades == null; // DWMSessaoLocal.GetSessaoLocal().Unidades == null;
+        }
+
+        private bool IsPortaria()
+        {
+            string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+
+            return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }
 
         #region Métodos da classe CrudContext
+        public override VisitanteAcessoViewModel BeforeInsert(VisitanteAcessoViewModel value)
+        {
+            value.mensagem = new App_Dominio.Contratos.Validate() { Code = 0, Message = "Registro processado com sucesso !" };
+            if (IsPortaria())
+                value.DataAcesso = Funcoes.Brasilia();
+            return base.BeforeInsert(value);
+        }
+
+        public override VisitanteAcessoViewModel BeforeUpdate(VisitanteAcessoViewModel value)
+        {
+            return BeforeInsert(value);
+        }
+
         public override VisitanteAcesso MapToEntity(VisitanteAcessoViewModel value)
         {
             VisitanteAcesso entity = Find(value);
@@ -40,46 +63,45 @@ namespace DWM.Models.Persistence
             if (entity == null)
             {
                 entity = new VisitanteAcesso();
-                entity.VisitanteAcessoUnidade = new List<VisitanteAcessoUnidade>();
+                value.DataInclusao = Funcoes.Brasilia();
             }
-            else
-                entity.VisitanteAcessoUnidade.Clear();
 
             entity.CondominioID = value.CondominioID;
             entity.VisitanteID = value.VisitanteID;
-            entity.DataInclusao = Funcoes.Brasilia();
+            entity.DataInclusao = value.DataInclusao;
             entity.DataAutorizacao = value.DataAutorizacao;
             entity.HoraInicio = value.HoraInicio;
             entity.HoraLimite = value.HoraLimite;
             entity.DataAcesso = value.DataAcesso;
             entity.Interfona = value.Interfona;
             entity.Observacao = value.Observacao;
-            entity.AluguelID = value.AluguelID;
+            entity.AluguelID = value.AluguelID == 0 ? null : value.AluguelID;
 
             #region VisitanteAcessoUnidadeViewModel
-            if (IsUserAdm())
-            {
-                entity.VisitanteAcessoUnidade.Add(new VisitanteAcessoUnidade()
+            if (value.EdificacaoID != null)
+                if (IsUserAdm())
                 {
-                    CondominioID = value.CondominioID,
-                    EdificacaoID = value.EdificacaoID.Value,
-                    UnidadeID = value.UnidadeID.Value,
-                    CondominoID = value.VisitanteAcessoUnidadeViewModel.FirstOrDefault().CondominoID,
-                    VisitanteAcesso = entity
-                });
-            }
-            else
-            {
-                entity.VisitanteAcessoUnidade.Add(new VisitanteAcessoUnidade()
+                    entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade()
+                    {
+                        CondominioID = value.CondominioID,
+                        EdificacaoID = value.EdificacaoID.Value,
+                        UnidadeID = value.UnidadeID.Value,
+                        CondominoID = value.VisitanteAcessoUnidadeViewModel.CondominoID,
+                        //VisitanteAcesso = entity
+                    };
+                }
+                else
                 {
-                    CondominioID = value.CondominioID,
-                    EdificacaoID = value.EdificacaoID.Value,
-                    UnidadeID = value.UnidadeID.Value,
-                    CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID,
-                    CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID,
-                    VisitanteAcesso = entity
-                });
-            }
+                    entity.VisitanteAcessoUnidade = new VisitanteAcessoUnidade()
+                    {
+                        CondominioID = value.CondominioID,
+                        EdificacaoID = value.EdificacaoID.Value,
+                        UnidadeID = value.UnidadeID.Value,
+                        CondominoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CondominoID,
+                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).CredenciadoID,
+                        //VisitanteAcesso = entity
+                    };
+                }
             #endregion
 
             return entity;
@@ -101,29 +123,30 @@ namespace DWM.Models.Persistence
                 Interfona = entity.Interfona,
                 Observacao = entity.Observacao,
                 AluguelID = entity.AluguelID,
-                VisitanteAcessoUnidadeViewModel = new List<VisitanteAcessoUnidadeViewModel>(),
+                VisitanteAcessoUnidadeViewModel = new VisitanteAcessoUnidadeViewModel(),
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
 
-            foreach (VisitanteAcessoUnidade und in entity.VisitanteAcessoUnidade)
-            {
-                v.EdificacaoID = und.EdificacaoID;
-                v.UnidadeID = und.UnidadeID;
+            VisitanteModel model = new VisitanteModel(this.db, this.seguranca_db);
+            v.Visitante = model.getObject(new VisitanteViewModel() { VisitanteID = entity.VisitanteID });
 
-                VisitanteAcessoUnidadeViewModel item = new VisitanteAcessoUnidadeViewModel()
+            if (entity.VisitanteAcessoUnidade != null)
+            {
+                v.EdificacaoID = entity.VisitanteAcessoUnidade.EdificacaoID;
+                v.UnidadeID = entity.VisitanteAcessoUnidade.UnidadeID;
+
+                v.VisitanteAcessoUnidadeViewModel = new VisitanteAcessoUnidadeViewModel()
                 {
-                    AcessoID = und.AcessoID,
-                    CondominioID = und.CondominioID,
-                    empresaId = und.CondominioID,
-                    EdificacaoID = und.EdificacaoID,
-                    UnidadeID = und.UnidadeID,
-                    CondominoID = und.CondominoID,
-                    CredenciadoID = und.CredenciadoID,
+                    AcessoID = entity.VisitanteAcessoUnidade.AcessoID,
+                    CondominioID = entity.VisitanteAcessoUnidade.CondominioID,
+                    empresaId = entity.VisitanteAcessoUnidade.CondominioID,
+                    EdificacaoID = entity.VisitanteAcessoUnidade.EdificacaoID,
+                    UnidadeID = entity.VisitanteAcessoUnidade.UnidadeID,
+                    CondominoID = entity.VisitanteAcessoUnidade.CondominoID,
+                    CredenciadoID = entity.VisitanteAcessoUnidade.CredenciadoID,
                     VisitanteAcessoViewModel = v,
                     mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
                 };
-
-                ((List<VisitanteAcessoUnidadeViewModel>)v.VisitanteAcessoUnidadeViewModel).Add(item);
             }
 
             return v;
@@ -167,7 +190,7 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (value.EdificacaoID == 0 || value.UnidadeID == 0)
+            if (SessaoLocal.Unidades != null && (value.EdificacaoID == 0 || value.UnidadeID == 0))
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
@@ -277,15 +300,32 @@ namespace DWM.Models.Persistence
             }
             #endregion
 
+            #region valida se o visitante preencheu a RG ou CPF (somente se usuário for do grupo Portaria)
+            if (IsPortaria())
+            {
+                Visitante v = db.Visitantes.Find(value.VisitanteID);
+                if (String.IsNullOrEmpty(v.RG) && String.IsNullOrEmpty(v.CPF))
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "RG ou CPF do Visitante/Prestador").ToString();
+                    value.mensagem.MessageBase = "RG ou CPF do visitante/prestador deve ser informado para registrar o seu acesso ao condomínio";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+            #endregion
+
             return value.mensagem;
         }
 
         public override VisitanteAcessoViewModel CreateRepository(HttpRequestBase Request = null)
         {
             VisitanteAcessoViewModel acesso = base.CreateRepository(Request);
-            SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+            this.SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+            acesso.mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso !" };
             acesso.CondominioID = SessaoLocal.empresaId;
             acesso.empresaId = acesso.CondominioID;
+            acesso.IsPortaria = IsPortaria();
 
             if (SessaoLocal.Unidades == null)
             {

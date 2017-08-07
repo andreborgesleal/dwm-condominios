@@ -9,11 +9,6 @@ namespace DWM.Models.Entidades
     [Table("VisitanteAcesso")]
     public class VisitanteAcesso
     {
-        public VisitanteAcesso()
-        {
-            VisitanteAcessoUnidade = new HashSet<VisitanteAcessoUnidade>();
-        }
-
         [Key]
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
@@ -46,8 +41,8 @@ namespace DWM.Models.Entidades
         public string Observacao { get; set; }
 
         [DisplayName("AluguelID")]
-        public int AluguelID { get; set; }
+        public System.Nullable<int> AluguelID { get; set; }
 
-        public virtual ICollection<VisitanteAcessoUnidade> VisitanteAcessoUnidade { get; set; }
+        public virtual VisitanteAcessoUnidade VisitanteAcessoUnidade { get; set; }
     }
 }

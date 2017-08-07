@@ -7,7 +7,7 @@ namespace DWM.Models.Entidades
     [Table("VisitanteAcessoUnidade")]
     public class VisitanteAcessoUnidade
     {
-        [Key]
+        [Key, ForeignKey("VisitanteAcesso")]
         [DisplayName("AcessoID")]
         public int AcessoID { get; set; }
 

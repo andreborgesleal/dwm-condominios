@@ -31,6 +31,10 @@ namespace DWM.Models.Repositories
         [StringLength(40, ErrorMessage = "Nome do visitante/prestador deve possuir no máximo 40 caracteres")]
         public string Nome { get; set; }
 
+        [DisplayName("E-mail")]
+        [StringLength(100, ErrorMessage = "E-mail do visitante/prestador deve possuir no máximo 100 caracteres")]
+        public string Email { get; set; }
+
         [DisplayName("RG")]
         [StringLength(20, ErrorMessage = "RG deve possuir no máximo 20 caracteres")]
         public string RG { get; set; }
@@ -99,9 +103,12 @@ namespace DWM.Models.Repositories
 
         public string NomeCondomino { get; set; }
 
-        public virtual VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
+        public VisitanteAcessoViewModel VisitanteAcessoViewModel { get; set; }
 
         public virtual IEnumerable<VisitanteUnidadeViewModel> VisitanteUnidadeViewModel { get; set; }
+
+        //public virtual IEnumerable<VisitanteAcessoViewModel> VisitanteAcessosViewModel { get; set; }
+
         #endregion
     }
 }

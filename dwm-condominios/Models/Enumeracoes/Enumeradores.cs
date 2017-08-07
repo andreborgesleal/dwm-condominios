@@ -53,6 +53,10 @@ namespace DWM.Models.Enumeracoes
             [StringValue("7")]
             FORGOT = 7,
 
+            [StringDescription("Acesso Portaria")]
+            [StringValue("8")]
+            PORTARIA = 8,
+
             [StringDescription("Outros")]
             [StringValue("9")]
             OUTROS = 9,

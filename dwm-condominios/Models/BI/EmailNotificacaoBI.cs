@@ -36,8 +36,6 @@ namespace DWM.Models.BI
         }
         #endregion
 
-
-
         public EmailLogViewModel Run(Repository value)
         {
             EmailLogViewModel log = (EmailLogViewModel)value;
@@ -72,7 +70,7 @@ namespace DWM.Models.BI
 
                     log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
-                    string Subject = log.Assunto.Replace("@condominio", condominio.RazaoSocial);
+                    string Subject = "[" + condominio.RazaoSocial + "] " + log.Assunto.Replace("@condominio", "");
                     string Html = log.EmailMensagem;
 
                     Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
@@ -247,6 +245,35 @@ namespace DWM.Models.BI
             else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT)
             {
 
+            }
+            else if (log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.PORTARIA)
+            {
+                VisitanteAcessoViewModel a = (VisitanteAcessoViewModel)log.Repository;
+
+                #region Condômino
+                EmailLogViewModel cond = new EmailLogViewModel()
+                {
+                    UsuarioID = sessaoCorrente.usuarioId,
+                    Nome = seguranca_db.Usuarios.Find(sessaoCorrente.usuarioId).nome,
+                    Email = sessaoCorrente.login
+                };
+
+                result.Add(cond);
+                #endregion
+
+                #region Visitante
+                if (!String.IsNullOrEmpty(a.Visitante.Email))
+                {
+                    EmailLogViewModel vis = new EmailLogViewModel()
+                    {
+                        UsuarioID = 0,
+                        Nome = a.Visitante.Nome,
+                        Email = a.Visitante.Email
+                    };
+
+                    result.Add(vis);
+                }
+                #endregion
             }
 
             return result;
