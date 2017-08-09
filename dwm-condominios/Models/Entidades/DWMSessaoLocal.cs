@@ -1,5 +1,6 @@
 ﻿using App_Dominio.Entidades;
 using App_Dominio.Security;
+using DWM.Models.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -110,5 +111,13 @@ namespace DWM.Models.Entidades
             }
         }
 
+        public static Condominio GetCondominioByPathInfo(string PathInfo)
+        {
+            if (!String.IsNullOrEmpty(PathInfo))
+                using (ApplicationContext db = new ApplicationContext())
+                    return db.Condominios.Where(info => info.PathInfo == PathInfo).AsEnumerable().FirstOrDefault();
+            else
+                return null;
+        }
     }
 }

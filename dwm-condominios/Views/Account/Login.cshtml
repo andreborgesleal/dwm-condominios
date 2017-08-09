@@ -1,4 +1,5 @@
-﻿@model DWM.Models.LoginViewModel
+﻿@using DWM.Models.Entidades
+@model DWM.Models.LoginViewModel
 @{ 
     Layout = null;
 }
@@ -34,6 +35,7 @@
         @Html.Partial("_alerts")
         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-signin", @role = "form" }))
         {
+            @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
             @Html.ValidationSummary(false)
             @Html.AntiForgeryToken()
             <div class="inner-bg">
@@ -41,7 +43,7 @@
                     @Html.Partial("_alerts")
                     <div class="row">
                         <div class="col-sm-8 col-sm-offset-2 text">
-                            <h1><strong>Condomínio Parc Paradiso</strong> Acesso</h1>
+                            <h1><strong>@Model.Condominio.RazaoSocial</strong> Acesso</h1>
                             <div class="description hidden-xs">
                                 <p>
                                     Sistema de Gestão Administrativa de Condomínios.
@@ -75,8 +77,10 @@
                                             <button type="submit" class="btn">Acesso</button>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="../Account/Register?id=3" class="pull-right">Cadastre-se</a><br />
-                                            <a href="../Account/Forgot?id=3" class="pull-right">Esqueci minha senha</a>
+                                            <a href="/Account/Register/@Model.Condominio.PathInfo" class="pull-right">Cadastre-se</a><br />
+                                            <a href="/Account/Forgot/@Model.Condominio.PathInfo" class="pull-right">Esqueci minha senha</a>
+                                            @*<a href="../Account/Register?id=3" class="pull-right">Cadastre-se</a><br />
+                                            <a href="../Account/Forgot?id=3" class="pull-right">Esqueci minha senha</a>*@
                                         </div>
                                     </div>
                                 </form>

@@ -1,5 +1,6 @@
 ﻿using DWM.Models.Repositories;
 using System.ComponentModel.DataAnnotations;
+using DWM.Models.Entidades;
 
 namespace DWM.Models
 {
@@ -44,6 +45,8 @@ namespace DWM.Models
 
         [Display(Name = "Lembrar-me?")]
         public bool RememberMe { get; set; }
+
+        public Condominio Condominio { get; set; }
     }
 
     public class RegisterViewModel : CondominoPFViewModel

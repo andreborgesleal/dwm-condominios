@@ -38,10 +38,27 @@ namespace DWM.Controllers
 
         #region Login
         [AllowAnonymous]
-        public async Task<ActionResult> Login(string returnUrl)
+        public async Task<ActionResult> Login(string id)
         {
-            ViewBag.ReturnUrl = returnUrl;
-            return View(); // RedirectToAction("Default", "Home");
+            try
+            {
+                if (String.IsNullOrEmpty(id))
+                    throw new ArgumentException();
+
+                Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(id);
+                if (Condominio == null)
+                    throw new ArgumentException();
+
+                LoginViewModel value = new LoginViewModel()
+                {
+                    Condominio = Condominio
+                };
+                return View(value); // RedirectToAction("Default", "Home");
+            }
+            catch 
+            {
+                return View("Error");
+            }
         }
 
         [HttpPost]
@@ -97,18 +114,24 @@ namespace DWM.Controllers
             RegisterViewModel value = new RegisterViewModel();
             if (id != null && id != "")
             {
-                if (id.Trim().Length > 10)
+                decimal valor = 0;
+                bool isNumeric = decimal.TryParse(id, out valor);
+
+                if (isNumeric) // validador enviado pelo e-mail
                 {
-                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    value.UnidadeViewModel = new UnidadeViewModel()
                     {
                         Validador = id
                     };
                 }
                 else
                 {
-                    value.CondominioID = int.Parse(id);
-                }
+                    Condominio entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
+                    if (entity == null)
+                        return View("Error");
 
+                    value.CondominioID = entity.CondominioID;
+                }
                 Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                 value = factory.Execute(new CodigoAtivacaoBI(), value);
             }
