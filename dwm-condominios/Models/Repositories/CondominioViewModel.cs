@@ -57,5 +57,11 @@ namespace DWM.Models.Repositories
         [StringLength(1, ErrorMessage = "Indicador Tipo Condômino só permite 1 caractere")]
         [Required(ErrorMessage = "Informe o Indicador Tipo Condômino")]
         public string IndTipoCondominio { get; set; }
+
+        [DisplayName("PathInfo")]
+        [StringLength(30, ErrorMessage = "Path da empresa deve possuir no máximo 30 caracteres")]
+        [Required(ErrorMessage = "Informe o Path da Empresa")]
+        public string PathInfo { get; set; }
+
     }
 }

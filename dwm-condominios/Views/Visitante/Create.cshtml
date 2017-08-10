@@ -21,6 +21,7 @@
                 @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.empresaId)
+                @Html.Hidden("op", (string)ViewBag.op)
 
                 if (ViewBag.unidades == null)
                 {

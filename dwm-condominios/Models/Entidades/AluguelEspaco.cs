@@ -9,6 +9,11 @@ namespace DWM.Models.Entidades
     [Table("AluguelEspaco")]
     public class AluguelEspaco
     {
+        //public AluguelEspaco()
+        //{
+        //    VisitanteAcessos = new List<VisitanteAcesso>();
+        //}
+
         [Key]
         [DisplayName("AluguelID")]
         public int AluguelID { get; set; }
@@ -32,9 +37,11 @@ namespace DWM.Models.Entidades
         public System.Nullable<int> CredenciadoID { get; set; }
 
         [DisplayName("DataEvento")]
+        [DataType(DataType.DateTime)]
         public DateTime DataEvento { get; set; }
 
         [DisplayName("DataReserva")]
+        [DataType(DataType.DateTime)]
         public DateTime DataReserva { get; set; }
 
         [DisplayName("DataAutorizacao")]
@@ -46,6 +53,17 @@ namespace DWM.Models.Entidades
         [DisplayName("Observacao")]
         public string Observacao { get; set; }
 
-        public virtual CondominoUnidade CondominoUnidade { get; set; }
+        #region Virtuals
+        //public virtual Condominio Condominio { get; set; }
+
+        //public virtual CondominoUnidade CondominoUnidade { get; set; }
+
+        //public virtual Credenciado Credenciado { get; set; }
+
+        //public virtual EspacoComum EspacoComum { get; set; }
+
+        //public virtual ICollection<VisitanteAcesso> VisitanteAcessos { get; set; }
+        #endregion
+
     }
 }

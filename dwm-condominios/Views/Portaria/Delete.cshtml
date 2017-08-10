@@ -1,0 +1,120 @@
+﻿@using App_Dominio.Repositories
+@using App_Dominio.Models
+@using DWM.Models.Repositories
+@model DWM.Models.Repositories.VisitanteAcessoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Visitante/Create?op=I";
+    t[0].nomeCurto = "Incluir Visitante";
+    t[0].referencia = "";
+    t[0].exibir = "S";
+
+    t[1].url = "../Home/Default";
+
+    var _max = "";
+
+    if (Model.IsPortaria)
+    {
+        _max = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    }
+}
+
+@Html.Partial("_alerts")
+@Html.Partial("_AjaxAlert", "panel-top")
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Acesso do Visitante/Prestador de Serviço", Descricao = "Inclusão de Acesso", Transacao = t })
+    <div class="x_content">
+        <!-- Smart Wizard -->
+        @using (Html.BeginForm("Delete", "Portaria", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+        {
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            @Html.HiddenFor(info => info.AcessoID)
+            @Html.HiddenFor(info => info.CondominioID)
+            @Html.HiddenFor(info => info.empresaId)
+            @Html.HiddenFor(info => info.EdificacaoID)
+            @Html.HiddenFor(info => info.UnidadeID)
+            @Html.HiddenFor(info => info.VisitanteID)
+            @Html.HiddenFor(info => info.IsPortaria)
+            @Html.HiddenFor(info => info.DataInclusao)
+            <div id="div-detail">
+                <p><h3>Dados de Acesso</h3></p>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Visitante/Prestador</label>
+                        <div id="div-visitante"><h3><span class="label label-default">@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)</span></h3></div>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Unidade</label>
+                        <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label" title="Portaria deve interfonar para o condômino antes de autorizar o acesso">Interfona p/ condômino</label>
+                        @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control", @Disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Data</label>
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" disabled value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
+                        <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" disabled />
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" title="Informar a hora Limite de acesso (preenchimento opcional)">Limite</label>
+                        <input type="text" class="form-control" name="HoraLimite" id="HoraLimite" value="@Model.HoraLimite" disabled />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Observação</label>
+                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1" disabled>@Model.Observacao</textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Excluir" class="btn btn-danger" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#HoraInicio").mask("99:99");
+        $("#HoraLimite").mask("99:99");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+        this.submit(); // If all the validations succeeded
+    });
+
+</script>
+
+
+
+
+

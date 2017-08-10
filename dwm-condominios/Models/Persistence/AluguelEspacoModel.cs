@@ -36,19 +36,23 @@ namespace DWM.Models.Persistence
             AluguelEspaco entity = Find(value);
 
             if (entity == null)
+            {
                 entity = new AluguelEspaco();
+                value.DataAutorizacao = null;
+            }
 
-            entity.CondominioID = value.CondominioID;
             entity.AluguelID = value.AluguelID;
-            entity.CondominoID = value.CondominoID;
-            entity.CredenciadoID = value.CredenciadoID;
-            entity.DataAutorizacao = DateTime.Now.Date;
-            entity.DataEvento = DateTime.Now.Date;
-            entity.DataReserva = DateTime.Now.Date;
+            entity.CondominioID = value.CondominioID;
             entity.EdificacaoID = value.EdificacaoID;
+            entity.UnidadeID = value.UnidadeID;
+            entity.CondominoID = SessaoLocal.CondominoID; // value.CondominoID;
+            entity.CredenciadoID = value.CredenciadoID;
+            entity.DataAutorizacao = value.DataAutorizacao;
+            entity.DataEvento = value.DataEvento;
+            entity.DataReserva = value.DataReserva;
             entity.EspacoID = value.EspacoID;
             entity.Observacao = value.Observacao;
-            entity.UnidadeID = value.UnidadeID;
+            
             entity.Valor = (from ec in db.EspacoComums where ec.EspacoID == value.EspacoID select ec.Valor).FirstOrDefault();
 
             return entity;

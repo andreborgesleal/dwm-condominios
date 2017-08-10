@@ -44,6 +44,7 @@ namespace DWM.Controllers
         public ActionResult ListParam(int? index, int? pageSize = 50, string descricao = null,
                                         int? edificacaoId = null, int? unidadeId = null)
         {
+            ViewBag.SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
             if (ViewBag.ValidateRequest)
             {
                 ListViewVisitanteAcesso l = new ListViewVisitanteAcesso();
@@ -51,6 +52,22 @@ namespace DWM.Controllers
             }
             else
                 return View();
+        }
+        #endregion
+
+        #region Edit
+        [AuthorizeFilter]
+        public ActionResult Edit(int AcessoID)
+        {
+            return _Edit(new VisitanteAcessoViewModel() { AcessoID = AcessoID });
+        }
+        #endregion
+
+        #region Delete
+        [AuthorizeFilter]
+        public ActionResult Delete(int AcessoID)
+        {
+            return Edit(AcessoID);
         }
         #endregion
 
@@ -105,25 +122,25 @@ namespace DWM.Controllers
             value.mensagem = error;
         }
 
-        //public override void OnDeleteError(ref VisitanteAcessoViewModel value, FormCollection collection)
-        //{
-        //    if (value.PrestadorCondominio == "N")
-        //    {
-        //        value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-        //        value.UnidadeID = int.Parse(collection["UnidadeID"]);
-        //        ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-        //    }
-        //}
+        public override void OnDeleteError(ref VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            OnEditError(ref value, collection);
+        }
 
-        //public override void OnEditError(ref VisitanteAcessoViewModel value, FormCollection collection)
-        //{
-        //    if (value.PrestadorCondominio == "N")
-        //    {
-        //        value.EdificacaoID = int.Parse(collection["EdificacaoID"]);
-        //        value.UnidadeID = int.Parse(collection["UnidadeID"]);
-        //        ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
-        //    }
-        //}
+        public override void OnEditError(ref VisitanteAcessoViewModel value, FormCollection collection)
+        {
+            Validate error = value.mensagem;
+            Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext> facade = new Facade<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext>();
+            GetCreate();
+            value = facade.getObject(new VisitanteAcessoViewModel() { AcessoID = value.AcessoID });
+            value.Interfona = collection["Interfona"];
+            value.HoraInicio = collection["HoraInicio"];
+            value.HoraLimite = collection["HoraLimite"];
+            value.Observacao = collection["Observacao"];
+            if (collection["DataAutorizacao"] != null && collection["DataAutorizacao"] != "")
+                value.DataAutorizacao = DateTime.Parse(collection["DataAutorizacao"]);
+            value.mensagem = error;
+        }
         #endregion
     }
 }

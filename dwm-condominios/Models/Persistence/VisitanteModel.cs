@@ -469,7 +469,7 @@ namespace DWM.Models.Persistence
                          Marca = v.Marca,
                          NomeCondomino = con.Nome,
                          DescricaoTipoPrestador = tp.Descricao,
-                         Email = v.Email,
+                         Email = v.Email
                      }).ToList();
             return q;
         }

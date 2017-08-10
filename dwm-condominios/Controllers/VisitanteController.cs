@@ -80,6 +80,7 @@ namespace DWM.Controllers
         {
             ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
             ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
+            ViewBag.op = (Request["op"] != null && "IU".Contains(Request["op"]))  ? Request["op"] : "";
 
             if (ViewBag.ValidateRequest)
             {
@@ -90,13 +91,29 @@ namespace DWM.Controllers
             else
                 return null;
         }
+
+        public override ActionResult AfterCreate(VisitanteViewModel value, FormCollection collection)
+        {
+            if (collection["op"] != null && collection["op"] == "I")
+                return RedirectToAction("Create", "Portaria");
+            else if (collection["op"] != null && collection["op"] == "U")
+                return RedirectToAction("Edit", "Portaria");
+            else
+                return base.AfterCreate(value, collection);
+        }
         #endregion
 
         #region Edit
         [AuthorizeFilter]
         public ActionResult Edit(int visitanteID)
         {
+            ViewBag.op = (Request["op"] != null && Request["op"] == "I") ? Request["op"] : "";
             return _Edit(new VisitanteViewModel() { VisitanteID = visitanteID });
+        }
+
+        public override ActionResult AfterEdit(VisitanteViewModel value, FormCollection collection)
+        {
+            return AfterCreate(value, collection);
         }
         #endregion
 

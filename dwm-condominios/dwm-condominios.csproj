@@ -470,7 +470,6 @@
     <Content Include="Content\css\style.old.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
-    <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\avatar.png" />
     <Content Include="Content\images\Logo_DWM_Sistemas.png" />
@@ -4117,11 +4116,6 @@
     <Content Include="Content\assets\ico\Thumbs.db" />
     <Content Include="Content\assets\img\backgrounds\Thumbs.db" />
     <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="Content\fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\fonts\FontAwesome.otf" />
     <None Include="Properties\PublishProfiles\meucondominio - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\meucondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
@@ -4275,6 +4269,8 @@
     <Content Include="Views\Aluguel\Browse.cshtml" />
     <Content Include="Views\Aluguel\ListParam.cshtml" />
     <Content Include="Views\Aluguel\Create.cshtml" />
+    <Content Include="Views\Portaria\Edit.cshtml" />
+    <Content Include="Views\Portaria\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

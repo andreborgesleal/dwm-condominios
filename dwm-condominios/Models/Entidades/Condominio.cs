@@ -43,5 +43,8 @@ namespace DWM.Models.Entidades
 
         [DisplayName("IndicadorTipoCondomino")]
         public string IndTipoCondominio { get; set; }
+
+        [DisplayName("PathInfo")]
+        public string PathInfo { get; set; }
     }
 }
