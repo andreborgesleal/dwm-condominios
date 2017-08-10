@@ -42,7 +42,7 @@ namespace DWM.Models.Persistence
             entity.AluguelID = value.AluguelID;
             entity.CondominoID = value.CondominoID;
             entity.CredenciadoID = value.CredenciadoID;
-            //entity.DataAutorizacao = value.DataAutorizacao;
+            entity.DataAutorizacao = DateTime.Now.Date;
             entity.DataEvento = DateTime.Now.Date;
             entity.DataReserva = DateTime.Now.Date;
             entity.EdificacaoID = value.EdificacaoID;
@@ -51,14 +51,6 @@ namespace DWM.Models.Persistence
             entity.UnidadeID = value.UnidadeID;
             entity.Valor = (from ec in db.EspacoComums where ec.EspacoID == value.EspacoID select ec.Valor).FirstOrDefault();
 
-            entity.CondominoUnidade = new CondominoUnidade()
-            {
-                CondominioID = entity.CondominioID,
-                CondominoID = entity.CondominoID,
-                EdificacaoID = entity.EdificacaoID,
-                UnidadeID = entity.UnidadeID,
-            };
-            
             return entity;
         }
 

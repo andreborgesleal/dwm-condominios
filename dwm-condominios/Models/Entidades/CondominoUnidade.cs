@@ -8,11 +8,6 @@ namespace DWM.Models.Entidades
     [Table("CondominoUnidade")]
     public class CondominoUnidade
     {
-        public CondominoUnidade()
-        {
-            AluguelEspacos = new List<AluguelEspaco>();
-        }
-
         [Key, Column(Order = 0)]
         [DisplayName("CondominioID")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -40,7 +35,5 @@ namespace DWM.Models.Entidades
         public System.DateTime? DataFim { get; set; }
 
         public virtual Condomino Condomino { get; set; }
-
-        public virtual ICollection<AluguelEspaco> AluguelEspacos { get; set; }
     }
 }

@@ -89,9 +89,6 @@ namespace DWM.Models.Repositories
         [StringLength(20, ErrorMessage = "Marca do veículo deve possuir no máximo 20 caracteres")]
         public string Marca { get; set; }
 
-        [DisplayName("Email")]
-        public string Email { get; set; }
-
         #region Atributos de Outras Tabelas
         public string DescricaoEdificacao { get; set; }
 

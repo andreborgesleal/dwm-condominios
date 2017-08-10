@@ -72,9 +72,6 @@ namespace DWM.Models.Entidades
         [DisplayName("Marca")]
         public string Marca { get; set; }
 
-        [DisplayName("Email")]
-        public string Email { get; set; }
-
         public virtual ICollection<VisitanteUnidade> VisitanteUnidade { get; set; }
     }
 }
