@@ -119,5 +119,18 @@ namespace DWM.Models.Entidades
             else
                 return null;
         }
+
+        public static TipoEdificacao GetTipoEdificacao(int? CondominioID)
+        {
+            if (!CondominioID.HasValue)
+            {
+                SessaoLocal s = GetSessaoLocal();
+                CondominioID = s.empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+                return db.TipoEdificacaos.Where(info => info.CondominioID == CondominioID).AsEnumerable().FirstOrDefault();
+
+        }
     }
 }

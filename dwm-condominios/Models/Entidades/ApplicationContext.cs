@@ -42,5 +42,6 @@ namespace DWM.Models.Entidades
         public DbSet<PrestadorTipo> PrestadorTipos { get; set; }
         public DbSet<AluguelEspaco> AluguelEspacos { get; set; }
         public DbSet<EspacoComum> EspacoComums { get; set; }
+        public DbSet<TipoEdificacao> TipoEdificacaos { get; set; }
     }
 }

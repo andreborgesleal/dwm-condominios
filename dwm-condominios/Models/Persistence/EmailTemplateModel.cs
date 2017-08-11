@@ -132,7 +132,8 @@ namespace DWM.Models.Persistence
             return (from ema in db.EmailTemplates
                     join tip in db.EmailTipos on ema.EmailTipoID equals tip.EmailTipoID
                     where ema.CondominioID == sessaoCorrente.empresaId
-                    && (_nome == null || ema.Nome == _nome)
+                          && tip.CondominioID == sessaoCorrente.empresaId
+                          && (_nome == null || ema.Nome == _nome)
                     orderby ema.Nome
                     select new EmailTemplateViewModel
                     {
@@ -146,7 +147,8 @@ namespace DWM.Models.Persistence
                         TotalCount = ((from ema1 in db.EmailTemplates
                                        join tip1 in db.EmailTipos on ema1.EmailTipoID equals tip1.EmailTipoID
                                        where ema1.CondominioID == sessaoCorrente.empresaId
-                                       && (_nome == null || ema1.Nome == _nome)
+                                             && tip1.CondominioID == sessaoCorrente.empresaId
+                                             && (_nome == null || ema1.Nome == _nome)
                                        orderby ema1.Nome
                                        select ema1).Count())
                     }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
