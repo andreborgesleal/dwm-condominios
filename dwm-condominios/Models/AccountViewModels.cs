@@ -65,5 +65,9 @@ namespace DWM.Models
         public string confirmacaoSenha { get; set; }
 
         public string Keyword { get; set; }
+
+        public string DescricaoTipoEdificacao { get; set; }
+
+        public Condominio Condominio { get; set; }
     }
 }

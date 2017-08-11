@@ -11,6 +11,9 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int TipoEdificacaoID { get; set; }
 
+        [DisplayName("CondominioID")]
+        public int CondominioID { get; set; }
+
         [DisplayName("Descrição")]
         public string Descricao { get; set; }
     }

@@ -1,0 +1,9 @@
+﻿@using DWM.Models.Entidades;
+@helper Bloco(int CondominioID) {
+// your helper can contain code and/or markup, e.g.
+// var msg = "Hello " + name;
+// <p>@msg</p>
+// For more information, visit http://go.microsoft.com/fwlink/?LinkID=204658
+TipoEdificacao t = DWMSessaoLocal.GetTipoEdificacao(CondominioID);
+<label class="control-label">@t.Descricao</label>
+}

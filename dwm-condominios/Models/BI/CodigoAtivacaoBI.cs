@@ -44,11 +44,16 @@ namespace DWM.Models.BI
                 if (r.CondominioID > 0)
                 {
                     registerViewModel.CondominioID = r.CondominioID;
-                    registerViewModel.UnidadeViewModel = new UnidadeViewModel()
-                    {
-                        CondominioID = r.CondominioID,
-                        EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID,
-                    };
+                    registerViewModel.UnidadeViewModel = new UnidadeViewModel();
+                    registerViewModel.UnidadeViewModel.CondominioID = r.CondominioID;
+                    registerViewModel.UnidadeViewModel.EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID;
+                    registerViewModel.DescricaoTipoEdificacao = db.TipoEdificacaos.Where(info => info.CondominioID == r.CondominioID).Select(m => m.Descricao).FirstOrDefault();
+
+                    //registerViewModel.UnidadeViewModel = new UnidadeViewModel()
+                    //{
+                    //    CondominioID = r.CondominioID,
+                    //    EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID,
+                    //};
                 }
                 else
                 {
@@ -59,6 +64,7 @@ namespace DWM.Models.BI
                         registerViewModel.CondominioID = u.CondominioID;
                         registerViewModel.Nome = u.NomeCondomino;
                         registerViewModel.Email = u.Email;
+                        registerViewModel.DescricaoTipoEdificacao = db.TipoEdificacaos.Where(info => info.CondominioID == u.CondominioID).Select(m => m.Descricao).FirstOrDefault();
                         registerViewModel.UnidadeViewModel = new UnidadeViewModel()
                         {
                             CondominioID = u.CondominioID,

@@ -38,7 +38,7 @@ namespace DWM.Controllers
 
         #region Login
         [AllowAnonymous]
-        public async Task<ActionResult> Login(string id)
+        public ActionResult Login(string id)
         {
             try
             {
@@ -112,6 +112,7 @@ namespace DWM.Controllers
         public ActionResult Register(string id)
         {
             RegisterViewModel value = new RegisterViewModel();
+            Condominio entity = null;
             if (id != null && id != "")
             {
                 decimal valor = 0;
@@ -126,7 +127,7 @@ namespace DWM.Controllers
                 }
                 else
                 {
-                    Condominio entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
+                    entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
                     if (entity == null)
                         return View("Error");
 
@@ -134,6 +135,7 @@ namespace DWM.Controllers
                 }
                 Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                 value = factory.Execute(new CodigoAtivacaoBI(), value);
+                value.Condominio = entity;
             }
             else
                 return RedirectToAction("Login", "Account");

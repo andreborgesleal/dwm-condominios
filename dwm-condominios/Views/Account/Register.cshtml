@@ -50,13 +50,13 @@
         <div class="container-cadastro center-margin">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><img class="img-responsive" src="~/Content/images/parcparadiso.png" style="height: 80px" /></li>
+                    <li><img class="img-responsive" src="~/Users_Data/Empresas/@Model.Condominio.CondominioID/logo/@Model.Condominio.Logo" style="height: 80px" /></li>
                 </ul>
                 <ul class="nav navbar-nav" style="margin-top: 20px">
-                    <li><h3>&nbsp;&nbsp;&nbsp;Parc Paradiso Condomínio Resort</h3></li>
+                    <li><h3>&nbsp;&nbsp;&nbsp;@Model.Condominio.RazaoSocial</h3></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="~/Account/Login">Acesso</a></li>
+                    <li><a href="~/Account/Login/@Model.Condominio.PathInfo">Acesso</a></li>
                 </ul>
             </div>
         </div>
@@ -92,6 +92,7 @@
                 {
                     @Html.Partial("_alerts")
                     @Html.AntiForgeryToken()
+                    @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
                     @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                     @Html.HiddenFor(info => info.CondominioID)
                     <div class="hidden-sm hidden-xs">
@@ -123,7 +124,7 @@
                     <div class="row clearfix">
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                <label class="control-label">Torre</label>
+                                <label class="control-label">@Model.DescricaoTipoEdificacao</label>
                                 @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
                             </div>
                         </div>
