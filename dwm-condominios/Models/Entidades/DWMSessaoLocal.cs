@@ -120,9 +120,18 @@ namespace DWM.Models.Entidades
                 return null;
         }
 
+        public static Condominio GetCondominioByID(int CondominioID)
+        {
+            if (CondominioID > 0)
+                using (ApplicationContext db = new ApplicationContext())
+                    return db.Condominios.Find(CondominioID);
+            else
+                return null;
+        }
+
         public static TipoEdificacao GetTipoEdificacao(int? CondominioID)
         {
-            if (!CondominioID.HasValue)
+            if (!CondominioID.HasValue || CondominioID.Value == 0)
             {
                 SessaoLocal s = GetSessaoLocal();
                 CondominioID = s.empresaId;

@@ -38,12 +38,12 @@
 
     <!-- Custom Theme Style -->
     @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
-    <script type="text/javascript" src="../Content/vendors/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="../../Content/vendors/jquery/dist/jquery.min.js"></script>
     @*<script type="text/javascript" src="../scripts/bootstrap.js"></script>*@
-    <script type="text/javascript" src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="../../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="../../scripts/jquery.maskedinput.js"></script>
-    <script type="text/javascript" src="../scripts/inputs-jquery-ui.js"></script>
+    <script type="text/javascript" src="../../scripts/inputs-jquery-ui.js"></script>
 </head>
 <body style="background:#cccccc;">
     <nav class="navbar navbar-fixed-top navbar-default hidden-xs">
@@ -93,6 +93,7 @@
                     @Html.Partial("_alerts")
                     @Html.AntiForgeryToken()
                     @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
+                    @Html.Hidden("Validador", Model.UnidadeViewModel.Validador)
                     @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                     @Html.HiddenFor(info => info.CondominioID)
                     <div class="hidden-sm hidden-xs">
@@ -110,13 +111,13 @@
                     <div class="row">
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Nome, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.Nome, new { @class = "control-label" })*
                                 @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "40" })
                             </div>
                         </div>
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.Email, new { @class = "control-label" })*
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             </div>
                         </div>
@@ -130,13 +131,13 @@
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                <label class="control-label">Unidade</label>
+                                <label class="control-label">Unidade</label>*
                                 @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control" })
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })*
                                 @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
                             </div>
                         </div>
@@ -150,7 +151,7 @@
                     <div class="row clearfix">
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
-                                @Html.LabelFor(m => m.TelParticular1, new { @class = "control-label" })
+                                @Html.LabelFor(m => m.TelParticular1, new { @class = "control-label" }) *
                                 @Html.TextBoxFor(m => m.TelParticular1, new { @class = "form-control" })
                             </div>
                         </div>

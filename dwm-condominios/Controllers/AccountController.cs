@@ -115,27 +115,37 @@ namespace DWM.Controllers
             Condominio entity = null;
             if (id != null && id != "")
             {
-                decimal valor = 0;
-                bool isNumeric = decimal.TryParse(id, out valor);
-
-                if (isNumeric) // validador enviado pelo e-mail
-                {
+                entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
+                if (entity == null)
                     value.UnidadeViewModel = new UnidadeViewModel()
                     {
                         Validador = id
                     };
-                }
                 else
-                {
-                    entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
-                    if (entity == null)
-                        return View("Error");
-
                     value.CondominioID = entity.CondominioID;
-                }
+
+                //decimal valor = 0;
+                //bool isNumeric = decimal.TryParse(id, out valor);
+
+                //if (isNumeric) // validador enviado pelo e-mail
+                //{
+                //    value.UnidadeViewModel = new UnidadeViewModel()
+                //    {
+                //        Validador = id
+                //    };
+                //}
+                //else
+                //{
+                //    entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
+                //    if (entity == null)
+                //        return View("Error");
+
+                //    value.CondominioID = entity.CondominioID;
+                //}
                 Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                 value = factory.Execute(new CodigoAtivacaoBI(), value);
-                value.Condominio = entity;
+                if (entity != null)
+                    value.Condominio = entity;
             }
             else
                 return RedirectToAction("Login", "Account");
@@ -157,7 +167,8 @@ namespace DWM.Controllers
                     {
                         CondominioID = value.CondominioID,
                         EdificacaoID = int.Parse(collection["EdificacaoID"]),
-                        UnidadeID = int.Parse(collection["UnidadeID"])
+                        UnidadeID = int.Parse(collection["UnidadeID"]),
+                        Validador = collection["Validador"] 
                     };
 
                     // Aciona o pattern local do aplicativo - Pattern Localhost (e não o do App_Dominio)
@@ -187,7 +198,8 @@ namespace DWM.Controllers
                     #endregion
 
                     Success("Seu cadastro foi realizado com sucesso.");
-                    return RedirectToAction("Login", "Account");
+
+                    return RedirectToAction("Login", "Account", new { id = collection["PathInfo"] });
                 }
                 catch (ArgumentException ex)
                 {
@@ -228,6 +240,12 @@ namespace DWM.Controllers
                 };
             }
 
+            Condominio entity = DWMSessaoLocal.GetCondominioByPathInfo(collection["PathInfo"]);
+            if (entity == null)
+                return View("Error");
+
+            value.CondominioID = entity.CondominioID;
+            value.Condominio = entity;
             return View(value);
         }
         #endregion
@@ -315,9 +333,20 @@ namespace DWM.Controllers
 
         #region Esqueci minha senha
         [AllowAnonymous]
-        public ActionResult Forgot(int id)
+        public ActionResult Forgot(string id)
         {
-            return View();
+            if (String.IsNullOrEmpty(id))
+                throw new ArgumentException();
+
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(id);
+            if (Condominio == null)
+                throw new ArgumentException();
+
+            LoginViewModel value = new LoginViewModel()
+            {
+                Condominio = Condominio
+            };
+            return View(value); // RedirectToAction("Default", "Home");
         }
 
         [ValidateInput(false)]
@@ -418,9 +447,13 @@ namespace DWM.Controllers
         public ActionResult LogOff()
         {
             System.Web.HttpContext web = System.Web.HttpContext.Current;
+
+            SessaoLocal s = DWMSessaoLocal.GetSessaoLocal();
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByID(s.empresaId);
+
             new EmpresaSecurity<App_DominioContext>().EncerrarSessao(web.Session.SessionID);
 
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Login", "Account", new { id = Condominio.PathInfo });
         }
 
         [AllowAnonymous]

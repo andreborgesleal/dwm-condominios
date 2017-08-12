@@ -73,6 +73,7 @@ namespace DWM.Models.BI
                             Validador = u.Validador,
                             EdificacaoDescricao = db.Edificacaos.Find(u.EdificacaoID).Descricao
                         };
+                        registerViewModel.Condominio = db.Condominios.Find(u.CondominioID);
                     }
                     #endregion
                 }
