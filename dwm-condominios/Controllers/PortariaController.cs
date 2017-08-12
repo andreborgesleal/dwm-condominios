@@ -75,7 +75,7 @@ namespace DWM.Controllers
         [AllowAnonymous]
         public JsonResult GetNames(string term, int tag)
         {
-            var results = new BindDropDownList().Unidades("Selecione...", "", term, tag);
+            var results = new BindDropDownList().Unidades2("Selecione...", "", term, tag);
 
             return new JsonResult()
             {
