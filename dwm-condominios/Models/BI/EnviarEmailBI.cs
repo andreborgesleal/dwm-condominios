@@ -34,6 +34,7 @@ namespace DWM.Models.BI
             {
                 int _empresaId = int.Parse(db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.EMPRESA).Valor);
                 int _sistemaId = int.Parse(db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+                string _url = db.Parametros.Find(rec.CondominioID, (int)Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
 
                 Condominio condominio = db.Condominios.Find(rec.CondominioID);
                 Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
@@ -59,7 +60,7 @@ namespace DWM.Models.BI
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema:</span></p>" +
-                              "<p><a href=\"http://www.parcparadiso.com.br/Account/Login/id=3\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
+                              "<p><a href=\"" + _url + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
                               "<p></p>" +
                               "<p></p>";
 
@@ -284,7 +285,7 @@ namespace DWM.Models.BI
                         "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + r.Email + "</span></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema e realizar o seu cadastro:</span></p>" +
-                        "<p><a href=\"http://www.parcparadiso.com.br/Account/Register/" + r.Validador + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Registre-se no " + sistema.descricao + "</span></a></p>" +
+                        "<p><a href=\"http://meucondominio.azurewebsites.net/Account/Register/" + r.Validador + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Registre-se no " + sistema.descricao + "</span></a></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Observação: este link estará disponível para ativação por 48 h</span></p>" +
                         "<hr />";

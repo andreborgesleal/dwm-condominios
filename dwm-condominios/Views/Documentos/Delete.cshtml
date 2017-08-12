@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-3 col-xs-12 col-sm-12">
                         <div class="form-group">
-                            <label class="control-label">Edificação</label>
+                            @Edificacao.Bloco(Model.empresaId)
                             @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Selecione...", Model.EdificacaoID.ToString(), Model.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')", @disabled = "disabled" })
                         </div>
                     </div>
