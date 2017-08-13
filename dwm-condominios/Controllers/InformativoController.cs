@@ -5,6 +5,7 @@ using App_Dominio.Security;
 using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
+using DWM.Models.Pattern;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
 using System;
@@ -29,7 +30,7 @@ namespace DWM.Controllers
         #region Create
         public override InformativoViewModel Insert(InformativoViewModel value)
         {
-            Factory<InformativoViewModel, ApplicationContext> facade = new Factory<InformativoViewModel, ApplicationContext>();
+            FactoryLocalhost<InformativoViewModel, ApplicationContext> facade = new FactoryLocalhost<InformativoViewModel, ApplicationContext>();
             return facade.Execute(new InformativoCadastrarBI(), value);
         }
 

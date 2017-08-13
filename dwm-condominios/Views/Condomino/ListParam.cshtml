@@ -37,7 +37,7 @@
                             <td>@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
                             @if ((int)ViewBag.CondominoID == 0)
                             {
-                                <td>
+                                <td class="text-center">
                                     <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
                                     <a href="~/Condomino/Append?CondominoID=@(value.CondominoID)" title="Adicionar unidade ao condômino"><i class="fa fa-plus-circle"></i></a>&nbsp;
                                     <a href="~/Condomino/Desativar?CondominioID=@(value.CondominioID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&CondominoID=@(value.CondominoID)" title="Desativar condômino da unidade"><i class="fa fa-trash"></i></a>
@@ -45,7 +45,7 @@
                             }
                             else
                             {
-                                <td>
+                                <td class="text-center">
                                     <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                 </td>
                             }

@@ -9,6 +9,9 @@
     t[0].referencia = "";
 
     t[1].url = "../Home/Default";
+
+    DWM.Models.Entidades.SessaoLocal s = (DWM.Models.Entidades.SessaoLocal)ViewBag.SessaoLocal;
+    string Disabled = "";
 }
 <div class="x_panel">
     @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Cadastro", Descricao = Model.DataCadastro.ToString("dd/MM/yyyy"), Transacao = t })
@@ -52,7 +55,14 @@
                 <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.IndSituacao, new { @class = "control-label" })
-                        @Html.DropDownList("IndSituacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao("A", Model.IndSituacao), new { @class = "form-control" })
+                        @if (s.CondominoID > 0)
+                        {
+                            @Html.DropDownList("IndSituacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao(Model.IndSituacao), new { @class = "form-control", @Disabled = Disabled })
+                        }
+                        else
+                        {
+                            @Html.DropDownList("IndSituacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao(Model.IndSituacao), new { @class = "form-control" })
+                        }
                     </div>
                 </div>
                 <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">

@@ -92,6 +92,18 @@ namespace DWM.Controllers
                 return View();
         }
 
+        [AuthorizeFilter]
+        public ActionResult ListInativos()
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb("Condômino", ClearBreadCrumbOnBrowse());
+                ListViewCondominosInativos l = new ListViewCondominosInativos();
+                return this._List(0, 1000, "Browse", l);
+            }
+            else
+                return View();
+        }
 
         /// <summary>
         /// Este método é acionado pelo funcionalidade CHAMADO
@@ -140,6 +152,9 @@ namespace DWM.Controllers
 
                 BindBreadCrumb(getBreadCrumbText("Condômino", null));
 
+                SessaoLocal s = DWMSessaoLocal.GetSessaoLocal();
+                ViewBag.SessaoLocal = s;
+
                 Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
                 CondominoEditViewModel value = new CondominoEditViewModel()
                 {
@@ -176,6 +191,9 @@ namespace DWM.Controllers
                 CondominoPFViewModel result = null;
                 try
                 {
+                    SessaoLocal s = DWMSessaoLocal.GetSessaoLocal();
+                    ViewBag.SessaoLocal = s;
+
                     CondominoPFViewModel value = new CondominoPFViewModel()
                     {
                         CondominioID = CondominioID,

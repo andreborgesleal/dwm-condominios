@@ -199,6 +199,7 @@ namespace DWM.Models.Persistence
                             && (IsHome == "N" || info.DataEmail >= SqlFunctions.GetDate())
                             && (GrupoCondominoID == "" || GrupoCondominoID.Contains(info.GrupoCondominoID.ToString()))
                             && (EdificacaoID == "" || EdificacaoID.Contains(info.EdificacaoID.ToString()))
+                            && (eti.CondominioID == SessaoLocal.empresaId)
                     orderby info.DataEmail descending
                     select new EmailLogViewModel
                     {

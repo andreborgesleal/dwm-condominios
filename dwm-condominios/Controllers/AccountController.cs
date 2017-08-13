@@ -55,7 +55,7 @@ namespace DWM.Controllers
                 };
                 return View(value); // RedirectToAction("Default", "Home");
             }
-            catch 
+            catch(Exception ex)
             {
                 return View("Error");
             }
@@ -102,8 +102,16 @@ namespace DWM.Controllers
             }
 
             // If we got this far, something failed, redisplay form
-            return View(model);
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(Request["PathInfo"]);
+            if (Condominio == null)
+                throw new ArgumentException();
 
+            LoginViewModel value = new LoginViewModel()
+            {
+                Condominio = Condominio
+            };
+
+            return View(value);
         }
         #endregion
 
@@ -115,6 +123,9 @@ namespace DWM.Controllers
             Condominio entity = null;
             if (id != null && id != "")
             {
+                // Primeiro o sistema verifica se o id informado é um PathInfo ("ParcParadiso", "Alhpaville", etc)
+                // Se não for, o sistema interpreta que o id = validador gerado a partir do envio do token para o condômino por e-mail pela administração
+
                 entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
                 if (entity == null)
                     value.UnidadeViewModel = new UnidadeViewModel()
@@ -124,24 +135,6 @@ namespace DWM.Controllers
                 else
                     value.CondominioID = entity.CondominioID;
 
-                //decimal valor = 0;
-                //bool isNumeric = decimal.TryParse(id, out valor);
-
-                //if (isNumeric) // validador enviado pelo e-mail
-                //{
-                //    value.UnidadeViewModel = new UnidadeViewModel()
-                //    {
-                //        Validador = id
-                //    };
-                //}
-                //else
-                //{
-                //    entity = DWMSessaoLocal.GetCondominioByPathInfo(id);
-                //    if (entity == null)
-                //        return View("Error");
-
-                //    value.CondominioID = entity.CondominioID;
-                //}
                 Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                 value = factory.Execute(new CodigoAtivacaoBI(), value);
                 if (entity != null)
@@ -246,6 +239,7 @@ namespace DWM.Controllers
 
             value.CondominioID = entity.CondominioID;
             value.Condominio = entity;
+            value.DescricaoTipoEdificacao = collection["DescricaoTipoEdificacao"];
             return View(value);
         }
         #endregion
@@ -268,6 +262,11 @@ namespace DWM.Controllers
                     ModelState.AddModelError("", value.mensagem.MessageBase); // mensagem amigável ao usuário
                     Error(value.mensagem.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                 }
+                if (value.empresaId > 0)
+                {
+                    Condominio c = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+                    return RedirectToAction("Login", "Account", new { id = c.PathInfo });
+                }
             }
             return RedirectToAction("Login", "Account");
         }
@@ -287,7 +286,9 @@ namespace DWM.Controllers
                         if (value.mensagem.Code > 0)
                             throw new App_DominioException(value.mensagem);
                         Success("Residente ativado com sucesso. Faça seu login para acessar o sistema");
-                        return RedirectToAction("Login", "Account");
+                        Condominio c = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+
+                        return RedirectToAction("Login", "Account", new { id = c.PathInfo });
                     };
                 }
                 catch (App_DominioException ex)

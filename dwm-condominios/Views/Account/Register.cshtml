@@ -21,12 +21,12 @@
     <link href="../../Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- bootstrap-wysiwyg -->
     <link href="../../Content/vendors/google-code-prettify/bin/prettify.min.css" rel="stylesheet">
-    <!-- Select2 -->
+    @*<!-- Select2 -->
     <link href="../../Content/vendors/select2/dist/css/select2.min.css" rel="stylesheet">
     <!-- Switchery -->
     <link href="../../Content/vendors/switchery/dist/switchery.min.css" rel="stylesheet">
     <!-- starrr -->
-    <link href="../../Content/vendors/starrr/dist/starrr.css" rel="stylesheet">
+    <link href="../../Content/vendors/starrr/dist/starrr.css" rel="stylesheet">*@
     <!-- Custom Theme Style -->
     <link href="../../Content/production/css/custom.css" rel="stylesheet">
 
@@ -94,6 +94,7 @@
                     @Html.AntiForgeryToken()
                     @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
                     @Html.Hidden("Validador", Model.UnidadeViewModel.Validador)
+                    @Html.Hidden("DescricaoTipoEdificacao", Model.DescricaoTipoEdificacao)
                     @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                     @Html.HiddenFor(info => info.CondominioID)
                     <div class="hidden-sm hidden-xs">
@@ -224,7 +225,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="submit" class="btn btn-success" value="Salvar" />
-                                <input type="button" onclick="window.location = '../Account/Login'" class="btn btn-default" value="Cancelar" />
+                                <input type="button" onclick="window.location = '/Account/Login/@Model.Condominio.PathInfo'" class="btn btn-default" value="Cancelar" />
                             </div>
                         </div>
                     </div>
@@ -244,7 +245,7 @@
         $("#TelParticular2").mask("(99)9999?9-9999");
     </script>
 
-    <!-- jQuery -->
+    @*<!-- jQuery -->
     <script src="../Content/vendors/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
@@ -253,11 +254,11 @@
     <!-- NProgress -->
     <script src="../Content/vendors/nprogress/nprogress.js"></script>
     <!-- bootstrap-progressbar -->
-    <script src="../Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="../Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>*@
     <!-- iCheck -->
     <script src="../Content/vendors/iCheck/icheck.min.js"></script>
     <!-- bootstrap-wysiwyg -->
-    <script src="../Content/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
+    @*<script src="../Content/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
     <script src="../Content/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
     <script src="../Content/vendors/google-code-prettify/src/prettify.js"></script>
     <!-- jQuery Tags Input -->
@@ -273,12 +274,12 @@
     <!-- jQuery autocomplete -->
     <script src="../Content/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
     <!-- starrr -->
-    <script src="../Content/vendors/starrr/dist/starrr.js"></script>
+    <script src="../Content/vendors/starrr/dist/starrr.js"></script>*@
     <!-- Custom Theme Scripts -->
     <script src="../Content/production/js/custom.js"></script>
     <!-- bootstrap-wysiwyg -->
     <script>
-      $(document).ready(function() {
+      @*$(document).ready(function() {
         $('.xcxc').click(function() {
           $('#descr').val($('#editor').html());
         });
@@ -476,7 +477,7 @@
           $('.stars-count-existing').html(value);
         });
 
-      });
+      });*@
     </script>
     <!-- /Starrr -->
 

@@ -169,6 +169,8 @@ namespace DWM.Models.BI
                 if (u == null)
                     throw new ArgumentException("Usuário inválido");
 
+                r.empresaId = u.empresaId;
+
                 if (u.dt_keyword < Funcoes.Brasilia())
                     throw new ArgumentException("Chave de ativação expirada");
 
@@ -288,6 +290,8 @@ namespace DWM.Models.BI
                 Usuario u = seguranca_db.Usuarios.Find(r.usuarioId);
                 if (u == null)
                     throw new ArgumentException("Usuário inválido");
+
+                r.empresaId = u.empresaId;
 
                 if (u.dt_keyword < Funcoes.Brasilia())
                     throw new ArgumentException("Chave de ativação expirada");

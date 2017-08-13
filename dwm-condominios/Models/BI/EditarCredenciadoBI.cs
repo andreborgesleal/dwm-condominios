@@ -296,8 +296,8 @@ namespace DWM.Models.BI
                     //    throw new ArgumentException(repository.mensagem.MessageBase);
                     #endregion
                 }
-
-                result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
+                else
+                    result.mensagem.Code = -1; // Tem que devolver -1 porque na Superclasse, se devolver zero, vai executar novamente o SaveChanges.
 
             }
             catch (ArgumentException ex)

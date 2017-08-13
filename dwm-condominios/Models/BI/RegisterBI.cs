@@ -110,7 +110,7 @@ namespace DWM.Models.BI
                     login = r.Email,
                     empresaId = _empresaId,
                     dt_cadastro = Funcoes.Brasilia(),
-                    situacao = r.UnidadeViewModel.Validador != null ? "A" : "D",
+                    situacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
                     isAdmin = "N",
                     senha = security.Criptografar(r.senha)
                 };
@@ -146,7 +146,7 @@ namespace DWM.Models.BI
                     TelParticular1 = r.TelParticular1,
                     TelParticular2 = r.TelParticular2,
                     Email = r.Email,
-                    IndSituacao = r.UnidadeViewModel.Validador != null ? "A" : "D",
+                    IndSituacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
                     UsuarioID = user.usuarioId,
                     ProfissaoID = r.ProfissaoID,
                     DataNascimento = r.DataNascimento,
@@ -157,7 +157,14 @@ namespace DWM.Models.BI
                 CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
                 condominoPFViewModel = condominoPFModel.Insert(condominoPFViewModel);
                 if (condominoPFViewModel.mensagem.Code > 0)
+                {
+                    #region Exclui o usuário
+                    seguranca_db.UsuarioGrupos.Remove(ug);
+                    seguranca_db.Usuarios.Remove(user);
+                    seguranca_db.SaveChanges();
+                    #endregion
                     throw new App_DominioException(condominoPFViewModel.mensagem);
+                }
                 #endregion
 
                 #region Incluir o CondominoUnidade

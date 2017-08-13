@@ -4,6 +4,7 @@ using App_Dominio.Pattern;
 using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
+using DWM.Models.Pattern;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
 using System;
@@ -51,7 +52,7 @@ namespace dwm_condominios.Controllers
         public override EmailLogViewModel Insert(EmailLogViewModel value)
         {
             value.EmailTipoID = (int)Enumeradores.EmailTipo.OUTROS;
-            Factory<EmailLogViewModel, ApplicationContext> facade = new Factory<EmailLogViewModel, ApplicationContext>();
+            FactoryLocalhost<EmailLogViewModel, ApplicationContext> facade = new FactoryLocalhost<EmailLogViewModel, ApplicationContext>();
             return facade.Execute(new EmailNotificacaoBI(), value);
         }
         

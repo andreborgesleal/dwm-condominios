@@ -11,6 +11,7 @@ using App_Dominio.Models;
 using System.Net.Mail;
 using DWM.Models.Repositories;
 using System.Linq;
+using DWM.Models.Persistence;
 
 namespace DWM.Models.BI
 {
@@ -60,7 +61,7 @@ namespace DWM.Models.BI
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema:</span></p>" +
-                              "<p><a href=\"" + _url + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
+                              "<p><a href=\"" + _url + "/Account/Login/" + condominio.PathInfo + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Acesso ao " + sistema.descricao + "</span></a></p>" +
                               "<p></p>" +
                               "<p></p>";
 
@@ -110,6 +111,21 @@ namespace DWM.Models.BI
                     throw new App_DominioException(result);
                 }
 
+                #region Gravar o LOG do e-mail enviado
+                EmailLog log = new EmailLog()
+                {
+                    EmailTipoID = 2,
+                    CondominioID = _empresaId,
+                    EdificacaoID = rec.UnidadeViewModel.EdificacaoID,
+                    UnidadeID = rec.UnidadeViewModel.UnidadeID,
+                    DataEmail = Funcoes.Brasilia(),
+                    Assunto = "Confirmação de Cadastro de Condômino",
+                    EmailMensagem = Html,
+                };
+
+                this.db.EmailLogs.Add(log);
+                this.db.SaveChanges();
+                #endregion
             }
             rec.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
             return rec; 
@@ -254,6 +270,7 @@ namespace DWM.Models.BI
             {
                 int _empresaId = sessaoCorrente.empresaId;
                 int _sistemaId = int.Parse(db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.SISTEMA).Valor);
+                string _url = db.Parametros.Find(_empresaId, (int)Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
 
                 Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
                 Condominio condominio = db.Condominios.Find(sessaoCorrente.empresaId);
@@ -285,7 +302,7 @@ namespace DWM.Models.BI
                         "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + r.Email + "</span></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Clique no link abaixo para acessar o sistema e realizar o seu cadastro:</span></p>" +
-                        "<p><a href=\"http://meucondominio.azurewebsites.net/Account/Register/" + r.Validador + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Registre-se no " + sistema.descricao + "</span></a></p>" +
+                        "<p><a href=\"" + _url + "/Account/Register/" + r.Validador + "\" target=\"_blank\"><span style=\"font-family: Verdana; font-size: small; color: #0094ff\">Registre-se no " + sistema.descricao + "</span></a></p>" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Observação: este link estará disponível para ativação por 48 h</span></p>" +
                         "<hr />";
@@ -310,9 +327,46 @@ namespace DWM.Models.BI
                 Validate result = sendMail.Send(sender, recipients, Html, Subject, Text);
                 if (result.Code > 0)
                 {
-                    result.MessageBase = "Hocorreram falhas de comunicação e não foi possível enviar o e-mail de autorização para o condômino. ";
+                    result.MessageBase = "Ocorreram falhas de comunicação e não foi possível enviar o e-mail de autorização para o condômino. ";
                     throw new App_DominioException(result);
                 }
+
+                #region Gravar o LOG do e-mail enviado
+                EmailLog log = new EmailLog()
+                {
+                    EmailTipoID = 2,
+                    CondominioID = _empresaId,
+                    EdificacaoID = r.EdificacaoID,
+                    UnidadeID = r.UnidadeID,
+                    DataEmail = Funcoes.Brasilia(),
+                    Assunto = Subject,
+                    EmailMensagem = Html,
+                };
+
+                this.db.EmailLogs.Add(log);
+                this.db.SaveChanges();
+                #endregion
+
+                #region Gravar o LOG do e-mail enviado
+                //EmailLogViewModel log = new EmailLogViewModel()
+                //{
+                //    EmailTipoID = 2,
+                //    CondominioID = _empresaId,
+                //    EdificacaoID = r.EdificacaoID,
+                //    UnidadeID = r.UnidadeID,
+                //    DataEmail = Funcoes.Brasilia(),
+                //    Assunto = Subject,
+                //    EmailMensagem = Html,
+                //    Repository = r
+                //};
+                //EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
+                //Validate Validate = Model.Validate(log, Crud.INCLUIR);
+                //if (Validate.Code > 0)
+                //    throw new ArgumentException(Validate.Message);
+                //log = Model.Insert(log);
+                //if (log.mensagem.Code > 0)
+                //    throw new App_DominioException(log.mensagem);
+                #endregion
 
             }
             r.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };

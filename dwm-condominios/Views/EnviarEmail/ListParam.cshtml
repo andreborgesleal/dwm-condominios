@@ -18,10 +18,11 @@
                     <tr class="headings">
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Tipo</th>
+                        <th class="column-title">Assunto</th>
                         <th class="column-title">Edificação</th>
                         <th class="column-title">Unidade</th>
                         <th class="column-title">Grupo</th>
-                        <th class="column-title">Período</th>
+                        <th class="column-title">Data Envio</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,6 +36,9 @@
                                 <span>@email.Descricao_EmailTipo</span>
                             </td>
                             <td>
+                                <span>@email.Assunto</span>
+                            </td>
+                            <td>
                                 <span>@email.Descricao_Edificacao</span>
                             </td>
                             <td>
@@ -44,7 +48,7 @@
                                 <span>@email.Descricao_GrupoCondomino</span>
                             </td>
                             <td>
-                                <span>@email.DataEmail.ToString("dd/MM/yyyy")</span>
+                                <span>@email.DataEmail.ToString("dd/MM/yyyy HH:mm")h.</span>
                             </td>
                         </tr>
                     }
@@ -62,13 +66,13 @@ else
 @foreach (DWM.Models.Repositories.EmailLogViewModel email in Model)
 {
     <div id="@email.EmailLogID" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-lg" style="width: 70%; height: 300px">
             <div class="modal-content hidden-xs">
                 <div class="modal-header bg-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModal">×</button>
                     <h3 class="modal-title" id="myModalLabel">@email.Assunto</h3>
                 </div>
-                <div class="modal-body" id="myModal1-body">
+                <div class="modal-body Scroll" id="myModal1-body">
                     <p>@Html.Raw(email.EmailMensagem)</p>
                 </div>
                 <div class="modal-footer">

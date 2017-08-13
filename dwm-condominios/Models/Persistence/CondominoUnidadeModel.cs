@@ -646,4 +646,70 @@ namespace DWM.Models.Persistence
         }
         #endregion
     }
+
+    public class ListViewCondominosInativos : ListViewModelLocal<CondominoUnidadeViewModel>
+    {
+        #region Constructor
+        public ListViewCondominosInativos() { }
+        public ListViewCondominosInativos(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
+        {
+            IEnumerable<CondominoUnidadeViewModel> query = null;
+
+            query = (from c in db.CondominoUnidades
+                     join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                     where c.CondominioID == sessaoCorrente.empresaId
+                           && c.Condomino.CondominioID == sessaoCorrente.empresaId 
+                           && c.Condomino.IndFiscal.Length == 11
+                           && c.Condomino.IndSituacao == "D"
+                           && c.DataFim == null
+                     orderby c.Condomino.Nome
+                     select new CondominoUnidadeViewModel()
+                     {
+                         CondominioID = c.CondominioID,
+                         EdificacaoID = c.EdificacaoID,
+                         UnidadeID = c.UnidadeID,
+                         CondominoID = c.CondominoID,
+                         DataInicio = c.DataInicio,
+                         EdificacaoDescricao = e.Descricao,
+                         CondominoViewModel = new CondominoPFViewModel()
+                         {
+                             Nome = c.Condomino.Nome,
+                             IndFiscal = c.Condomino.IndFiscal,
+                             IndProprietario = c.Condomino.IndProprietario,
+                             TelParticular1 = c.Condomino.TelParticular1,
+                             TelParticular2 = c.Condomino.TelParticular2,
+                             Email = c.Condomino.Email,
+                             UsuarioID = c.Condomino.UsuarioID,
+                             DataCadastro = c.Condomino.DataCadastro,
+                             Avatar = c.Condomino.Avatar,
+                         },
+                     }).ToList();
+            return query;
+        }
+
+        public override string action()
+        {
+            return "../Condomino/ListViewCondominosInativos";
+        }
+
+        public override string DivId()
+        {
+            return "div-condomino-pf";
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new CondominoPFModel().getObject((CondominoPFViewModel)id);
+        }
+        #endregion
+    }
+
+
 }

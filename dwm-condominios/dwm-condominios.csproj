@@ -49,7 +49,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="App_Dominio">
+    <Reference Include="App_Dominio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -1422,8 +1423,6 @@
     <Content Include="Content\vendors\Flot\jquery.flot.time.js" />
     <Content Include="Content\vendors\Flot\jquery.js" />
     <Content Include="Content\vendors\Flot\LICENSE.txt" />
-    <Content Include="Content\vendors\font-awesome.css" />
-    <Content Include="Content\vendors\font-awesome.min.css" />
     <Content Include="Content\vendors\font-awesome\.gitignore" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.css" />
     <Content Include="Content\vendors\font-awesome\css\font-awesome.min.css" />
@@ -4146,7 +4145,14 @@
     <Content Include="Users_Data\Empresas\3\Avatar\68.jpg" />
     <Content Include="Users_Data\Empresas\3\Avatar\74.jpg" />
     <Content Include="Users_Data\Empresas\3\Avatar\75.jpg" />
+    <Content Include="Users_Data\Empresas\3\Documentos\Teste.txt" />
+    <Content Include="Users_Data\Empresas\3\Informativos\Teste.txt" />
     <Content Include="Users_Data\Empresas\3\logo\parcparadiso.png" />
+    <Content Include="Users_Data\Empresas\9\Avatar\Teste.txt" />
+    <Content Include="Users_Data\Empresas\9\Chamados\Teste.txt" />
+    <Content Include="Users_Data\Empresas\9\Documentos\Teste.txt" />
+    <Content Include="Users_Data\Empresas\9\download\Teste.txt" />
+    <Content Include="Users_Data\Empresas\9\Informativos\Teste.txt" />
     <Content Include="Users_Data\Empresas\9\logo\alphaville.png" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -4274,16 +4280,10 @@
     <Content Include="Views\Aluguel\Create.cshtml" />
     <Content Include="Views\Portaria\Edit.cshtml" />
     <Content Include="Views\Portaria\Delete.cshtml" />
+    <Content Include="Views\Condomino\ListInativos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
-    <Folder Include="Users_Data\Empresas\3\Documentos\" />
-    <Folder Include="Users_Data\Empresas\3\Informativos\" />
-    <Folder Include="Users_Data\Empresas\9\Avatar\" />
-    <Folder Include="Users_Data\Empresas\9\Chamados\" />
-    <Folder Include="Users_Data\Empresas\9\Documentos\" />
-    <Folder Include="Users_Data\Empresas\9\download\" />
-    <Folder Include="Users_Data\Empresas\9\Informativos\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
