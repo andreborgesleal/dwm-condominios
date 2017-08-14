@@ -256,7 +256,14 @@ namespace DWM.Controllers
                 Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
                 value = factory.Execute(new CodigoValidacaoCredenciadoBI(), value);
                 if (value.mensagem.Code == -1)
+                {
+                    Condominio Condominio = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+                    if (Condominio == null)
+                        throw new ArgumentException();
+
+                    ViewBag.Condominio = Condominio;
                     return View(value);
+                }
                 else
                 {
                     ModelState.AddModelError("", value.mensagem.MessageBase); // mensagem amigável ao usuário
@@ -287,7 +294,6 @@ namespace DWM.Controllers
                             throw new App_DominioException(value.mensagem);
                         Success("Residente ativado com sucesso. Faça seu login para acessar o sistema");
                         Condominio c = DWMSessaoLocal.GetCondominioByID(value.empresaId);
-
                         return RedirectToAction("Login", "Account", new { id = c.PathInfo });
                     };
                 }
@@ -305,6 +311,12 @@ namespace DWM.Controllers
             }
             else
                 Error("Dados incorretos");
+
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+            if (Condominio == null)
+                throw new ArgumentException();
+
+            ViewBag.Condominio = Condominio;
 
             return View(value);
         }
@@ -343,11 +355,9 @@ namespace DWM.Controllers
             if (Condominio == null)
                 throw new ArgumentException();
 
-            LoginViewModel value = new LoginViewModel()
-            {
-                Condominio = Condominio
-            };
-            return View(value); // RedirectToAction("Default", "Home");
+            ViewBag.Condominio = Condominio;
+
+            return View(); // RedirectToAction("Default", "Home");
         }
 
         [ValidateInput(false)]
@@ -382,7 +392,13 @@ namespace DWM.Controllers
                 return View(value);
             }
 
-            return RedirectToAction("Login", "Account");
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(collection["PathInfo"]);
+            if (Condominio == null)
+                throw new ArgumentException();
+
+            ViewBag.Condominio = Condominio;
+
+            return RedirectToAction("Login", "Account", new { id = collection["PathInfo"] });
         }
 
         [AllowAnonymous]
@@ -396,12 +412,26 @@ namespace DWM.Controllers
                 Factory<UsuarioRepository, ApplicationContext> factory = new Factory<UsuarioRepository, ApplicationContext>();
                 value = factory.Execute(new CodigoValidacaoCredenciadoBI(), value);
                 if (value.mensagem.Code == -1)
+                {
+                    Condominio Condominio = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+                    if (Condominio == null)
+                        throw new ArgumentException();
+
+                    ViewBag.Condominio = Condominio;
                     return View(value);
+                }
                 else
                 {
                     ModelState.AddModelError("", value.mensagem.MessageBase); // mensagem amigável ao usuário
                     Error(value.mensagem.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
                 }
+
+                if (value.empresaId > 0)
+                {
+                    Condominio c = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+                    return RedirectToAction("Login", "Account", new { id = c.PathInfo });
+                }
+
             }
             return RedirectToAction("Login", "Account");
         }
@@ -421,7 +451,8 @@ namespace DWM.Controllers
                         if (value.mensagem.Code > 0)
                             throw new App_DominioException(value.mensagem);
                         Success("Senha alterada com sucesso. Faça seu login para acessar o sistema");
-                        return RedirectToAction("Login", "Account");
+                        Condominio c = DWMSessaoLocal.GetCondominioByID(value.empresaId);
+                        return RedirectToAction("Login", "Account", new { id = c.PathInfo });
                     };
                 }
                 catch (App_DominioException ex)

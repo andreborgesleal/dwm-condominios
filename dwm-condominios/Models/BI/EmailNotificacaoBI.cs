@@ -64,16 +64,29 @@ namespace DWM.Models.BI
 
                     MailAddress sender = new MailAddress(condominio.RazaoSocial + " <" + condominio.Email + ">");
                     List<string> recipients = new List<string>();
+                    List<string> CarbonCopy = new List<string>();
 
-                    foreach (EmailLogViewModel item in EmailLogPessoas)
-                        recipients.Add(item.Nome + "<" + item.Email + ">");
+                    if (EmailLogPessoas.Count() > 1)
+                    {
+                        foreach (EmailLogViewModel item in EmailLogPessoas)
+                            CarbonCopy.Add(item.Nome + "<" + item.Email + ">");
+                        recipients.Add(condominio.PathInfo + "<" + condominio.Email + ">");
+                    }
+                    else
+                    {
+                        // somente 1 e-mail em EmailLogPessoas
+                        foreach (EmailLogViewModel item in EmailLogPessoas)
+                            recipients.Add(item.Nome + "<" + item.Email + ">");
 
+                        CarbonCopy = null;
+                    }
+                        
                     log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
                     string Subject = "[" + condominio.RazaoSocial + "] " + log.Assunto.Replace("@condominio", "");
                     string Html = log.EmailMensagem;
 
-                    Validate result = sendMail.Send(sender, null, Html, Subject, "", recipients);
+                    Validate result = sendMail.Send(sender, recipients, Html, Subject, "", CarbonCopy);
                     if (result.Code > 0)
                     {
                         result.MessageBase = "Não foi possível enviar o e-mail. Tente novamente mais tarde e se o erro persistir, favor entrar em contato com faleconosco@dwmsisteamas.com e reporte o código de erro " + result.Code.ToString() + ". ";

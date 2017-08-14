@@ -1,4 +1,5 @@
-﻿@using App_Dominio.Repositories
+﻿@using App_Dominio.Models
+@using App_Dominio.Repositories
 @using DWM.Models.Repositories
 @model CondominoPFViewModel
 @{
@@ -58,6 +59,7 @@
                         @if (s.CondominoID > 0)
                         {
                             @Html.DropDownList("IndSituacao", App_Dominio.Enumeracoes.DropDownListEnum.Situacao(Model.IndSituacao), new { @class = "form-control", @Disabled = Disabled })
+                            @Html.HiddenFor(info => info.IndSituacao)
                         }
                         else
                         {
@@ -88,7 +90,8 @@
                 <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                     <div class="control-group">
                         @Html.LabelFor(m => m.DataNascimento, new { @class = "control-label" })
-                        @Html.Editor("data1", "DATE", new { identificador = "DataNascimento", value = Model.DataNascimento.HasValue ? Model.DataNascimento.Value : DateTime.Today, readOnly = "false" })
+                        @*@Html.Editor("data1", "DATE", new { identificador = "DataNascimento", value = Model.DataNascimento.HasValue ? Model.DataNascimento.Value : DateTime.Today, readOnly = "false" })*@
+                        <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" value="@(Model.DataNascimento.HasValue ? Model.DataNascimento.Value.Date.ToString("yyyy-MM-dd") : "")" max="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ using DWM.Models.Entidades;
 using DWM.Models.Repositories;
 using App_Dominio.Security;
 using System.Web;
+using System.Data.Entity;
 
 namespace DWM.Models.Persistence
 {
@@ -40,6 +41,15 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe CrudModel
+        public override R AfterUpdate(R value)
+        {
+            Usuario u = seguranca_db.Usuarios.Find(value.UsuarioID);
+            u.situacao = value.IndSituacao;
+            seguranca_db.Entry(u).State = EntityState.Modified;
+
+            return base.AfterUpdate(value);
+        }
+
         public override E MapToEntity(R value)
         {
             E condomino = (E)Find(value);

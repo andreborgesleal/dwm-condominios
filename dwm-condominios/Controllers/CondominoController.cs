@@ -207,6 +207,7 @@ namespace DWM.Controllers
                         Sexo = Sexo,
                         IndProprietario = IndProprietario,
                         IndAnimal = IndAnimal,
+                        DataNascimento = Funcoes.StringToDate(DataNascimento),
                         ProfissaoID = ProfissaoID != null && int.Parse(ProfissaoID) > 0 ? int.Parse(ProfissaoID) : 0,
                         Observacao = Observacao
                     };

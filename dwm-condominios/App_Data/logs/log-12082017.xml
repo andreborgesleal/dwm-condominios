@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="2112138275" Data="12/08/2017 11:55:56">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Registro já existente: CPF/CNPJ: 373.238.652-04</Mensagem>
+    <NameSpace>DWM.Models.BI.RegisterBI =&gt; account/register/parcparadiso</NameSpace>
+    <Context>__RequestVerificationToken="y6cN9MBKYTqYBw_J68JA459BfZ4EVT_H2c_CO7PrkD3brMyLIyTLvuFzaqgfZNLYNxxSOxoibnbUBQSR63l6hoKN-Xl5McoD-37TVmWFwtI1",PathInfo="ParcParadiso",Validador="",DescricaoTipoEdificacao="Torre",CondominioID="3",Nome="Antônio José Darwich Borges Leal",Email="afbleal10@uol.com.br",EdificacaoID="3",UnidadeID="1203",IndFiscal="373.238.652-04",ProfissaoID="10",TelParticular1="(91)99087-6233",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="1037667669" Data="12/08/2017 12:15:13">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Registro já existente: CPF/CNPJ: 373.238.652-04</Mensagem>
+    <NameSpace>DWM.Models.BI.RegisterBI =&gt; account/register/parcparadiso</NameSpace>
+    <Context>__RequestVerificationToken="pNUJv-l_QEYhbgWFp_uMchxDV0jO41P30gshkkHvlp5hTUt9MQgkN839pcBsHYBhj2IFfNdmqq3IfeiUMNuA2cKpk331rlg977JWqUK9mLU1",PathInfo="ParcParadiso",Validador="",DescricaoTipoEdificacao="Torre",CondominioID="3",Nome="Antônio José Darwich Borges Leal",Email="afbleal10@uol.com.br",EdificacaoID="3",UnidadeID="1203",IndFiscal="373.238.652-04",ProfissaoID="10",TelParticular1="(91)99989-9900",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace />
+  </LOG>
+  <LOG ID="286776565" Data="12/08/2017 12:22:02">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>The operation cannot be completed because the DbContext has been disposed.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/register/parcparadiso</NameSpace>
+    <Context>__RequestVerificationToken="bru_hEwk7b6jxAQ-SVLruHAI5pdn9OIkZp5-NBB5lpo2izMQ0JGnto06F6FBe-LpRQlBYuTsBtZD59cHpYLtnxugd79Yq-qNCePO9lxUtbk1",PathInfo="ParcParadiso",Validador="",DescricaoTipoEdificacao="Torre",CondominioID="3",Nome="Antônio José Darwich Borges Leal",Email="afbleal10@uol.com.br",EdificacaoID="3",UnidadeID="1203",IndFiscal="995.348.821-51",ProfissaoID="10",TelParticular1="(91)99989-9900",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace>   em System.Data.Entity.Internal.LazyInternalContext.InitializeContext()
+   em System.Data.Entity.Internal.LazyInternalContext.get_ObjectContext()
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em DWM.Models.BI.EnviarEmailBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\EnviarEmailBI.cs:linha 33
+   em DWM.Controllers.AccountController.Register(RegisterViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 185</StackTrace>
+  </LOG>
+  <LOG ID="2132008110" Data="12/08/2017 18:54:44">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Senha deve ser informada</Mensagem>
+    <NameSpace>ERROR =&gt; account/ativarcredenciado</NameSpace>
+    <Context>__RequestVerificationToken="OhRnBvO08iIA0O4MAvnFFVWZsHmKwTvYDpLnCfwt7AOQRrnP-Bm77y6q1oUDN_uMYUIsLk2J6xZOqbk0-qNVNwxHzOh-Kozj1KeoiYgL_Mo1",usuarioId="14120",keyword="53898939",login="afbleal11@uol.com.br",nome="DANIELA PRADO BORGES LEAL",isAdmin="N",situacao="D",empresaId="3",senha="",confirmacaoSenha=""</Context>
+    <StackTrace>   em DWM.Models.BI.CodigoAtivacaoCredenciadoBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\CodigoAtivacaoBI.cs:linha 181</StackTrace>
+  </LOG>
+</LOG>

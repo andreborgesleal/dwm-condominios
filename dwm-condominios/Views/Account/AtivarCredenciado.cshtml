@@ -1,6 +1,7 @@
 ﻿@model App_Dominio.Repositories.UsuarioRepository
 @{
     Layout = null;
+    DWM.Models.Entidades.Condominio Condominio = (DWM.Models.Entidades.Condominio)ViewBag.Condominio;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -39,13 +40,14 @@
         <div class="container-cadastro center-margin">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><img class="img-responsive" src="~/Content/images/parcparadiso.png" style="height: 80px" /></li>
+                    @*<li><img class="img-responsive" src="~/Content/images/parcparadiso.png" style="height: 80px" /></li>*@
+                    <li><img class="img-responsive" src="~/Users_Data/Empresas/@Condominio.CondominioID/logo/@Condominio.Logo" style="height: 80px" /></li>
                 </ul>
                 <ul class="nav navbar-nav" style="margin-top: 20px">
-                    <li><h3>&nbsp;&nbsp;&nbsp;Parc Paradiso Condomínio Resort</h3></li>
+                    <li><h3>&nbsp;&nbsp;&nbsp;@Condominio.RazaoSocial</h3></li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="~/Account/Login">Acesso</a></li>
+                    <li><a href="~/Account/Login/@Condominio.PathInfo">Acesso</a></li>
                 </ul>
             </div>
         </div>
@@ -89,7 +91,7 @@
                     @Html.HiddenFor(info => info.isAdmin)
                     @Html.HiddenFor(info => info.situacao)
                     @Html.HiddenFor(info => info.empresaId)
-
+                    @Html.Hidden("PathInfo", Condominio.PathInfo)
                     <div class="hidden-sm hidden-xs">
                         <h4>Instruções de preenchimento</h4>
                         <p class="font-gray-dark">
@@ -132,7 +134,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <input type="submit" class="btn btn-success" value="Salvar" />
-                                <input type="button" onclick="window.location = '../Account/Login'" class="btn btn-default" value="Cancelar" />
+                                <input type="button" onclick="window.location = '/Account/Login/@Condominio.PathInfo'" class="btn btn-default" value="Cancelar" />
                             </div>
                         </div>
                     </div>

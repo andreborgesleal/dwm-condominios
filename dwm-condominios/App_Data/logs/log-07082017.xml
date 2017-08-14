@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="381341214" Data="07/08/2017 01:39:58">
+    <Sessao>kb4mac413lvwmd1awqwplbct</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Tempo Limite de Execução Expirado.  O período de tempo limite terminou antes da conclusão da operação ou o servidor não está respondendo. *** An error occurred while executing the command definition. See the inner exception for details.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.SecurityContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; aluguel/browse</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   em System.Data.Entity.Core.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__6()
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1414072737" Data="07/08/2017 10:22:25">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/delete</NameSpace>
+    <Context>AcessoID="1",CondominioID="3",empresaId="3",EdificacaoID="1",UnidadeID="1304",VisitanteID="1",IsPortaria="False",DataInclusao="07/08/2017 08:53:48"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 153
+   em App_Dominio.Controllers.DwmRootController`3.Del(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 363
+   em App_Dominio.Controllers.DwmRootController`3.SetDelete(R value, FormCollection collection, String breadCrumbText, IDictionary`2 text) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 318</StackTrace>
+  </LOG>
+  <LOG ID="679234340" Data="07/08/2017 10:26:28">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/delete</NameSpace>
+    <Context>AcessoID="1",CondominioID="3",empresaId="3",EdificacaoID="1",UnidadeID="1304",VisitanteID="1",IsPortaria="False",DataInclusao="07/08/2017 08:53:48"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 153
+   em App_Dominio.Controllers.DwmRootController`3.Del(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 363
+   em App_Dominio.Controllers.DwmRootController`3.SetDelete(R value, FormCollection collection, String breadCrumbText, IDictionary`2 text) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 318</StackTrace>
+  </LOG>
+  <LOG ID="461415344" Data="07/08/2017 10:39:13">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/delete</NameSpace>
+    <Context>AcessoID="1",CondominioID="3",empresaId="3",EdificacaoID="1",UnidadeID="1304",VisitanteID="1",IsPortaria="False",DataInclusao="07/08/2017 08:53:48"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 153
+   em App_Dominio.Controllers.DwmRootController`3.Del(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 363
+   em App_Dominio.Controllers.DwmRootController`3.SetDelete(R value, FormCollection collection, String breadCrumbText, IDictionary`2 text) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 318</StackTrace>
+  </LOG>
+  <LOG ID="1980327649" Data="07/08/2017 10:39:59">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/delete</NameSpace>
+    <Context>AcessoID="1",CondominioID="3",empresaId="3",EdificacaoID="1",UnidadeID="1304",VisitanteID="1",IsPortaria="False",DataInclusao="07/08/2017 08:53:48"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 153
+   em App_Dominio.Controllers.DwmRootController`3.Del(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 363
+   em App_Dominio.Controllers.DwmRootController`3.SetDelete(R value, FormCollection collection, String breadCrumbText, IDictionary`2 text) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 318</StackTrace>
+  </LOG>
+  <LOG ID="637771507" Data="07/08/2017 11:55:50">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/create</NameSpace>
+    <Context>CondominioID="3",empresaId="3",EdificacaoID="",UnidadeID="",VisitanteID="2",IsPortaria="False",DataTables_Table_0_length="15",Interfona="N",DataAutorizacao="2017-08-07",HoraInicio="13:30",HoraLimite="15:00",Observacao="Solicitar apresentar o material de cloro"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 155
+   em App_Dominio.Controllers.DwmRootController`3.Insert(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 140
+   em App_Dominio.Controllers.DwmRootController`3.SetCreate(R value, FormCollection collection, String breadCrumbText) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 93</StackTrace>
+  </LOG>
+  <LOG ID="2029260286" Data="07/08/2017 12:03:44">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/create</NameSpace>
+    <Context>CondominioID="3",empresaId="3",EdificacaoID="",UnidadeID="",VisitanteID="2",IsPortaria="False",DataTables_Table_0_length="15",Interfona="S",DataAutorizacao="2017-08-07",HoraInicio="13:30",HoraLimite="15:00",Observacao="Teste"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 155
+   em App_Dominio.Controllers.DwmRootController`3.Insert(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 140
+   em App_Dominio.Controllers.DwmRootController`3.SetCreate(R value, FormCollection collection, String breadCrumbText) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 93</StackTrace>
+  </LOG>
+  <LOG ID="1484243517" Data="07/08/2017 14:20:05">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/create</NameSpace>
+    <Context>CondominioID="3",empresaId="3",EdificacaoID="3",UnidadeID="1203",VisitanteID="3",IsPortaria="False",DataTables_Table_0_length="15",Interfona="S",DataAutorizacao="2017-08-07",HoraInicio="15:30",HoraLimite="",Observacao="Confirma se trouxe o material didático antes de autorizar o acesso"</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 155
+   em App_Dominio.Controllers.DwmRootController`3.Insert(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 140
+   em App_Dominio.Controllers.DwmRootController`3.SetCreate(R value, FormCollection collection, String breadCrumbText) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 93</StackTrace>
+  </LOG>
+  <LOG ID="137938108" Data="07/08/2017 14:32:54">
+    <Sessao>mizncuuoneqcalclhotz4g3b</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.PortariaController =&gt; portaria/create</NameSpace>
+    <Context>CondominioID="3",empresaId="3",EdificacaoID="3",UnidadeID="1203",VisitanteID="3",IsPortaria="False",DataTables_Table_0_length="15",Interfona="S",DataAutorizacao="2017-08-07",HoraInicio="",HoraLimite="",Observacao=""</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 155
+   em App_Dominio.Controllers.DwmRootController`3.Insert(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 140
+   em App_Dominio.Controllers.DwmRootController`3.SetCreate(R value, FormCollection collection, String breadCrumbText) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 93</StackTrace>
+  </LOG>
+</LOG>

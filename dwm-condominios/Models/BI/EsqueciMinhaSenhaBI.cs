@@ -120,6 +120,7 @@ namespace DWM.Models.BI
                 EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
+                db.SaveChanges();
                 #endregion
                 #endregion
 

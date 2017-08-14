@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="812728116" Data="11/08/2017 20:19:11">
+    <Sessao>jztvpgtevak3qjcto0pvwplw</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/create</NameSpace>
+    <Context>CondominioID="3",empresaId="0",Prioridade="2",__EdificacaoID="1",__UnidadeID="1304",__CondominoID="1",Assunto="Teste de chamado",_ChamadoMotivoID="3",_FilaAtendimentoID="2",MensagemOriginal="Isto é um teste de teste de envio de chamado",File1ID="",NomeOriginal1="",File2ID="",NomeOriginal2="",File3ID="",NomeOriginal3=""</Context>
+    <StackTrace>   em App_Dominio.Pattern.Facade`3.Save(R value, Crud operation) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Pattern\Facade.cs:linha 155
+   em App_Dominio.Controllers.DwmRootController`3.Insert(R value) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 140
+   em App_Dominio.Controllers.DwmRootController`3.SetCreate(R value, FormCollection collection, String breadCrumbText) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Controllers\DwmRootController.cs:linha 93</StackTrace>
+  </LOG>
+  <LOG ID="1314692438" Data="11/08/2017 20:48:52">
+    <Sessao>jztvpgtevak3qjcto0pvwplw</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Tempo Limite de Execução Expirado.  O período de tempo limite terminou antes da conclusão da operação ou o servidor não está respondendo. *** An error occurred while executing the command definition. See the inner exception for details.</Mensagem>
+    <NameSpace>App_Dominio.Security.EmpresaSecurity`1[[App_Dominio.Entidades.App_DominioContext, App_Dominio, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]] =&gt; chamado/browse</NameSpace>
+    <Context />
+    <StackTrace>   em System.Data.Entity.Core.EntityClient.Internal.EntityCommandDefinition.ExecuteStoreCommands(EntityCommand entityCommand, CommandBehavior behavior)
+   em System.Data.Entity.Core.Objects.Internal.ObjectQueryExecutionPlan.Execute[TResultType](ObjectContext context, ObjectParameterCollection parameterValues)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__6()
+   em System.Data.Entity.Core.Objects.ObjectContext.ExecuteInTransaction[T](Func`1 func, IDbExecutionStrategy executionStrategy, Boolean startLocalTransaction, Boolean releaseConnectionOnSuccess)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;&gt;c__DisplayClass7.&lt;GetResults&gt;b__5()
+   em System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.GetResults(Nullable`1 forMergeOption)
+   em System.Data.Entity.Core.Objects.ObjectQuery`1.&lt;System.Collections.Generic.IEnumerable&lt;T&gt;.GetEnumerator&gt;b__0()
+   em System.Data.Entity.Internal.LazyEnumerator`1.MoveNext()
+   em System.Linq.Enumerable.SingleOrDefault[TSource](IEnumerable`1 source)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.&lt;GetElementFunction&gt;b__2[TResult](IEnumerable`1 sequence)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.ExecuteSingle[TResult](IEnumerable`1 query, Expression queryRoot)
+   em System.Data.Entity.Core.Objects.ELinq.ObjectQueryProvider.System.Linq.IQueryProvider.Execute[TResult](Expression expression)
+   em System.Linq.Queryable.SingleOrDefault[TSource](IQueryable`1 source)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.FindInStore(WrappedEntityKey key, String keyValuesParamName)
+   em System.Data.Entity.Internal.Linq.InternalSet`1.Find(Object[] keyValues)
+   em System.Data.Entity.DbSet`1.Find(Object[] keyValues)
+   em App_Dominio.Security.EmpresaSecurity`1._ValidarSessao(String sessionId) na C:\Sistemas\app_dominio\App_Dominio\App_Dominio\Security\EmpresaSecurity.cs:linha 225</StackTrace>
+  </LOG>
+  <LOG ID="1596225257" Data="11/08/2017 21:50:09">
+    <Sessao>jztvpgtevak3qjcto0pvwplw</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/register/parcparadiso</NameSpace>
+    <Context>__RequestVerificationToken="hkr4JdLj8AFVIWyZ4tgY0lW4-qc-gfwA5xwlNLcn3NhYs6Q1xzazflW2SLmWgFnv7MnYPF-fil2UlqiSwwwlvj0iMTnmsHsL5EjnnM1_v7g1",PathInfo="ParcParadiso",CondominioID="3",Nome="Gilberto Mestrinho Andrade",Email="afbleal2@uol.com.br",EdificacaoID="4",UnidadeID="302",IndFiscal="241.184.697-58",ProfissaoID="9",TelParticular1="(91)99987-0997",TelParticular2="",DataNascimento="",Sexo="M",IndProprietario="S",IndAnimal="N",senha="EvergladesParc",confirmacaoSenha="EvergladesParc"</Context>
+    <StackTrace>   em DWM.Controllers.AccountController.Register(RegisterViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 192</StackTrace>
+  </LOG>
+</LOG>

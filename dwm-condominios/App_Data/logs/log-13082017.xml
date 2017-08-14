@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LOG>
+  <LOG ID="36608204" Data="13/08/2017 00:59:54">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.AlertaBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\AlertaBI.cs:linha 148
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 218</StackTrace>
+  </LOG>
+  <LOG ID="1718868432" Data="13/08/2017 01:01:39">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.AlertaBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\AlertaBI.cs:linha 148
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 218</StackTrace>
+  </LOG>
+  <LOG ID="1944778199" Data="13/08/2017 01:03:29">
+    <Sessao>344r03vg1ta5kkjd2ejhqyp4</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Referência de objeto não definida para uma instância de um objeto.</Mensagem>
+    <NameSpace>DWM.Controllers.ChamadoController =&gt; chamado/editanotacao</NameSpace>
+    <Context />
+    <StackTrace>   em DWM.Models.BI.AlertaBI.Run(Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\BI\AlertaBI.cs:linha 148
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 20
+   em DWM.Controllers.ChamadoController.EditAnotacao(Int32 ChamadoID, String Mensagem, String FilaAtendimentoAtualID, String _FilaAtendimentoID, String DescricaoFilaAtendimento, String IsCondomino, String _ChamadoStatusID, String DescricaoChamadoStatus) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\ChamadoController.cs:linha 218</StackTrace>
+  </LOG>
+  <LOG ID="32225567" Data="13/08/2017 09:08:12">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Bad Request</Mensagem>
+    <NameSpace>App_Dominio.Component.SendEmail =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="751672910" Data="13/08/2017 09:08:30">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Não foi possível enviar o e-mail. Problemas de infra estrutura. Tente novamente mais tarde.</Mensagem>
+    <NameSpace>DWM.Models.BI.EmailNotificacaoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1522200838" Data="13/08/2017 09:08:30">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Não foi possível enviar o e-mail. Problemas de infra estrutura. Tente novamente mais tarde.</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1168880554" Data="13/08/2017 09:08:41">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Registro já cadastrado.</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="393000987" Data="13/08/2017 09:10:49">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Bad Request</Mensagem>
+    <NameSpace>App_Dominio.Component.SendEmail =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="812157024" Data="13/08/2017 09:10:49">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Não foi possível enviar o e-mail. Problemas de infra estrutura. Tente novamente mais tarde.</Mensagem>
+    <NameSpace>DWM.Models.BI.EmailNotificacaoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="205729233" Data="13/08/2017 09:10:49">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>Não foi possível enviar o e-mail. Problemas de infra estrutura. Tente novamente mais tarde.</Mensagem>
+    <NameSpace>DWM.Models.BI.EditarCredenciadoBI =&gt; condomino/editcredenciado</NameSpace>
+    <Context />
+    <StackTrace />
+  </LOG>
+  <LOG ID="1050498264" Data="13/08/2017 11:54:27">
+    <Sessao>ia1ob1ivf1uupclo3wtmtksf</Sessao>
+    <IP>::1</IP>
+    <HostName>DESKTOP-5TKHUUF\André</HostName>
+    <Mensagem>An error occurred while updating the entries. See the inner exception for details. *** An error occurred while updating the entries. See the inner exception for details.</Mensagem>
+    <NameSpace>DWM.Controllers.AccountController =&gt; account/forgot/parcparadiso</NameSpace>
+    <Context>__RequestVerificationToken="WaP73RSffo4ZC28lNwX8mauYOoev-krPXeqD9bjz11rGbGfAXhEIZYWMNIHGTgRx96zszTJdaF2ZKzYsiJ5DZgI28Y8dzxnSBENJAcY7IE41",empresaId="3",PathInfo="ParcParadiso",login="afbleal@gmail.com"</Context>
+    <StackTrace>   em System.Data.Entity.Internal.InternalContext.SaveChanges()
+   em System.Data.Entity.Internal.LazyInternalContext.SaveChanges()
+   em System.Data.Entity.DbContext.SaveChanges()
+   em DWM.Models.Pattern.FactoryLocalhost`2.Execute(IProcess`2 proc, Repository value) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Models\Pattern\FactoryLocalhost.cs:linha 25
+   em DWM.Controllers.AccountController.Forgot(UsuarioViewModel value, FormCollection collection) na C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\Controllers\AccountController.cs:linha 375</StackTrace>
+  </LOG>
+</LOG>
