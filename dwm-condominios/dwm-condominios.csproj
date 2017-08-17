@@ -243,6 +243,7 @@
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PortariaController.cs" />
+    <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\VisitanteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -4281,6 +4282,11 @@
     <Content Include="Views\Portaria\Edit.cshtml" />
     <Content Include="Views\Portaria\Delete.cshtml" />
     <Content Include="Views\Condomino\ListInativos.cshtml" />
+    <Content Include="Views\Unidade\Browse.cshtml" />
+    <Content Include="Views\Unidade\List.cshtml" />
+    <Content Include="Views\Unidade\Create.cshtml" />
+    <Content Include="Views\Unidade\Edit.cshtml" />
+    <Content Include="Views\Unidade\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

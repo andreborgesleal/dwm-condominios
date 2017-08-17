@@ -13,9 +13,27 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Informe a Edificação")]
         public int EdificacaoID { get; set; }
 
+        public string DescricaoEdificacao { get; set; }
+
         [DisplayName("Unidade")]
         [Required(ErrorMessage = "Informe a Unidade")]
         public int UnidadeID { get; set; }
+
+        [DisplayName("Código")]
+        [Required(ErrorMessage = "Informe o Código da Unidade")]
+        public string Codigo { get; set; }
+
+        [DisplayName("Tipo Unidade")]
+        [Required(ErrorMessage = "Informe o tipo de unidade: Residencial ou Comercial")]
+        public string TipoUnidade { get; set; }
+
+        [DisplayName("Tipo Condômino")]
+        [Required(ErrorMessage = "Informe o tipo do condômino: Pessoa Física ou Pessoa Jurídica")]
+        public string TipoCondomino { get; set; }
+
+        [DisplayName("Nº Vagas Garagem")]
+        [Required(ErrorMessage = "Informe o número de vagas de garagem")]
+        public int NumVagas { get; set; }
 
         [DisplayName("Validador")]
         public string Validador { get; set; }

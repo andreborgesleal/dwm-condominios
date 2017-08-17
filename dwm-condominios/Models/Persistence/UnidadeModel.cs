@@ -24,6 +24,23 @@ namespace DWM.Models.Persistence
         #endregion
 
         #region Métodos da classe CrudContext
+        public override UnidadeViewModel BeforeInsert(UnidadeViewModel value)
+        {
+            if ((from u in db.Unidades
+                 where u.CondominioID == sessaoCorrente.empresaId
+                       && u.EdificacaoID == value.EdificacaoID
+                 select u.UnidadeID).Count() == 0)
+                value.UnidadeID = 1;
+            else
+                value.UnidadeID = (from u in db.Unidades
+                                   where u.CondominioID == sessaoCorrente.empresaId
+                                         && u.EdificacaoID == value.EdificacaoID
+                                   select u.UnidadeID).Max() + 1;
+
+            value.empresaId = sessaoCorrente.empresaId;
+            return base.BeforeInsert(value);
+        }
+
         public override Unidade MapToEntity(UnidadeViewModel value)
         {
             Unidade entity = Find(value);
@@ -34,10 +51,17 @@ namespace DWM.Models.Persistence
             entity.CondominioID = value.CondominioID;
             entity.EdificacaoID = value.EdificacaoID;
             entity.UnidadeID = value.UnidadeID;
-            entity.Validador = value.Validador;
-            entity.DataExpiracao = value.DataExpiracao;
-            entity.NomeCondomino = value.NomeCondomino;
-            entity.Email = value.Email;
+            entity.Codigo = value.Codigo;
+            entity.TipoUnidade = value.TipoUnidade;
+            entity.TipoCondomino = value.TipoCondomino;
+            entity.NumVagas = value.NumVagas;
+            if (value.Validador != null && value.Validador != "" && value.Validador != "dwm sistemas")
+            {
+                entity.Validador = value.Validador;
+                entity.DataExpiracao = value.DataExpiracao;
+                entity.NomeCondomino = value.NomeCondomino;
+                entity.Email = value.Email;
+            }
 
             return entity;
         }
@@ -47,8 +71,14 @@ namespace DWM.Models.Persistence
             return new UnidadeViewModel()
             {
                 CondominioID = entity.CondominioID,
+                empresaId=sessaoCorrente.empresaId,
                 EdificacaoID = entity.EdificacaoID,
+                DescricaoEdificacao = db.Edificacaos.Find(entity.EdificacaoID).Descricao,
                 UnidadeID = entity.UnidadeID,
+                Codigo = entity.Codigo,
+                TipoUnidade = entity.TipoUnidade,
+                TipoCondomino = entity.TipoCondomino,
+                NumVagas = entity.NumVagas,
                 Validador = entity.Validador,
                 DataExpiracao = entity.DataExpiracao,
                 NomeCondomino = entity.NomeCondomino,
@@ -102,7 +132,50 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            if (operation == Crud.ALTERAR)
+
+            if (operation != Crud.EXCLUIR && String.IsNullOrEmpty(value.Codigo))
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Código").ToString();
+                value.mensagem.MessageBase = "Código da Unidade deve ser informado";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            #region Verifica se a unidade já existe
+            if (operation == Crud.INCLUIR)
+            {
+                if ((from u in db.Unidades
+                     where u.CondominioID == value.CondominioID
+                           && u.EdificacaoID == value.EdificacaoID
+                           && u.Codigo == value.Codigo
+                     select u).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "Unidade já cadastrada";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+            else if (operation == Crud.EXCLUIR)
+            {
+                if ((from cu in db.CondominoUnidades
+                     where cu.CondominioID == value.CondominioID 
+                     && cu.EdificacaoID == value.EdificacaoID 
+                     && cu.UnidadeID == value.UnidadeID
+                     select cu).Count() > 0)
+                {
+                    value.mensagem.Code = 16;
+                    value.mensagem.Message = MensagemPadrao.Message(16).ToString();
+                    value.mensagem.MessageBase = MensagemPadrao.Message(16).ToString();
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+            #endregion
+
+            if (operation == Crud.ALTERAR && value.Validador != null && value.Validador != "dwm sistemas")
             {
                 if (value.Validador.Trim().Length == 0)
                 {
@@ -159,6 +232,10 @@ namespace DWM.Models.Persistence
             UnidadeViewModel u = base.CreateRepository(Request);
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
             u.CondominioID = security.getSessaoCorrente().empresaId;
+            u.TipoUnidade = "R";
+            u.TipoCondomino = "F";
+            u.Validador = "dwm sistemas";
+
             return u;
         }
         #endregion
@@ -177,7 +254,7 @@ namespace DWM.Models.Persistence
         #region Métodos da classe ListViewRepository
         public override IEnumerable<UnidadeViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
-            int _CondominioID = param != null && param.Count() > 0 && param[0] != null ? int.Parse(param[0].ToString()) : 0;
+            int _CondominioID = sessaoCorrente.empresaId;
 
             return (from u in db.Unidades
                     join e in db.Edificacaos on u.EdificacaoID equals e.EdificacaoID
@@ -188,19 +265,18 @@ namespace DWM.Models.Persistence
                         empresaId = sessaoCorrente.empresaId,
                         CondominioID = u.CondominioID,
                         EdificacaoID = u.EdificacaoID,
+                        DescricaoEdificacao = e.Descricao,
                         UnidadeID = u.UnidadeID,
                         EdificacaoDescricao = e.Descricao,
+                        Codigo = u.Codigo,
+                        TipoUnidade = u.TipoUnidade,
+                        TipoCondomino = u.TipoCondomino,
+                        NumVagas = u.NumVagas,
                         Validador = u.Validador,
                         NomeCondomino = u.NomeCondomino,
                         DataExpiracao = u.DataExpiracao,
                         Email = u.Email,
-                        PageSize = pageSize,
-                        TotalCount = ((from u1 in db.Unidades
-                                       join e1 in db.Edificacaos on u1.EdificacaoID equals e1.EdificacaoID
-                                       where u1.CondominioID == _CondominioID
-                                       orderby e1.Descricao, u1.UnidadeID
-                                       select u1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                    }).ToList();
         }
 
         public override Repository getRepository(Object id)

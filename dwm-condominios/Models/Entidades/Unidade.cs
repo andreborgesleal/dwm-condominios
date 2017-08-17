@@ -19,6 +19,18 @@ namespace DWM.Models.Entidades
         [DisplayName("ID")]
         public int UnidadeID { get; set; }
 
+        [DisplayName("Codigo")]
+        public string Codigo { get; set; }
+
+        [DisplayName("TipoUnidade")]
+        public string TipoUnidade { get; set; }
+
+        [DisplayName("TipoCondomino")]
+        public string TipoCondomino { get; set; }
+
+        [DisplayName("NumVagas")]
+        public int NumVagas { get; set; }
+
         [DisplayName("Validador")]
         public string Validador { get; set; }
 

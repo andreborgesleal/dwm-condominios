@@ -101,7 +101,7 @@ namespace DWM.Models.Enumeracoes
                                 select new SelectListItem()
                                 {
                                     Value = u.UnidadeID.ToString(),
-                                    Text = u.UnidadeID.ToString(),
+                                    Text = u.Codigo,
                                     Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
                                 }).ToList();
 
@@ -114,7 +114,7 @@ namespace DWM.Models.Enumeracoes
                                 select new SelectListItem()
                                 {
                                     Value = u.UnidadeID.ToString(),
-                                    Text = u.UnidadeID.ToString(),
+                                    Text = u.Codigo,
                                     Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
                                 }).ToList();
 
@@ -210,7 +210,7 @@ namespace DWM.Models.Enumeracoes
                             select new SelectListItem()
                             {
                                 Value = u.UnidadeID.ToString(),
-                                Text = u.UnidadeID.ToString(),
+                                Text = u.Codigo,
                                 Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
                             }).ToList();
 
@@ -725,5 +725,22 @@ namespace DWM.Models.Enumeracoes
                 return q;
             }
         }
+
+        public IEnumerable<SelectListItem> TipoUnidade(string SelectedValue)
+        {
+            IList<SelectListItem> q = new List<SelectListItem>();
+            q.Add(new SelectListItem() { Value = "R", Text = "Residencial", Selected = (SelectedValue != null && SelectedValue != "" ? SelectedValue == "R" : false) });
+            q.Add(new SelectListItem() { Value = "C", Text = "Comercial", Selected = (SelectedValue != null && SelectedValue != "" ? SelectedValue == "C" : false) });
+            return q;
+        }
+
+        public IEnumerable<SelectListItem> TipoCondomino(string SelectedValue)
+        {
+            IList<SelectListItem> q = new List<SelectListItem>();
+            q.Add(new SelectListItem() { Value = "F", Text = "Pessoa Física", Selected = (SelectedValue != null && SelectedValue != "" ? SelectedValue == "F" : false) });
+            q.Add(new SelectListItem() { Value = "J", Text = "Pessoa Jurídica", Selected = (SelectedValue != null && SelectedValue != "" ? SelectedValue == "J" : false) });
+            return q;
+        }
+
     }
 }

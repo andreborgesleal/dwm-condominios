@@ -1,0 +1,80 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@using App_Dominio.Models
+@model DWM.Models.Repositories.UnidadeViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Unidade/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+    int _CondominioID = Model.CondominioID;
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Unidades", Descricao = "Alteração de Unidade", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Delete", "Unidade", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.EdificacaoID)
+                @Html.HiddenFor(info => info.UnidadeID)
+                @Html.HiddenFor(info => info.Codigo)
+                @Html.HiddenFor(info => info.TipoUnidade)
+                @Html.HiddenFor(info => info.TipoCondomino)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.NumVagas)
+                if (Model.Validador == null || Model.Validador.Trim().Length == 0)
+                {
+                    @Html.Hidden("Validador", "dwm sistemas")
+                }
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            @Edificacao.Bloco(_CondominioID)
+                            @Html.DropDownList("EdificacaoID", new BindDropDownList().Edificacoes("", Model.EdificacaoID.ToString()), new { @class = "form-control", @disabled = "Disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Unidade</label>
+                            <input type="text" id="Codigo" name="Codigo" value="@Model.Codigo" class="form-control" maxlength="6" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo Unidade</label>
+                            @Html.DropDownList("TipoUnidade", new BindDropDownList().TipoUnidade(Model.TipoUnidade.ToString()), new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo Condômino</label>
+                            @Html.DropDownList("TipoCondomino", new BindDropDownList().TipoCondomino(Model.TipoCondomino.ToString()), new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Nº Vagas Garagem</label>
+                            <input type="number" class="form-control" name="NumVagas" id="NumVagas" value="@Model.NumVagas" min="0" max="4" disabled />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Excluir" class="btn btn-danger" />
+                        <input type="button" onclick="window.location = '../Unidade/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

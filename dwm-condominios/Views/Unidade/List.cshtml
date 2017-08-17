@@ -1,0 +1,93 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.UnidadeViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">@ViewBag.EdificacaoDescricao</th>
+                        <th class="column-title">Unidade</th>
+                        <th class="column-title">Tipo Unidade</th>
+                        <th class="column-title">Tipo Condômino</th>
+                        <th class="column-title">Condômino</th>
+                        <th class="column-title">E-mail</th>
+                        <th class="column-title text-center">Expira em</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.UnidadeViewModel und in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <a href="Edit?EdificacaoID=@und.EdificacaoID.ToString()&UnidadeID=@und.UnidadeID.ToString()" title="Editar"><i class="fa fa-edit fa-2x"></i></a>&nbsp;
+                                <a href="Delete?EdificacaoID=@und.EdificacaoID.ToString()&UnidadeID=@und.UnidadeID.ToString()" title="Excluir"><i class="fa fa-trash fa-2x"></i></a>
+                            </td>
+                            <td>
+                                <span>@und.DescricaoEdificacao</span>
+                            </td>
+                            <td>
+                                <span>@und.Codigo</span>
+                            </td>
+                            <td>
+                                @if (und.TipoUnidade == "R")
+                                {
+                                    <span>Residencial</span>
+                                }
+                                else if (und.TipoUnidade == "C")
+                                {
+                                    <span>Comercial</span>
+                                }
+                            </td>
+                            <td>
+                                @if (und.TipoCondomino == "F")
+                                {
+                                    <span>Pessoa Física</span>
+                                }
+                                else if (und.TipoCondomino == "J")
+                                {
+                                    <span>Pessoa Jurídica</span>
+                                }
+                            </td>
+                            <td>
+                                <span>@und.NomeCondomino</span>
+                            </td>
+                            <td>
+                                <span>@und.Email</span>
+                            </td>
+                            <td class="text-center">
+                                <span>@(und.DataExpiracao.HasValue ? und.DataExpiracao.Value.ToString("dd/MM/yyyy") : "")</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 25,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+
+
+
