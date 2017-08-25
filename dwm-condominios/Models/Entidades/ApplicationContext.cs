@@ -8,6 +8,7 @@ namespace DWM.Models.Entidades
         public DbSet<Condominio> Condominios { get; set; }
         public DbSet<Condomino> Condominos { get; set; }
         public DbSet<CondominoPF> CondominoPFs { get; set; }
+        public DbSet<CondominoPJ> CondominoPJs { get; set; }
         public DbSet<Credenciado> Credenciados { get; set; }
         public DbSet<CondominoUnidade> CondominoUnidades { get; set; }
         public DbSet<Unidade> Unidades { get; set;  }
@@ -43,5 +44,6 @@ namespace DWM.Models.Entidades
         public DbSet<AluguelEspaco> AluguelEspacos { get; set; }
         public DbSet<EspacoComum> EspacoComums { get; set; }
         public DbSet<TipoEdificacao> TipoEdificacaos { get; set; }
+        public DbSet<RamoAtividade> RamoAtividades { get; set; }
     }
 }

@@ -206,12 +206,56 @@ namespace DWM.Models.Enumeracoes
 
                 q = q.Union(from u in db.Unidades.AsEnumerable()
                             where u.CondominioID.Equals(_CondominioID) && u.EdificacaoID.Equals(_EdificacaoID)
+                            orderby u.Codigo
+                            select new SelectListItem()
+                            {
+                                Value = u.UnidadeID.ToString(),
+                                Text = u.Codigo,
+                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false),
+                            }).ToList();
+
+                return q.AsEnumerable().ToList();
+            }
+        }
+
+        public IEnumerable<SelectListItem> UnidadesDesocupadas(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int _EdificacaoID = int.Parse(param[2].ToString());
+            int _CondominioID = 0;
+
+            if (param.Count() > 3)
+                _CondominioID = (int)param[3];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from u in db.Unidades
+                            where u.CondominioID.Equals(_CondominioID) 
+                                  && u.EdificacaoID.Equals(_EdificacaoID)
+                                  && !(from cunid in db.CondominoUnidades
+                                       where cunid.CondominioID == _CondominioID 
+                                             && cunid.EdificacaoID == _EdificacaoID
+                                             && cunid.DataFim == null
+                                       select new { cunid.CondominioID, cunid.EdificacaoID, cunid.UnidadeID }).Contains(new { u.CondominioID, u.EdificacaoID, u.UnidadeID })
                             orderby u.UnidadeID
                             select new SelectListItem()
                             {
                                 Value = u.UnidadeID.ToString(),
                                 Text = u.Codigo,
-                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false)
+                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false),
                             }).ToList();
 
                 return q.AsEnumerable().ToList();
@@ -391,6 +435,33 @@ namespace DWM.Models.Enumeracoes
                             select new SelectListItem()
                             {
                                 Value = e.ProfissaoID.ToString(),
+                                Text = e.Descricao,
+                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> RamoAtividade(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.RamoAtividades.AsEnumerable()
+                            orderby e.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = e.RamoAtividadeID.ToString(),
                                 Text = e.Descricao,
                                 Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
                             }).ToList();

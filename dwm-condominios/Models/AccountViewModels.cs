@@ -69,5 +69,11 @@ namespace DWM.Models
         public string DescricaoTipoEdificacao { get; set; }
 
         public Condominio Condominio { get; set; }
+
+        [Display(Name = "Administrador")]
+        public string Administrador { get; set; }
+
+        [Display(Name = "Atividade")]
+        public int RamoAtividadeID { get; set; }
     }
 }

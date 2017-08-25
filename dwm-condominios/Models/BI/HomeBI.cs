@@ -145,9 +145,9 @@ namespace dwm_condominios.Models.BI
                     home.Documentos = l.getPagedList(0, 15, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
                 #endregion
 
-                IList<ChartJS> js = new List<ChartJS>();
-                foreach (BalanceteViewModel bal in home.DRE.Where(info => info.Natureza == "D"))
-                    js.Add(new ChartJS() { device = bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
+                //IList<ChartJS> js = new List<ChartJS>();
+                //foreach (BalanceteViewModel bal in home.DRE.Where(info => info.Natureza == "D"))
+                //    js.Add(new ChartJS() { device = bal.descricao, geekbench = bal.SaldosContabeis.FirstOrDefault().ValorSaldo });
 
                 //js.Add(new ChartJS() { device = "Taxa condominial", geekbench = 380 });
                 //js.Add(new ChartJS() { device = "Taxa extra", geekbench = 180 });
@@ -160,11 +160,11 @@ namespace dwm_condominios.Models.BI
                 //js.Add(new ChartJS() { device = "Acordo judicial", geekbench = 780 });
                 //js.Add(new ChartJS() { device = "Outros", geekbench = 880 });
 
-                home.js = new JsonResult()
-                {
-                    Data = js.ToList(),
-                    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-                };
+                //home.js = new JsonResult()
+                //{
+                //    Data = js.ToList(),
+                //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+                //};
             }
             catch (Exception ex)
             {

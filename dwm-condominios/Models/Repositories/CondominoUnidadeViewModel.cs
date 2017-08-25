@@ -18,6 +18,8 @@ namespace DWM.Models.Repositories
         [Required(ErrorMessage = "Informe a UnidadeID")]
         public int UnidadeID { get; set; }
 
+        public string Codigo { get; set; }
+
         [DisplayName("Condomino ID")]
         public int CondominoID { get; set; }
 

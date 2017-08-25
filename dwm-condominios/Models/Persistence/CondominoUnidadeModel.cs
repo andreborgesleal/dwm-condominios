@@ -124,6 +124,7 @@ namespace DWM.Models.Persistence
                 CondominioID = entity.CondominioID,
                 EdificacaoID = entity.EdificacaoID,
                 UnidadeID = entity.UnidadeID,
+                Codigo = db.Unidades.Find(entity.CondominioID, entity.EdificacaoID, entity.UnidadeID).Codigo,
                 CondominoID = entity.CondominoID,
                 DataInicio = entity.DataInicio,
                 DataFim = entity.DataFim,
@@ -281,9 +282,8 @@ namespace DWM.Models.Persistence
             if (_CondominoID.HasValue)
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
-                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID}
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
                                && (c.CondominioID == sessaoCorrente.empresaId
                                    && c.CondominoID == _CondominoID)
@@ -294,6 +294,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -308,26 +309,14 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
+                                 discriminator = c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
-                             //                        && c1.CondominoID == _CondominoID)
-                             //                    && c1.DataFim == null
-                             //              orderby c1.EdificacaoID, c1.UnidadeID
-                             //              select c1).Count()
                          }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
             {
                 query = (from c in db.CondominoUnidades join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
-                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
                                && (c.CondominioID == sessaoCorrente.empresaId 
                                    && c.EdificacaoID == _EdificacaoID
@@ -339,6 +328,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -353,29 +343,16 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
+                                 discriminator = c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
-                             //                        && c1.EdificacaoID == _EdificacaoID
-                             //                        && c1.UnidadeID == _UnidadeID)
-                             //                    && c1.DataFim == null
-                             //              orderby c1.Condomino.Nome
-                             //              select c1).Count()
                          }).ToList();
             }
             else
             {
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
-                         join pf in db.CondominoPFs on c.CondominoID equals pf.CondominoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "A"
                                && (
                                      (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome))) ||
@@ -390,6 +367,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -404,23 +382,8 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 Sexo = pf.Sexo == "M" ? "Masculino" : "Feminino",
+                                 discriminator = c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (
-                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome))) ||
-                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
-                             //                          (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome)) ||
-                             //                          (_EdificacaoID == 0 && (_nome == null || _nome == ""))
-                             //                       )
-                             //                    && c1.DataFim == null
-                             //              orderby c1.Condomino.Nome
-                             //              select c1).Count()
                          }).ToList();
             }
             return query;
@@ -475,8 +438,8 @@ namespace DWM.Models.Persistence
             if (_CondominoID.HasValue)
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "D"
                                && (c.CondominioID == sessaoCorrente.empresaId
                                    && c.CondominoID == _CondominoID)
@@ -487,6 +450,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -501,25 +465,15 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 discriminator=c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
-                             //                        && c1.CondominoID == _CondominoID)
-                             //                    && c1.DataFim == null
-                             //              orderby c1.EdificacaoID, c1.UnidadeID
-                             //              select c1).Count()
                          }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
             {
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "D"
                                && (c.CondominioID == sessaoCorrente.empresaId
                                    && c.EdificacaoID == _EdificacaoID
@@ -531,6 +485,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -545,27 +500,16 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 discriminator = c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (c1.CondominioID == sessaoCorrente.empresaId
-                             //                        && c1.EdificacaoID == _EdificacaoID
-                             //                        && c1.UnidadeID == _UnidadeID)
-                             //                    && c1.DataFim == null
-                             //              orderby c1.Condomino.Nome
-                             //              select c1).Count()
                          }).ToList();
             }
             else
             {
                 query = (from c in db.CondominoUnidades
                          join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                         join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
                          where c.CondominioID == sessaoCorrente.empresaId
-                               && c.Condomino.IndFiscal.Length == 11
                                && c.Condomino.IndSituacao == "D"
                                && (
                                      (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome))) ||
@@ -580,6 +524,7 @@ namespace DWM.Models.Persistence
                              CondominioID = c.CondominioID,
                              EdificacaoID = c.EdificacaoID,
                              UnidadeID = c.UnidadeID,
+                             Codigo = u.Codigo,
                              CondominoID = c.CondominoID,
                              DataInicio = c.DataInicio,
                              EdificacaoDescricao = e.Descricao,
@@ -594,22 +539,8 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 discriminator = c.Condomino.discriminator
                              },
-                             //PageSize = pageSize,
-                             //TotalCount = (from c1 in db.CondominoUnidades
-                             //              join e1 in db.Edificacaos on c1.EdificacaoID equals e1.EdificacaoID
-                             //              where c1.CondominioID == sessaoCorrente.empresaId
-                             //                    && c1.Condomino.IndFiscal.Length == 11
-                             //                    && c1.Condomino.IndSituacao == "A"
-                             //                    && (
-                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome))) ||
-                             //                          (_EdificacaoID > 0 && (c1.CondominioID == sessaoCorrente.empresaId && c1.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
-                             //                          (_nome != null && _nome != "" && (c1.Condomino.Nome.StartsWith(_nome) || c1.Condomino.IndFiscal == _nome || c1.Condomino.Email == _nome)) ||
-                             //                          (_EdificacaoID == 0 && (_nome == null || _nome == ""))
-                             //                       )
-                             //                    && c1.DataFim == null
-                             //              orderby c1.Condomino.Nome
-                             //              select c1).Count()
                          }).ToList();
             }
             return query;
@@ -661,12 +592,11 @@ namespace DWM.Models.Persistence
         public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
         {
             IEnumerable<CondominoUnidadeViewModel> query = null;
-
             query = (from c in db.CondominoUnidades
                      join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                     join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID}
                      where c.CondominioID == sessaoCorrente.empresaId
-                           && c.Condomino.CondominioID == sessaoCorrente.empresaId 
-                           && c.Condomino.IndFiscal.Length == 11
+                           && c.Condomino.CondominioID == sessaoCorrente.empresaId
                            && c.Condomino.IndSituacao == "D"
                            && c.DataFim == null
                      orderby c.Condomino.Nome
@@ -675,6 +605,7 @@ namespace DWM.Models.Persistence
                          CondominioID = c.CondominioID,
                          EdificacaoID = c.EdificacaoID,
                          UnidadeID = c.UnidadeID,
+                         Codigo = u.Codigo,
                          CondominoID = c.CondominoID,
                          DataInicio = c.DataInicio,
                          EdificacaoDescricao = e.Descricao,
@@ -689,6 +620,7 @@ namespace DWM.Models.Persistence
                              UsuarioID = c.Condomino.UsuarioID,
                              DataCadastro = c.Condomino.DataCadastro,
                              Avatar = c.Condomino.Avatar,
+                             discriminator = c.Condomino.discriminator
                          },
                      }).ToList();
             return query;

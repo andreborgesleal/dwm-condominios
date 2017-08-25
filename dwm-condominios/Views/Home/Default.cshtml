@@ -2,7 +2,7 @@
 @using DWM.Models.Entidades
 @using App_Dominio.Models
 @using App_Dominio.Repositories
-@model DWM.Models.Repositories.HomeViewModel
+@model HomeViewModel
 @{
     string _hidden = "";
     string _largura = "col-md-8 col-lg-8";
@@ -314,7 +314,10 @@ else
                         </div>
                         <div class="x_content">
                             <div id="div-download">
-                                @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
+                                @if (Model != null && Model.Documentos != null && Model.Documentos.TotalCount > 0)
+                                {
+                                    @Html.Partial("../Documentos/ListParamHome", Model.Documentos)
+                                }
                             </div>
                         </div>
                     </div>
@@ -333,19 +336,18 @@ else
                 <div class="modal-content">
                     <div class="modal-header bg-primary">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                        <h3 class="modal-title" id="my
-                        LabelPreview">
+                        <h3 class="modal-title" id="myLabelPreview">
                             @inf.Cabecalho
-                    </h3>
-                </div>
-                <div class="modal-body Scroll" id="myModal1-body-preview" style="height: 700px">
-                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                        </h3>
+                    </div>
+                    <div class="modal-body" id="myModal1-body-preview">
+                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    </div>
                 </div>
             </div>
-        </div>
         <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
             <div class="modal-content">
                 <div class="modal-header bg-primary">

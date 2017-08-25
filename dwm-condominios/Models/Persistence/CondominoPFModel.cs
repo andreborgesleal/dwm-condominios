@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using App_Dominio.Entidades;
-using App_Dominio.Component;
+﻿using App_Dominio.Entidades;
 using DWM.Models.Entidades;
 using DWM.Models.Repositories;
 

@@ -15,8 +15,6 @@
     <link href="../../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="../../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-
-
     <!-- iCheck -->
     <link href="../../Content/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
     <!-- bootstrap-wysiwyg -->
@@ -29,17 +27,12 @@
     <link href="../../Content/vendors/starrr/dist/starrr.css" rel="stylesheet">*@
     <!-- Custom Theme Style -->
     <link href="../../Content/production/css/custom.css" rel="stylesheet">
-
     <!-- Site.css -->
     <link href="../../Content/Site.css" rel="stylesheet">
-
     <!-- Sticky-footer-->
     <link href="../../Content/Css/sticky-footer.css" rel="stylesheet" />
-
     <!-- Custom Theme Style -->
-    @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
     <script type="text/javascript" src="../../Content/vendors/jquery/dist/jquery.min.js"></script>
-    @*<script type="text/javascript" src="../scripts/bootstrap.js"></script>*@
     <script type="text/javascript" src="../../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../../scripts/jquery.validate.js"></script>
     <script type="text/javascript" src="../../scripts/jquery.maskedinput.js"></script>
@@ -65,7 +58,7 @@
     <div class="container-cadastro center-margin">
         <div class="x_panel">
             <div class="x_title">
-                <h2>Cadastro <small>Ao se cadastrar você concorda com os <a href="~/Account/TermoUso" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica" class="text-info" target="_blank">Política de Privacidade</a></small></h2>
+                <h2>Cadastro <small>Ao se cadastrar você concorda com os <a href="~/Account/TermoUso/@Model.Condominio.PathInfo" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica/@Model.Condominio.PathInfo" class="text-info" target="_blank">Política de Privacidade</a></small></h2>
                 <ul class="nav navbar-right panel_toolbox hidden-xs">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -81,9 +74,6 @@
                             </li>
                         </ul>
                     </li>
-                    @*<li>
-                        <a class="close-link"><i class="fa fa-close"></i></a>
-                    </li>*@
                 </ul>
                 <div class="clearfix"></div>
             </div>
@@ -95,7 +85,7 @@
                     @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
                     @Html.Hidden("Validador", Model.UnidadeViewModel.Validador)
                     @Html.Hidden("DescricaoTipoEdificacao", Model.DescricaoTipoEdificacao)
-                    @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                    @Html.Hidden("TipoCondomino", Model.UnidadeViewModel.TipoCondomino)
                     @Html.HiddenFor(info => info.CondominioID)
                     <div class="hidden-sm hidden-xs">
                         <h4>Instruções de preenchimento</h4>
@@ -106,50 +96,36 @@
                             - A habilitação de seu cadastro será notificada por e-mail
                         </p>
                         <p class="font-gray-dark">
-                            - Ao se cadastrar você concorda com os <a href="~/Account/TermoUso" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica" class="text-info" target="_blank">Política de Privacidade</a>
+                            - Ao se cadastrar você concorda com os <a href="~/Account/TermoUso/@Model.Condominio.PathInfo" class="text-info" target="_blank">Termos de Uso</a> e <a href="~/Account/Politica/@Model.Condominio.PathInfo" class="text-info" target="_blank">Política de Privacidade</a>
                         </p>
                     </div>
                     <div class="row">
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">@Model.DescricaoTipoEdificacao</label>
+                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetUnidades('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            </div>
+                        </div>
+                        <div class="col-md-3 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>*
+                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "ChangeTipoCondomino()" })
+                            </div>
+                        </div>
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Nome, new { @class = "control-label" })*
-                                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "40" })
+                                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "60" })
                             </div>
                         </div>
+                    </div>
+                    <div class="row clearfix">
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })*
                                 @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
                             </div>
                         </div>
-                    </div>
-                    <div class="row clearfix">
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">@Model.DescricaoTipoEdificacao</label>
-                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Unidade</label>*
-                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })*
-                                @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                <label class="control-label">Profissão/Ocupação</label>
-                                @Html.DropDownList("ProfissaoID", new DWM.Models.Enumeracoes.BindDropDownList().Profissoes("", ""), new { @class = "form-control" })
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row clearfix">
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.TelParticular1, new { @class = "control-label" }) *
@@ -162,69 +138,114 @@
                                 @Html.TextBoxFor(m => m.TelParticular2, new { @class = "form-control" })
                             </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="control-group">
-                                <div class="controls">
-                                    <div class="xdisplay_inputx form-group has-feedback">
-                                        @{ 
+                    </div>
+                    <div id="div-PF">
+                        <div class="row clearfix">
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })*
+                                    @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Profissão/Ocupação</label>
+                                    @Html.DropDownList("ProfissaoID", new DWM.Models.Enumeracoes.BindDropDownList().Profissoes("", ""), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <div class="xdisplay_inputx form-group has-feedback">
+                                            @{
                                             var DN = Model.DataNascimento.HasValue ? Model.DataNascimento.Value.ToString("yyyy-MM-dd") : "";
-                                        }
-                                        @Html.LabelFor(m => m.DataNascimento, new { @class = "control-label" })
-                                        <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" value="@DN" />
-
-
-                                        @*@if (Model.DataNascimento.HasValue)
-                                        {
-                                            
-                                        }
-                                        else
-                                        {
-                                            <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" />
-                                        }*@
-                                        @*<input type="text" class="form-control has-feedback-left" id="DataNascimento" name="DataNascimento" aria-describedby="inputSuccess2Status4">
-                                        <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                        <span id="inputSuccess2Status4" class="sr-only">(success)</span>*@
+                                            }
+                                            @Html.LabelFor(m => m.DataNascimento, new { @class = "control-label" })
+                                            <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" value="@DN" />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Sexo, new { @class = "control-label" })
+                                    @Html.DropDownList("Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo("M", ""), new { @class = "form-control" })
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Sexo, new { @class = "control-label" })
-                                @Html.DropDownList("Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo("M", ""), new { @class = "form-control" })
+                        <div class="row clearfix">
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
+                                    @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IndAnimal, new { @class = "control-label" })
+                                    @Html.DropDownList("IndAnimal", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("N", ""), new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.senha, new { @class = "control-label" })
+                                    @Html.PasswordFor(m => m.senha, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.confirmacaoSenha, new { @class = "control-label" })
+                                    @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control" })
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row clearfix">
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
-                                @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                    <div id="div-PJ">
+                        <div class="row clearfix">
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">CNPJ</label>*
+                                    <input type="text" id="cnpj" name="cnpj" class="form-control" value="@Model.IndFiscal" />
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Administrador, new { @class = "control-label" })
+                                    @Html.TextBoxFor(m => m.Administrador, new { @class = "form-control", @maxlength = "40" })
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    <label class="control-label">Atividade</label>
+                                    @Html.DropDownList("RamoAtividadeID", new DWM.Models.Enumeracoes.BindDropDownList().RamoAtividade("", ""), new { @class = "form-control" })
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.IndAnimal, new { @class = "control-label" })
-                                @Html.DropDownList("IndAnimal", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("N", ""), new { @class = "form-control" })
+                        <div class="row clearfix">
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
+                                    @Html.DropDownList("IndProprietarioPJ", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.senha, new { @class = "control-label" })
-                                @Html.PasswordFor(m => m.senha, new { @class = "form-control" })
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.senha, new { @class = "control-label" })
+                                    <input type="password" id="pwd" name="pwd" class="form-control" />
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 col-xs-12 col-sm-12">
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.confirmacaoSenha, new { @class = "control-label" })
-                                @Html.PasswordFor(m => m.confirmacaoSenha, new { @class = "form-control" })
+                            <div class="col-md-3 col-xs-12 col-sm-12">
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.confirmacaoSenha, new { @class = "control-label" })
+                                    <input type="password" id="pwdConfirm" name="pwdConfirm" class="form-control" />
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="row clearfix">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <input type="submit" class="btn btn-success" value="Salvar" />
+                                <input type="submit" class="btn btn-success" value="Salvar" onclick="return valida()"/>
                                 <input type="button" onclick="window.location = '/Account/Login/@Model.Condominio.PathInfo'" class="btn btn-default" value="Cancelar" />
                             </div>
                         </div>
@@ -240,247 +261,110 @@
     </section>
 
     <script type="text/javascript">
+
         $("#IndFiscal").mask("999.999.999-99");
+        $("#cnpj").mask("99.999.999/9999-99");
         $("#TelParticular1").mask("(99)9999?9-9999");
         $("#TelParticular2").mask("(99)9999?9-9999");
-    </script>
 
-    @*<!-- jQuery -->
-    <script src="../Content/vendors/jquery/dist/jquery.min.js"></script>
-    <!-- Bootstrap -->
-    <script src="../Content/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- FastClick -->
-    <script src="../Content/vendors/fastclick/lib/fastclick.js"></script>
-    <!-- NProgress -->
-    <script src="../Content/vendors/nprogress/nprogress.js"></script>
-    <!-- bootstrap-progressbar -->
-    <script src="../Content/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>*@
-    <!-- iCheck -->
+        AtivaPessoa();
+
+        function valida() {
+            if ($('#TipoCondomino').val() == "J")
+            {
+                $('#senha').val($('#pwd').val());
+                $('#confirmacaoSenha').val($('#pwdConfirm').val());
+                $('#IndFiscal').val($('#cnpj').val());
+                $('#IndProprietario').val($('#IndProprietarioPJ').val());
+            }
+            return true;
+        }
+
+        function ChangeTipoCondomino() {
+            var link = "/Account/GetUnidade";
+            link = encodeURI(link + '?CondominioID=' + $('#CondominioID').val() + '&EdificacaoID=' + $('#EdificacaoID').val() + '&UnidadeID=' + $('#UnidadeID').val());
+            link = encodeURI(link + '&noCahce=' + new Date());
+            $.ajax({
+                type: "POST",
+                url: link,
+                contentType: "application/json; charset=utf-8",
+                global: false,
+                async: false,
+                dataType: "json",
+                success: function (jsonObj) {
+                    var TipoCondomino = jsonObj.TipoCondomino;
+                    $('#TipoCondomino').val(TipoCondomino);
+                    AtivaPessoa();
+                }
+            });
+        }
+
+        function AtivaPessoa() {
+            if ($('#TipoCondomino').val() == "F") {
+                $("#div-PF").show();
+                $("#div-PJ").hide();
+                $('#Administrador').val('');
+                $('#cnpj').val('');
+            }
+            else {
+                $("#div-PJ").show();
+                $("#div-PF").hide();
+                $('#IndFiscal').val('');
+                $('#DataNascimento').val('');
+            }
+        }
+
+        function GetUnidades(thisId, nextId, tag) {
+
+            var link = "/Account/GetNames";
+            var _Id = "";
+            var _tag = "";
+
+            // Recupera o VALUE do dropdownlist selecionado
+            _Id = $("#" + thisId + " option:selected").val();
+
+            if (_Id == "") {
+                $('#' + nextId).html('<select class="form-control input-sm" id="' + nextId + '" name="' + nextId + '"><option value="">Selecione...</option></select>');
+                return
+            }
+
+            link = encodeURI(link + '?term=' + _Id);
+
+            // Recupera o campo adicional TAG
+            if (tag != '') {
+                _tag = $("#" + tag).val();
+                link = encodeURI(link + '&tag=' + _tag);
+            }
+
+            CarregandoIn();
+
+            link = encodeURI(link + '&noCahce=' + new Date());
+
+            $.ajax({
+                type: "POST",
+                url: link,
+                contentType: "application/json; charset=utf-8",
+                global: false,
+                async: false,
+                dataType: "json",
+                success: function (jsonObj) {
+                    var listItems = "";
+
+                    for (i in jsonObj) {
+                        listItems += "<option value='" + jsonObj[i].Value + "'>" + jsonObj[i].Text + "</option>";
+                    }
+                    $("#" + nextId).html(listItems);
+                    AtivaPessoa();
+                    $('#carregando').css("visibility", "hidden");
+                    $('#carregando').css("height", "0px");
+                    $('#carregando').css("margin-top", "0%");
+                    $('#carregando').css("margin-left", "0%");
+                }
+            });
+        }
+
+    </script>
     <script src="../Content/vendors/iCheck/icheck.min.js"></script>
-    <!-- bootstrap-wysiwyg -->
-    @*<script src="../Content/vendors/bootstrap-wysiwyg/js/bootstrap-wysiwyg.min.js"></script>
-    <script src="../Content/vendors/jquery.hotkeys/jquery.hotkeys.js"></script>
-    <script src="../Content/vendors/google-code-prettify/src/prettify.js"></script>
-    <!-- jQuery Tags Input -->
-    <script src="../Content/vendors/jquery.tagsinput/src/jquery.tagsinput.js"></script>
-    <!-- Switchery -->
-    <script src="../Content/vendors/switchery/dist/switchery.min.js"></script>
-    <!-- Select2 -->
-    <script src="../Content/vendors/select2/dist/js/select2.full.min.js"></script>
-    <!-- Parsley -->
-    <script src="../Content/vendors/parsleyjs/dist/parsley.min.js"></script>
-    <!-- Autosize -->
-    <script src="../Content/vendors/autosize/dist/autosize.min.js"></script>
-    <!-- jQuery autocomplete -->
-    <script src="../Content/vendors/devbridge-autocomplete/dist/jquery.autocomplete.min.js"></script>
-    <!-- starrr -->
-    <script src="../Content/vendors/starrr/dist/starrr.js"></script>*@
-    <!-- Custom Theme Scripts -->
     <script src="../Content/production/js/custom.js"></script>
-    <!-- bootstrap-wysiwyg -->
-    <script>
-      @*$(document).ready(function() {
-        $('.xcxc').click(function() {
-          $('#descr').val($('#editor').html());
-        });
-      });
-
-      $(document).ready(function() {
-        function initToolbarBootstrapBindings() {
-          var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
-              'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
-              'Times New Roman', 'Verdana'
-            ],
-            fontTarget = $('[title=Font]').siblings('.dropdown-menu');
-          $.each(fonts, function(idx, fontName) {
-            fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
-          });
-          $('a[title]').tooltip({
-            container: 'body'
-          });
-          $('.dropdown-menu input').click(function() {
-              return false;
-            })
-            .change(function() {
-              $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
-            })
-            .keydown('esc', function() {
-              this.value = '';
-              $(this).change();
-            });
-
-          $('[data-role=magic-overlay]').each(function() {
-            var overlay = $(this),
-              target = $(overlay.data('target'));
-            overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-          });
-
-          if ("onwebkitspeechchange" in document.createElement("input")) {
-            var editorOffset = $('#editor').offset();
-
-            $('.voiceBtn').css('position', 'absolute').offset({
-              top: editorOffset.top,
-              left: editorOffset.left + $('#editor').innerWidth() - 35
-            });
-          } else {
-            $('.voiceBtn').hide();
-          }
-        }
-
-        function showErrorAlert(reason, detail) {
-          var msg = '';
-          if (reason === 'unsupported-file-type') {
-            msg = "Unsupported format " + detail;
-          } else {
-            console.log("error uploading file", reason, detail);
-          }
-          $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-        }
-
-        initToolbarBootstrapBindings();
-
-        $('#editor').wysiwyg({
-          fileUploadError: showErrorAlert
-        });
-
-        window.prettyPrint && prettyPrint();
-      });
-    </script>
-    <!-- /bootstrap-wysiwyg -->
-    <!-- Select2 -->
-    <script>
-      $(document).ready(function() {
-        $(".select2_single").select2({
-          placeholder: "Select a state",
-          allowClear: true
-        });
-        $(".select2_group").select2({});
-        $(".select2_multiple").select2({
-          maximumSelectionLength: 4,
-          placeholder: "With Max Selection limit 4",
-          allowClear: true
-        });
-      });
-    </script>
-    <!-- /Select2 -->
-    <!-- jQuery Tags Input -->
-    <script>
-      function onAddTag(tag) {
-        alert("Added a tag: " + tag);
-      }
-
-      function onRemoveTag(tag) {
-        alert("Removed a tag: " + tag);
-      }
-
-      function onChangeTag(input, tag) {
-        alert("Changed a tag: " + tag);
-      }
-
-      $(document).ready(function() {
-        $('#tags_1').tagsInput({
-          width: 'auto'
-        });
-      });
-    </script>
-    <!-- /jQuery Tags Input -->
-    <!-- Parsley -->
-    <script>
-      $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-          validateFront();
-        });
-        $('#demo-form .btn').on('click', function() {
-          $('#demo-form').parsley().validate();
-          validateFront();
-        });
-        var validateFront = function() {
-          if (true === $('#demo-form').parsley().isValid()) {
-            $('.bs-callout-info').removeClass('hidden');
-            $('.bs-callout-warning').addClass('hidden');
-          } else {
-            $('.bs-callout-info').addClass('hidden');
-            $('.bs-callout-warning').removeClass('hidden');
-          }
-        };
-      });
-
-      $(document).ready(function() {
-        $.listen('parsley:field:validate', function() {
-          validateFront();
-        });
-        $('#demo-form2 .btn').on('click', function() {
-          $('#demo-form2').parsley().validate();
-          validateFront();
-        });
-        var validateFront = function() {
-          if (true === $('#demo-form2').parsley().isValid()) {
-            $('.bs-callout-info').removeClass('hidden');
-            $('.bs-callout-warning').addClass('hidden');
-          } else {
-            $('.bs-callout-info').addClass('hidden');
-            $('.bs-callout-warning').removeClass('hidden');
-          }
-        };
-      });
-      try {
-        hljs.initHighlightingOnLoad();
-      } catch (err) {}
-    </script>
-    <!-- /Parsley -->
-    <!-- Autosize -->
-    <script>
-      $(document).ready(function() {
-        autosize($('.resizable_textarea'));
-      });
-    </script>
-    <!-- /Autosize -->
-    <!-- jQuery autocomplete -->
-    <script>
-      $(document).ready(function() {
-        var countries = { AD:"Andorra",A2:"Andorra Test",AE:"United Arab Emirates",AF:"Afghanistan",AG:"Antigua and Barbuda",AI:"Anguilla",AL:"Albania",AM:"Armenia",AN:"Netherlands Antilles",AO:"Angola",AQ:"Antarctica",AR:"Argentina",AS:"American Samoa",AT:"Austria",AU:"Australia",AW:"Aruba",AX:"Åland Islands",AZ:"Azerbaijan",BA:"Bosnia and Herzegovina",BB:"Barbados",BD:"Bangladesh",BE:"Belgium",BF:"Burkina Faso",BG:"Bulgaria",BH:"Bahrain",BI:"Burundi",BJ:"Benin",BL:"Saint Barthélemy",BM:"Bermuda",BN:"Brunei",BO:"Bolivia",BQ:"British Antarctic Territory",BR:"Brazil",BS:"Bahamas",BT:"Bhutan",BV:"Bouvet Island",BW:"Botswana",BY:"Belarus",BZ:"Belize",CA:"Canada",CC:"Cocos [Keeling] Islands",CD:"Congo - Kinshasa",CF:"Central African Republic",CG:"Congo - Brazzaville",CH:"Switzerland",CI:"Côte d’Ivoire",CK:"Cook Islands",CL:"Chile",CM:"Cameroon",CN:"China",CO:"Colombia",CR:"Costa Rica",CS:"Serbia and Montenegro",CT:"Canton and Enderbury Islands",CU:"Cuba",CV:"Cape Verde",CX:"Christmas Island",CY:"Cyprus",CZ:"Czech Republic",DD:"East Germany",DE:"Germany",DJ:"Djibouti",DK:"Denmark",DM:"Dominica",DO:"Dominican Republic",DZ:"Algeria",EC:"Ecuador",EE:"Estonia",EG:"Egypt",EH:"Western Sahara",ER:"Eritrea",ES:"Spain",ET:"Ethiopia",FI:"Finland",FJ:"Fiji",FK:"Falkland Islands",FM:"Micronesia",FO:"Faroe Islands",FQ:"French Southern and Antarctic Territories",FR:"France",FX:"Metropolitan France",GA:"Gabon",GB:"United Kingdom",GD:"Grenada",GE:"Georgia",GF:"French Guiana",GG:"Guernsey",GH:"Ghana",GI:"Gibraltar",GL:"Greenland",GM:"Gambia",GN:"Guinea",GP:"Guadeloupe",GQ:"Equatorial Guinea",GR:"Greece",GS:"South Georgia and the South Sandwich Islands",GT:"Guatemala",GU:"Guam",GW:"Guinea-Bissau",GY:"Guyana",HK:"Hong Kong SAR China",HM:"Heard Island and McDonald Islands",HN:"Honduras",HR:"Croatia",HT:"Haiti",HU:"Hungary",ID:"Indonesia",IE:"Ireland",IL:"Israel",IM:"Isle of Man",IN:"India",IO:"British Indian Ocean Territory",IQ:"Iraq",IR:"Iran",IS:"Iceland",IT:"Italy",JE:"Jersey",JM:"Jamaica",JO:"Jordan",JP:"Japan",JT:"Johnston Island",KE:"Kenya",KG:"Kyrgyzstan",KH:"Cambodia",KI:"Kiribati",KM:"Comoros",KN:"Saint Kitts and Nevis",KP:"North Korea",KR:"South Korea",KW:"Kuwait",KY:"Cayman Islands",KZ:"Kazakhstan",LA:"Laos",LB:"Lebanon",LC:"Saint Lucia",LI:"Liechtenstein",LK:"Sri Lanka",LR:"Liberia",LS:"Lesotho",LT:"Lithuania",LU:"Luxembourg",LV:"Latvia",LY:"Libya",MA:"Morocco",MC:"Monaco",MD:"Moldova",ME:"Montenegro",MF:"Saint Martin",MG:"Madagascar",MH:"Marshall Islands",MI:"Midway Islands",MK:"Macedonia",ML:"Mali",MM:"Myanmar [Burma]",MN:"Mongolia",MO:"Macau SAR China",MP:"Northern Mariana Islands",MQ:"Martinique",MR:"Mauritania",MS:"Montserrat",MT:"Malta",MU:"Mauritius",MV:"Maldives",MW:"Malawi",MX:"Mexico",MY:"Malaysia",MZ:"Mozambique",NA:"Namibia",NC:"New Caledonia",NE:"Niger",NF:"Norfolk Island",NG:"Nigeria",NI:"Nicaragua",NL:"Netherlands",NO:"Norway",NP:"Nepal",NQ:"Dronning Maud Land",NR:"Nauru",NT:"Neutral Zone",NU:"Niue",NZ:"New Zealand",OM:"Oman",PA:"Panama",PC:"Pacific Islands Trust Territory",PE:"Peru",PF:"French Polynesia",PG:"Papua New Guinea",PH:"Philippines",PK:"Pakistan",PL:"Poland",PM:"Saint Pierre and Miquelon",PN:"Pitcairn Islands",PR:"Puerto Rico",PS:"Palestinian Territories",PT:"Portugal",PU:"U.S. Miscellaneous Pacific Islands",PW:"Palau",PY:"Paraguay",PZ:"Panama Canal Zone",QA:"Qatar",RE:"Réunion",RO:"Romania",RS:"Serbia",RU:"Russia",RW:"Rwanda",SA:"Saudi Arabia",SB:"Solomon Islands",SC:"Seychelles",SD:"Sudan",SE:"Sweden",SG:"Singapore",SH:"Saint Helena",SI:"Slovenia",SJ:"Svalbard and Jan Mayen",SK:"Slovakia",SL:"Sierra Leone",SM:"San Marino",SN:"Senegal",SO:"Somalia",SR:"Suriname",ST:"São Tomé and Príncipe",SU:"Union of Soviet Socialist Republics",SV:"El Salvador",SY:"Syria",SZ:"Swaziland",TC:"Turks and Caicos Islands",TD:"Chad",TF:"French Southern Territories",TG:"Togo",TH:"Thailand",TJ:"Tajikistan",TK:"Tokelau",TL:"Timor-Leste",TM:"Turkmenistan",TN:"Tunisia",TO:"Tonga",TR:"Turkey",TT:"Trinidad and Tobago",TV:"Tuvalu",TW:"Taiwan",TZ:"Tanzania",UA:"Ukraine",UG:"Uganda",UM:"U.S. Minor Outlying Islands",US:"United States",UY:"Uruguay",UZ:"Uzbekistan",VA:"Vatican City",VC:"Saint Vincent and the Grenadines",VD:"North Vietnam",VE:"Venezuela",VG:"British Virgin Islands",VI:"U.S. Virgin Islands",VN:"Vietnam",VU:"Vanuatu",WF:"Wallis and Futuna",WK:"Wake Island",WS:"Samoa",YD:"People's Democratic Republic of Yemen",YE:"Yemen",YT:"Mayotte",ZA:"South Africa",ZM:"Zambia",ZW:"Zimbabwe",ZZ:"Unknown or Invalid Region" };
-
-        var countriesArray = $.map(countries, function(value, key) {
-          return {
-            value: value,
-            data: key
-          };
-        });
-
-        // initialize autocomplete with custom appendTo
-        $('#autocomplete-custom-append').autocomplete({
-          lookup: countriesArray,
-          appendTo: '#autocomplete-container'
-        });
-      });
-    </script>
-    <!-- /jQuery autocomplete -->
-    <!-- Starrr -->
-    <script>
-      $(document).ready(function() {
-        $(".stars").starrr();
-
-        $('.stars-existing').starrr({
-          rating: 4
-        });
-
-        $('.starrr').on('click', function (e) {
-          e.preventDefault();
-        });
-
-        $('.stars').on('starrr:change', function (e, value) {
-          $('.stars-count').html(value);
-        });
-
-        $('.stars-existing').on('starrr:change', function (e, value) {
-          $('.stars-count-existing').html(value);
-        });
-
-      });*@
-    </script>
-    <!-- /Starrr -->
-
-
 </body>
 </html>

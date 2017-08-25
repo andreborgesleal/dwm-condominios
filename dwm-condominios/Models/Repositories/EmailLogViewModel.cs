@@ -24,6 +24,8 @@ namespace DWM.Models.Repositories
         [DisplayName("Unidade")]
         public System.Nullable<int> UnidadeID { get; set; }
 
+        public string Codigo { get; set; }
+
         [DisplayName("Grupo Condômino")]
         public System.Nullable<int> GrupoCondominoID { get; set; }
 

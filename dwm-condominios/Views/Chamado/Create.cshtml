@@ -40,7 +40,14 @@
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Assunto</label>
-                            <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
+                            @if (Model.Condominos.Count > 0)
+                            {
+                                <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
+                            }
+                            else
+                            {
+                                <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" />
+                            }
                         </div>
                     </div>
                 </div>

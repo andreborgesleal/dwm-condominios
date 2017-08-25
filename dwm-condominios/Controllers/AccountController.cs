@@ -156,15 +156,22 @@ namespace DWM.Controllers
                 {
                     value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
 
-                    value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
+                    value.UnidadeViewModel = new UnidadeViewModel()
                     {
                         CondominioID = value.CondominioID,
                         EdificacaoID = int.Parse(collection["EdificacaoID"]),
                         UnidadeID = int.Parse(collection["UnidadeID"]),
+                        TipoCondomino = collection["TipoCondomino"],
                         Validador = collection["Validador"] 
                     };
 
-                    // Aciona o pattern local do aplicativo - Pattern Localhost (e não o do App_Dominio)
+                    if (collection ["TipoCondomino"] == "J" && collection["cnpj"].Trim() != "")
+                    {
+                        value.IndFiscal = collection["cnpj"];
+                        value.senha = collection["pwd"];
+                        value.confirmacaoSenha = collection["pwdConfirm"];
+                    }
+
                     Factory<RegisterViewModel, ApplicationContext> factory = new Factory<RegisterViewModel, ApplicationContext>();
                     value = factory.Execute(new RegisterBI(), value);
 
@@ -172,10 +179,6 @@ namespace DWM.Controllers
                         throw new ArgumentException(value.mensagem.MessageBase);
 
                     #region Enviar E-mail
-                    //value = factory.Execute(new EnviarEmailRegisterBI());
-                    //if (value.mensagem.Code > 0)
-                    //    throw new ArgumentException(value.mensagem.MessageBase);
-
                     using (ApplicationContext db = new ApplicationContext())
                     {
                         using (SecurityContext seguranca_db = new SecurityContext())
@@ -221,7 +224,8 @@ namespace DWM.Controllers
                     {
                         CondominioID = value.CondominioID,
                         EdificacaoID = int.Parse(collection["EdificacaoID"]),
-                        UnidadeID = int.Parse(collection["UnidadeID"])
+                        UnidadeID = int.Parse(collection["UnidadeID"]),
+                        TipoCondomino = collection["TipoCondomino"],
                     };
                 }
                 else
@@ -229,6 +233,7 @@ namespace DWM.Controllers
                     value.UnidadeViewModel = new Models.Repositories.UnidadeViewModel()
                     {
                         CondominioID = value.CondominioID,
+                        TipoCondomino = collection["TipoCondomino"]
                     };
                 };
             }
@@ -324,14 +329,32 @@ namespace DWM.Controllers
 
         #region Termo de Uso e Política de Privacidade
         [AllowAnonymous]
-        public ActionResult TermoUso()
+        public ActionResult TermoUso(string id)
         {
+            if (String.IsNullOrEmpty(id))
+                throw new ArgumentException();
+
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(id);
+            if (Condominio == null)
+                throw new ArgumentException();
+
+            ViewBag.Condominio = Condominio;
+
             return View();
         }
 
         [AllowAnonymous]
-        public ActionResult Politica()
+        public ActionResult Politica(string id)
         {
+            if (String.IsNullOrEmpty(id))
+                throw new ArgumentException();
+
+            Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(id);
+            if (Condominio == null)
+                throw new ArgumentException();
+
+            ViewBag.Condominio = Condominio;
+
             return View();
         }
         #endregion
@@ -491,14 +514,37 @@ namespace DWM.Controllers
         [AllowAnonymous]
         public JsonResult GetNames(string term, int tag)
         {
-            var results = new Models.Enumeracoes.BindDropDownList().Unidades("", "", term, tag);
-
+            var results = new Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("Selecione...", "", term, tag);
             return new JsonResult()
             {
                 Data = results,
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet
             };
 
+        }
+
+        [AllowAnonymous]
+        public JsonResult GetUnidade(int CondominioID, int EdificacaoID, int UnidadeID)
+        {
+            UnidadeViewModel key = new UnidadeViewModel()
+            {
+                CondominioID = CondominioID,
+                EdificacaoID = EdificacaoID,
+                UnidadeID = UnidadeID
+            };
+            var results = GetUnidade(key);
+            return new JsonResult()
+            {
+                Data = results,
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+        }
+
+        private UnidadeViewModel GetUnidade(UnidadeViewModel key)
+        {
+            Factory<UnidadeViewModel, ApplicationContext> factory = new Factory<UnidadeViewModel, ApplicationContext>();
+            UnidadeViewModel value = factory.Execute(new GetUnidadeBI(), key);
+            return value;
         }
 
     }

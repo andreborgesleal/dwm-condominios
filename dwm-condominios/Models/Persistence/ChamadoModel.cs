@@ -582,9 +582,6 @@ namespace DWM.Models.Persistence
         {
             int _FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, this.db);
 
-
-
-
             return (from cha in db.Chamados
                     join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
                     join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON

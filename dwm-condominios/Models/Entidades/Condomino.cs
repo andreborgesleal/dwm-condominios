@@ -46,5 +46,7 @@ namespace DWM.Models.Entidades
 
         [DisplayName("IndicadorSituacao")]
         public string IndSituacao { get; set; }
+
+        public string discriminator { get; set; }
     }
 }

@@ -1,7 +1,7 @@
 ﻿@using App_Dominio.Models
 @using App_Dominio.Repositories
 @using DWM.Models.Repositories
-@model CondominoPFViewModel
+@model CondominoViewModel
 @{
     Layout = null;
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
@@ -80,43 +80,45 @@
                     </div>
                 </div>
             </div>
-            <div class="row clearfix">
-                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.Sexo, new { @class = "control-label" })
-                        @Html.DropDownList("Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo("M", ""), new { @class = "form-control" })
+            if (Model is CondominoPFViewModel)
+            {
+                <div class="row clearfix">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => ((CondominoPFViewModel)m).Sexo, new { @class = "control-label" })
+                            @Html.DropDownList("Sexo", App_Dominio.Enumeracoes.DropDownListEnum.Sexo("M", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="control-group">
+                            @Html.LabelFor(m => ((CondominoPFViewModel)m).DataNascimento, new { @class = "control-label" })
+                            <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" value="@(((CondominoPFViewModel)Model).DataNascimento.HasValue ? ((CondominoPFViewModel)Model).DataNascimento.Value.Date.ToString("yyyy-MM-dd") : "")" max="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                    <div class="control-group">
-                        @Html.LabelFor(m => m.DataNascimento, new { @class = "control-label" })
-                        @*@Html.Editor("data1", "DATE", new { identificador = "DataNascimento", value = Model.DataNascimento.HasValue ? Model.DataNascimento.Value : DateTime.Today, readOnly = "false" })*@
-                        <input type="date" class="form-control" name="DataNascimento" id="DataNascimento" value="@(Model.DataNascimento.HasValue ? Model.DataNascimento.Value.Date.ToString("yyyy-MM-dd") : "")" max="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
+                <div class="row clearfix">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
+                            @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => ((CondominoPFViewModel)m).IndAnimal, new { @class = "control-label" })
+                            @Html.DropDownList("IndAnimal", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("N", ""), new { @class = "form-control" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row clearfix">
-                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
-                        @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                <div class="row">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="form-group">
+                            <label class="control-label">Profissão/Ocupação</label>
+                            @Html.DropDownList("ProfissaoID", new DWM.Models.Enumeracoes.BindDropDownList().Profissoes("", ""), new { @class = "form-control" })
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.IndAnimal, new { @class = "control-label" })
-                        @Html.DropDownList("IndAnimal", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("N", ""), new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
-                    <div class="form-group">
-                        <label class="control-label">Profissão/Ocupação</label>
-                        @Html.DropDownList("ProfissaoID", new DWM.Models.Enumeracoes.BindDropDownList().Profissoes("", ""), new { @class = "form-control" })
-                    </div>
-                </div>
-            </div>
+            }
             @*<div class="ln_solid"></div>*@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xs-12">
@@ -130,7 +132,10 @@
             <div class="row clearfix">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" onclick="$('#msg-salvando-cond').show()"  />
+                        @if (Model is CondominoPFViewModel)
+                        {
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" onclick="$('#msg-salvando-cond').show()" />
+                        }
                         <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
                         <span class="text-prateado" id="msg-salvando-cond">Salvando...</span>
                     </div>

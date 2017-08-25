@@ -12,15 +12,15 @@
 @if (Model != null)
 {
     <h4>
-        @Model.CondominoPFViewModel.Nome
+        @Model.CondominoViewModel.Nome
         <small>
-            @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.UnidadeID)
+            @(Model.UnidadeViewModel.EdificacaoDescricao + " " + Model.UnidadeViewModel.Codigo)
         </small>
     </h4>
     <div class="row">
         <div class="col-md-6 col-sm-12 col-xs-12">
             <div id="div-condomino-cad">
-                @Html.Partial("EditCondomino", Model.CondominoPFViewModel)
+                @Html.Partial("EditCondomino", Model.CondominoViewModel)
             </div>
             <div id="div-condomino-automovel">
                 <div class="x_panel">

@@ -34,6 +34,7 @@ namespace dwm_condominios.Controllers
             ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 if (data1 == null || data1 == "")
                 {
                     data1 = "01" + DateTime.Today.AddMonths(-1).ToString("/MM/yyyy");

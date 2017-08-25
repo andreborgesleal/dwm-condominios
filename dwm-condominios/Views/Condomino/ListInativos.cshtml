@@ -8,6 +8,7 @@
     t[0].referencia = "";
 
     t[1].url = "../Home/Default";
+    string TipoPessoa = "PF";
 }
 <!-- Datatables -->
 <link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -24,7 +25,7 @@
                             <thead>
                                 <tr>
                                     <th class="column-title">Nome </th>
-                                    <th class="column-title">Edificação </th>
+                                    <th class="column-title">@ViewBag.TipoEdificacao</th>
                                     <th class="column-title">Unidade </th>
                                     <th class="column-title">Telefone </th>
                                     <th class="column-title">E-mail </th>
@@ -37,15 +38,16 @@
                             <tbody>
                                 @foreach (CondominoUnidadeViewModel value in Model)
                                 {
+                                    TipoPessoa = (value.CondominoViewModel.discriminator == "CondominoPF") ? "PF" : "PJ";
                                     <tr class="even pointer">
                                         <td>@value.CondominoViewModel.Nome</td>
                                         <td>@value.EdificacaoDescricao </td>
-                                        <td>@value.UnidadeID</td>
+                                        <td>@value.Codigo</td>
                                         <td>@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
                                         <td>@value.CondominoViewModel.Email</td>
                                         <td>@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
                                         <td class="text-center">
-                                            <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                            <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&TipoPessoa=@(TipoPessoa)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                         </td>
                                     </tr>
                                 }

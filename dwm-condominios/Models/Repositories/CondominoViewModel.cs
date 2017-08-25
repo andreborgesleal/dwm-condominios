@@ -57,5 +57,7 @@ namespace DWM.Models.Repositories
         public string IndSituacao { get; set; }
 
         public UsuarioViewModel UsuarioViewModel { get; set; }
+
+        public string discriminator { get; set; }
     }
 }

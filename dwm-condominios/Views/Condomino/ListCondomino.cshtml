@@ -2,6 +2,7 @@
 @model PagedList<CondominoUnidadeViewModel>
 @{
     Layout = null;
+    string TipoPessoa = "PF";
 }
 <!-- Datatables -->
 <link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
@@ -33,6 +34,7 @@
                             int idx = 0;
                             foreach (CondominoUnidadeViewModel value in Model)
                             {
+                                TipoPessoa = (value.CondominoViewModel.discriminator == "CondominoPF") ? "PF" : "PJ";
                                 <tr class="even pointer" id="line_@idx">
                                     <td class="">@value.CondominoViewModel.Nome</td>
                                     <td class="">@value.EdificacaoDescricao </td>

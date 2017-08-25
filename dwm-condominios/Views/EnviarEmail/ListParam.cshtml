@@ -19,7 +19,7 @@
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Tipo</th>
                         <th class="column-title">Assunto</th>
-                        <th class="column-title">Edificação</th>
+                        <th class="column-title">@ViewBag.TipoEdificacao</th>
                         <th class="column-title">Unidade</th>
                         <th class="column-title">Grupo</th>
                         <th class="column-title">Data Envio</th>
@@ -42,7 +42,7 @@
                                 <span>@email.Descricao_Edificacao</span>
                             </td>
                             <td>
-                                <span>@email.UnidadeID</span>
+                                <span>@email.Codigo</span>
                             </td>
                             <td>
                                 <span>@email.Descricao_GrupoCondomino</span>

@@ -46,6 +46,7 @@ namespace DWM.Controllers
             ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 int _EdificacaoID = EdificacaoID == null || EdificacaoID == "" ? 0 : int.Parse(EdificacaoID);
                 int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
 
@@ -97,6 +98,7 @@ namespace DWM.Controllers
         {
             if (ViewBag.ValidateRequest)
             {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 BindBreadCrumb("Condômino", ClearBreadCrumbOnBrowse());
                 ListViewCondominosInativos l = new ListViewCondominosInativos();
                 return this._List(0, 1000, "Browse", l);
@@ -119,8 +121,10 @@ namespace DWM.Controllers
             ViewBag.ValidateRequest = true;
             if (ViewBag.ValidateRequest)
             {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 int _EdificacaoID = EdificacaoID == null || EdificacaoID == "" ? 0 : int.Parse(EdificacaoID);
                 int _UnidadeID = UnidadeID == null || UnidadeID == "" ? 0 : int.Parse(UnidadeID);
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
 
                 EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
                 Sessao sessaoCorrente = security.getSessaoCorrente();
@@ -144,7 +148,7 @@ namespace DWM.Controllers
 
         #region Index
         [AuthorizeFilter]
-        public ActionResult Index(int id, int EdificacaoID, int UnidadeID)
+        public ActionResult Index(int id, int EdificacaoID, int UnidadeID, string TipoPessoa)
         {
             if (ViewBag.ValidateRequest)
             {
@@ -163,17 +167,24 @@ namespace DWM.Controllers
                         EdificacaoID = EdificacaoID,
                         UnidadeID = UnidadeID,
                     },
-                    CondominoPFViewModel = new CondominoPFViewModel()
-                    {
-                        CondominoID = id,
-                    },
                     CredenciadoViewModel = new CredenciadoViewModel()
                     {
                         CondominoID = id,
                     }
                 };
+                if (TipoPessoa == "PF")
+                    value.CondominoViewModel = new CondominoPFViewModel()
+                    {
+                        CondominoID = id,
+                    };
+                else
+                    value.CondominoViewModel = new CondominoPJViewModel()
+                    {
+                        CondominoID = id,
+                    };
+
                 CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), value);
-                if (obj.CondominoPFViewModel.mensagem.Code > 0)
+                if (obj.CondominoViewModel.mensagem.Code > 0)
                     obj = null;
                     
                 return View(obj);
@@ -263,7 +274,7 @@ namespace DWM.Controllers
                         result = new CondominoEditViewModel()
                         {
                             UnidadeViewModel = new UnidadeViewModel(),
-                            CondominoPFViewModel = new CondominoPFViewModel(),
+                            CondominoViewModel = new CondominoPFViewModel(),
                             CredenciadoViewModel = new CredenciadoViewModel()
                             {
                                 CredenciadoID = CredenciadoViewModel_CredenciadoID,
@@ -327,7 +338,7 @@ namespace DWM.Controllers
                 CondominoEditViewModel result = new CondominoEditViewModel()
                 {
                     UnidadeViewModel = new UnidadeViewModel(),
-                    CondominoPFViewModel = new CondominoPFViewModel()
+                    CondominoViewModel = new CondominoPFViewModel()
                     {
                         CondominoID = CredenciadoViewModel.CondominoID
                     },
@@ -358,7 +369,7 @@ namespace DWM.Controllers
                         result = new CondominoEditViewModel()
                         {
                             UnidadeViewModel = new UnidadeViewModel(),
-                            CondominoPFViewModel = new CondominoPFViewModel(),
+                            CondominoViewModel = new CondominoPFViewModel(),
                             CredenciadoViewModel = new CredenciadoViewModel(),
                             VeiculoViewModel = new VeiculoViewModel()
                             {
@@ -420,7 +431,7 @@ namespace DWM.Controllers
                         UnidadeID = VeiculoViewModel.UnidadeID,
                         CondominioID = VeiculoViewModel.CondominioID
                     },
-                    CondominoPFViewModel = new CondominoPFViewModel()
+                    CondominoViewModel = new CondominoPFViewModel()
                     {
                         CondominoID = VeiculoViewModel.CondominoID
                     },
@@ -451,7 +462,7 @@ namespace DWM.Controllers
                         result = new CondominoEditViewModel()
                         {
                             UnidadeViewModel = new UnidadeViewModel(),
-                            CondominoPFViewModel = new CondominoPFViewModel(),
+                            CondominoViewModel = new CondominoPFViewModel(),
                             CredenciadoViewModel = new CredenciadoViewModel(),
                             VeiculoViewModel = new VeiculoViewModel(),
                             FuncionarioViewModel = new FuncionarioViewModel()
@@ -517,7 +528,7 @@ namespace DWM.Controllers
                         UnidadeID = FuncionarioViewModel.UnidadeID,
                         CondominioID = FuncionarioViewModel.CondominioID
                     },
-                    CondominoPFViewModel = new CondominoPFViewModel()
+                    CondominoViewModel = new CondominoPFViewModel()
                     {
                         CondominoID = FuncionarioViewModel.CondominoID
                     },

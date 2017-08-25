@@ -47,13 +47,13 @@ namespace DWM.Models.BI
                     registerViewModel.UnidadeViewModel = new UnidadeViewModel();
                     registerViewModel.UnidadeViewModel.CondominioID = r.CondominioID;
                     registerViewModel.UnidadeViewModel.EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID;
-                    registerViewModel.DescricaoTipoEdificacao = db.TipoEdificacaos.Where(info => info.CondominioID == r.CondominioID).Select(m => m.Descricao).FirstOrDefault();
+                    registerViewModel.DescricaoTipoEdificacao = db.TipoEdificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).Select(m => m.Descricao).FirstOrDefault();
+                    registerViewModel.UnidadeViewModel.UnidadeID = db.Unidades.Where(info => info.CondominioID == r.CondominioID && info.EdificacaoID == registerViewModel.UnidadeViewModel.EdificacaoID).OrderBy(m => m.Codigo).Select(i => i.UnidadeID).FirstOrDefault();
 
-                    //registerViewModel.UnidadeViewModel = new UnidadeViewModel()
-                    //{
-                    //    CondominioID = r.CondominioID,
-                    //    EdificacaoID = db.Edificacaos.Where(info => info.CondominioID == r.CondominioID).OrderBy(info => info.Descricao).FirstOrDefault().EdificacaoID,
-                    //};
+                    Unidade und = db.Unidades.Find(r.CondominioID, registerViewModel.UnidadeViewModel.EdificacaoID, registerViewModel.UnidadeViewModel.UnidadeID);
+
+                    registerViewModel.UnidadeViewModel.TipoCondomino = und.TipoCondomino;
+                    registerViewModel.UnidadeViewModel.TipoUnidade = und.TipoUnidade;
                 }
                 else
                 {
@@ -70,6 +70,8 @@ namespace DWM.Models.BI
                             CondominioID = u.CondominioID,
                             EdificacaoID = u.EdificacaoID,
                             UnidadeID = u.UnidadeID,
+                            TipoCondomino = u.TipoCondomino,
+                            TipoUnidade = u.TipoUnidade,
                             Validador = u.Validador,
                             EdificacaoDescricao = db.Edificacaos.Find(u.EdificacaoID).Descricao
                         };

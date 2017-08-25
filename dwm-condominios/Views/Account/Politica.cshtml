@@ -12,31 +12,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>DWM-Condomínios</title>
     <!-- Bootstrap -->
-    <link href="../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../Content/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
-    <link href="../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../Content/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- Site.css -->
-    <link href="../Content/Site.css" rel="stylesheet">
+    <link href="../../Content/Site.css" rel="stylesheet">
         <!-- Sticky-footer-->
-    <link href="../Content/Css/sticky-footer.css" rel="stylesheet" />
+    <link href="../../Content/Css/sticky-footer.css" rel="stylesheet" />
 
     <!-- Custom Theme Style -->
     @*<link href="../Content/production/css/custom.css" rel="stylesheet">*@
-    <script type="text/javascript" src="../scripts/jquery-1.10.2.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.js"></script>
-    <script type="text/javascript" src="../scripts/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../scripts/jquery.validate.js"></script>
+    <script type="text/javascript" src="../../scripts/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="../../scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="../../scripts/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../../scripts/jquery.validate.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-fixed-top navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <img class="img-responsive" src="~/Content/images/parcparadiso.png" style="height: 70px" />
+                <img class="img-responsive" src="~/Users_Data/Empresas/@ViewBag.Condominio.CondominioID/logo/@ViewBag.Condominio.Logo" style="height: 70px" />
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav pull-right">
-                    <li><a href="~/Account/Login">Acesso</a></li>
-                    <li><button class="btn btn-sm btn-default margem-top-10" onclick="window.location = '../Account/Register'">Cadastro</button></li>
+                    <li><a href="~/Account/Login/@ViewBag.Condominio.PathInfo">Acesso</a></li>
+                    <li><button class="btn btn-sm btn-default margem-top-10" onclick="window.location = '../../Account/Register/@ViewBag.Condominio.PathInfo'">Cadastro</button></li>
                 </ul>
             </div>
         </div>

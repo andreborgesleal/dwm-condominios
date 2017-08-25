@@ -106,7 +106,7 @@ namespace DWM.Models.BI
 
                 Usuario user = new Usuario()
                 {
-                    nome = r.Nome.ToUpper(),
+                    nome = r.Nome.Trim().Length > 40 ? r.Nome.Substring(0,40).ToUpper() : r.Nome.Trim().ToUpper(),
                     login = r.Email,
                     empresaId = _empresaId,
                     dt_cadastro = Funcoes.Brasilia(),
@@ -133,37 +133,77 @@ namespace DWM.Models.BI
 
                 #endregion
 
-                #region Incluir o Condômino
-                CondominoPFViewModel condominoPFViewModel = new CondominoPFViewModel()
+                #region Incluir Condômino
+                CondominoViewModel condomino = null;
+                if (r.UnidadeViewModel.TipoCondomino == "F")
                 {
-                    uri = r.uri,
-                    empresaId = _empresaId,
-                    CondominoID = r.CondominoID,
-                    CondominioID = r.CondominioID,
-                    Nome = r.Nome,
-                    IndFiscal = r.IndFiscal,
-                    IndProprietario = r.IndProprietario,
-                    TelParticular1 = r.TelParticular1,
-                    TelParticular2 = r.TelParticular2,
-                    Email = r.Email,
-                    IndSituacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
-                    UsuarioID = user.usuarioId,
-                    ProfissaoID = r.ProfissaoID,
-                    DataNascimento = r.DataNascimento,
-                    Sexo = r.Sexo,
-                    IndAnimal = r.IndAnimal
-                };
+                    #region Incluir o Condômino PF
+                    condomino = new CondominoPFViewModel()
+                    {
+                        uri = r.uri,
+                        empresaId = _empresaId,
+                        CondominoID = r.CondominoID,
+                        CondominioID = r.CondominioID,
+                        Nome = r.Nome,
+                        IndFiscal = r.IndFiscal,
+                        IndProprietario = r.IndProprietario,
+                        TelParticular1 = r.TelParticular1,
+                        TelParticular2 = r.TelParticular2,
+                        Email = r.Email,
+                        IndSituacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
+                        UsuarioID = user.usuarioId,
+                        ProfissaoID = r.ProfissaoID,
+                        DataNascimento = r.DataNascimento,
+                        Sexo = r.Sexo,
+                        IndAnimal = r.IndAnimal
+                    };
 
-                CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
-                condominoPFViewModel = condominoPFModel.Insert(condominoPFViewModel);
-                if (condominoPFViewModel.mensagem.Code > 0)
-                {
-                    #region Exclui o usuário
-                    seguranca_db.UsuarioGrupos.Remove(ug);
-                    seguranca_db.Usuarios.Remove(user);
-                    seguranca_db.SaveChanges();
+                    CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
+                    condomino = condominoPFModel.Insert((CondominoPFViewModel)condomino);
+                    if (condomino.mensagem.Code > 0)
+                    {
+                        #region Exclui o usuário
+                        seguranca_db.UsuarioGrupos.Remove(ug);
+                        seguranca_db.Usuarios.Remove(user);
+                        seguranca_db.SaveChanges();
+                        #endregion
+                        throw new App_DominioException(condomino.mensagem);
+                    }
                     #endregion
-                    throw new App_DominioException(condominoPFViewModel.mensagem);
+                }
+                else
+                {
+                    #region Incluir o Condômino PJ
+                    condomino = new CondominoPJViewModel()
+                    {
+                        uri = r.uri,
+                        empresaId = _empresaId,
+                        CondominoID = r.CondominoID,
+                        CondominioID = r.CondominioID,
+                        Nome = r.Nome,
+                        IndFiscal = r.IndFiscal,
+                        IndProprietario = r.IndProprietario,
+                        TelParticular1 = r.TelParticular1,
+                        TelParticular2 = r.TelParticular2,
+                        Email = r.Email,
+                        IndSituacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
+                        UsuarioID = user.usuarioId,
+                        Administrador = r.Administrador,
+                        RamoAtividadeID = r.RamoAtividadeID
+                    };
+
+                    CondominoPJModel condominoPJModel = new CondominoPJModel(this.db, this.seguranca_db);
+                    condomino = condominoPJModel.Insert((CondominoPJViewModel)condomino);
+                    if (condomino.mensagem.Code > 0)
+                    {
+                        #region Exclui o usuário
+                        seguranca_db.UsuarioGrupos.Remove(ug);
+                        seguranca_db.Usuarios.Remove(user);
+                        seguranca_db.SaveChanges();
+                        #endregion
+                        throw new App_DominioException(condomino.mensagem);
+                    }
+                    #endregion
                 }
                 #endregion
 
@@ -176,18 +216,18 @@ namespace DWM.Models.BI
                     UnidadeID = r.UnidadeViewModel.UnidadeID,
                     CondominoID = r.CondominoID,
                     DataInicio = Funcoes.Brasilia().Date,
-                    CondominoViewModel = condominoPFViewModel
+                    CondominoViewModel = condomino
                 };
 
                 CondominoUnidadeModel condominoUnidadeModel = new CondominoUnidadeModel(this.db, this.seguranca_db);
                 condominoUnidadeViewModel = condominoUnidadeModel.Insert(condominoUnidadeViewModel);
                 if (condominoUnidadeViewModel.mensagem.Code > 0)
-                    throw new App_DominioException(condominoPFViewModel.mensagem);
+                    throw new App_DominioException(condomino.mensagem);
                 #endregion
 
-                r.CondominoID = condominoPFViewModel.CondominoID;
-                r.IndSituacao = condominoPFViewModel.IndSituacao;
-                r.mensagem = condominoPFViewModel.mensagem;
+                r.CondominoID = condomino.CondominoID;
+                r.IndSituacao = condomino.IndSituacao;
+                r.mensagem = condomino.mensagem;
                 r.UnidadeViewModel.EdificacaoDescricao = db.Edificacaos.Find(r.UnidadeViewModel.EdificacaoID).Descricao;
                 db.SaveChanges();
             }

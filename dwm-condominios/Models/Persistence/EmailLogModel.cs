@@ -188,7 +188,7 @@ namespace DWM.Models.Persistence
                 }
             }
 
-            return (from info in db.EmailLogs
+            IEnumerable<EmailLogViewModel> foldase = (from info in db.EmailLogs
                     join gru in db.GrupoCondominos on info.GrupoCondominoID equals gru.GrupoCondominoID into GRU
                     from gru in GRU.DefaultIfEmpty()
                     join edi in db.Edificacaos on info.EdificacaoID equals edi.EdificacaoID into EDI
@@ -217,18 +217,19 @@ namespace DWM.Models.Persistence
                         UnidadeID = info.UnidadeID,
                         sessionId = sessaoCorrente.sessaoId,
                         Descricao_EmailTipo = eti.Descricao,
-                        
-                        PageSize = pageSize,
-                        TotalCount = (from info1 in db.Informativos
-                                      join gru1 in db.GrupoCondominos on info1.GrupoCondominoID equals gru1.GrupoCondominoID into GRU1
-                                      from gru1 in GRU1.DefaultIfEmpty()
-                                      join edi1 in db.Edificacaos on info1.EdificacaoID equals edi1.EdificacaoID into EDI1
-                                      from edi1 in EDI.DefaultIfEmpty()
-                                      where info1.DataPublicacao >= data1 && info1.DataPublicacao <= data2
-                                              && info1.CondominioID == sessaoCorrente.empresaId
-                                      orderby info1.DataPublicacao descending
-                                      select info1).Count()
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                    }).ToList();
+
+            int contador = 0;
+            foreach (EmailLogViewModel log in foldase)
+            {
+                if (log.UnidadeID.HasValue)
+                {
+                    foldase.ElementAt(contador).Codigo = db.Unidades.Find(log.CondominioID, log.EdificacaoID, log.UnidadeID).Codigo;
+                }
+                contador++;
+            }
+
+            return foldase;
         }
 
         public override string action()
