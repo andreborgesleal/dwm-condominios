@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using App_Dominio.Component;
+using System.Collections.Generic;
 
 namespace DWM.Models.Repositories
 {
@@ -52,5 +53,7 @@ namespace DWM.Models.Repositories
         [DisplayName("CEP")]
         [StringLength(8, ErrorMessage = "CEP deve ter no máximo 8 caracteres")]
         public string CEP { get; set; }
+
+        public virtual IEnumerable<ProprietarioUnidadeViewModel> ProprietarioUnidades { get; set; }
     }
 }

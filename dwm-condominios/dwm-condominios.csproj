@@ -355,6 +355,7 @@
     <Compile Include="Models\Persistence\InformativoComentarioModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
+    <Compile Include="Models\Persistence\ProprietarioModel.cs" />
     <Compile Include="Models\Persistence\UnidadeModel.cs" />
     <Compile Include="Models\Persistence\VeiculoModel.cs" />
     <Compile Include="Models\Persistence\VisitanteAcessoModel.cs" />
@@ -434,6 +435,7 @@
     <Content Include="Content\assets\ico\favicon.png" />
     <Content Include="Content\assets\img\backgrounds\1%402x.jpg" />
     <Content Include="Content\assets\img\backgrounds\1.jpg" />
+    <Content Include="Content\assets\img\backgrounds\parc_paradiso.png" />
     <Content Include="Content\assets\js\jquery-1.11.1.js" />
     <Content Include="Content\assets\js\jquery-1.11.1.min.js" />
     <Content Include="Content\assets\js\jquery.backstretch.js" />

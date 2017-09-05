@@ -4,7 +4,10 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("../../Content/assets/img/backgrounds/1.jpg");
+    //$.backstretch("../../Content/assets/img/backgrounds/1.jpg");
+    //$.backstretch("../../Content/assets/img/backgrounds/parc_paradiso.png");
+    //$.backstretch("../../Content/assets/img/backgrounds/predios2.jpg");
+    $.backstretch("../../Content/assets/img/backgrounds/" + $('#BackEmpresa').val());
     
     /*
         Form validation

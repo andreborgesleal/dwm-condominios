@@ -38,6 +38,14 @@
             @Html.Hidden("PathInfo", Model.Condominio.PathInfo)
             @Html.ValidationSummary(false)
             @Html.AntiForgeryToken()
+            if (Model.Condominio.PathInfo == "ParcParadiso")
+            {
+                @Html.Hidden("BackEmpresa", "parc_paradiso.png")
+            }
+            else
+            {
+                @Html.Hidden("BackEmpresa", "1.jpg")
+            }
             <div class="inner-bg">
                 <div class="container">
                     @Html.Partial("_alerts")
@@ -77,8 +85,8 @@
                                             <button type="submit" class="btn">Acesso</button>
                                         </div>
                                         <div class="col-md-6">
-                                            <a href="/Account/Register/@Model.Condominio.PathInfo" class="pull-right">Cadastre-se</a><br />
-                                            <a href="/Account/Forgot/@Model.Condominio.PathInfo" class="pull-right">Esqueci minha senha</a>
+                                            <a href="/Account/Register/@Model.Condominio.PathInfo" style="color: white" class="pull-right">Cadastre-se</a><br />
+                                            <a href="/Account/Forgot/@Model.Condominio.PathInfo" style="color: white" class="pull-right">Esqueci minha senha</a>
                                             @*<a href="../Account/Register?id=3" class="pull-right">Cadastre-se</a><br />
                                             <a href="../Account/Forgot?id=3" class="pull-right">Esqueci minha senha</a>*@
                                         </div>
