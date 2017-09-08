@@ -23,6 +23,8 @@
             @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
             @Html.HiddenFor(info => info.CondominioID)
             @Html.HiddenFor(info => info.CondominoID)
+            @Html.HiddenFor(info => info.DataCadastro)
+            @Html.Hidden("usuarioId", Model.UsuarioViewModel.usuarioId)
             <div class="row">
                 <div class="col-md-2 col-lg-2 hidden-xs">
                     <span class="img-responsive">
@@ -47,12 +49,24 @@
                 </div>
             </div>
             <div class="row clearfix">
-                <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })
-                        @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
+                @if (Model is CondominoPFViewModel)
+                {
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IndFiscal, new { @class = "control-label" })
+                            @Html.TextBoxFor(m => m.IndFiscal, new { @class = "form-control" })
+                        </div>
                     </div>
-                </div>
+                }
+                else
+                {
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label">CNPJ</label>
+                            <input type="text" id="cnpj" name="cnpj" class="form-control" value="@Model.IndFiscal" />
+                        </div>
+                    </div>
+                }
                 <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
                     <div class="form-group">
                         @Html.LabelFor(m => m.IndSituacao, new { @class = "control-label" })
@@ -119,6 +133,31 @@
                     </div>
                 </div>
             }
+            else
+            {
+                <div class="row clearfix">
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            <label class="control-label">Administrador</label>
+                            <input type="text" id="administrador" name="administrador" maxlength="40" class="form-control" value="@(((CondominoPJViewModel)Model).Administrador)" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-12 col-sm-12 col-lg-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.IndProprietario, new { @class = "control-label" })
+                            @Html.DropDownList("IndProprietario", App_Dominio.Enumeracoes.DropDownListEnum.SimNao("S", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12 col-xs-12 col-sm-12 col-lg-12">
+                        <div class="control-group">
+                            <label class="control-label">Atividade</label>
+                            @Html.DropDownList("RamoAtividadeID", new DWM.Models.Enumeracoes.BindDropDownList().RamoAtividade("", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            }
             @*<div class="ln_solid"></div>*@
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xs-12">
@@ -132,10 +171,7 @@
             <div class="row clearfix">
                 <div class="col-md-12">
                     <div class="form-group">
-                        @if (Model is CondominoPFViewModel)
-                        {
-                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" onclick="$('#msg-salvando-cond').show()" />
-                        }
+                        <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar-condomino" id="btn-salvar-condomino" onclick="$('#msg-salvando-cond').show()" />
                         <input type="button" onclick="window.location = '../Condomino/Browse'" class="btn btn-default" value="Cancelar" />
                         <span class="text-prateado" id="msg-salvando-cond">Salvando...</span>
                     </div>
@@ -164,6 +200,7 @@
         });
     });
 
+    $("#cnpj").mask("99.999.999/9999-99");
     $("#IndFiscal").mask("999.999.999-99");
     $("#TelParticular1").mask("(99)9999?9-9999");
     $("#TelParticular2").mask("(99)9999?9-9999");
