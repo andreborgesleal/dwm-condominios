@@ -193,39 +193,78 @@ namespace DWM.Controllers
         }
 
         [AuthorizeFilter]
-        public ActionResult EditCondomino(int CondominioID, int CondominoID, string Nome, string Email, string IndFiscal, 
-                                            string IndSituacao, string TelParticular1, string TelParticular2, string DataNascimento,
-                                            string Sexo, string IndProprietario, string IndAnimal, string ProfissaoID, string Observacao)
+        public ActionResult EditCondomino(int CondominioID, int CondominoID, string Nome, string Email, string IndFiscal, string DataCadastro,
+                                            string IndSituacao, string TelParticular1, string TelParticular2, string DataNascimento, string usuarioId,
+                                            string Sexo, string IndProprietario, string IndAnimal, string ProfissaoID, string Observacao, 
+                                            string cnpj, string Administrador, string RamoAtividadeID)
         {
             if (ViewBag.ValidateRequest)
             {
-                CondominoPFViewModel result = null;
+                CondominoViewModel result = null;
                 try
                 {
                     SessaoLocal s = DWMSessaoLocal.GetSessaoLocal();
                     ViewBag.SessaoLocal = s;
+                    CondominoViewModel value = null;
 
-                    CondominoPFViewModel value = new CondominoPFViewModel()
+                    if (IndFiscal != null && IndFiscal.Trim().Length > 0)
                     {
-                        CondominioID = CondominioID,
-                        CondominoID = CondominoID,
-                        Nome = Nome,
-                        Email = Email,
-                        IndFiscal = IndFiscal,
-                        IndSituacao = IndSituacao,
-                        TelParticular1 = TelParticular1,
-                        TelParticular2 = TelParticular2,
-                        Sexo = Sexo,
-                        IndProprietario = IndProprietario,
-                        IndAnimal = IndAnimal,
-                        DataNascimento = Funcoes.StringToDate(DataNascimento),
-                        ProfissaoID = ProfissaoID != null && int.Parse(ProfissaoID) > 0 ? int.Parse(ProfissaoID) : 0,
-                        Observacao = Observacao
-                    };
+                        value = new CondominoPFViewModel()
+                        {
+                            CondominioID = CondominioID,
+                            CondominoID = CondominoID,
+                            Nome = Nome,
+                            Email = Email,
+                            IndFiscal = IndFiscal,
+                            IndSituacao = IndSituacao,
+                            DataCadastro = DataCadastro != null && DataCadastro != "" ? Funcoes.StringToDate(DataCadastro).Value : Funcoes.Brasilia(),
+                            TelParticular1 = TelParticular1,
+                            TelParticular2 = TelParticular2,
+                            Sexo = Sexo,
+                            IndProprietario = IndProprietario,
+                            IndAnimal = IndAnimal,
+                            DataNascimento = Funcoes.StringToDate(DataNascimento),
+                            ProfissaoID = ProfissaoID != null && int.Parse(ProfissaoID) > 0 ? int.Parse(ProfissaoID) : 0,
+                            Observacao = Observacao,
+                            UsuarioViewModel = new UsuarioViewModel()
+                            {
+                                empresaId = CondominioID,
+                                usuarioId = usuarioId != null && usuarioId != "" ? int.Parse(usuarioId) : 0
+                            }
+                        };
 
-                    value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
-                    Facade<CondominoPFViewModel, CondominoPFModel, ApplicationContext> facade = new Facade<CondominoPFViewModel, CondominoPFModel, ApplicationContext>();
-                    result = facade.Save(value, Crud.ALTERAR);
+                        value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                        Facade<CondominoPFViewModel, CondominoPFModel, ApplicationContext> facade = new Facade<CondominoPFViewModel, CondominoPFModel, ApplicationContext>();
+                        result = facade.Save((CondominoPFViewModel)value, Crud.ALTERAR);
+                    }
+                    else
+                    {
+                        value = new CondominoPJViewModel()
+                        {
+                            CondominioID = CondominioID,
+                            CondominoID = CondominoID,
+                            Nome = Nome,
+                            Email = Email,
+                            IndFiscal = cnpj,
+                            IndSituacao = IndSituacao,
+                            DataCadastro = DataCadastro != null && DataCadastro != "" ? Funcoes.StringToDate(DataCadastro).Value : Funcoes.Brasilia(),
+                            TelParticular1 = TelParticular1,
+                            TelParticular2 = TelParticular2,
+                            IndProprietario = IndProprietario,
+                            Administrador = Administrador,
+                            RamoAtividadeID = RamoAtividadeID != null && RamoAtividadeID != "" ? int.Parse(RamoAtividadeID) : 0,
+                            Observacao = Observacao,
+                            UsuarioViewModel = new UsuarioViewModel()
+                            {
+                                empresaId = CondominioID,
+                                usuarioId = usuarioId != null && usuarioId != "" ? int.Parse(usuarioId) : 0
+                            }
+                        };
+
+                        value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+                        Facade<CondominoPJViewModel, CondominoPJModel, ApplicationContext> facade = new Facade<CondominoPJViewModel, CondominoPJModel, ApplicationContext>();
+                        result = facade.Save((CondominoPJViewModel)value, Crud.ALTERAR);
+                    }
 
                     if (result.mensagem.Code > 0)
                         throw new App_DominioException(result.mensagem);
