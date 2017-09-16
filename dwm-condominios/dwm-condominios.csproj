@@ -226,6 +226,7 @@
     <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\AluguelController.cs" />
     <Compile Include="Controllers\API\ChamadosAPIController.cs" />
+    <Compile Include="Controllers\API\DocumentosAPIController.cs" />
     <Compile Include="Controllers\API\DwmApiController.cs" />
     <Compile Include="Controllers\API\EdificacaoAPIController.cs" />
     <Compile Include="Controllers\API\GrupoCondominoAPIController.cs" />
@@ -4295,6 +4296,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
+    <Folder Include="Views\DocumentosAPI\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>

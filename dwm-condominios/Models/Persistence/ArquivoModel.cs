@@ -273,7 +273,7 @@ namespace DWM.Models.Persistence
             int _EdificacaoID = (int)param[2];
             int _UnidadeID = (int)param[3];
             int _CondominoID = (int)param[4];
-            int _GrupoCondominoID = (int)param[5];
+            int _GrupoCondominoID = (int?)param[5] ?? 0;
             string _Nome = (string)param[6];
 
             IEnumerable<ArquivoViewModel> archive = new List<ArquivoViewModel>();
