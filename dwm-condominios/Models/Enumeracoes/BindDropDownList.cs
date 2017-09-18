@@ -97,7 +97,7 @@ namespace DWM.Models.Enumeracoes
 
                     q = q.Union(from u in db.Unidades.AsEnumerable()
                                 where u.CondominioID.Equals(_CondominioID) && u.EdificacaoID.Equals(_EdificacaoID)
-                                orderby u.UnidadeID
+                                orderby u.Codigo
                                 select new SelectListItem()
                                 {
                                     Value = u.UnidadeID.ToString(),
@@ -142,8 +142,6 @@ namespace DWM.Models.Enumeracoes
             using (ApplicationContext db = new ApplicationContext())
             {
                 IList<SelectListItem> q = new List<SelectListItem>();
-
-                
 
                 IEnumerable<Unidade> Unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
 
@@ -250,7 +248,51 @@ namespace DWM.Models.Enumeracoes
                                              && cunid.EdificacaoID == _EdificacaoID
                                              && cunid.DataFim == null
                                        select new { cunid.CondominioID, cunid.EdificacaoID, cunid.UnidadeID }).Contains(new { u.CondominioID, u.EdificacaoID, u.UnidadeID })
-                            orderby u.UnidadeID
+                            orderby u.Codigo
+                            select new SelectListItem()
+                            {
+                                Value = u.UnidadeID.ToString(),
+                                Text = u.Codigo,
+                                Selected = (selectedValue != "" ? u.UnidadeID.ToString() == selectedValue : false),
+                            }).ToList();
+
+                return q.AsEnumerable().ToList();
+            }
+        }
+
+        public IEnumerable<SelectListItem> UnidadesSemProprietario(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+            int _EdificacaoID = int.Parse(param[2].ToString());
+            int _CondominioID = 0;
+
+            if (param.Count() > 3)
+                _CondominioID = (int)param[3];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from u in db.Unidades
+                            where u.CondominioID.Equals(_CondominioID)
+                                  && u.EdificacaoID.Equals(_EdificacaoID)
+                                  && !(from punid in db.ProprietarioUnidades
+                                       where punid.CondominioID == _CondominioID
+                                             && punid.EdificacaoID == _EdificacaoID
+                                             && punid.DataFim == null
+                                       select new { punid.CondominioID, punid.EdificacaoID, punid.UnidadeID }).Contains(new { u.CondominioID, u.EdificacaoID, u.UnidadeID })
+                            orderby u.Codigo
                             select new SelectListItem()
                             {
                                 Value = u.UnidadeID.ToString(),
@@ -813,5 +855,31 @@ namespace DWM.Models.Enumeracoes
             return q;
         }
 
+        public IEnumerable<SelectListItem> Cidades(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.Cidades.AsEnumerable()
+                            orderby e.Nome
+                            select new SelectListItem()
+                            {
+                                Value = e.CidadeID.ToString(),
+                                Text = e.Nome,
+                                Selected = (selectedValue != "" ? e.Nome.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
     }
 }

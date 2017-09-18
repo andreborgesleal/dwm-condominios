@@ -53,6 +53,8 @@ namespace DWM.Models.Repositories
         [DisplayName("Unidade")]
         public System.Nullable<int> UnidadeID { get; set; }
 
+        public string Codigo { get; set; }
+
         [DisplayName("Data")]
         public System.DateTime DataChamado { get; set; }
 

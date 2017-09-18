@@ -8,41 +8,39 @@
 
     t[1].url = "../Home/Default";
 }
-<div class="container-cadastro">
-    <div class="x_panel">
-        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Emails", Descricao = "", Transacao = t })
-        <div class="x_content">
-            @using (Ajax.BeginForm("Listparam", "EmailLogID", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
+<!-- Datatables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Emails", Descricao = "", Transacao = t })
+    <div class="x_content">
+        @using (Ajax.BeginForm("Listparam", "EmailLogID", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
             {
-                <div class="container-cadastro">
-                    <div class="row clearfix">
-                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                            <div class="form-group">
-                                <label class="control-label" for="data1">Período</label>
-                                <div class="row clearfix">
-                                    <div class="col-md-3">
-                                        @Html.Editor("__data1", "DATE", new { identificador = "data1", readOnly = "false", value = Convert.ToDateTime(DateTime.Today.AddMonths(-2).ToString("yyyy-MM-dd")) })
-                                    </div>
-                                    <div class="col-md-1">
-                                        à
-                                    </div>
-                                    <div class="col-md-8">
-                                        @Html.Editor("__data2", "DATE", new { identificador = "data2", readOnly = "false", value = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1) })
-                                    </div>
+            <div class="container-cadastro">
+                <div class="row clearfix">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label" for="data1">Período</label>
+                            <div class="row clearfix">
+                                <div class="col-md-3">
+                                    <input type="date" id="data1" name="data1" class="form-control" value="@DateTime.Today.AddMonths(-2).ToString("yyyy-MM-dd")" />
+                                </div>
+                                <div class="col-md-1">
+                                    à
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="date" id="data2" name="data2" class="form-control" value="@Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("yyyy-MM-dd")" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <input type="submit" class="btn btn-primary" value="Buscar" />
                 </div>
-            }
-            <br />
-            <div id="div-list">
-                @Html.Partial("ListParam", Model)
+                <input type="submit" class="btn btn-primary" value="Buscar" />
             </div>
-            @*<div class="altura-35">
-                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "EnviarEmail", buttonType = "link" } })
-            </div>*@
+        }
+        <br />
+        <div id="div-list">
+            @Html.Partial("ListParam", Model)
         </div>
     </div>
 </div>

@@ -113,6 +113,11 @@ namespace DWM.Models.Persistence
                 CondominoPFModel model = new CondominoPFModel(this.db, this.seguranca_db);
                 condominoUnidade.Condomino = model.MapToEntity((CondominoPFViewModel)value.CondominoViewModel);
             }
+            else if (value.CondominoViewModel is CondominoPJViewModel)
+            {
+                CondominoPJModel model = new CondominoPJModel(this.db, this.seguranca_db);
+                condominoUnidade.Condomino = model.MapToEntity((CondominoPJViewModel)value.CondominoViewModel);
+            }
 
             return condominoUnidade;
         }
@@ -309,7 +314,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator = c.Condomino.discriminator
                              },
                          }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
@@ -343,7 +347,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator = c.Condomino.discriminator
                              },
                          }).ToList();
             }
@@ -382,7 +385,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator = c.Condomino.discriminator
                              },
                          }).ToList();
             }
@@ -465,7 +467,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator=c.Condomino.discriminator
                              },
                          }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
@@ -500,7 +501,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator = c.Condomino.discriminator
                              },
                          }).ToList();
             }
@@ -539,7 +539,6 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
-                                 discriminator = c.Condomino.discriminator
                              },
                          }).ToList();
             }
@@ -620,7 +619,6 @@ namespace DWM.Models.Persistence
                              UsuarioID = c.Condomino.UsuarioID,
                              DataCadastro = c.Condomino.DataCadastro,
                              Avatar = c.Condomino.Avatar,
-                             discriminator = c.Condomino.discriminator
                          },
                      }).ToList();
             return query;

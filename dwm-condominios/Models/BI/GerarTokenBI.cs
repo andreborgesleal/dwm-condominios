@@ -39,20 +39,28 @@ namespace DWM.Models.BI
                 Guid guid = Guid.NewGuid();
                 string Validador = guid.ToString();
 
-                result = new UnidadeViewModel()
-                {
-                    empresaId = sessaoCorrente.empresaId,
-                    uri = r.uri,
-                    CondominioID = r.CondominioID,
-                    EdificacaoID = r.EdificacaoID,
-                    UnidadeID = r.UnidadeID,
-                    Validador = Validador,
-                    DataExpiracao = Funcoes.Brasilia().Date.AddDays(2),
-                    NomeCondomino = r.NomeCondomino != null ? r.NomeCondomino.ToUpper() : "",
-                    Email = r.Email != null ? r.Email.ToLower() : "",
-                };
-
                 UnidadeModel model = new UnidadeModel(this.db, this.seguranca_db);
+                Unidade u = model.Find(r);
+                result = model.MapToRepository(u);
+                result.uri = r.uri;
+                result.Validador = Validador;
+                result.DataExpiracao = Funcoes.Brasilia().Date.AddDays(2);
+                result.NomeCondomino = r.NomeCondomino != null ? r.NomeCondomino.ToUpper() : "";
+                result.Email = r.Email != null ? r.Email.ToLower() : "";
+
+                #region Verifica se a unidade está ocupada 
+                int quantidade = db.CondominoUnidades.Where(info => info.CondominioID == sessaoCorrente.empresaId
+                                                                    && info.EdificacaoID == r.EdificacaoID
+                                                                    && info.UnidadeID == r.UnidadeID
+                                                                    && info.DataFim == null).Count();
+                if (quantidade > 0)
+                {
+                    result.mensagem = new Validate() { Code = 19, Message = "A unidade informada já se encontra ocupada por outro condômino. É necessário desocupar a unidade para executar o envio do Token de cadastro." };
+                    throw new App_DominioException(result.mensagem);
+                }
+                    
+                #endregion
+
                 result = model.Update(result);
 
                 if (result.mensagem.Code > 0)
@@ -60,10 +68,11 @@ namespace DWM.Models.BI
 
                 db.SaveChanges();
                 seguranca_db.SaveChanges();
-
                 #region envio de e-mail ao condômino para registro
+
                 EnviarEmailTokenBI EnviarEmailToken = new EnviarEmailTokenBI(this.db, this.seguranca_db);
                 result.EdificacaoDescricao = db.Edificacaos.Find(result.EdificacaoID).Descricao;
+                result.EdificacaoDescricaoTipoEdificacao = DWMSessaoLocal._GetTipoEdificacao(result.CondominioID, this.db).Descricao;
                 result = EnviarEmailToken.Run(result);
                 if (result.mensagem.Code > 0)
                     throw new ArgumentException(result.mensagem.MessageBase);

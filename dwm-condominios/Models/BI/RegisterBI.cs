@@ -155,7 +155,7 @@ namespace DWM.Models.BI
                         ProfissaoID = r.ProfissaoID,
                         DataNascimento = r.DataNascimento,
                         Sexo = r.Sexo,
-                        IndAnimal = r.IndAnimal
+                        IndAnimal = r.IndAnimal,
                     };
 
                     CondominoPFModel condominoPFModel = new CondominoPFModel(this.db, this.seguranca_db);
@@ -189,7 +189,7 @@ namespace DWM.Models.BI
                         IndSituacao = r.UnidadeViewModel.Validador != null && r.UnidadeViewModel.Validador != "" ? "A" : "D",
                         UsuarioID = user.usuarioId,
                         Administrador = r.Administrador,
-                        RamoAtividadeID = r.RamoAtividadeID
+                        RamoAtividadeID = r.RamoAtividadeID,
                     };
 
                     CondominoPJModel condominoPJModel = new CondominoPJModel(this.db, this.seguranca_db);

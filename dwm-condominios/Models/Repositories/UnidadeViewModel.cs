@@ -52,5 +52,6 @@ namespace DWM.Models.Repositories
         public string Email { get; set; }
 
         public string EdificacaoDescricao { get; set; }
+        public string EdificacaoDescricaoTipoEdificacao { get; set; }
     }
 }

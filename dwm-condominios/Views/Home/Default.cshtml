@@ -268,7 +268,7 @@ else
                                                     <div class="byline">
                                                         <span id="prev_data">@inf.DataPublicacao.ToShortDateString()</span>
                                                     </div>
-                                                    <p class="excerpt">
+                                                    <p class="excerpt img-responsive">
                                                         @Html.Raw(inf.Resumo)
                                                     </p>
                                                     <p class="dedo-indicador" id="readmore"><code data-toggle="modal" data-target="#@inf.InformativoID">Leia mais...</code></p>
@@ -340,7 +340,21 @@ else
                             @inf.Cabecalho
                         </h3>
                     </div>
-                    <div class="modal-body" id="myModal1-body-preview">
+                    <div class="modal-body img-responsive" id="myModal1-body-preview">
+                        <p>@Html.Raw(inf.MensagemDetalhada)</p>
+                    </div> 
+                    <div class="modal-footer">
+                        <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
+                        <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
+                    </div>
+                    <div class="modal-body img-responsive Scroll" id="myModal1-body-preview">
                         <p>@Html.Raw(inf.MensagemDetalhada)</p>
                     </div>
                     <div class="modal-footer">
@@ -348,21 +362,7 @@ else
                     </div>
                 </div>
             </div>
-        <div class="modal-dialog modal-sm hidden-lg hidden-md hidden-sm">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModalPreview">×</button>
-                    <h3 class="modal-title" id="myModalLabelPreview">@inf.Cabecalho</h3>
-                </div>
-                <div class="modal-body Scroll" id="myModal1-body-preview">
-                    <p>@Html.Raw(inf.MensagemDetalhada)</p>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
-                </div>
-            </div>
         </div>
-    </div>
     }
     @* Fim do Modal *@
 }

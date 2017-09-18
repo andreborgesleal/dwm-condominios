@@ -1,0 +1,97 @@
+﻿@using DWM.Models.Repositories
+@using DWM.Models.Entidades
+@model PagedList<DWM.Models.Repositories.ProprietarioViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>CNPJ/CPF</code> para buscar o Proprietário
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action table-responsive display" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title text-center">Ação</th>
+                        <th class="column-title text-left">Nome</th>
+                        <th class="column-title">CPF/CNPJ</th>
+                        <th class="column-title">E-mail</th>
+                        <th class="column-title">Telefone</th>
+                        <th class="column-title">Endereço</th>
+                        <th class="column-title text-left">Unidade</th>
+                        <th class="column-title">Cidade</th>
+                        <th class="column-title">CEP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (ProprietarioViewModel value in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?ProprietarioID=@value.ProprietarioID'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?ProprietarioID=@value.ProprietarioID'"></button>
+                            </td>
+                            <td>
+                                <small>@value.Nome</small>
+                            </td>
+                            <td>
+                                <small>@(App_Dominio.Models.Funcoes.FormataCPFCNPJ(value.IndFiscal))</small>
+                            </td>
+                            <td>
+                                <small>@value.Email</small>
+                            </td>
+                            <td>
+                                <small>@(App_Dominio.Models.Funcoes.FormataTelefone(value.Telefone))</small>
+                            </td>
+                            <td>
+                                <small>@(value.Endereco + " " + value.Complemento)</small>
+                            </td>
+                            <td>
+                                @foreach (ProprietarioUnidadeViewModel pu in value.ProprietarioUnidades)
+                                {
+                                    <p>
+                                        <small>@(pu.EdificacaoDescricao + "-" + pu.Codigo)</small>
+                                    </p>
+                                }
+                            </td>
+                            <td>
+                                <small>@(value.CidadeDescricao + "-" + value.UF)</small>
+                            </td>
+                            <td>
+                                <small>@(App_Dominio.Models.Funcoes.FormataCEP(value.CEP))</small>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+
+
+

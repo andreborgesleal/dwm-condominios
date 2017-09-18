@@ -39,6 +39,8 @@ namespace DWM.Models.BI
 
                 Condominio condominio = db.Condominios.Find(rec.CondominioID);
                 Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
+                rec.UnidadeViewModel.Codigo = db.Unidades.Find(rec.CondominioID, rec.UnidadeViewModel.EdificacaoID, rec.UnidadeViewModel.UnidadeID).Codigo;
+                string DescricaoTipoEdificacao = DWMSessaoLocal._GetTipoEdificacao(_empresaId, this.db).Descricao;
 
                 rec.empresaId = _empresaId;
 
@@ -54,9 +56,9 @@ namespace DWM.Models.BI
                 string Html = "<p><span style=\"font-family: Verdana; font-size: larger; color: #656464\">" + sistema.descricao + "</span></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + rec.Nome.ToUpper() + "</span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Torre: <b>" + rec.UnidadeViewModel.EdificacaoDescricao + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">" + DescricaoTipoEdificacao + ": <b>" + rec.UnidadeViewModel.EdificacaoDescricao + "</b></span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + rec.UnidadeViewModel.UnidadeID.ToString() + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + rec.UnidadeViewModel.Codigo + "</b></span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>" +
@@ -177,6 +179,8 @@ namespace DWM.Models.BI
                 CondominoUnidade CondominoUnidade = db.CondominoUnidades.Where(info => info.CondominoID == rec.CondominoID && !info.DataFim.HasValue).FirstOrDefault();
                 Edificacao Edificacao = db.Edificacaos.Find(CondominoUnidade.EdificacaoID);
                 Credenciado Credenciado = db.Credenciados.Where(info => info.Email == rec.Email).FirstOrDefault();
+                Unidade Unidade = db.Unidades.Find(_empresaId, CondominoUnidade.EdificacaoID, CondominoUnidade.UnidadeID);
+                string DescricaoTipoEdificacao = DWMSessaoLocal._GetTipoEdificacao(_empresaId, this.db).Descricao;
 
                 rec.empresaId = _empresaId;
 
@@ -192,9 +196,9 @@ namespace DWM.Models.BI
                 string Html = "<p><span style=\"font-family: Verdana; font-size: larger; color: #656464\">" + sistema.descricao + "</span></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + rec.Nome.ToUpper() + "</span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Torre: <b>" + Edificacao.Descricao + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">" + DescricaoTipoEdificacao + ": <b>" + Edificacao.Descricao + "</b></span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + CondominoUnidade.UnidadeID.ToString() + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + Unidade.Codigo + "</b></span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de confirmação de seu cadastro de credenciado. Seu registro no Sistema Administrativo do " + condominio.RazaoSocial + " foi realizado com sucesso.</span></p>" +
                               "<p></p>";
@@ -289,9 +293,9 @@ namespace DWM.Models.BI
                 string Html = "<p><span style=\"font-family: Verdana; font-size: larger; color: #656464\">" + sistema.descricao + "</span></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: xx-large; color: #0094ff\">" + r.NomeCondomino + "</span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Torre: <b>" + r.EdificacaoDescricao + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">" + r.EdificacaoDescricaoTipoEdificacao + ": <b>" + r.EdificacaoDescricao + "</b></span></p>" +
                               "<p></p>" +
-                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + r.UnidadeID.ToString() + "</b></span></p>" +
+                              "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Unidade: <b>" + r.Codigo.ToString() + "</b></span></p>" +
                               "<p></p>" +
                               "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Essa é uma mensagem de autorização de cadastro no Sistema Administrativo do " + condominio.RazaoSocial + ".</span></p>" +
                               "<p></p>";
@@ -309,13 +313,15 @@ namespace DWM.Models.BI
 
                 Html += "<p></p>" +
                         "<p></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Através do sistema o credenciado poderá:</span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Através do sistema o condômino poderá:</span></p>" +
                         "<p></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Realizar a inclusão dos moradores de sua unidade com credenciamento de acesso.</span></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os documentos e comunicados oficiais do condomínio postados pelo síndico.</span></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar os comunicados específicos destinados a sua torre.</span></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Abrir chamados à administração como por exemplo fazer o registro de uma ocorrência ou uma solicitação.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Atualizar seu cadastro (foto, dependentes, veículos, funcionários, etc).</ span></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Receber mensagens e alertas personalizados.</ span></p>" +
-                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar o histórico de notificações.</ span></p>" +
+                        "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">- Consultar seu histórico de notificações.</ span></p>" +
                         "<hr />" +
                         "<p></p>" +
                         "<p><span style=\"font-family: Verdana; font-size: small; color: #000\">Além desses recursos, estaremos implementando outras novidades. Aguarde !</span></p>" +
@@ -346,28 +352,6 @@ namespace DWM.Models.BI
                 this.db.EmailLogs.Add(log);
                 this.db.SaveChanges();
                 #endregion
-
-                #region Gravar o LOG do e-mail enviado
-                //EmailLogViewModel log = new EmailLogViewModel()
-                //{
-                //    EmailTipoID = 2,
-                //    CondominioID = _empresaId,
-                //    EdificacaoID = r.EdificacaoID,
-                //    UnidadeID = r.UnidadeID,
-                //    DataEmail = Funcoes.Brasilia(),
-                //    Assunto = Subject,
-                //    EmailMensagem = Html,
-                //    Repository = r
-                //};
-                //EmailLogModel Model = new EmailLogModel(this.db, this.seguranca_db);
-                //Validate Validate = Model.Validate(log, Crud.INCLUIR);
-                //if (Validate.Code > 0)
-                //    throw new ArgumentException(Validate.Message);
-                //log = Model.Insert(log);
-                //if (log.mensagem.Code > 0)
-                //    throw new App_DominioException(log.mensagem);
-                #endregion
-
             }
             r.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
             return r;

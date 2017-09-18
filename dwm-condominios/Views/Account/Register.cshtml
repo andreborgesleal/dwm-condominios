@@ -1,4 +1,5 @@
-﻿@model DWM.Models.RegisterViewModel
+﻿
+@model DWM.Models.RegisterViewModel
 @{
     Layout = null;
 }
@@ -103,19 +104,43 @@
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 <label class="control-label">@Model.DescricaoTipoEdificacao</label>
-                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetUnidades('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                @if (Model.UnidadeViewModel.Validador == null || Model.UnidadeViewModel.Validador == "")
+                                {
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "GetUnidades('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("", Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @Disabled="Disabled", @onchange = "GetUnidades('EdificacaoID','UnidadeID', 'CondominioID')" })
+                                    @Html.Hidden("EdificacaoID", Model.UnidadeViewModel.EdificacaoID)
+                                }
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 <label class="control-label">Unidade</label>*
-                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "ChangeTipoCondomino()" })
+                                @if (Model.UnidadeViewModel.Validador == null || Model.UnidadeViewModel.Validador == "")
+                                {
+                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @onchange = "ChangeTipoCondomino()" })
+                                }
+                                else
+                                {
+                                    @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("", Model.UnidadeViewModel.UnidadeID.ToString(), Model.UnidadeViewModel.EdificacaoID.ToString(), Model.CondominioID), new { @class = "form-control", @Disabled = "Disabled", @onchange = "ChangeTipoCondomino()" })
+                                    @Html.Hidden("UnidadeID", Model.UnidadeViewModel.UnidadeID)
+                                }
                             </div>
                         </div>
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Nome, new { @class = "control-label" })*
-                                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "60" })
+                                @if (Model.UnidadeViewModel.Validador == null || Model.UnidadeViewModel.Validador == "")
+                                {
+                                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @maxlength = "60" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @Disabled = "Disabled", @maxlength = "60" })
+                                    @Html.Hidden("Nome", Model.Nome)
+                                }
                             </div>
                         </div>
                     </div>
@@ -123,7 +148,15 @@
                         <div class="col-md-6 col-xs-12 col-sm-12">
                             <div class="form-group">
                                 @Html.LabelFor(m => m.Email, new { @class = "control-label" })*
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @if (Model.UnidadeViewModel.Validador == null || Model.UnidadeViewModel.Validador == "")
+                                {
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                }
+                                else
+                                {
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", @Disabled = "Disabled" })
+                                    @Html.Hidden("Email", Model.Email)
+                                }
                             </div>
                         </div>
                         <div class="col-md-3 col-xs-12 col-sm-12">

@@ -127,7 +127,7 @@ namespace DWM.Models.Persistence
                 if (value.EmailMensagem == null || value.EmailMensagem.Trim().Length <= 20)
                 {
                     value.mensagem.Code = 5;
-                    value.mensagem.Message = MensagemPadrao.Message(5, "EmailMensagem").ToString();
+                    value.mensagem.Message = MensagemPadrao.Message(5, "EmailMensagem deve possuir mais de 20 caracteres").ToString();
                     value.mensagem.MessageBase = "Mensagem do e-mail deve ser informada";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;

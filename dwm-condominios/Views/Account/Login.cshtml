@@ -42,6 +42,10 @@
             {
                 @Html.Hidden("BackEmpresa", "parc_paradiso.png")
             }
+            else if (Model.Condominio.PathInfo == "Alphaville")
+            {
+                @Html.Hidden("BackEmpresa", "alphaville_login.jpg")
+            }
             else
             {
                 @Html.Hidden("BackEmpresa", "1.jpg")

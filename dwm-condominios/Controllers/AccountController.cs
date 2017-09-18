@@ -405,6 +405,8 @@ namespace DWM.Controllers
             {
                 ModelState.AddModelError("", ex.Result.MessageBase); // mensagem amigável ao usuário
                 Error(ex.Result.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                Condominio Condominio1 = DWMSessaoLocal.GetCondominioByPathInfo(collection["PathInfo"]);
+                ViewBag.Condominio = Condominio1;
                 return View(value);
             }
             catch (Exception ex)
@@ -412,6 +414,8 @@ namespace DWM.Controllers
                 App_DominioException.saveError(ex, GetType().FullName);
                 ModelState.AddModelError("", MensagemPadrao.Message(17).ToString()); // mensagem amigável ao usuário
                 Error(ex.Message); // Mensagem em inglês com a descrição detalhada do erro e fica no topo da tela
+                Condominio Condominio1 = DWMSessaoLocal.GetCondominioByPathInfo(collection["PathInfo"]);
+                ViewBag.Condominio = Condominio1;
                 return View(value);
             }
 
@@ -504,11 +508,15 @@ namespace DWM.Controllers
             System.Web.HttpContext web = System.Web.HttpContext.Current;
 
             SessaoLocal s = DWMSessaoLocal.GetSessaoLocal();
-            Condominio Condominio = DWMSessaoLocal.GetCondominioByID(s.empresaId);
 
-            new EmpresaSecurity<App_DominioContext>().EncerrarSessao(web.Session.SessionID);
+            if (s != null)
+            {
+                Condominio Condominio = DWMSessaoLocal.GetCondominioByID(s.empresaId);
+                new EmpresaSecurity<App_DominioContext>().EncerrarSessao(web.Session.SessionID);
+                return RedirectToAction("Login", "Account", new { id = Condominio.PathInfo });
+            }
 
-            return RedirectToAction("Login", "Account", new { id = Condominio.PathInfo });
+            return RedirectToAction("Login", "Account", new { id = "" });
         }
 
         [AllowAnonymous]

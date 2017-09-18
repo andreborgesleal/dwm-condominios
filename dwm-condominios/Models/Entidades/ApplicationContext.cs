@@ -46,5 +46,7 @@ namespace DWM.Models.Entidades
         public DbSet<TipoEdificacao> TipoEdificacaos { get; set; }
         public DbSet<RamoAtividade> RamoAtividades { get; set; }
         public DbSet<Proprietario> Proprietarios { get; set; }
+        public DbSet<ProprietarioUnidade> ProprietarioUnidades { get; set; }
+        public DbSet<Cidade> Cidades { get; set; }
     }
 }

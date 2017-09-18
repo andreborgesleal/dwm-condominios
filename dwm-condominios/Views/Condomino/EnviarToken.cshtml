@@ -16,8 +16,11 @@
             @using (Html.BeginForm("EnviarToken", "Condomino", FormMethod.Post, new { @class = "form" }))
             {
                 @Html.Partial("_alerts")
-                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
+                @Html.Hidden("Codigo","0")
+                @Html.HiddenFor(info => info.TipoUnidade)
+                @Html.HiddenFor(info => info.TipoCondomino)
                 <div class="row">
                     <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
                         <div class="form-group">
@@ -44,7 +47,7 @@
                     <div class="col-md-2 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Unidade</label>
-                            @Html.DropDownListFor(info => info.UnidadeID, new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Selecione...", "", 0, Model.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownListFor(info => info.UnidadeID, new DWM.Models.Enumeracoes.BindDropDownList().UnidadesDesocupadas("Selecione...", "", 0, Model.CondominioID), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
