@@ -26,6 +26,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,9 +50,8 @@
       <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="App_Dominio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
+    <Reference Include="App_Dominio">
+      <HintPath>..\..\app_dominio\App_Dominio\App_Dominio\bin\Release\App_Dominio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.7\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -226,10 +226,12 @@
     <Compile Include="Controllers\AlterarSenhaController.cs" />
     <Compile Include="Controllers\AluguelController.cs" />
     <Compile Include="Controllers\API\ChamadosAPIController.cs" />
+    <Compile Include="Controllers\API\DocumentosAPIController.cs" />
     <Compile Include="Controllers\API\DwmApiController.cs" />
     <Compile Include="Controllers\API\EdificacaoAPIController.cs" />
     <Compile Include="Controllers\API\GrupoCondominoAPIController.cs" />
     <Compile Include="Controllers\API\InformativosAPIController.cs" />
+    <Compile Include="Controllers\API\ProfileAPIController.cs" />
     <Compile Include="Controllers\API\SegurancaAPIController.cs" />
     <Compile Include="Controllers\BalanceteController.cs" />
     <Compile Include="Controllers\ChamadoController.cs" />
@@ -4299,6 +4301,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
+    <Folder Include="Views\DocumentosAPI\" />
+    <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
