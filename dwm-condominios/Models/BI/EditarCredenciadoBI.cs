@@ -202,6 +202,9 @@ namespace DWM.Models.BI
                         UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
                         seguranca_db.Set<UsuarioGrupo>().Remove(ug);
 
+                        // Exclui o usuário da tabela Sessao
+                        seguranca_db.Database.ExecuteSqlCommand("delete from Sessao where usuarioId = " + result.UsuarioID.ToString() + " and empresaId = " + sessaoCorrente.empresaId.ToString());
+
                         // Exclui o usuário 
                         Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);
                         seguranca_db.Set<Usuario>().Remove(user);
@@ -232,6 +235,9 @@ namespace DWM.Models.BI
                         // Exclui o usuário do Grupo
                         UsuarioGrupo ug = seguranca_db.UsuarioGrupos.Find(result.UsuarioID, _grupoId);
                         seguranca_db.Set<UsuarioGrupo>().Remove(ug);
+
+                        // Exclui o usuário da tabela Sessao
+                        seguranca_db.Database.ExecuteSqlCommand("delete from Sessao where usuarioId = " + result.UsuarioID.ToString() + " and empresaId = " + sessaoCorrente.empresaId.ToString());
 
                         // Exclui o usuário 
                         Usuario user = seguranca_db.Usuarios.Find(result.UsuarioID);

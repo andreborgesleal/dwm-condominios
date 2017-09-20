@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using System;
 using App_Dominio.Component;
 using App_Dominio.Repositories;
+using System.Net;
+using System.Threading;
+using System.IO;
+using System.Runtime.Serialization.Json;
 
 namespace DWM.Models.Persistence
 {
@@ -42,6 +46,61 @@ namespace DWM.Models.Persistence
             return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }
 
+        #region SMS
+        //Declaração dos métodos de envio.
+        public string EnviarSMS(string chaveApi, string remetente, string destinatario, string mensagem)
+        {
+            try
+            {
+                string url = String.Format("https://sms.comtele.com.br/api/{0}/sendmessage?sender={1}&receivers={2}&content={3}", chaveApi, remetente, destinatario, mensagem);
+                AutoResetEvent ev = new AutoResetEvent(false);
+                WebPost(new Uri(url), string.Empty, (data) =>
+                {
+                    //Retorno enviado pela API.
+                    var d = data;
+                    ev.Set();
+                });
+
+                ev.WaitOne();
+                return "";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
+            }
+        }
+
+        private void WebPost(Uri uri, string data, Action<object> callback)
+        {
+            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+
+            request.Method = "POST";
+            request.ContentType = "text/plain;charset=utf-8";
+
+            System.Text.UTF8Encoding encoding = new System.Text.UTF8Encoding();
+            byte[] bytes = encoding.GetBytes(data);
+
+            request.ContentLength = bytes.Length;
+
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(bytes, 0, bytes.Length);
+            }
+
+            request.BeginGetResponse((x) =>
+            {
+                using (HttpWebResponse response = (HttpWebResponse)request.EndGetResponse(x))
+                {
+                    if (callback != null)
+                    {
+                        DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(object));
+                        callback(ser.ReadObject(response.GetResponseStream()) as object);
+                    }
+                }
+            }, null);
+        }
+        #endregion
+
         #region Métodos da classe CrudContext
         public override VisitanteAcessoViewModel BeforeInsert(VisitanteAcessoViewModel value)
         {
@@ -71,6 +130,50 @@ namespace DWM.Models.Persistence
             #endregion
 
             return base.BeforeDelete(value);
+        }
+
+        public override VisitanteAcessoViewModel AfterInsert(VisitanteAcessoViewModel value)
+        {
+            string _HABILITA_SMS = db.Parametros.Find(sessaoCorrente.empresaId, (int)Enumeracoes.Enumeradores.Param.HABILITA_SMS).Valor;
+
+            if (_HABILITA_SMS == "S")
+            {
+                try
+                {
+                    string _CHAVE_SMS = db.Parametros.Find(sessaoCorrente.empresaId, (int)Enumeracoes.Enumeradores.Param.CHAVE_SMS).Valor;
+                    Condominio Condominio = db.Condominios.Find(sessaoCorrente.empresaId);
+                    Visitante Visitante = db.Visitantes.Find(value.VisitanteID);
+                    string ret = "";
+                    if (Visitante.Telefone != null && Visitante.Telefone.Trim().Length > 0)
+                    {
+                        ret = EnviarSMS(_CHAVE_SMS, Condominio.PathInfo, Visitante.Telefone, "[" + Condominio.PathInfo + "] Sua senha de acesso ao condominio na data de " + value.DataAutorizacao.ToString("dd/MM/yyyy") + " e " + value.AcessoID.ToString());
+                        if (ret.Trim().Length > 0)
+                        {
+                            throw new App_DominioException(new Validate()
+                            {
+                                Code = 60,
+                                Message = MensagemPadrao.Message(60, ret).ToString(),
+                                MessageBase = ret,
+                                MessageType = MsgType.WARNING
+                            });
+                        }
+                    }
+                }
+                catch (App_DominioException ex)
+                {
+                    value.mensagem = ex.Result;
+                    value.mensagem.MessageType = MsgType.WARNING;
+                }
+                catch (Exception ex)
+                {
+                    value.mensagem.Code = 60;
+                    value.mensagem.Message = MensagemPadrao.Message(60, ex.Message).ToString();
+                    value.mensagem.MessageBase = ex.Message;
+                    value.mensagem.MessageType = MsgType.WARNING;
+                }
+            }
+            
+            return base.AfterInsert(value);
         }
 
         public override VisitanteAcesso MapToEntity(VisitanteAcessoViewModel value)

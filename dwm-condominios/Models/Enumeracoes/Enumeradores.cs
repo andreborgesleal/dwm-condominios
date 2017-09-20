@@ -21,6 +21,8 @@ namespace DWM.Models.Enumeracoes
             ESQUECI_MINHA_SENHA = 9,
             GRUPO_PORTARIA = 10,
             EMAIL_TEMPLATE_PORTARIA = 11,
+            HABILITA_SMS = 12,
+            CHAVE_SMS = 13
         }
 
         public enum EmailTipo

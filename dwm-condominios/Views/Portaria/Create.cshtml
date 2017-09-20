@@ -47,9 +47,8 @@
                                 <th class="column-title">Visitante/Prestador</th>
                                 <th class="column-title">Sexo</th>
                                 <th class="column-title">RG</th>
-                                <th class="column-title">O.Emissor</th>
+                                <th class="column-title">O.E</th>
                                 <th class="column-title">CPF</th>
-                                <th class="column-title">Edificação</th>
                                 <th class="column-title">Unidade</th>
                                 <th class="column-title">Condômino</th>
                                 <th class="column-title">Profissão</th>
@@ -68,7 +67,7 @@
                                         <small>@value.Nome</small>
                                     </td>
                                     <td>
-                                        <small>@value.Sexo</small>
+                                        <small>@value.Sexo.Substring(0,1)</small>
                                     </td>
                                     <td>
                                         <small>@value.RG</small>
@@ -80,10 +79,7 @@
                                         <small>@value.CPF</small>
                                     </td>
                                     <td>
-                                        <small>@value.DescricaoEdificacao</small>
-                                    </td>
-                                    <td>
-                                        <small>@value.UnidadeID</small>
+                                        <small>@(value.DescricaoEdificacao + "-" + value.UnidadeID.ToString())</small>
                                     </td>
                                     <td>
                                         <small>@value.NomeCondomino</small>
@@ -131,8 +127,6 @@
                         <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
                 <div class="col-md-4 col-lg-4 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora Limite de acesso (preenchimento opcional)">Limite</label>
