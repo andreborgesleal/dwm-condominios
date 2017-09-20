@@ -16,7 +16,7 @@
                             <th class="column-title text-center">Data </th>
                             <th class="column-title text-center">ID </th>
                             <th class="column-title text-left">Solicitante </th>
-                            <th class="column-title text-left">Edificação </th>
+                            <th class="column-title text-left">Bloco </th>
                             <th class="column-title text-center">Unidade </th>
                             <th class="column-title text-left">Condômino </th>
                             <th class="column-title text-left">Assunto </th>
@@ -77,7 +77,7 @@
                                 <td class="text-center @WhitePaper">@value.ChamadoID </td>
                                 <td class="text-left @WhitePaper">@_n</td>
                                 <td class="text-left @WhitePaper">@value.DescricaoEdificacao</td>
-                                <td class="text-center @WhitePaper">@value.UnidadeID</td>
+                                <td class="text-center @WhitePaper">@value.Codigo</td>
                                 <td class="text-left @WhitePaper">@value.NomeCondomino</td>
                                 <td class="text-left @WhitePaper">@value.Assunto</td>
                                 <td class="text-center @WhitePaper">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>

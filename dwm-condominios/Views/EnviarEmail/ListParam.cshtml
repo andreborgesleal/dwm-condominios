@@ -6,14 +6,11 @@
 @if (Model != null)
 {
     <div class="dashboard-widget-content">
-        <div class="col-md-5">
-            Clique nos botões de <code>Ação</code> para executar a ação desejada
-        </div>
-        <div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
+        @*<div class="col-md-offset-9 col-lg-offset-9 col-xs-offset-7">
             @Html.Partial("Filtro")
-        </div>
+        </div>*@
         <div class="table-responsive">
-            <table class="table table-striped jambo_table bulk_action">
+            <table class="table table-striped jambo_table bulk_action table-responsive display" id="datatable">
                 <thead>
                     <tr class="headings">
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
@@ -82,3 +79,17 @@ else
         </div>
     </div>
 }
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>

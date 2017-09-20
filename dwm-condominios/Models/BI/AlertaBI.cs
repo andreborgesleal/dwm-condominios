@@ -74,7 +74,7 @@ namespace DWM.Models.BI
                     GrupoCondominoID = null,
                     DataEmail = Funcoes.Brasilia(),
                     Nome = c.NomeUsuario + _Edificacao,
-                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO, sessaoCorrente.empresaId).Assunto + " " + c.ChamadoID.ToString() + " - " + c.Assunto + " - " + db.Condominios.Find(c.CondominioID).RazaoSocial,
+                    Assunto = db.EmailTipos.Find((int)Enumeracoes.Enumeradores.EmailTipo.CHAMADO, sessaoCorrente.empresaId).Assunto + " " + c.ChamadoID.ToString() + " - " + c.Assunto,
                     EmailMensagem = db.EmailTemplates.Find(EmailTemplateID).EmailMensagem,
                     Repository = c
                 };
@@ -82,6 +82,8 @@ namespace DWM.Models.BI
                 EmailLogViewModel = notificacaoBI.Run(EmailLogViewModel);
                 if (EmailLogViewModel.mensagem.Code > 0)
                     throw new App_DominioException(EmailLogViewModel.mensagem);
+
+                EmailLogViewModel.Repository = c;
 
                 IEnumerable<EmailLogViewModel> EmailLogPessoas = notificacaoBI.List(EmailLogViewModel);
                 #endregion

@@ -1,0 +1,159 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.ProprietarioViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Proprietario/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Proprietário", Descricao = "Inclusão de Proprietário", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Create", "Proprietario", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @Html.HiddenFor(info => info.empresaId)
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            @Edificacao.Bloco(Model.empresaId)
+                            @Html.DropDownList("EdificacaoID", new BindDropDownList().Edificacoes("Selecione...", "", Model.empresaId), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'empresaId')" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12 col-lg-2">
+                        <div class="form-group">
+                            <label class="control-label">Unidade</label>
+                            @Html.DropDownList("UnidadeID", new BindDropDownList().UnidadesSemProprietario("Selecione...", "", 0), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Nome</label>
+                            <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="50" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo Pessoa</label>
+                            @Html.DropDownList("IndTipoPessoa", new BindDropDownList().TipoCondomino(Model.IndTipoPessoa), new { @class = "form-control", @onchange = "MudaPessoa()" })
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">CPF/CNPJ</label>
+                            <input type="text" class="form-control" name="IndFiscal" id="IndFiscal" value="@Model.IndFiscal" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">E-mail</label>
+                            <input type="email" class="form-control" name="Email" id="Email" value="@Model.Email" maxlength="100" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Endereço</label>
+                            <input type="text" class="form-control" name="Endereco" id="Endereco" value="@Model.Endereco" maxlength="50" />
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Complemento</label>
+                            <input type="text" class="form-control" name="Complemento" id="Complemento" value="@Model.Complemento" maxlength="25" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Cidade</label>
+                            @Html.DropDownList("CidadeID", new BindDropDownList().Cidades("Selecione...",Model.CidadeID), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">UF</label>
+                            <input type="text" class="form-control" name="UF" id="UF" value="@Model.UF" maxlength="2" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">CEP</label>
+                            <input type="text" class="form-control" name="CEP" id="CEP" value="@Model.CEP" maxlength="8" />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" class="form-control" name="Telefone" id="Telefone" value="@Model.Telefone" maxlength="11" />
+                        </div>
+                    </div>
+                </div>
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                        <input type="button" onclick="window.location = '../Proprietario/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Telefone").mask("(99)9999?9-9999");
+        $("#IndFiscal").mask("999.999.999-99");
+        $("#CEP").mask("99999-999");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function Valida() {
+        if ($('#EdificacaoID').val() == null || $('#EdificacaoID').val() == '') {
+            ShowMessageAjaxAlert('Bloco deve ser informado', 'warning');
+            return false;
+        }
+        
+        if ($('#UnidadeID').val() == null || $('#UnidadeID').val() == '') {
+            ShowMessageAjaxAlert('Unidade deve ser informada', 'warning');
+            return false;
+        }
+
+        if ($('#CidadeID').val() == null || $('#CidadeID').val() == "")
+        {
+            ShowMessageAjaxAlert('Cidade deve ser informada', 'warning');
+            return false;
+        }
+
+        return true;
+    }
+
+    function MudaPessoa() {
+        $("#IndFiscal").val('');
+        if ($('#IndTipoPessoa').val() == "F")
+            $("#IndFiscal").mask("999.999.999-99");
+        else
+            $("#IndFiscal").mask("99.999.999/9999-99");
+    }
+</script>
+
+
+

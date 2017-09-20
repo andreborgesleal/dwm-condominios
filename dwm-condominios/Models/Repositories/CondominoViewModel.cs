@@ -58,6 +58,15 @@ namespace DWM.Models.Repositories
 
         public UsuarioViewModel UsuarioViewModel { get; set; }
 
-        public string discriminator { get; set; }
+        public string discriminator
+        {
+            get
+            {
+                if (IndFiscal != null && IndFiscal != "")
+                    return IndFiscal.Trim().Length == 11 ? "CondominoPF" : "CondominoPJ";
+                else
+                    return "CondominoPF";
+            }
+        }
     }
 }

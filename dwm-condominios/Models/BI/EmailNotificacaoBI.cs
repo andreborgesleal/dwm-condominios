@@ -57,6 +57,7 @@ namespace DWM.Models.BI
 
                     Condominio condominio = db.Condominios.Find(log.CondominioID);
                     Sistema sistema = seguranca_db.Sistemas.Find(_sistemaId);
+                    string CodigoUnidade = log.UnidadeID.HasValue ? db.Unidades.Find(log.CondominioID, log.EdificacaoID, log.UnidadeID).Codigo : "";
 
                     IEnumerable<EmailLogViewModel> EmailLogPessoas = List(log);
 
@@ -81,9 +82,9 @@ namespace DWM.Models.BI
                         CarbonCopy = null;
                     }
                         
-                    log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", log.UnidadeID.ToString()).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
+                    log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", CodigoUnidade).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
-                    string Subject = "[" + condominio.RazaoSocial + "] " + log.Assunto.Replace("@condominio", "");
+                    string Subject = "[" + condominio.PathInfo + "] " + log.Assunto.Replace("@condominio", "");
                     string Html = log.EmailMensagem;
 
                     Validate result = sendMail.Send(sender, recipients, Html, Subject, "", CarbonCopy);
@@ -194,6 +195,7 @@ namespace DWM.Models.BI
                                    where con.CondominioID == sessaoCorrente.empresaId
                                          && und.CondominioID == sessaoCorrente.empresaId
                                          && und.DataFim == null && (!log.EdificacaoID.HasValue || (und.EdificacaoID == log.EdificacaoID))
+                                         && cre.Email != null && cre.Email.Trim() != ""
                                          && (!log.GrupoCondominoID.HasValue || gru.GrupoCondominoID == log.GrupoCondominoID)
                                    select new EmailLogViewModel()
                                    {

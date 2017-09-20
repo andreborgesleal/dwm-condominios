@@ -64,13 +64,15 @@
                             <div class="col-md-2 col-sm-6 col-lg-2 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label">Data Publicação</label>
-                                    @Html.Editor("data1", "DATE", new { identificador = "DataPublicacao", value = Model.DataPublicacao, readOnly = "false" })
+                                    @*@Html.Editor("data1", "DATE", new { identificador = "DataPublicacao", value = Model.DataPublicacao, readOnly = "false" })*@
+                                    <input type="date" id="DataPublicacao" name="DataPublicacao" class="form-control" value="@Model.DataPublicacao.ToString("yyyy-MM-dd")" />
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-lg-2 col-xs-6">
                                 <div class="form-group">
                                     <label class="control-label">Data Expiração</label>
-                                    @Html.Editor("data2", "DATE", new { identificador = "DataExpiracao", value = Model.DataExpiracao, readOnly = "false" })
+                                    @*@Html.Editor("data2", "DATE", new { identificador = "DataExpiracao", value = Model.DataExpiracao, readOnly = "false" })*@
+                                    <input type="date" id="DataExpiracao" name="DataExpiracao" class="form-control" value="@Model.DataExpiracao.Value.ToString("yyyy-MM-dd")" />
                                 </div>
                             </div>
                             <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">

@@ -140,9 +140,9 @@ namespace dwm_condominios.Models.BI
 
                 ListViewArquivoHome l = new ListViewArquivoHome(this.db, this.seguranca_db);
                 if (SessaoLocal.CondominoID == 0)
-                    home.Documentos = l.getPagedList(0, 15, _data1, _data2, _EdificacaoID, _UnidadeID, _CondominoID, _GrupoCondominoID, "");
+                    home.Documentos = l.getPagedList(0, 10, _data1, _data2, _EdificacaoID, _UnidadeID, _CondominoID, _GrupoCondominoID, "");
                 else
-                    home.Documentos = l.getPagedList(0, 15, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
+                    home.Documentos = l.getPagedList(0, 10, _data1, _data2, _EdificacaoID, _UnidadeID, SessaoLocal.CondominoID, _GrupoCondominoID, "");
                 #endregion
 
                 //IList<ChartJS> js = new List<ChartJS>();

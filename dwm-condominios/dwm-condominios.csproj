@@ -246,6 +246,7 @@
     <Compile Include="Controllers\InformativoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PortariaController.cs" />
+    <Compile Include="Controllers\ProprietarioController.cs" />
     <Compile Include="Controllers\UnidadeController.cs" />
     <Compile Include="Controllers\VisitanteController.cs" />
     <Compile Include="Global.asax.cs">
@@ -438,6 +439,7 @@
     <Content Include="Content\assets\ico\favicon.png" />
     <Content Include="Content\assets\img\backgrounds\1%402x.jpg" />
     <Content Include="Content\assets\img\backgrounds\1.jpg" />
+    <Content Include="Content\assets\img\backgrounds\alphaville_login.jpg" />
     <Content Include="Content\assets\img\backgrounds\parc_paradiso.png" />
     <Content Include="Content\assets\js\jquery-1.11.1.js" />
     <Content Include="Content\assets\js\jquery-1.11.1.min.js" />
@@ -4294,6 +4296,9 @@
     <Content Include="Views\Unidade\Create.cshtml" />
     <Content Include="Views\Unidade\Edit.cshtml" />
     <Content Include="Views\Unidade\Delete.cshtml" />
+    <Content Include="Views\Proprietario\Browse.cshtml" />
+    <Content Include="Views\Proprietario\List.cshtml" />
+    <Content Include="Views\Proprietario\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

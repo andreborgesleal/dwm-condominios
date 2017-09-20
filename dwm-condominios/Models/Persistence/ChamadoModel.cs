@@ -588,6 +588,8 @@ namespace DWM.Models.Persistence
                     from con in CON.DefaultIfEmpty()
                     join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
+                    join uni in db.Unidades on new { CondominioID = cha.CondominioID, EdificacaoID = cha.EdificacaoID.Value, UnidadeID = cha.UnidadeID.Value } equals new { uni.CondominioID, uni.EdificacaoID, uni.UnidadeID } into UNI
+                    from uni in UNI.DefaultIfEmpty()
                     join sta in db.ChamadoStatuss on cha.ChamadoStatusID equals sta.ChamadoStatusID
                     join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
                     where  cha.CondominioID == SessaoLocal.empresaId &&
@@ -619,6 +621,7 @@ namespace DWM.Models.Persistence
                         EdificacaoID = cha.EdificacaoID,
                         DescricaoEdificacao = edi.Descricao,
                         UnidadeID = cha.UnidadeID,
+                        Codigo = uni.Codigo,
                         DataChamado = cha.DataChamado,
                         Assunto = cha.Assunto,
                         UsuarioID = cha.UsuarioID,
@@ -629,28 +632,8 @@ namespace DWM.Models.Persistence
                         DataRedirecionamento = cha.DataRedirecionamento,
                         UsuarioFilaID = cha.UsuarioFilaID,
                         NomeUsuarioFila = cha.NomeUsuarioFila,
-                        LoginUsuarioFila = cha.LoginUsuarioFila,
-                        PageSize = pageSize,
-                        TotalCount = ((from cha1 in db.Chamados
-                                       join FilaAtual1 in db.FilaAtendimentos on cha1.FilaAtendimentoID equals FilaAtual1.FilaAtendimentoID
-                                       join con1 in db.Condominos on cha1.CondominoID equals con1.CondominoID into CON1
-                                       from con1 in CON1.DefaultIfEmpty()
-                                       join edi1 in db.Edificacaos on cha1.EdificacaoID equals edi1.EdificacaoID into EDI1
-                                       from edi1 in EDI1.DefaultIfEmpty()
-                                       join sta1 in db.ChamadoStatuss on cha1.ChamadoStatusID equals sta1.ChamadoStatusID
-                                       join mot1 in db.ChamadoMotivos on cha1.ChamadoMotivoID equals mot1.ChamadoMotivoID
-                                       where cha1.CondominioID == SessaoLocal.empresaId &&
-                                              sta1.CondominioID == SessaoLocal.empresaId &&
-                                              mot1.CondominioID == SessaoLocal.empresaId &&
-                                              cha1.ChamadoStatusID != 3 && // 3-Encerrado
-                                              (cha1.UsuarioID == SessaoLocal.usuarioId || cha1.UsuarioFilaID == SessaoLocal.usuarioId ||
-                                              (cha.CondominoID.HasValue && cha.CondominoID == SessaoLocal.CondominoID && SessaoLocal.CondominoID > 0) ||
-                                              (from usu1 in db.FilaAtendimentoUsuarios
-                                               where usu1.FilaAtendimentoID == cha1.FilaAtendimentoID
-                                               select usu1.UsuarioID).Contains(SessaoLocal.usuarioId))
-                                       orderby cha1.DataChamado descending
-                                       select cha1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                        LoginUsuarioFila = cha.LoginUsuarioFila
+                    }).ToList();
         }
 
         public override Repository getRepository(Object id)
@@ -715,6 +698,8 @@ namespace DWM.Models.Persistence
                     from con in CON.DefaultIfEmpty()
                     join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
+                    join uni in db.Unidades on new { CondominioID = cha.CondominioID, EdificacaoID = cha.EdificacaoID.Value, UnidadeID = cha.UnidadeID.Value } equals new { uni.CondominioID, uni.EdificacaoID, uni.UnidadeID } into UNI
+                    from uni in UNI.DefaultIfEmpty()
                     join sta in db.ChamadoStatuss on cha.ChamadoStatusID equals sta.ChamadoStatusID
                     join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
                     where cha.CondominioID == SessaoLocal.empresaId &&
@@ -745,6 +730,7 @@ namespace DWM.Models.Persistence
                         EdificacaoID = cha.EdificacaoID,
                         DescricaoEdificacao = edi.Descricao,
                         UnidadeID = cha.UnidadeID,
+                        Codigo = uni.Codigo,
                         DataChamado = cha.DataChamado,
                         Assunto = cha.Assunto,
                         UsuarioID = cha.UsuarioID,
@@ -755,28 +741,8 @@ namespace DWM.Models.Persistence
                         DataRedirecionamento = cha.DataRedirecionamento,
                         UsuarioFilaID = cha.UsuarioFilaID,
                         NomeUsuarioFila = cha.NomeUsuarioFila,
-                        LoginUsuarioFila = cha.LoginUsuarioFila,
-                        PageSize = pageSize,
-                        TotalCount = ((from cha1 in db.Chamados
-                                       join FilaAtual1 in db.FilaAtendimentos on cha1.FilaAtendimentoID equals FilaAtual1.FilaAtendimentoID
-                                       join con1 in db.Condominos on cha1.CondominoID equals con1.CondominoID into CON1
-                                       from con1 in CON1.DefaultIfEmpty()
-                                       join edi1 in db.Edificacaos on cha1.EdificacaoID equals edi1.EdificacaoID into EDI1
-                                       from edi1 in EDI1.DefaultIfEmpty()
-                                       join sta1 in db.ChamadoStatuss on cha1.ChamadoStatusID equals sta1.ChamadoStatusID
-                                       join mot1 in db.ChamadoMotivos on cha1.ChamadoMotivoID equals mot1.ChamadoMotivoID
-                                       where cha1.CondominioID == SessaoLocal.empresaId &&
-                                             cha1.DataChamado >= _data1 && cha1.DataChamado <= _data2 &&
-                                             sta1.CondominioID == SessaoLocal.empresaId &&
-                                             mot1.CondominioID == SessaoLocal.empresaId &&
-                                             (!_EdificacaoID.HasValue || (cha1.EdificacaoID == _EdificacaoID && cha1.UnidadeID == _UnidadeID)) &&
-                                             (!_CondominoID.HasValue || cha1.CondominoID == _CondominoID) &&
-                                             (!_FilaAtendimentoID.HasValue || cha1.FilaAtendimentoID == _FilaAtendimentoID) &&
-                                             (!_ChamadoMotivoID.HasValue || cha1.ChamadoMotivoID == _ChamadoMotivoID) &&
-                                             (!_ChamadoStatusID.HasValue || cha1.ChamadoStatusID == _ChamadoStatusID)
-                                       orderby cha1.DataChamado descending
-                                       select cha1).Count())
-                    }).Skip((index ?? 0) * pageSize).Take(pageSize).ToList();
+                        LoginUsuarioFila = cha.LoginUsuarioFila
+                    }).ToList();
         }
 
         public override Repository getRepository(Object id)

@@ -138,8 +138,18 @@ namespace DWM.Models.Entidades
             }
 
             using (ApplicationContext db = new ApplicationContext())
-                return db.TipoEdificacaos.Where(info => info.CondominioID == CondominioID).AsEnumerable().FirstOrDefault();
+                return _GetTipoEdificacao(CondominioID, db);
 
+        }
+
+        public static TipoEdificacao _GetTipoEdificacao(int? CondominioID, ApplicationContext db)
+        {
+            if (!CondominioID.HasValue || CondominioID.Value == 0)
+            {
+                SessaoLocal s = GetSessaoLocal();
+                CondominioID = s.empresaId;
+            }
+            return db.TipoEdificacaos.Where(info => info.CondominioID == CondominioID).AsEnumerable().FirstOrDefault();
         }
     }
 }

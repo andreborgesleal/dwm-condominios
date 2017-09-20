@@ -53,17 +53,17 @@ namespace DWM.Models.Persistence
             entity.Endereco = value.Endereco;
             entity.Complemento = value.Complemento;
             entity.CidadeID = value.CidadeID;
-            entity.UF = value.UF;
+            entity.UF = value.UF.ToUpper();
             entity.CEP = value.CEP != null && value.CEP != "" ? value.CEP.Replace("-", "") : value.CEP;
 
             foreach(ProprietarioUnidadeViewModel p in value.ProprietarioUnidades)
             {
                 ProprietarioUnidade pu = new ProprietarioUnidade()
                 {
+                    ProprietarioID = entity.ProprietarioID,
                     CondominioID = SessaoLocal.empresaId,
                     EdificacaoID = p.EdificacaoID,
                     UnidadeID = p.UnidadeID,
-                    ProprietarioID = p.ProprietarioID,
                     DataFim = p.DataFim
                 };
 
@@ -100,11 +100,11 @@ namespace DWM.Models.Persistence
             {
                 ProprietarioUnidadeViewModel puRepository = new ProprietarioUnidadeViewModel()
                 {
+                    ProprietarioID = pu.ProprietarioID,
                     empresaId = sessaoCorrente.empresaId,
                     CondominioID = pu.CondominioID,
                     EdificacaoID = pu.EdificacaoID,
                     UnidadeID = pu.UnidadeID,
-                    ProprietarioID = pu.ProprietarioID,
                     DataFim = pu.DataFim,
                     mensagem = new Validate() { Code = 0, Message = "Registro incluído com sucesso", MessageBase = "Registro incluído com sucesso", MessageType = MsgType.SUCCESS }
                 };
@@ -143,6 +143,79 @@ namespace DWM.Models.Persistence
                     return value.mensagem;
                 }
 
+                #region Unidades do Proprietário
+                if (value.ProprietarioUnidades == null || value.ProprietarioUnidades.Count() == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                    value.mensagem.MessageBase = "O proprietário deve possuir pelo menos uma unidade.";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+
+                foreach (ProprietarioUnidadeViewModel pu in value.ProprietarioUnidades)
+                {
+                    if (pu.CondominioID == 0)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                        value.mensagem.MessageBase = "Condomínio deve ser informada";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (pu.EdificacaoID == 0)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Bloco").ToString();
+                        value.mensagem.MessageBase = "Bloco deve ser informado";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    if (pu.UnidadeID == 0)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                        value.mensagem.MessageBase = "Unidade deve ser informada";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+
+                    #region Verifica se a torre/unidade já não foi gravada para outro proprietário
+                    if (operation == Crud.INCLUIR && 
+                        (from punid in db.ProprietarioUnidades
+                         where punid.CondominioID == pu.CondominioID
+                                && punid.EdificacaoID == pu.EdificacaoID
+                                && punid.UnidadeID == pu.UnidadeID
+                                && punid.DataFim == null
+                         select punid).Count() > 0)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                        value.mensagem.MessageBase = "Unidade já pertence a outro proprietário";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                    else if (operation == Crud.ALTERAR &&
+                            (from punid in db.ProprietarioUnidades
+                             where punid.ProprietarioID != pu.ProprietarioID
+                                    && punid.CondominioID == pu.CondominioID
+                                    && punid.EdificacaoID == pu.EdificacaoID
+                                    && punid.UnidadeID == pu.UnidadeID
+                                    && punid.DataFim == null
+                             select punid).Count() > 0)
+                    {
+                        value.mensagem.Code = 5;
+                        value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                        value.mensagem.MessageBase = "Unidade já pertence a outro proprietário";
+                        value.mensagem.MessageType = MsgType.WARNING;
+                        return value.mensagem;
+                    }
+                    #endregion
+                }
+                #endregion
+
                 if (value.Nome == null || value.Nome.Trim().Length < 5)
                 {
                     value.mensagem.Code = 5;
@@ -163,7 +236,7 @@ namespace DWM.Models.Persistence
 
                 if (value.IndFiscal != null)
                 {
-                    if (value.IndFiscal.Trim().Length <= 11 && !Funcoes.ValidaCpf(value.IndFiscal))
+                    if (value.IndFiscal.Trim().Replace(".","").Replace("-","").Replace("/","").Length <= 11 && !Funcoes.ValidaCpf(value.IndFiscal.Replace(".", "").Replace("-", "").Replace("/", "")))
                     {
                         value.mensagem.Code = 29;
                         value.mensagem.Message = MensagemPadrao.Message(29).ToString();
@@ -171,7 +244,7 @@ namespace DWM.Models.Persistence
                         value.mensagem.MessageType = MsgType.WARNING;
                         return value.mensagem;
                     }
-                    else if (!Funcoes.ValidaCnpj(value.IndFiscal))
+                    else if (value.IndFiscal.Trim().Replace(".", "").Replace("-", "").Replace("/", "").Length == 14 && !Funcoes.ValidaCnpj(value.IndFiscal.Trim().Replace(".", "").Replace("-", "").Replace("/", "")))
                     {
                         value.mensagem.Code = 30;
                         value.mensagem.Message = MensagemPadrao.Message(30).ToString();
@@ -189,6 +262,35 @@ namespace DWM.Models.Persistence
                     return value.mensagem;
                 }
 
+                #region Verifica se o CPF/CNPJ já não foi cadastrado para outro Proprietário
+                if (operation == Crud.INCLUIR &&
+                    (from p in db.Proprietarios join pu in db.ProprietarioUnidades on p.ProprietarioID equals pu.ProprietarioID
+                     where pu.CondominioID == value.empresaId
+                            && p.IndFiscal == value.IndFiscal.Replace(".","").Replace("/","").Replace("-","")
+                     select p).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "CPF/CNPJ já cadastrado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                else if (operation == Crud.ALTERAR &&
+                        (from p in db.Proprietarios
+                         join pu in db.ProprietarioUnidades on p.ProprietarioID equals pu.ProprietarioID
+                         where pu.CondominioID == value.empresaId
+                                && p.ProprietarioID != value.ProprietarioID
+                                && p.IndFiscal == value.IndFiscal.Replace(".", "").Replace("/", "").Replace("-", "")
+                         select p).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "CPF/CNPJ já cadastrado para outro proprietário";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                #endregion
+
                 if (value.Email == null || value.Email.Trim().Length == 0)
                 {
                     value.mensagem.Code = 5;
@@ -205,6 +307,45 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
+
+                #region Verifica se já não existe e-mail cadastrado para outro proprietário
+                if (operation == Crud.INCLUIR &&
+                    (from p in db.Proprietarios
+                     join pu in db.ProprietarioUnidades on p.ProprietarioID equals pu.ProprietarioID
+                     where pu.CondominioID == value.empresaId
+                            && p.Email == value.Email
+                     select p).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "E-mail já cadastrado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                else if (operation == Crud.ALTERAR &&
+                        (from p in db.Proprietarios
+                         join pu in db.ProprietarioUnidades on p.ProprietarioID equals pu.ProprietarioID
+                         where pu.CondominioID == value.empresaId
+                                && p.ProprietarioID != value.ProprietarioID
+                                && p.Email == value.Email
+                         select p).Count() > 0)
+                {
+                    value.mensagem.Code = 19;
+                    value.mensagem.Message = MensagemPadrao.Message(19).ToString();
+                    value.mensagem.MessageBase = "E-mail já cadastrado para outro proprietário";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                #endregion
+
+                if (value.CidadeID == 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(5, "Cidade").ToString();
+                    value.mensagem.MessageBase = "Cidade deve ser informada";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
             }
             return value.mensagem;
         }
@@ -215,6 +356,79 @@ namespace DWM.Models.Persistence
             ProprietarioViewModel p = base.CreateRepository(Request);
             p.empresaId = security.getSessaoCorrente().empresaId;
             return p;
+        }
+        #endregion
+    }
+
+    public class ListViewProprietario : ListViewModelLocal<ProprietarioViewModel>
+    {
+        #region Constructor
+        public ListViewProprietario() { }
+        public ListViewProprietario(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<ProprietarioViewModel> Bind(int? index, int pageSize = 20, params object[] param)
+        {
+            int CondominioID = SessaoLocal.empresaId;
+
+            IEnumerable<ProprietarioViewModel> query = null;
+
+            query = (from p in db.Proprietarios
+                     join c in db.Cidades on p.CidadeID equals c.CidadeID
+                     where (from pu in db.ProprietarioUnidades
+                            where pu.CondominioID == CondominioID
+                                    && pu.ProprietarioID == p.ProprietarioID
+                                    && pu.DataFim == null
+                            select pu.ProprietarioID).Count() > 0
+                     orderby p.Nome
+                     select new ProprietarioViewModel()
+                     {
+                         ProprietarioID = p.ProprietarioID,
+                         Nome = p.Nome,
+                         IndTipoPessoa = p.IndTipoPessoa,
+                         IndFiscal = p.IndFiscal,
+                         Email = p.Email,
+                         Telefone = p.Telefone,
+                         Endereco = p.Endereco,
+                         Complemento = p.Complemento,
+                         CidadeDescricao = c.Nome,
+                         UF = p.UF,
+                         CEP = p.CEP,
+                         ProprietarioUnidades = (from pu in db.ProprietarioUnidades
+                                                 join u in db.Unidades on new {pu.CondominioID, pu.EdificacaoID, pu.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                                                 join e in db.Edificacaos on pu.EdificacaoID equals e.EdificacaoID
+                                                 where pu.CondominioID == CondominioID
+                                                        && pu.ProprietarioID == p.ProprietarioID
+                                                        && pu.DataFim == null
+                                                 select new ProprietarioUnidadeViewModel()
+                                                 {
+                                                     UnidadeID = pu.UnidadeID,
+                                                     Codigo = u.Codigo,
+                                                     EdificacaoID = pu.EdificacaoID,
+                                                     EdificacaoDescricao = e.Descricao
+                                                 }).ToList()
+                     }).ToList();
+
+            return query;
+        }
+
+        public override string action()
+        {
+            return "../Proprietario/ListParam";
+        }
+
+        public override string DivId()
+        {
+            return "div-proprietario";
+        }
+
+        public override App_Dominio.Component.Repository getRepository(Object id)
+        {
+            return new ProprietarioModel().getObject((ProprietarioViewModel)id);
         }
         #endregion
     }
