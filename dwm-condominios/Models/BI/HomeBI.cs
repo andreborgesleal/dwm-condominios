@@ -133,8 +133,8 @@ namespace dwm_condominios.Models.BI
                 #region Documentos p/ download
                 DateTime _data1 = Funcoes.Brasilia().AddMonths(-3) ;
                 DateTime _data2 = Funcoes.Brasilia().Date.AddDays(1).AddMinutes(-1);
-                int _EdificacaoID = 0;
-                int _UnidadeID = 0;
+                int? _EdificacaoID = null;
+                int? _UnidadeID = null;
                 int _CondominoID = 0;
                 int _GrupoCondominoID = 0;
 

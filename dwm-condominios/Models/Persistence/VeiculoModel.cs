@@ -20,6 +20,10 @@ namespace DWM.Models.Persistence
         {
             this.Create(_db, _seguranca_db);
         }
+        public VeiculoModel(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
         #endregion
 
         #region Métodos da classe CrudContext
@@ -169,6 +173,10 @@ namespace DWM.Models.Persistence
         public ListViewVeiculos(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             this.Create(_db, _seguranca_db);
+        }
+        public ListViewVeiculos(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
         }
         #endregion
 

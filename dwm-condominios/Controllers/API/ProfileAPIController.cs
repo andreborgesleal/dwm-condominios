@@ -15,6 +15,7 @@ using App_Dominio.Contratos;
 using DWM.Models.BI;
 using App_Dominio.Enumeracoes;
 using System.Linq;
+using System.Web;
 
 namespace DWM.Controllers.API
 {
@@ -42,7 +43,7 @@ namespace DWM.Controllers.API
 
             SessaoLocal s = DWMSessaoLocal.GetSessaoLocal(a.Token);
 
-            Factory<CondominoEditViewModel, ApplicationContext> factory = new Factory<CondominoEditViewModel, ApplicationContext>();
+            FactoryLocalhost<CondominoEditViewModel, ApplicationContext> factory = new FactoryLocalhost<CondominoEditViewModel, ApplicationContext>();
             CondominoEditViewModel condominoEditViewModel2 = new CondominoEditViewModel()
             {
                 UnidadeViewModel = new UnidadeViewModel()
@@ -60,12 +61,15 @@ namespace DWM.Controllers.API
             {
                 CondominoID = s.CondominoID
             };
+            condominoEditViewModel2.sessionId = s.sessaoId;
 
-            CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), condominoEditViewModel2);
+
+            
+            CondominoEditViewModel obj = factory.Execute(new EditarCondominoBI(), condominoEditViewModel2, value.Token);
             if (obj.CondominoViewModel.mensagem.Code > 0)
                 obj = null;
 
-            return condominoEditViewModel2;
+            return obj;
 
         }
     }
