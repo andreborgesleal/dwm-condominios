@@ -30,5 +30,26 @@ namespace DWM.Models.Pattern
                 }
             }
         }
+
+        public override R Execute(IProcessAPI<R, D> proc, Repository value = null, string Token = null)
+        {
+            using (db = getContextInstance())
+            {
+                using (seguranca_db = new SecurityContext())
+                {
+                    proc.Create(db, seguranca_db, Token);
+                    R r = proc.Run(value);
+
+                    if (r != null && r.mensagem.Code == 0)
+                    {
+                        db.SaveChanges();
+                        seguranca_db.SaveChanges();
+                    }
+
+                    Mensagem = r != null ? r.mensagem : null;
+                    return r;
+                }
+            }
+        }
     }
 }

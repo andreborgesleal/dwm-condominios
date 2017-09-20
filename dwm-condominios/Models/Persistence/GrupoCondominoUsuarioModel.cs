@@ -89,7 +89,10 @@ namespace DWM.Models.Persistence
         {
             this.Create(_db, _seguranca_db);
         }
-
+        public ListViewGrupoCondominoUsuarios(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
         #endregion
 
         #region Métodos da classe ListViewRepository

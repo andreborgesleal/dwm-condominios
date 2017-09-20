@@ -20,6 +20,10 @@ namespace DWM.Models.Persistence
         {
             this.Create(_db, _seguranca_db);
         }
+        public FuncionarioModel(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
         #endregion
 
         #region Métodos da classe CrudContext
@@ -195,6 +199,10 @@ namespace DWM.Models.Persistence
         public ListViewFuncionarios(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             this.Create(_db, _seguranca_db);
+        }
+        public ListViewFuncionarios(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
         }
         #endregion
 

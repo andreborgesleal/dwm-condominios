@@ -11,10 +11,11 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Security;
 using System.Linq;
 using System.Data.Entity.Infrastructure;
+using System.Web;
 
 namespace DWM.Models.BI
 {
-    public class EditarCondominoBI : DWMContextLocal, IProcess<CondominoEditViewModel, ApplicationContext>
+    public class EditarCondominoBI : DWMContextLocal, IProcessAPI<CondominoEditViewModel, ApplicationContext>
     {
         #region Constructor
         public EditarCondominoBI() { }
@@ -24,6 +25,10 @@ namespace DWM.Models.BI
             Create(_db, _seguranca_db);
         }
 
+        public EditarCondominoBI(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            Create(_db, _seguranca_db, Token);
+        }
         #endregion
 
         public CondominoEditViewModel Run(Repository value)
@@ -70,41 +75,64 @@ namespace DWM.Models.BI
                     #endregion
                 }
 
-                #region Credenciado
-                CredenciadoModel CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
+                
+                CredenciadoModel CredenciadoModel;
+                ListViewCredenciados ListCredenciados;
+                VeiculoModel VeiculoModel;
+                ListViewVeiculos ListVeiculos;
+                FuncionarioModel FuncionarioModel;
+                ListViewFuncionarios ListFuncionarios;
+                ListViewGrupoCondominoUsuarios ListGrupoCondominoUsuarios;
+
+                if (String.IsNullOrEmpty(value.sessionId))
+                {
+                    CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db);
+                    ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
+                    VeiculoModel = new VeiculoModel(this.db, this.seguranca_db);
+                    ListVeiculos = new ListViewVeiculos(this.db, this.seguranca_db);
+                    FuncionarioModel = new FuncionarioModel(this.db, this.seguranca_db);
+                    ListFuncionarios = new ListViewFuncionarios(this.db, this.seguranca_db);
+                    ListGrupoCondominoUsuarios = new ListViewGrupoCondominoUsuarios(this.db, this.seguranca_db);
+                }
+                else
+                {
+                    CredenciadoModel = new CredenciadoModel(this.db, this.seguranca_db, value.sessionId);
+                    ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db, value.sessionId);
+                    VeiculoModel = new VeiculoModel(this.db, this.seguranca_db, value.sessionId);
+                    ListVeiculos = new ListViewVeiculos(this.db, this.seguranca_db, value.sessionId);
+                    FuncionarioModel = new FuncionarioModel(this.db, this.seguranca_db, value.sessionId);
+                    ListFuncionarios = new ListViewFuncionarios(this.db, this.seguranca_db, value.sessionId);
+                    ListGrupoCondominoUsuarios = new ListViewGrupoCondominoUsuarios(this.db, this.seguranca_db, value.sessionId);
+                }
+                
                 result.CredenciadoViewModel = CredenciadoModel.CreateRepository();
                 result.CredenciadoViewModel.CondominoID = result.CondominoViewModel.CondominoID;
-
-                ListViewCredenciados ListCredenciados = new ListViewCredenciados(this.db, this.seguranca_db);
                 result.Credenciados = ListCredenciados.Bind(0, 50, result.CondominoViewModel.CondominoID);
-                #endregion
+                
 
                 #region Veículos
-                VeiculoModel VeiculoModel = new VeiculoModel(this.db, this.seguranca_db);
+                
                 result.VeiculoViewModel = VeiculoModel.CreateRepository();
                 result.VeiculoViewModel.CondominioID = sessaoCorrente.empresaId;
                 result.VeiculoViewModel.EdificacaoID = r.UnidadeViewModel.EdificacaoID;
                 result.VeiculoViewModel.UnidadeID = r.UnidadeViewModel.UnidadeID;
                 result.VeiculoViewModel.CondominoID = result.CondominoViewModel.CondominoID;
 
-                ListViewVeiculos ListVeiculos = new ListViewVeiculos(this.db, this.seguranca_db);
                 result.Veiculos = ListVeiculos.Bind(0, 50, result.VeiculoViewModel.CondominioID, result.VeiculoViewModel.EdificacaoID, result.VeiculoViewModel.UnidadeID, result.VeiculoViewModel.CondominoID);
                 #endregion
 
                 #region Funcionários
-                FuncionarioModel FuncionarioModel = new FuncionarioModel(this.db, this.seguranca_db);
                 result.FuncionarioViewModel = FuncionarioModel.CreateRepository();
                 result.FuncionarioViewModel.CondominioID = sessaoCorrente.empresaId;
                 result.FuncionarioViewModel.EdificacaoID = r.UnidadeViewModel.EdificacaoID;
                 result.FuncionarioViewModel.UnidadeID = r.UnidadeViewModel.UnidadeID;
                 result.FuncionarioViewModel.CondominoID = result.CondominoViewModel.CondominoID;
 
-                ListViewFuncionarios ListFuncionarios = new ListViewFuncionarios(this.db, this.seguranca_db);
                 result.Funcionarios = ListFuncionarios.Bind(0, 50, result.FuncionarioViewModel.CondominioID, result.FuncionarioViewModel.EdificacaoID, result.FuncionarioViewModel.UnidadeID, result.FuncionarioViewModel.CondominoID);
                 #endregion
 
                 #region Grupo de Condôminos
-                ListViewGrupoCondominoUsuarios ListGrupoCondominoUsuarios = new ListViewGrupoCondominoUsuarios(this.db, this.seguranca_db);
+                
                 result.GrupoCondominoUsuarios = ListGrupoCondominoUsuarios.Bind(0, 50, result.CondominoViewModel.CondominoID);
                 #endregion
 
