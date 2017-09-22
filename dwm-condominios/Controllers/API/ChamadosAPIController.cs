@@ -111,7 +111,7 @@ namespace DWM.Controllers.API
         public Auth EditChamado(AnotacaoAPIModel value)
         {
 
-            Auth auth = new Models.API.Auth()
+            Auth auth = new Auth()
             {
                 Code = 0,
                 Mensagem = "Sucesso!"
@@ -155,7 +155,8 @@ namespace DWM.Controllers.API
                     DataRedirecionamento = Funcoes.Brasilia(),
                     Rotas = new List<ChamadoFilaViewModel>(),
                     Anexos = new List<ChamadoAnexoViewModel>(),
-                    mensagem = new Validate() { Code = 0 }
+                    mensagem = new Validate() { Code = 0 },
+                    sessionId = value.sessionId,
                 };
                 if (value.FilaAtendimentoAtualID == value.FilaAtendimentoID.ToString())
                     result.IsUsuarioFila = false;
@@ -163,7 +164,7 @@ namespace DWM.Controllers.API
                     result.IsUsuarioFila = true;
 
                 result.ChamadoAnotacaoViewModel.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
-                Factory<ChamadoAnotacaoViewModel, ApplicationContext> factory = new Factory<ChamadoAnotacaoViewModel, ApplicationContext>();
+                FactoryLocalhost<ChamadoAnotacaoViewModel, ApplicationContext> factory = new FactoryLocalhost<ChamadoAnotacaoViewModel, ApplicationContext>();
                 factory.Execute(new ChamadoAnotacaoBI(), result, value.sessionId);
                 if (factory.Mensagem.Code > 0)
                     throw new App_DominioException(factory.Mensagem);

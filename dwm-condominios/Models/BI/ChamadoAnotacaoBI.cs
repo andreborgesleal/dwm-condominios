@@ -16,7 +16,7 @@ using System.Data.Entity;
 
 namespace DWM.Models.BI
 {
-    public class ChamadoAnotacaoBI : DWMContextLocal, IProcess<ChamadoAnotacaoViewModel, ApplicationContext>
+    public class ChamadoAnotacaoBI : DWMContextLocal, IProcessAPI<ChamadoAnotacaoViewModel, ApplicationContext>
     {
         #region Constructor
         public ChamadoAnotacaoBI() { }
@@ -24,6 +24,10 @@ namespace DWM.Models.BI
         public ChamadoAnotacaoBI(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             Create(_db, _seguranca_db);
+        }
+        public ChamadoAnotacaoBI(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            Create(_db, _seguranca_db, Token);
         }
         #endregion
 
@@ -47,17 +51,28 @@ namespace DWM.Models.BI
                 int _empresaId = sessaoCorrente.empresaId;
 
                 ChamadoAnotacaoModel model = new ChamadoAnotacaoModel();
-                model.Create(this.db, this.seguranca_db);
+
+                if (String.IsNullOrEmpty(value.sessionId))
+                    model.Create(this.db, this.seguranca_db);
+                else
+                    model.Create(this.db, this.seguranca_db, value.sessionId);
+
+
                 result = model.Insert(result);
 
                 if (result.mensagem.Code > 0)
                     throw new App_DominioException(result.mensagem);
 
                 #region Encaminha o chamado para a Fila de Atendimento
-                if (repository.FilaAtendimentoID.HasValue)
+                if (repository.FilaAtendimentoID.HasValue && repository.FilaAtendimentoID != 0)
                 {
                     ChamadoFilaModel ChamadoFilaModel = new ChamadoFilaModel();
-                    ChamadoFilaModel.Create(this.db, this.seguranca_db);
+
+                    if (String.IsNullOrEmpty(value.sessionId))
+                        ChamadoFilaModel.Create(this.db, this.seguranca_db);
+                    else
+                        ChamadoFilaModel.Create(this.db, this.seguranca_db, value.sessionId);
+
                     ChamadoFilaViewModel ChamadoFilaViewModel = new ChamadoFilaViewModel()
                     {
                         empresaId = SessaoLocal.empresaId,
@@ -82,7 +97,13 @@ namespace DWM.Models.BI
 
                 #region Altera o Status do Chamado
                 ChamadoModel ChamadoModel = new ChamadoModel();
-                ChamadoModel.Create(this.db, this.seguranca_db);
+
+                if (String.IsNullOrEmpty(value.sessionId))
+                    ChamadoModel.Create(this.db, this.seguranca_db);
+                else
+                    ChamadoModel.Create(this.db, this.seguranca_db, value.sessionId);
+
+
                 ChamadoViewModel ChamadoViewModel = ChamadoModel.getObject(repository);
                 if (ChamadoViewModel.ChamadoStatusID != repository.ChamadoStatusID)
                 {
