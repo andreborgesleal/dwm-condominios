@@ -36,11 +36,29 @@
             @Html.HiddenFor(info => info.VisitanteID)
             @Html.HiddenFor(info => info.IsPortaria)
             @Html.HiddenFor(info => info.DataInclusao)
-            <div id="div-detail">
-                <p><h3>Dados de Acesso</h3></p>
-            </div>
-            <hr />
+            @Html.HiddenFor(info => info.Interfona)
             <div class="row">
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Visitante/Prestador</label>
+                        <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Unidade</label>
+                        @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                        {
+                            <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)" />
+                        }
+                        else
+                        {
+                            <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Administração" />
+                        }
+                    </div>
+                </div>
+            </div>
+            @*<div class="row">
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Visitante/Prestador</label>
@@ -53,23 +71,15 @@
                         <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" title="Portaria deve interfonar para o condômino antes de autorizar o acesso">Interfona p/ condômino</label>
-                        @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control", @Disabled = "disabled" })
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
                         <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" disabled value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" />
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
                         <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" disabled />

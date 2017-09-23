@@ -15,5 +15,7 @@ namespace App_Dominio.Contratos
         where D : DbContext
     {
         void Open(D _db, SecurityContext _seguranca_db, string Token);
+
+        R AfterCommit(R value);
     }
 }

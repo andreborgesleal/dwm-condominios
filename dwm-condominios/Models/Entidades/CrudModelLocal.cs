@@ -33,5 +33,10 @@ namespace DWM.Models.Entidades
             Create(_db, _seguranca_db, Token);
         }
 
+        public virtual R AfterCommit(R value)
+        {
+            return value;
+        }
+
     }
 }

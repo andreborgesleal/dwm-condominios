@@ -38,6 +38,7 @@
             @Html.HiddenFor(info => info.VisitanteID)
             @Html.HiddenFor(info => info.IsPortaria)
             @Html.Hidden("Interfona", Model.Interfona)
+            <p><h4>Selecione o Visitante/Prestador desejado</h4></p><br />
             <div class="row">
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <table class="table table-striped jambo_table bulk_action table-responsive display">
@@ -96,32 +97,29 @@
                     </table>
                 </div>
             </div>
-            <div id="div-detail">
-                <p><h3>Dados de Acesso</h3></p>
-            </div>
             <hr />
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Visitante/Prestador</label>
-                        <div id="div-visitante"><h3><span class="label label-default">Nenhum Visitante selecionado</span></h3></div>
+                        <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="Nenhum Visitante selecionado" />
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Unidade</label>
-                        <div id="div-unidade"><h3><span class="label label-default">Nenhum Condômino selecionado</span></h3></div>
+                        <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Nenhum Condômino selecionado" />
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
                         <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max"/>
                     </div>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
                         <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
@@ -138,7 +136,7 @@
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Observação</label>
-                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300" cols="1">@Model.Observacao</textarea>
+                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300">@Model.Observacao</textarea>
                     </div>
                 </div>
             </div>
@@ -185,11 +183,11 @@
         $('#VisitanteID').val(VisitanteID);
         $('#EdificacaoID').val(EdificacaoID);
         $('#UnidadeID').val(UnidadeID);
-        $('#div-visitante').html('<h3><span class="label label-default">' + VisitanteID + '-' + Nome + '</span></h3>');
+        $('#div-visitante').val(VisitanteID + '-' + Nome);
         if (DescricaoEdificacao === '')
-            $('#div-unidade').html('<h3><span class="label label-default">Prestador de serviço do condomínio</span></h3>');
+            $('#div-unidade').val('Prestador de serviço do condomínio');
         else
-            $('#div-unidade').html('<h3><span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino + '</span></h3>');
+            $('#div-unidade').val(DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino);
     }
 
     function Valida() {
