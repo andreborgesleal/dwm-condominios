@@ -107,6 +107,93 @@ namespace DWM.Controllers.API
 
         }
 
+        public IEnumerable<FilaAtendimentoViewModel> ListFilaAtendimentoSemCondomino(Auth value)
+        {
+            // Validar Token
+            Auth a = ValidarToken(value);
+            if (a.Code != 0)
+            {
+                FilaAtendimentoViewModel filaAtendimentoViewModel = new FilaAtendimentoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<FilaAtendimentoViewModel> ret = new List<FilaAtendimentoViewModel>();
+                ret.Add(filaAtendimentoViewModel);
+                return ret;
+            }
+
+
+            // Listar
+            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
+            Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext> facade = new Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext>();
+            IEnumerable<FilaAtendimentoViewModel> list = facade.List(new ListViewFilaAtendimento(), 0, int.Parse(PageSize), value.Token).Where(x => x.Descricao != "Condôminos");
+
+            return list;
+
+        }
+
+        public IEnumerable<FilaAtendimentoViewModel> ListFilaAtendimentoComCondomino(Auth value)
+        {
+            // Validar Token
+            Auth a = ValidarToken(value);
+            if (a.Code != 0)
+            {
+                FilaAtendimentoViewModel filaAtendimentoViewModel = new FilaAtendimentoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<FilaAtendimentoViewModel> ret = new List<FilaAtendimentoViewModel>();
+                ret.Add(filaAtendimentoViewModel);
+                return ret;
+            }
+
+
+            // Listar
+            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
+            Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext> facade = new Facade<FilaAtendimentoViewModel, FilaAtendimentoModel, ApplicationContext>();
+            IEnumerable<FilaAtendimentoViewModel> list = facade.List(new ListViewFilaAtendimento(), 0, int.Parse(PageSize), value.Token).Where(x => x.Descricao == "Condôminos");
+
+            return list;
+
+        }
+
+        public IEnumerable<ChamadoMotivoViewModel> ListChamadoMotivo(Auth value)
+        {
+            // Validar Token
+            Auth a = ValidarToken(value);
+            if (a.Code != 0)
+            {
+                ChamadoMotivoViewModel chamadoMotivoViewModel = new ChamadoMotivoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<ChamadoMotivoViewModel> ret = new List<ChamadoMotivoViewModel>();
+                ret.Add(chamadoMotivoViewModel);
+                return ret;
+            }
+
+
+            // Listar
+            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
+            Facade<ChamadoMotivoViewModel, ChamadoMotivoModel, ApplicationContext> facade = new Facade<ChamadoMotivoViewModel, ChamadoMotivoModel, ApplicationContext>();
+            IEnumerable<ChamadoMotivoViewModel> list = facade.List(new ListViewChamadoMotivo(), 0, int.Parse(PageSize), value.Token);
+
+            return list;
+
+        }
+
 
         public Auth EditChamado(AnotacaoAPIModel value)
         {
