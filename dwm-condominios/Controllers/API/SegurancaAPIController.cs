@@ -1,7 +1,10 @@
 ﻿using App_Dominio.Entidades;
 using App_Dominio.Security;
 using DWM.Models.API;
+using DWM.Models.Entidades;
+using dwm_condominios.Models.API;
 using System;
+using System.Collections.Generic;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -87,6 +90,43 @@ namespace DWM.Controllers.API
             }
 
             return result;
+        }
+
+        [HttpPost]
+        public IEnumerable<UsuarioLogadoToken> GetDadosUsuarioToken(Auth result)
+        {
+            result = this.Validar(result);
+            List<UsuarioLogadoToken> response = new List<UsuarioLogadoToken>();
+
+            if (result.Code == 0)
+            {
+                var s = DWMSessaoLocal.GetSessaoLocal(result.Token);
+                foreach(var unidade in s.Unidades)
+                {
+                    response.Add(new UsuarioLogadoToken()
+                    {
+                        Code = 0,
+                        EdificacaoID = unidade.EdificacaoID,
+                        Mensagem = "Sucesso!",
+                        Token = s.sessaoId,
+                        Descricao = DWMSessaoLocal.GetDescricaoEdificacao(s.empresaId) + " " + unidade.UnidadeID,
+                        UnidadeID = unidade.UnidadeID
+                    });
+                }
+            }
+            else
+            {
+                response.Add(new UsuarioLogadoToken()
+                {
+                    Code = 0,
+                    EdificacaoID = 0,
+                    Mensagem = "Não foi possível obter os dados!",
+                    Token = result.Token,
+                    UnidadeID = 0
+                });
+            }
+
+            return response;
         }
     }
 }
