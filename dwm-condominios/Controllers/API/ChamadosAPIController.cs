@@ -194,6 +194,81 @@ namespace DWM.Controllers.API
 
         }
 
+        [HttpPost]
+        public Auth CreateChamado(ChamadoViewModel value)
+        {
+            Auth auth = new Auth()
+            {
+                Code = 0,
+                Mensagem = "Sucesso!"
+            };
+
+            ChamadoViewModel chamadoViewModel = (ChamadoViewModel)ValidarToken(value);
+            if (chamadoViewModel.mensagem.Code != 0)
+            {
+                Auth cvm = new Auth()
+                {
+                    Mensagem = "Acesso Negado.",
+                    Code = 202
+                };
+                return cvm;
+            }
+
+            ChamadoViewModel result = new ChamadoViewModel()
+            {
+                uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                Assunto = value.Assunto,
+                ChamadoStatusID = value.ChamadoStatusID,
+                ChamadoMotivoID = value.ChamadoMotivoID,
+                CondominioID = value.empresaId,
+                empresaId = value.empresaId,
+                MensagemOriginal = value.MensagemOriginal,
+                EdificacaoID = value.EdificacaoID,
+                UnidadeID = value.UnidadeID,
+                FilaSolicitanteID = value.FilaSolicitanteID,
+                FilaAtendimentoID = value.FilaAtendimentoID,
+                ChamadoAnexoViewModel = new ChamadoAnexoViewModel(),
+                ChamadoFilaViewModel = new ChamadoFilaViewModel()
+                {
+                    Data = Funcoes.Brasilia(),
+                    FilaAtendimentoID = value.FilaAtendimentoID.Value,
+                },
+                Rotas = new List<ChamadoFilaViewModel>(),
+                Anexos = new List<ChamadoAnexoViewModel>(),
+                sessionId = value.sessionId,
+                Prioridade = "2",
+            };
+
+            //#region Envia Email
+            //try
+            //{
+            //    FactoryLocalhost<AlertaRepository, ApplicationContext> factory = new FactoryLocalhost<AlertaRepository, ApplicationContext>();
+            //    AlertaBI bi = new AlertaBI();
+            //    value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+            //    AlertaRepository a = factory.Execute(new AlertaBI(), value);
+            //    if (a.mensagem.Code > 0)
+            //        throw new Exception(a.mensagem.Message);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Console.WriteLine(ex.Message);
+            //}
+            //#endregion
+
+            try
+            {
+                FacadeLocalhost<ChamadoViewModel, ChamadoModel, ApplicationContext> facade = new FacadeLocalhost<ChamadoViewModel, ChamadoModel, ApplicationContext>();
+                facade.Save(result, App_Dominio.Enumeracoes.Crud.INCLUIR);
+            }
+            catch(Exception e)
+            {
+                Console.Write(e.Message);
+            }
+            
+
+            return auth;
+        }
+
 
         public Auth EditChamado(AnotacaoAPIModel value)
         {
