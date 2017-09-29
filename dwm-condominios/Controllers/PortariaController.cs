@@ -1,5 +1,6 @@
 ﻿using App_Dominio.Contratos;
 using App_Dominio.Controllers;
+using App_Dominio.Enumeracoes;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
 using DWM.Models.BI;
@@ -54,6 +55,12 @@ namespace DWM.Controllers
                 return View();
         }
         #endregion
+
+        public override VisitanteAcessoViewModel Insert(VisitanteAcessoViewModel value)
+        {
+            FacadeLocalhost<VisitanteAcessoViewModel, VisitanteAcessoModel , ApplicationContext> facade = new FacadeLocalhost<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext>();
+            return facade.Save(value, Crud.INCLUIR);
+        }
 
         #region Edit
         [AuthorizeFilter]

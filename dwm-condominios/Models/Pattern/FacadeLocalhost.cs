@@ -50,6 +50,8 @@ namespace DWM.Models.Pattern
                         {
                             db.SaveChanges();
                             seguranca_db.SaveChanges();
+
+                            model.AfterCommit(value);
                         }
                     }
                     catch (ArgumentException ex)

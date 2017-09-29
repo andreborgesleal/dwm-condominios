@@ -45,15 +45,12 @@
             @Html.HiddenFor(info => info.IsPortaria)
             @Html.HiddenFor(info => info.DataInclusao)
             @Html.HiddenFor(info => info.DataAutorizacao)
-            <div id="div-detail">
-                <p><h3>Dados de Acesso</h3></p>
-            </div>
-            <hr />
+            @Html.HiddenFor(info => info.Interfona)
             <div class="row">
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Visitante/Prestador</label>
-                        <div id="div-visitante"><h3><span class="label label-default">@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)</span></h3></div>
+                        <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)" />
                     </div>
                 </div>
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
@@ -61,32 +58,23 @@
                         <label class="control-label">Unidade</label>
                         @if (Model.UnidadeID != null && Model.UnidadeID > 0)
                         {
-                            <div id="div-unidade"><h3><span class="label label-default">@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)</span></h3></div>
+                            <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)" />
                         }
                         else
                         {
-                            <div id="div-unidade"><h3><span class="label label-default">Administração</span></h3></div>
+                            <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Administração" />
                         }
-
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label" title="Portaria deve interfonar para o condômino antes de autorizar o acesso">Interfona p/ condômino</label>
-                        @Html.DropDownList("Interfona", App_Dominio.Enumeracoes.DropDownListEnum.SimNao(Model.Interfona, ""), new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
                         <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" disabled />
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12">
+                <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
                         <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
@@ -145,16 +133,28 @@
             this.submit(); // If all the validations succeeded
     });
 
+    //function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino) {
+    //    $('#VisitanteID').val(VisitanteID);
+    //    $('#EdificacaoID').val(EdificacaoID);
+    //    $('#UnidadeID').val(UnidadeID);
+    //    $('#div-visitante').html('<h3><span class="label label-default">' + VisitanteID + '-' + Nome + '</span></h3>');
+    //    if (DescricaoEdificacao === '')
+    //        $('#div-unidade').html('<h3><span class="label label-default">Prestador de serviço do condomínio</span></h3>');
+    //    else
+    //        $('#div-unidade').html('<h3><span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino + '</span></h3>');
+    //}
+
     function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino) {
         $('#VisitanteID').val(VisitanteID);
         $('#EdificacaoID').val(EdificacaoID);
         $('#UnidadeID').val(UnidadeID);
-        $('#div-visitante').html('<h3><span class="label label-default">' + VisitanteID + '-' + Nome + '</span></h3>');
+        $('#div-visitante').val(VisitanteID + '-' + Nome);
         if (DescricaoEdificacao === '')
-            $('#div-unidade').html('<h3><span class="label label-default">Prestador de serviço do condomínio</span></h3>');
+            $('#div-unidade').val('Prestador de serviço do condomínio');
         else
-            $('#div-unidade').html('<h3><span class="label label-default">' + DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino + '</span></h3>');
+            $('#div-unidade').val(DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino);
     }
+
 
     function Valida() {
         var visitante = $('#VisitanteID').val();
