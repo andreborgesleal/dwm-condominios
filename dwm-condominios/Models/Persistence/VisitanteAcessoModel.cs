@@ -40,7 +40,7 @@ namespace DWM.Models.Persistence
         {
             string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId, SessaoLocal.sessaoId).AsEnumerable();
 
             return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }
@@ -242,11 +242,12 @@ namespace DWM.Models.Persistence
                 Interfona = entity.Interfona,
                 Observacao = entity.Observacao,
                 AluguelID = entity.AluguelID,
+                sessionId = DWMSessaoLocal.GetSessaoLocal(sessaoCorrente, this.db).sessaoId,
                 VisitanteAcessoUnidadeViewModel = new VisitanteAcessoUnidadeViewModel(),
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
 
-            VisitanteModel model = new VisitanteModel(this.db, this.seguranca_db);
+            VisitanteModel model = new VisitanteModel(this.db, this.seguranca_db, v.sessionId);
             v.Visitante = model.getObject(new VisitanteViewModel() { VisitanteID = entity.VisitanteID });
 
             if (entity.VisitanteAcessoUnidade != null)
@@ -271,7 +272,7 @@ namespace DWM.Models.Persistence
 
             if (SessaoLocal.Unidades != null)
             {
-                ListViewVisitante list = new ListViewVisitante(db, seguranca_db);
+                ListViewVisitante list = new ListViewVisitante(db, seguranca_db, v.sessionId);
                 v.Visitantes = list.Bind(0, 25, v.EdificacaoID, v.UnidadeID);
             }
 
@@ -523,7 +524,7 @@ namespace DWM.Models.Persistence
         {
             string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId, SessaoLocal.sessaoId).AsEnumerable();
 
             return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }

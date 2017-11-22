@@ -22,9 +22,9 @@ namespace DWM.Models.Persistence
         {
         }
 
-        public VisitanteModel(ApplicationContext _db, SecurityContext _seguranca_db)
+        public VisitanteModel(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
         {
-            this.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db, Token);
         }
         #endregion
 
@@ -37,7 +37,7 @@ namespace DWM.Models.Persistence
         {
             string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId).AsEnumerable();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId, SessaoLocal.sessaoId).AsEnumerable();
 
             return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
         }
@@ -182,8 +182,8 @@ namespace DWM.Models.Persistence
                         CondominioID = value.CondominioID,
                         EdificacaoID = value.EdificacaoID.Value,
                         UnidadeID = value.UnidadeID.Value,
-                        CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID,
-                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal().CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal().CredenciadoID
+                        CondominoID = DWMSessaoLocal.GetSessaoLocal(value.sessionId).CondominoID,
+                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal(value.sessionId).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal().CredenciadoID
                     });
                 }
             }
@@ -278,7 +278,7 @@ namespace DWM.Models.Persistence
             }
 
 
-            if (value.CPF != null)
+            if (!string.IsNullOrEmpty(value.CPF))
             {
                 if (!Funcoes.ValidaCpf(value.CPF.Replace(".", "").Replace(".", "").Replace("-", "")))
                 {
@@ -405,9 +405,9 @@ namespace DWM.Models.Persistence
     {
         #region Constructor
         public ListViewVisitante() { }
-        public ListViewVisitante(ApplicationContext _db, SecurityContext _seguranca_db)
+        public ListViewVisitante(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
         {
-            this.Create(_db, _seguranca_db);
+            this.Create(_db, _seguranca_db, Token);
         }
         #endregion
 
