@@ -349,4 +349,24 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
+    public class ListViewInformativoAPI : ListViewInformativo
+    {
+        public override IEnumerable<InformativoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            return (from info in db.Informativos
+                    where info.DataPublicacao <= SqlFunctions.GetDate()
+                          && info.DataExpiracao >= SqlFunctions.GetDate()
+                    orderby info.DataPublicacao descending
+                    select new InformativoViewModel
+                    {
+                        InformativoID = info.InformativoID,
+                        DataExpiracao = info.DataExpiracao,
+                        DataInformativo = info.DataInformativo,
+                        DataPublicacao = info.DataPublicacao,
+                        Cabecalho = info.Cabecalho,
+                        Resumo = info.Resumo,
+                    }).ToList();
+        }
+    }
+
 }
