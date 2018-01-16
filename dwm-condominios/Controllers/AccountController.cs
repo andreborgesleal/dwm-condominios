@@ -42,7 +42,10 @@ namespace DWM.Controllers
         {
             try
             {
-                if (String.IsNullOrEmpty(id))
+                if (Request.Url.Host.ToLower().Contains("parcparadiso"))
+                    id = "ParcParadiso";
+
+                if (String.IsNullOrEmpty(id) )
                     throw new ArgumentException();
 
                 Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(id);
