@@ -19,8 +19,10 @@ namespace DWM.Controllers.API
             Auth result = new Auth()
             {
                 Code = 0,
+                UsuarioID = 0,
                 Mensagem = "",
-                Token = ""
+                Token = "",
+                
             };
             int Code = 0;
             string Mensagem = "";
@@ -41,6 +43,7 @@ namespace DWM.Controllers.API
                 result.Code = Code;
                 result.Mensagem = Mensagem;
                 result.Token = s.sessaoId;
+                result.UsuarioID = s.usuarioId;
             }
             catch (ArgumentException ex)
             {

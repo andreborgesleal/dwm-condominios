@@ -35,8 +35,10 @@ namespace DWM.Controllers.API
                         Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
                     }
                 };
-                List<InformativoViewModel> ret = new List<InformativoViewModel>();
-                ret.Add(informativoViewModel);
+                List<InformativoViewModel> ret = new List<InformativoViewModel>
+                {
+                    informativoViewModel
+                };
                 return ret;
             }
             //if (a.Code != 0)
@@ -44,26 +46,8 @@ namespace DWM.Controllers.API
             //    throw new Exception(a.Mensagem);
 
             // Listar
-            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
-            DateTime Data1 = Funcoes.Brasilia().AddDays(-20);
-            DateTime Data2 = Funcoes.Brasilia().Date;
             Facade<InformativoViewModel, InformativoModel, ApplicationContext> facade = new Facade<InformativoViewModel, InformativoModel, ApplicationContext>();
-            IEnumerable<InformativoViewModel> list = facade.List(new ListViewInformativo(), 0, int.Parse(PageSize), value.Token, Data1, Data2);
-
-            //int contador = 0;
-            //foreach (InformativoViewModel info in list)
-            //{
-            //    if (info.DataExpiracao.HasValue)
-            //        list.ElementAt(contador)._DataExpiracao = info.DataExpiracao.Value.ToString("dd/MM/yyyy");
-
-            //    if (info.DataInformativo != null)
-            //        list.ElementAt(contador)._DataInformativo = info.DataInformativo.ToString("dd/MM/yyyy");
-
-            //    if (info.DataPublicacao != null)
-            //        list.ElementAt(contador)._DataPublicacao = info.DataPublicacao.ToString("dd/MM/yyyy");
-
-            //    contador++;
-            //}
+            IEnumerable<InformativoViewModel> list = facade.List(new ListViewInformativoAPI(), 0, int.Parse(PageSize), value.Token);
             return list;
         }
 
