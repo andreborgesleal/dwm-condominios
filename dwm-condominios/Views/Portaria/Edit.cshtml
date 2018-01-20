@@ -46,7 +46,114 @@
             @Html.HiddenFor(info => info.DataInclusao)
             @Html.HiddenFor(info => info.DataAutorizacao)
             @Html.HiddenFor(info => info.Interfona)
+
             <div class="row">
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                    <img src="@Model.Visitante.Avatar("200")" width="200" class="img-thumbnail img-responsive" />
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-2 col-lg-2 col-xs-4 col-sm-4">
+                            <div class="form-group">
+                                <label class="control-label">Identificador</label>
+                                <input type="text" disabled class="form-control" name="div-identificador" id="div-identificador" value="@(Model.AcessoID.ToString())" />
+                            </div>
+                        </div>
+                        <div class="col-md-10 col-lg-10 col-xs-8 col-sm-8">
+                            <div class="form-group">
+                                <label class="control-label">Visitante/Prestador</label>
+                                <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="@(Model.VisitanteID.ToString() + "-" + Model.Visitante.Nome)" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>
+                                @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                                {
+                                    <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="@(Model.DescricaoEdificacao + "-" + Model.UnidadeID.ToString() + " " + Model.Visitante.NomeCondomino)" />
+                                }
+                                else
+                                {
+                                    <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Administração" />
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">RG</label>
+                            @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                            {
+                                <input type="text" disabled class="form-control" name="div-rg" id="div-rg" value="@(Model.Visitante.RG + "-" + Model.Visitante.OrgaoEmissor)" />
+                            }
+                            else
+                            {
+                                <input type="text" disabled class="form-control" name="div-rg" id="div-rg" value="" />
+                            }
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">CPF</label>
+                            @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                            {
+                                <input type="text" disabled class="form-control" name="div-cpf" id="div-cpf" value="@(Model.Visitante.CPF)" />
+                            }
+                            else
+                            {
+                                <input type="text" disabled class="form-control" name="div-cpf" id="div-cpf" value="" />
+                            }
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Telefone</label>
+                            @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                            {
+                                <input type="text" disabled class="form-control" name="div-fone" id="div-fone" value="@(Model.Visitante.Telefone)" />
+                            }
+                            else
+                            {
+                                <input type="text" disabled class="form-control" name="div-fone" id="div-fone" value="" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                    <label class="control-label">Prestador</label>
+                    @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                    {
+                        <input type="text" disabled class="form-control" name="div-prest" id="div-prest" value="@(Model.Visitante.DescricaoTipoPrestador)" />
+                    }
+                    else
+                    {
+                        <input type="text" disabled class="form-control" name="div-prest" id="div-prest" value="" />
+                    }
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                    <label class="control-label">Placa</label>
+                    @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                    {
+                        <input type="text" disabled class="form-control" name="div-placa" id="div-placa" value="@(Model.Visitante.Placa)" />
+                    }
+                    else
+                    {
+                        <input type="text" disabled class="form-control" name="div-placa" id="div-placa" value="" />
+                    }
+                </div>
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                    <label class="control-label">Marca</label>
+                    @if (Model.UnidadeID != null && Model.UnidadeID > 0)
+                    {
+                        <input type="text" disabled class="form-control" name="div-marca" id="div-marca" value="@(Model.Visitante.Marca)" />
+                    }
+                    else
+                    {
+                        <input type="text" disabled class="form-control" name="div-marca" id="div-marca" value="" />
+                    }
+                </div>
+            </div>
+            @*<div class="row">
                 <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                     <div class="form-group">
                         <label class="control-label">Visitante/Prestador</label>
@@ -66,7 +173,7 @@
                         }
                     </div>
                 </div>
-            </div>
+            </div>*@
             <div class="row">
                 <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">

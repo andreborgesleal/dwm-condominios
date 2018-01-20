@@ -4164,6 +4164,7 @@
     <Content Include="Users_Data\Empresas\3\Documentos\Teste.txt" />
     <Content Include="Users_Data\Empresas\3\Informativos\Teste.txt" />
     <Content Include="Users_Data\Empresas\3\logo\parcparadiso.png" />
+    <Content Include="Users_Data\Empresas\3\Visitante\SDC18123.JPG" />
     <Content Include="Users_Data\Empresas\9\Avatar\Teste.txt" />
     <Content Include="Users_Data\Empresas\9\Chamados\Teste.txt" />
     <Content Include="Users_Data\Empresas\9\Documentos\Teste.txt" />
@@ -4308,6 +4309,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
+    <Folder Include="Users_Data\Empresas\9\Visitante\" />
     <Folder Include="Views\DocumentosAPI\" />
     <Folder Include="Views\PortariaAPI\" />
     <Folder Include="Views\Profile\" />

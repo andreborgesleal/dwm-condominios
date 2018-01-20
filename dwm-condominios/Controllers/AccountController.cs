@@ -103,6 +103,8 @@ namespace DWM.Controllers
                     Error("Erro na autorização de acesso. Favor entre em contato com o administrador do sistema");
                 }
             }
+            else
+                Error("Erro de preenchimento de login e senha");
 
             // If we got this far, something failed, redisplay form
             Condominio Condominio = DWMSessaoLocal.GetCondominioByPathInfo(Request["PathInfo"]);

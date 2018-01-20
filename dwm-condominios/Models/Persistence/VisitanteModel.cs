@@ -12,6 +12,7 @@ using System.Web;
 using App_Dominio.Security;
 using dwm_condominios.Models.Persistence;
 using App_Dominio.Repositories;
+using System.IO;
 
 namespace DWM.Models.Persistence
 {
@@ -134,6 +135,62 @@ namespace DWM.Models.Persistence
             }
 
             return base.BeforeInsert(value);
+        }
+
+        public override VisitanteViewModel AfterInsert(VisitanteViewModel value)
+        {
+            try
+            {
+                #region Check if has file to transfer from Temp Folder to Users_Data Folder 
+                if (value.Fotografia != null && value.Fotografia != "")
+                {
+                    #region Check if directory "arquivos" exists. If do not, create it
+                    // Define destination
+                    var folderName = "/Users_Data/Empresas/" + sessaoCorrente.empresaId.ToString() + "/Visitante";
+                    var serverPath = System.Web.HttpContext.Current.Server.MapPath(folderName);
+                    if (Directory.Exists(serverPath) == false)
+                    {
+                        Directory.CreateDirectory(serverPath);
+                    }
+                    #endregion
+
+                    #region Move the file from Temp Folder to Users_Data Folder
+                    System.IO.FileInfo f = new System.IO.FileInfo(Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Temp"), value.Fotografia));
+                    if (f.Exists)
+                        f.MoveTo(Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/Users_Data/Empresas/" + sessaoCorrente.empresaId.ToString() + "/Visitante"), value.Fotografia));
+                    #endregion
+                }
+                #endregion
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+                value.mensagem.Code = 17;
+                value.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                value.mensagem.MessageBase = new App_DominioException(ex.InnerException != null ? ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message : ex.Message, GetType().FullName).Message + ". Path de armazenamento do arquivo de boleto/comprovante não encontrado";
+                value.mensagem.MessageType = MsgType.ERROR;
+            }
+            catch (FileNotFoundException ex)
+            {
+                value.mensagem.Code = 17;
+                value.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                value.mensagem.MessageBase = new App_DominioException(ex.InnerException != null ? ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message : ex.Message, GetType().FullName).Message + ". Arquivo de boleto/comprovante não encontrado";
+                value.mensagem.MessageType = MsgType.ERROR;
+            }
+            catch (IOException ex)
+            {
+                value.mensagem.Code = 17;
+                value.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                value.mensagem.MessageBase = new App_DominioException(ex.InnerException != null ? ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message : ex.Message, GetType().FullName).Message + ". Erro referente ao arquivo de boleto/comprovante";
+                value.mensagem.MessageType = MsgType.ERROR;
+            }
+            catch (Exception ex)
+            {
+                value.mensagem.Code = 17;
+                value.mensagem.Message = MensagemPadrao.Message(17).ToString();
+                value.mensagem.MessageBase = new App_DominioException(ex.InnerException != null ? ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message : ex.Message, GetType().FullName).Message;
+                value.mensagem.MessageType = MsgType.ERROR;
+            }
+            return value;
         }
 
         public override Visitante MapToEntity(VisitanteViewModel value)
@@ -414,6 +471,7 @@ namespace DWM.Models.Persistence
         #region Métodos da classe ListViewRepository
         public override IEnumerable<VisitanteViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
+            string URL = db.Parametros.Find(SessaoLocal.empresaId, (int)Models.Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
             int _CondominioID = sessaoCorrente.empresaId;
             int _EdificacaoID;
             int _UnidadeID;
@@ -469,8 +527,9 @@ namespace DWM.Models.Persistence
                          Marca = v.Marca,
                          NomeCondomino = con.Nome,
                          DescricaoTipoPrestador = tp.Descricao,
-                         Email = v.Email
+                         Email = v.Email,
                      }).ToList();
+
             return q;
         }
 

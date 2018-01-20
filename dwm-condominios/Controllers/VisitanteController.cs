@@ -72,6 +72,7 @@ namespace DWM.Controllers
                         empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId,
                     }
                 };
+                //value.Fotografia = collection["Fotografia"];
             }
         }
 

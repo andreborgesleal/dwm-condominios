@@ -41,14 +41,7 @@
                                 <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@vis.VisitanteID'"></button>
                             </td>
                             <td>
-                                @if (vis.Fotografia == null || vis.Fotografia == "")
-                                {
-                                    <span><img src="~/Content/images/avatar.png" width="16" /> @vis.Nome</span>
-                                }
-                                else
-                                {
-                                    <span><img src="@vis.Fotografia" /> @vis.Nome</span><br />
-                                }
+                                <span><img src="@vis.Avatar("45")" width="45" class="img-thumbnail img-responsive" />&nbsp; @vis.Nome</span><br />
                             </td>
                             <td>
                                 <span>@vis.RG</span>
