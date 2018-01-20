@@ -6,5 +6,6 @@
         public string Mensagem { get; set; }
         public string Token { get; set; }
         public int UsuarioID { get; set; }
+        public string Avatar { get; set; }
     }
 }

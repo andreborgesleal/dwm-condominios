@@ -258,6 +258,7 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\API\AnotacaoAPIModel.cs" />
     <Compile Include="Models\API\Auth.cs" />
+    <Compile Include="Models\API\InformativoAPIModel.cs" />
     <Compile Include="Models\API\UsuarioLogadoToken.cs" />
     <Compile Include="Models\BI\AlertaBI.cs" />
     <Compile Include="Models\BI\ChamadoAnotacaoBI.cs" />
