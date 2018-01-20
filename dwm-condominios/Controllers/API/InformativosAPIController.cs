@@ -52,6 +52,39 @@ namespace DWM.Controllers.API
         }
 
         [HttpPost]
+        [AuthorizeFilter]
+        public IEnumerable<InformativoViewModel> ListInformativosByID(InformativoAPIModel value)
+        {
+            // Validar Token
+            Auth a = ValidarToken(value);
+            if (a.Code != 0)
+            {
+                InformativoViewModel informativoViewModel = new InformativoViewModel()
+                {
+                    mensagem = new Validate()
+                    {
+                        Code = 202,
+                        Message = "Acesso Negado. Suas credencias não estão autorizadas para executar esta operação."
+                    }
+                };
+                List<InformativoViewModel> ret = new List<InformativoViewModel>
+                {
+                    informativoViewModel
+                };
+                return ret;
+            }
+            //if (a.Code != 0)
+            //    //return new List<InformativoViewModel>();
+            //    throw new Exception(a.Mensagem);
+
+            // Listar
+            Facade<InformativoViewModel, InformativoModel, ApplicationContext> facade = new Facade<InformativoViewModel, InformativoModel, ApplicationContext>();
+            IEnumerable<InformativoViewModel> list = facade.List(new ListViewInformativoByIDAPI(), 0, int.Parse(PageSize), value.Token, value.InformativoID);
+            return list;
+        }
+
+
+        [HttpPost]
         [ResponseType(typeof(InformativoViewModel))]
         public InformativoViewModel Create(InformativoViewModel value)
         {
