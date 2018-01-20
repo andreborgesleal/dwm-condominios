@@ -42,24 +42,30 @@ namespace DWM.Controllers.API
                 }
                 #endregion
 
+                string URL = "";
+                using (var db = new ApplicationContext())
+                {
+                    URL = db.Parametros.Find(s.empresaId, (int)Models.Enumeracoes.Enumeradores.Param.URL_CONDOMINIO).Valor;
+                }
+
                 result.Code = Code;
                 result.Mensagem = Mensagem;
                 result.Token = s.sessaoId;
                 result.UsuarioID = s.usuarioId;
 
-                FileInfo f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + 3 + "\\Avatar\\" + s.usuarioId + ".png");
+                FileInfo f = new FileInfo(HttpContext.Current.Server.MapPath("~/Users_Data/Empresas/"+ s.empresaId + "/Avatar/" +  s.usuarioId + ".png"));
                 if (f.Exists)
-                    result.Avatar = "../Users_Data/Empresas/" + 3 + "/Avatar/" + s.usuarioId + ".png";
+                    result.Avatar = URL + "/Users_Data/Empresas/" + s.empresaId + "/Avatar/" + s.usuarioId + ".png";
                 else
                 {
-                    f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + 3 + "\\Avatar\\" + s.usuarioId + ".jpg");
+                    f = new FileInfo(HttpContext.Current.Server.MapPath("~/Users_Data/Empresas/" + s.empresaId + "/Avatar/" + s.usuarioId + ".jpg"));
                     if (f.Exists)
-                        result.Avatar = "../Users_Data/Empresas/" + 3 + "/Avatar/" + s.usuarioId + ".jpg";
+                        result.Avatar = URL + "/Users_Data/Empresas/" + 3 + "/Avatar/" + s.usuarioId + ".jpg";
                     else
                     {
-                        f = new FileInfo(HttpContext.Current.Server.MapPath("") + "..\\..\\Users_Data\\Empresas\\" + 3 + "\\Avatar\\" + s.usuarioId + ".bmp");
+                        f = new FileInfo(HttpContext.Current.Server.MapPath("~/Users_Data/Empresas/" + s.empresaId + "/Avatar/" + s.usuarioId + ".bmp"));
                         if (f.Exists)
-                            result.Avatar = "../Users_Data/Empresas/" + 3 + "/Avatar/" + s.usuarioId + ".bmp";
+                            result.Avatar = URL + "/Users_Data/Empresas/" + 3 + "/Avatar/" + s.usuarioId + ".bmp";
                         else
                             result.Avatar = "http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=30";
                     }
