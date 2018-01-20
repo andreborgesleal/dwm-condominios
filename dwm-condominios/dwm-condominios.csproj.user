@@ -9,11 +9,11 @@
     <WebStackScaffolding_LayoutPageFile />
     <WebStackScaffolding_ControllerDialogWidth>751</WebStackScaffolding_ControllerDialogWidth>
     <WebStackScaffolding_IsAsyncSelected>True</WebStackScaffolding_IsAsyncSelected>
-    <ToolsVersionPromptShown>0.0</ToolsVersionPromptShown>
+    <ToolsVersionPromptShown>2.6</ToolsVersionPromptShown>
     <UseIISExpress>true</UseIISExpress>
     <WebStackScaffolding_DbContextDialogWidth>600</WebStackScaffolding_DbContextDialogWidth>
     <WebStackScaffolding_DbContextTypeFullName>DWM.Models.Entidades.ApplicationContext</WebStackScaffolding_DbContextTypeFullName>
-    <NameOfLastUsedPublishProfile>meucondominio - Web Deploy</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>condomino - Web Deploy</NameOfLastUsedPublishProfile>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
