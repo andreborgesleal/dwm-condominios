@@ -22,6 +22,12 @@
     {
         _max = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
     }
+
+    var _DataAutorizacao = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    if (Model.DataAcesso.HasValue)
+    {
+        _DataAutorizacao = Model.DataAcesso.Value.ToString("yyyy-MM-dd");
+    }
 }
 
 <!-- DataTables -->
@@ -178,7 +184,7 @@
                 <div class="col-md-2 col-lg-2 col-xs-12">
                     <div class="form-group">
                         <label class="control-label">Data</label>
-                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" disabled />
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@_DataAutorizacao" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" max="@_max" disabled />
                     </div>
                 </div>
                 <div class="col-md-2 col-lg-2 col-xs-12">
@@ -202,12 +208,15 @@
                     </div>
                 </div>
             </div>
-            <hr />
-            <div class="row">
-                <div class="col-md-12">
-                    <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
-                </div>
-            </div>
+            if (!Model.DataAcesso.HasValue && Model.DataAutorizacao >= Funcoes.Brasilia().Date)
+            {
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                        </div>
+                    </div>
+                }
         }
     </div>
 </div>

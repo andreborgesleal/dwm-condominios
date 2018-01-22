@@ -11,8 +11,6 @@ using App_Dominio.Enumeracoes;
 using App_Dominio.Security;
 using System.Linq;
 using System.Data.Entity.Infrastructure;
-using App_Dominio.Models;
-using System.Data.Entity;
 
 namespace DWM.Models.BI
 {

@@ -224,6 +224,7 @@ namespace DWM.Models.Persistence
                         join con in db.Condominos on c.CondominoID equals con.CondominoID
                         join cu in db.CondominoUnidades on con.CondominoID equals cu.CondominoID
                         join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                        where con.CondominioID == sessaoCorrente.empresaId
                         orderby c.Nome
                         select new CredenciadoViewModel
                         {

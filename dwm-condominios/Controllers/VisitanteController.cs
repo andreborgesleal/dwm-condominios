@@ -2,8 +2,10 @@
 using App_Dominio.Models;
 using App_Dominio.Pattern;
 using App_Dominio.Security;
+using DWM.Models.BI;
 using DWM.Models.Entidades;
 using DWM.Models.Enumeracoes;
+using DWM.Models.Pattern;
 using DWM.Models.Persistence;
 using DWM.Models.Repositories;
 using dwm_condominios.Models.Persistence;
@@ -108,6 +110,15 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult Edit(int visitanteID)
         {
+            // Se o usuário logado for um condômino, verifica se o VisitanteID é do respectivo Condômimo (se for portaria ou administração, pode editar)
+            FactoryLocalhost<VisitanteViewModel, ApplicationContext> factory = new FactoryLocalhost<VisitanteViewModel, ApplicationContext>();
+            VisitanteViewModel value = factory.Execute(new VisitanteChecarEdicaoBI(), new VisitanteViewModel() { VisitanteID = visitanteID });
+            if (value.mensagem.Code == -2)
+            {
+                Error("Visitante não autorizado para edição");
+                return RedirectToAction("Browse");
+            }
+
             ViewBag.op = (Request["op"] != null && Request["op"] == "I") ? Request["op"] : "";
             return _Edit(new VisitanteViewModel() { VisitanteID = visitanteID });
         }

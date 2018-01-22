@@ -62,7 +62,7 @@
                                 <tr class="even pointer">
                                     <td>
                                         <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
-                                        <a href="#div-detail" title="Selecionar Visitante/Prestador"><i class="fa fa-2x fa-check" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino')"></i>&nbsp;</a>
+                                        <a href="#div-detail" title="Selecionar Visitante/Prestador"><i class="fa fa-2x fa-check" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino', '@value.RG', '@value.OrgaoEmissor', '@value.CPF', '@value.Telefone', '@value.Placa', '@value.Marca', '@value.Avatar("200")')"></i>&nbsp;</a>
                                     </td>
                                     <td>
                                         <small>@value.Nome</small>
@@ -99,17 +99,56 @@
             </div>
             <hr />
             <div class="row">
-                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label">Visitante/Prestador</label>
-                        <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="Nenhum Visitante selecionado" />
-                    </div>
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+                    <img src="http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=200" width="200" class="img-thumbnail img-responsive" id="img-avatar"/>
                 </div>
-                <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-                    <div class="form-group">
-                        <label class="control-label">Unidade</label>
-                        <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Nenhum Condômino selecionado" />
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Visitante/Prestador</label>
+                                <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="Nenhum Visitante/Prestador selecionado" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>
+                                <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Nenhum Condômino selecionado" />
+                            </div>
+                        </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">RG</label>
+                            <input type="text" disabled class="form-control" name="div-rg" id="div-rg" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">CPF</label>
+                            <input type="text" disabled class="form-control" name="div-cpf" id="div-cpf" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" disabled class="form-control" name="div-fone" id="div-fone" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Placa</label>
+                            <input type="text" disabled class="form-control" name="div-placa" id="div-placa" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Marca</label>
+                            <input type="text" disabled class="form-control" name="div-marca" id="div-marca" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <p>
+                                <br />
+                                <br />
+                                <a href="#" class="text-prateado" id="lnk-visitante">Editar</a>
+                            </p>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div class="row">
@@ -179,7 +218,7 @@
             this.submit(); // If all the validations succeeded
     });
 
-    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino) {
+    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino, RG, OrgaoEmissor, CPF, Telefone, Placa, Marca, Fotografia) {
         $('#VisitanteID').val(VisitanteID);
         $('#EdificacaoID').val(EdificacaoID);
         $('#UnidadeID').val(UnidadeID);
@@ -188,6 +227,13 @@
             $('#div-unidade').val('Prestador de serviço do condomínio');
         else
             $('#div-unidade').val(DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino);
+        $('#div-rg').val(RG + ' ' + OrgaoEmissor);
+        $('#div-cpf').val(CPF);
+        $('#div-fone').val(Telefone);
+        $('#div-placa').val(Placa);
+        $('#div-marca').val(Marca);
+        $('#img-avatar').attr("src", Fotografia);
+        $('#lnk-visitante').attr("href", "../Visitante/Edit?VisitanteID=" + VisitanteID);
     }
 
     function Valida() {

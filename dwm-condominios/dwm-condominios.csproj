@@ -281,6 +281,8 @@
     <Compile Include="Models\BI\CondominoCorrenteBI.cs" />
     <Compile Include="Models\BI\InformativoCadastrarBI.cs" />
     <Compile Include="Models\BI\RegisterBI.cs" />
+    <Compile Include="Models\BI\VisitanteAcessoChecarEdicaoBI.cs" />
+    <Compile Include="Models\BI\VisitanteChecarEdicaoBI.cs" />
     <Compile Include="Models\Contratos\ICrudModelLocal.cs" />
     <Compile Include="Models\Entidades\AluguelEspaco.cs" />
     <Compile Include="Models\Entidades\ApplicationContext.cs" />
@@ -4133,8 +4135,6 @@
     <Content Include="App_Code\Edificacao.cshtml" />
     <None Include="Properties\PublishProfiles\condomino - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\condomino - Web Deploy.pubxml" />
-    <None Include="Properties\PublishProfiles\meucondominio - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\meucondominio - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.1.1.js" />
     <Content Include="Scripts\jquery-3.1.1.min.js" />

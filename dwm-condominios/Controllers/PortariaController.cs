@@ -66,6 +66,15 @@ namespace DWM.Controllers
         [AuthorizeFilter]
         public ActionResult Edit(int AcessoID)
         {
+            // Se o usuário logado for um condômino, não pode editar o acesso de outro condômino. 
+            FactoryLocalhost<VisitanteAcessoViewModel, ApplicationContext> factory = new FactoryLocalhost<VisitanteAcessoViewModel, ApplicationContext>();
+            VisitanteAcessoViewModel value = factory.Execute(new VisitanteAcessoChecarEdicaoBI(), new VisitanteAcessoViewModel() { AcessoID = AcessoID });
+            if (value.mensagem.Code == -2)
+            {
+                Error("Registro não autorizado para edição");
+                return RedirectToAction("Browse");
+            }
+
             return _Edit(new VisitanteAcessoViewModel() { AcessoID = AcessoID });
         }
         #endregion

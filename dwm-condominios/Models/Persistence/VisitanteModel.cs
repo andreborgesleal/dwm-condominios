@@ -193,6 +193,11 @@ namespace DWM.Models.Persistence
             return value;
         }
 
+        public override VisitanteViewModel AfterUpdate(VisitanteViewModel value)
+        {
+            return AfterInsert(value);
+        }
+
         public override Visitante MapToEntity(VisitanteViewModel value)
         {
             Visitante entity = Find(value);
@@ -501,7 +506,7 @@ namespace DWM.Models.Persistence
                            && (_EdificacaoID == 0 || vu.EdificacaoID == _EdificacaoID)
                            && (_UnidadeID == 0 || vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
-                     orderby v.DataInclusao, v.Nome
+                     orderby v.Nome
                      select new VisitanteViewModel
                      {
                          empresaId = sessaoCorrente.empresaId,

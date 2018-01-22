@@ -97,7 +97,7 @@
                                     }
                                 </td>
                                 <td class="center">
-                                    <small>@value.AcessoID</small>
+                                    <h3 style="text-decoration: @riscado">@value.AcessoID</h3>
                                 </td>
                                 <td>
                                     <div class="row">
@@ -107,9 +107,9 @@
                                         <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                    <small style="text-decoration: @riscado">@value.Visitante.Nome</small><br />
+                                                    <h4 style="text-decoration: @riscado">@value.Visitante.Nome</h4>
                                                     <small>@value.Visitante.Sexo</small><br />
-                                                    <small>RG: @(value.Visitante.RG + " " + value.Visitante.OrgaoEmissor)</small><br />
+                                                    <small>RG: <strong>@(value.Visitante.RG + " " + value.Visitante.OrgaoEmissor)</strong></small><br />
                                                     <small>CPF: @value.Visitante.CPF</small><br />
                                                     @if (value.DataAcesso.HasValue)
                                                     {
@@ -165,7 +165,7 @@
                 <table class="table table-striped jambo_table bulk_action table-responsive display">
                     <thead>
                         <tr class="headings">
-                            <th class="column-title text-center">Ação</th>
+                            @*<th class="column-title text-center">Ação</th>*@
                             <th class="column-title text-center">Edificação</th>
                             <th class="column-title text-center">Unidade</th>
                             <th class="column-title">Nome</th>
@@ -176,12 +176,12 @@
                         @foreach (CondominoUnidadeViewModel value in Model.Condominos)
                         {
                             <tr class="even pointer">
-                                <td class="center">
+                                @*<td class="center">
                                     <button type="button" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#visitanteInfo">
                                         <i class="fa fa-search" aria-hidden="true"></i>
                                     </button>
                                     
-                                </td>
+                                </td>*@
                                 <td align="center">
                                     @value.EdificacaoDescricao
                                 </td>
@@ -199,9 +199,9 @@
                         @foreach (CredenciadoViewModel cred in Model.Credenciados)
                         {
                             <tr class="even pointer">
-                                <td>
+                                @*<td>
                                     Lupa
-                                </td>
+                                </td>*@
                                 <td align="center">
                                     @cred.DescricaoEdificacao
                                 </td>
