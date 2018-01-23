@@ -58,7 +58,7 @@ namespace dwm_condominios.Controllers.API
             var _Nome = "";
 
             Facade<ArquivoViewModel, ArquivoModel, ApplicationContext> facade = new Facade<ArquivoViewModel, ArquivoModel, ApplicationContext>();
-            IEnumerable<ArquivoViewModel> list = facade.List(new ListViewArquivo(), 0, int.Parse(PageSize), value.Token, Data1, Data2, _EdificacaoID, _UnidadeID, _CondominoID, 0, null);
+            IEnumerable<ArquivoViewModel> list = facade.List(new ListViewArquivoAPI(), 0, int.Parse(PageSize), value.Token, _EdificacaoID, _UnidadeID, _CondominoID, 0, null);
 
             return list;
         }
