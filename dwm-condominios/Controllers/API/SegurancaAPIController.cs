@@ -138,7 +138,7 @@ namespace DWM.Controllers.API
                         EdificacaoID = unidade.EdificacaoID,
                         Mensagem = "Sucesso!",
                         Token = s.sessaoId,
-                        Descricao = DWMSessaoLocal.GetDescricaoEdificacao(s.empresaId) + " " + unidade.UnidadeID,
+                        Descricao = DWMSessaoLocal.GetDescricaoEdificacao(s.empresaId, unidade.EdificacaoID) + " " + unidade.UnidadeID,
                         UnidadeID = unidade.UnidadeID,
                         UsuarioID = s.usuarioId,
                         Avatar = "http://condomino.azurewebsites.net/Users_Data/Empresas/3/Avatar/" + s.usuarioId + ".jpg"
