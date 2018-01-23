@@ -293,3 +293,6 @@ __pycache__/
 *.btm.cs
 *.odx.cs
 *.xsd.cs
+/dwm-condominios/App_Data/logs
+/dwm-condominios/Users_Data/Empresas
+/dwm-condominios/Temp

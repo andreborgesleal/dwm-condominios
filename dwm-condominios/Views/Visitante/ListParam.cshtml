@@ -21,15 +21,11 @@
                     <tr class="headings">
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Nome</th>
-                        <th class="column-title">RG</th>
-                        <th class="column-title">Órgão Emissor</th>
-                        <th class="column-title">CPF</th>
                         <th class="column-title">Edificação</th>
                         <th class="column-title">Unidade</th>
-                        <th class="column-title">Sexo</th>
-                        <th class="column-title">Telefone</th>
                         <th class="column-title">Data de Inclusão</th>
                         <th class="column-title">Placa</th>
+                        <th class="column-title">Marca</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -41,16 +37,22 @@
                                 <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@vis.VisitanteID'"></button>
                             </td>
                             <td>
-                                <span><img src="@vis.Avatar("45")" width="45" class="img-thumbnail img-responsive" />&nbsp; @vis.Nome</span><br />
-                            </td>
-                            <td>
-                                <span>@vis.RG</span>
-                            </td>
-                            <td>
-                                <span>@vis.OrgaoEmissor</span><br />
-                            </td>
-                            <td>
-                                <span>@App_Dominio.Models.Funcoes.FormataCPFCNPJ(vis.CPF)</span>
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                        <img src="@vis.Avatar("100")" width="100" class="img-thumbnail img-responsive" />
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <h4>@vis.Nome</h4>
+                                                <small>@vis.Sexo</small><br />
+                                                <small>RG: <strong>@(vis.RG + " " + vis.OrgaoEmissor)</strong></small><br />
+                                                <small>CPF: @App_Dominio.Models.Funcoes.FormataCPFCNPJ(vis.CPF)</small><br />
+                                                <small>@vis.DescricaoTipoPrestador</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <span>@vis.DescricaoEdificacao</span><br />
@@ -59,16 +61,13 @@
                                 <span>@vis.UnidadeID</span>
                             </td>
                             <td>
-                                <span>@vis.Sexo</span>
-                            </td>
-                            <td>
-                                <span>@App_Dominio.Models.Funcoes.FormataTelefone(vis.Telefone)</span>
-                            </td>
-                            <td>
                                 <span>@vis.DataInclusao.ToString("dd/MM/yyyy")</span>
                             </td>
                             <td>
                                 <span>@vis.Placa</span>
+                            </td>
+                            <td>
+                                <span>@vis.Marca</span>
                             </td>
                         </tr>
                     }

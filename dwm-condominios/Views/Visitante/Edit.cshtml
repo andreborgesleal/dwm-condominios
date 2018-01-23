@@ -35,6 +35,37 @@
                 }
 
                 <div class="row">
+                    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h2 class="panel-title">
+                                    Fotografia
+                                </h2>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                                        <img src="@Model.Avatar("200")" width="200" class="img-thumbnail img-responsive" />
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-12 col-xs-12">
+                                        <div class="form-group">
+                                            <input id="fileupload" type="file" name="files[]" multiple>
+                                            @Html.Hidden("Fotografia", Model.Fotografia)
+                                        </div>
+                                        <div class="file_name" id="file_name1"></div>
+                                        <div class="progress" id="progress1">
+                                            <div id="progress1-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                                                <span class="sr-only">0% complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Edificação</label>
@@ -44,7 +75,7 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Unidades</label>
-                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades2("Todos...", "", 0, Model.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades2("Todos...", Model.UnidadeID, Model.EdificacaoID, Model.CondominioID), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -175,6 +206,32 @@
     </div>
 </div>
 
+<div id="myModal1" class="modal fade" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content hidden-xs">
+            <div class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="btnModal">×</button>
+                <h3 class="modal-title" id="myModalLabel">Modal title</h3>
+            </div>
+            <div class="modal-body" id="myModal1-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/Content/css/jquery.fileupload.css" rel="stylesheet" />
+<script src="~/Scripts/fileUpload/jquery.ui.widget.js"></script>
+<script src="~/Scripts/fileUpload/jquery.fileupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        FileUpload('fileupload', 'Fotografia', 'progress1', 'file_name1', 'myModal1', 'arq1', 'trash1');
+    });
+</script>
 
 <script>
     $(document).ready(function () {
