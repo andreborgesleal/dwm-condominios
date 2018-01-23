@@ -142,7 +142,7 @@ namespace DWM.Models.Entidades
 
         }
 
-        public static string GetDescricaoEdificacao(int? CondominioID)
+        public static string GetDescricaoEdificacao(int? CondominioID, int? EdificacaoID)
         {
             if (!CondominioID.HasValue || CondominioID.Value == 0)
             {
@@ -151,7 +151,7 @@ namespace DWM.Models.Entidades
             }
 
             using (ApplicationContext db = new ApplicationContext())
-                return db.Edificacaos.Where(info => info.CondominioID == CondominioID).AsEnumerable().FirstOrDefault().Descricao;
+                return db.Edificacaos.Where(info => info.CondominioID == CondominioID && info.EdificacaoID == EdificacaoID).AsEnumerable().FirstOrDefault().Descricao;
 
         }
 
