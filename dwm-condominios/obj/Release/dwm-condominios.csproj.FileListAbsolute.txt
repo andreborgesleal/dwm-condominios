@@ -271,4 +271,3 @@ C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\Microsoft.Thread
 C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Release\dwm-condominios.csprojResolveAssemblyReference.cache
 C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Release\dwm-condominios.dll
 C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\obj\Release\dwm-condominios.pdb
-C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll

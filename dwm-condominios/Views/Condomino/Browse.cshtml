@@ -22,13 +22,14 @@
             </div>
         </div>
     </div>
-    <!-- Visão mobile -->
+    <!-- SmartPhone -->
     <div class="x_panel hidden-lg hidden-md hidden-sm">
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Condôminos", Descricao = "", Transacao = t })
         <div class="x_content">
             <div id="div-condomino-pf">
                 @if (Model != null)
                 {
+                    string TipoPessoa = "PF";
                     @*@Html.Partial("ListParam", Model)*@
                     <div class="row clearfix">
                         <div class="col-md-12 col-sm-12 col-xs-12">
@@ -36,6 +37,7 @@
                                 <tbody>
                                     @foreach (CondominoUnidadeViewModel value in Model)
                                     {
+                                        TipoPessoa = (value.CondominoViewModel.discriminator == "CondominoPF") ? "PF" : "PJ";
                                         <tr class="even pointer">
                                             <td>
                                                 <p class="text-bold">
@@ -63,7 +65,7 @@
                                                 else
                                                 {
                                                     <p class="pull-right">
-                                                        <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                                        <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&TipoPessoa=@(TipoPessoa)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                                     </p>
                                                 }
                                             </td>

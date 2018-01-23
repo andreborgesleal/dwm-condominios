@@ -15,7 +15,7 @@
             <p>&nbsp;</p>
         }
         
-        <div class="table-responsive">
+        <div class="table-responsive hidden-xs">
             <table class="table table-striped jambo_table bulk_action" id="datatable">
                 <thead>
                     <tr class="headings">
@@ -73,6 +73,35 @@
                     }
                 </tbody>
             </table>
+        </div>
+
+        <div class="hidden-lg hidden-md hidden-sm">
+            @foreach (DWM.Models.Repositories.VisitanteViewModel vis in Model)
+            {
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                        <img src="@vis.Avatar("90")" width="90" class="img-thumbnail img-responsive" />
+                        <small>@vis.DescricaoEdificacao</small>
+                        <small>@vis.UnidadeID</small>
+                    </div>
+                    <div class="col-xs-8">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h5>@vis.Nome</h5>
+                                <small>@vis.Sexo</small><br />
+                                <small>RG: <strong>@(vis.RG + " " + vis.OrgaoEmissor)</strong></small><br />
+                                <small>CPF: @App_Dominio.Models.Funcoes.FormataCPFCNPJ(vis.CPF)</small><br />
+                                <small>@vis.DescricaoTipoPrestador</small>
+                                <div class="text-left">
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?visitanteID=@vis.VisitanteID'"></button>
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@vis.VisitanteID'"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr />
+            }
         </div>
     </div>
 }
