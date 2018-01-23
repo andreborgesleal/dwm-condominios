@@ -286,6 +286,7 @@ namespace DWM.Models.Persistence
                 NomeCondomino = _nomeCondomino,
                 DescricaoTipoPrestador = _descricaoPrestador,
                 Email = entity.Email,
+                sessionId = SessaoLocal.sessaoId,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
 
@@ -533,6 +534,7 @@ namespace DWM.Models.Persistence
                          NomeCondomino = con.Nome,
                          DescricaoTipoPrestador = tp.Descricao,
                          Email = v.Email,
+                         sessionId = sessaoCorrente.sessaoId,
                      }).ToList();
 
             return q;

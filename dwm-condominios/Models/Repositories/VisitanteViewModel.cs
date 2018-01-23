@@ -38,7 +38,7 @@ namespace DWM.Models.Repositories
                 if (empresaId == 0)
                 {
                     EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                    Sessao sessaoCorrente = security.getSessaoCorrente();
+                    Sessao sessaoCorrente = security.getSessaoCorrente(sessionId);
                     if (sessaoCorrente == null)
                         return "";
                     empresaId = sessaoCorrente.empresaId;
@@ -61,7 +61,7 @@ namespace DWM.Models.Repositories
             if (empresaId == 0)
             {
                 EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                Sessao sessaoCorrente = security.getSessaoCorrente();
+                Sessao sessaoCorrente = security.getSessaoCorrente(sessionId);
                 if (sessaoCorrente == null)
                     return "";
                 empresaId = sessaoCorrente.empresaId;
@@ -78,13 +78,15 @@ namespace DWM.Models.Repositories
 
         public string Avatar(string size = "30")
         {
+            this.SetURL(this.GetURL());
+
             if (VisitanteID == 0 || Fotografia == null || Fotografia.Trim() == "")
                 return "http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=" + size;
 
             if (empresaId == 0)
             {
                 EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-                Sessao sessaoCorrente = security.getSessaoCorrente();
+                Sessao sessaoCorrente = security.getSessaoCorrente(sessionId);
                 if (sessaoCorrente == null)
                     return "http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=" + size;
                 empresaId = sessaoCorrente.empresaId;

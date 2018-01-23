@@ -93,6 +93,7 @@ namespace DWM.Controllers.API
                 Telefone = value.Telefone,
                 Situacao = "A",
                 VisitanteID = value.VisitanteID,
+                Fotografia = value.Fotografia,
                 VisitanteUnidadeViewModel = new List<VisitanteUnidadeViewModel>()
                 {
                     new VisitanteUnidadeViewModel()
