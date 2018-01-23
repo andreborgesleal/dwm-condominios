@@ -8,7 +8,7 @@
 }
 @if (Model != null)
 {
-    <div class="dashboard-widget-content">
+    <div class="dashboard-widget-content hidden-xs">
         <div class="row">
             <div class="col-md-8">
                 Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>RG/CPF</code> para buscar o Visitante
@@ -135,6 +135,83 @@
                 </tbody>
             </table>
         </div>
+    </div>
+
+    <!-- SmartPhone-->
+    <div class="hidden-lg hidden-md hidden-sm">
+        @foreach (VisitanteAcessoViewModel value in Model)
+        {
+            if (value.DataAcesso != null)
+            {
+                riscado = "line-through";
+            }
+            else
+            {
+                riscado = "";
+            }
+            <div class="row">
+                <div class="col-xs-4 text-center">
+                    <img src="@value.Visitante.Avatar("90")" width="90" class="img-thumbnail img-responsive" />
+                    <small>@value.Visitante.DescricaoEdificacao</small>
+                    <small>@value.Visitante.UnidadeID</small>
+                </div>
+                <div class="col-xs-8">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h5 style="text-decoration: @riscado">@value.Visitante.Nome</h5>
+                            <small>@value.Visitante.Sexo</small><br />
+                            @if (!String.IsNullOrEmpty(value.Visitante.RG))
+                            {
+                                <small>RG: <strong>@(value.Visitante.RG + " " + value.Visitante.OrgaoEmissor)</strong></small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.Telefone))
+                            {
+                                <small>Telefone: @value.Visitante.Telefone</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.Email))
+                            {
+                                <small>E-mail: @value.Visitante.Email</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.DescricaoTipoPrestador))
+                            {
+                                <small>@value.Visitante.DescricaoTipoPrestador</small><br />
+                            }
+                            @if (value.DataAcesso.HasValue)
+                            {
+                                <small>Hora de Acesso: @value.DataAcesso.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                            }
+                            <div class="text-left">
+                                @if (value.IsPortaria)
+                                {
+                                    if (value.DataAcesso == null)
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>
+                                    }
+                                }
+                                else
+                                {
+                                    if (value.DataAcesso == null)
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>
+                                        <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
+                                    }
+                                    else
+                                    {
+                                        <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>
+                                        <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Visitante já acessou o condomínio. Exclusão não permitida"></button>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
     </div>
 }
 else

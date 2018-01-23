@@ -38,8 +38,10 @@
             @Html.HiddenFor(info => info.VisitanteID)
             @Html.HiddenFor(info => info.IsPortaria)
             @Html.Hidden("Interfona", Model.Interfona)
-            <p><h4>Selecione o Visitante/Prestador desejado</h4></p><br />
-            <div class="row">
+            <div class="hidden-xs">
+                <p><h4>Selecione o Visitante/Prestador desejado</h4></p><br />
+            </div>
+            <div class="row hidden-xs">
                 <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
                     <table class="table table-striped jambo_table bulk_action table-responsive display">
                         <thead>
@@ -97,9 +99,50 @@
                     </table>
                 </div>
             </div>
-            <hr />
-            <div class="row">
-                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12">
+
+            <!-- SmartPhone -->
+            <div class="hidden-lg hidden-md hidden-sm">
+                @foreach (VisitanteViewModel value in Model.Visitantes)
+                {
+                    <div class="row">
+                        <div class="col-xs-4 text-center">
+                            <img src="@value.Avatar("90")" width="90" class="img-thumbnail img-responsive" />
+                            <small>@value.DescricaoEdificacao</small>
+                            <small>@value.UnidadeID</small>
+                        </div>
+                        <div class="col-xs-8">
+                            <h5>@value.Nome</h5>
+                            <small>@value.Sexo</small><br />
+                            @if (!String.IsNullOrEmpty(value.RG))
+                            {
+                                <small>RG: <strong>@(value.RG + " " + value.OrgaoEmissor)</strong></small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Telefone))
+                            {
+                                <small>Telefone: @value.Telefone</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Email))
+                            {
+                                <small>E-mail: @value.Email</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.DescricaoTipoPrestador))
+                            {
+                                <small>@value.DescricaoTipoPrestador</small><br />
+                            }
+                            <div class="text-left">
+                                <a href="#div-detail" title="Selecionar Visitante/Prestador"><i class="fa fa-2x fa-check" title="Selecionar Visitante/Prestador para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino', '@value.RG', '@value.OrgaoEmissor', '@value.CPF', '@value.Telefone', '@value.Placa', '@value.Marca', '@value.Avatar("200")')"></i>&nbsp;</a>
+                                <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Visitante/Prestador"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+            </div>
+            <div class="hidden-lg hidden-md hidden-sm text-center">
+                <p><h4>Autorizar acesso</h4></p><br />
+            </div>
+            <div class="row" id="div-detail">
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12 text-center">
                     <img src="http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=200" width="200" class="img-thumbnail img-responsive" id="img-avatar"/>
                 </div>
                 <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
