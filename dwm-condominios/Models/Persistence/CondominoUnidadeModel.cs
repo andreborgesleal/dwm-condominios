@@ -314,6 +314,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = (from sex in db.CondominoPFs where sex.CondominoID == c.Condomino.CondominoID select sex.Sexo).FirstOrDefault()
                              },
                          }).ToList();
             else if (_EdificacaoID > 0 && _UnidadeID > 0)
@@ -347,6 +348,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = (from sex in db.CondominoPFs where sex.CondominoID == c.Condomino.CondominoID select sex.Sexo).FirstOrDefault()
                              },
                          }).ToList();
             }
@@ -385,6 +387,7 @@ namespace DWM.Models.Persistence
                                  UsuarioID = c.Condomino.UsuarioID,
                                  DataCadastro = c.Condomino.DataCadastro,
                                  Avatar = c.Condomino.Avatar,
+                                 Sexo = (from sex in db.CondominoPFs where sex.CondominoID == c.Condomino.CondominoID select sex.Sexo).FirstOrDefault()
                              },
                          }).ToList();
             }
