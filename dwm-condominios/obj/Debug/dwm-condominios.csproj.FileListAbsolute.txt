@@ -662,4 +662,3 @@ C:\Users\Daniel Leal\Projects\dwm\dwm-condominios\dwm-condominios\bin\Microsoft.
 C:\Users\Daniel Leal\Projects\dwm\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.Twitter.xml
 C:\Users\Daniel Leal\Projects\dwm\dwm-condominios\dwm-condominios\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 C:\Users\Daniel Leal\Projects\dwm\dwm-condominios\dwm-condominios\bin\Microsoft.Threading.Tasks.xml
-C:\Sistemas\dwm-condominios\dwm-condominios\dwm-condominios\bin\App_Dominio.dll
