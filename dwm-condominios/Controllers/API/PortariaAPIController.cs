@@ -69,6 +69,7 @@ namespace DWM.Controllers.API
 
             VisitanteAcessoViewModel result = new VisitanteAcessoViewModel()
             {
+                AcessoID = value.AcessoID,
                 uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
                 CondominioID = se.empresaId,
                 empresaId = se.empresaId,
@@ -101,6 +102,61 @@ namespace DWM.Controllers.API
 
             auth.Code = result.mensagem.Code.GetValueOrDefault();
             auth.Mensagem = result.mensagem.Message;
+
+            return auth;
+        }
+
+        [HttpPost]
+        public Auth DeleteAcesso(VisitanteAcessoViewModel value)
+        {
+            Auth auth = new Auth()
+            {
+                Code = 0,
+                Mensagem = "Sucesso!",
+                Token = value.sessionId
+            };
+
+            VisitanteAcessoViewModel visitanteViewModel = (VisitanteAcessoViewModel)ValidarToken(value);
+            if (visitanteViewModel.mensagem.Code != 0)
+            {
+                auth.Code = 202;
+                auth.Mensagem = "Acesso Negado.";
+                return auth;
+            }
+
+            SessaoLocal se = DWMSessaoLocal.GetSessaoLocal(value.sessionId);
+
+            int? codUnidade = 0;
+            int? codEdificacao = 0;
+            int empresaId = se.empresaId;
+
+            foreach (var un in se.Unidades)
+            {
+                codUnidade = un.UnidadeID;
+                codEdificacao = un.EdificacaoID;
+            }
+
+            VisitanteAcessoViewModel result = new VisitanteAcessoViewModel()
+            {
+                uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString(),
+                VisitanteID = value.VisitanteID,
+                AcessoID = value.AcessoID,
+                sessionId = value.sessionId,
+                CondominioID = value.CondominioID,
+                EdificacaoID = codEdificacao,
+                UnidadeID = codUnidade,
+            };
+
+            try
+            {
+                FacadeLocalhost<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext> facade = new FacadeLocalhost<VisitanteAcessoViewModel, VisitanteAcessoModel, ApplicationContext>();
+                facade.Save(result, App_Dominio.Enumeracoes.Crud.EXCLUIR);
+            }
+            catch (Exception e)
+            {
+                auth.Mensagem = e.Message;
+                Console.Write(e.Message);
+            }
 
             return auth;
         }

@@ -169,6 +169,7 @@ namespace DWM.Controllers.API
             }
             catch (Exception e)
             {
+                auth.Mensagem = e.Message;
                 Console.Write(e.Message);
             }
 
