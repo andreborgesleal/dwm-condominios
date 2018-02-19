@@ -485,7 +485,7 @@ namespace DWM.Models.Persistence
 
             if (SessaoLocal.CondominoID > 0)
             {
-                _EdificacaoID = db.Edificacaos.Where(x => x.CondominioID == _CondominioID).FirstOrDefault().EdificacaoID;
+                _EdificacaoID = SessaoLocal.Unidades.FirstOrDefault().EdificacaoID;  // db.Edificacaos.Where(x => x.CondominioID == _CondominioID).FirstOrDefault().EdificacaoID;
                 _UnidadeID = SessaoLocal.Unidades.FirstOrDefault().UnidadeID;
             }
             else
