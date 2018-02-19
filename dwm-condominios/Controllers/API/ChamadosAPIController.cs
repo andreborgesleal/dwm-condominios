@@ -204,6 +204,7 @@ namespace DWM.Controllers.API
             };
 
             ChamadoViewModel chamadoViewModel = (ChamadoViewModel)ValidarToken(value);
+            SessaoLocal s = DWMSessaoLocal.GetSessaoLocal(value.sessionId);
             if (chamadoViewModel.mensagem.Code != 0)
             {
                 Auth cvm = new Auth()
@@ -221,6 +222,7 @@ namespace DWM.Controllers.API
                 ChamadoStatusID = value.ChamadoStatusID,
                 ChamadoMotivoID = value.ChamadoMotivoID,
                 CondominioID = value.empresaId,
+                CondominoID = s.CondominoID,
                 empresaId = value.empresaId,
                 MensagemOriginal = value.MensagemOriginal,
                 EdificacaoID = value.EdificacaoID,
