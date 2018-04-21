@@ -32,7 +32,6 @@ namespace DWM.Models.Persistence
                 value.empresaId = SessaoLocal.empresaId;
                 value.DataChamado = Funcoes.Brasilia();
                 value.CondominioID = SessaoLocal.empresaId;
-                value.CredenciadoID = SessaoLocal.CredenciadoID;
                 value.ChamadoStatusID = 0;
                 value.DataRedirecionamento = Funcoes.Brasilia();
 
@@ -234,6 +233,7 @@ namespace DWM.Models.Persistence
                 CondominioID = entity.CondominioID,
                 CondominoID = entity.CondominoID,
                 NomeCondomino = entity.CondominoID.HasValue ? db.Condominos.Find(entity.CondominoID).Nome : "",
+                NomeCredenciado = entity.CredenciadoID.HasValue ? db.Credenciados.Find(entity.CredenciadoID).Nome : "",
                 CredenciadoID = entity.CredenciadoID,
                 EdificacaoID = entity.EdificacaoID,
                 UnidadeID = entity.UnidadeID,
@@ -393,7 +393,7 @@ namespace DWM.Models.Persistence
                 {
                     value.mensagem.Code = 5;
                     value.mensagem.Message = MensagemPadrao.Message(5, "Residente").ToString();
-                    value.mensagem.MessageBase = "Residente deve ser informado";
+                    value.mensagem.MessageBase = "Dependente deve ser informado";
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
@@ -522,6 +522,7 @@ namespace DWM.Models.Persistence
                     value.CondominioID = sessaoCorrente.empresaId;
                     value.CondominoID = SessaoLocal.CondominoID;
                     value.UsuarioID = SessaoLocal.usuarioId;
+                    value.CredenciadoID = SessaoLocal.CredenciadoID;
                     value.FilaCondominoID = DWMSessaoLocal.FilaCondominoID(sessaoCorrente, db);
 
                     ListViewCondominoUnidadeChamado l = new ListViewCondominoUnidadeChamado(db, seguranca_db);
@@ -586,6 +587,8 @@ namespace DWM.Models.Persistence
                     join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
                     join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
                     from con in CON.DefaultIfEmpty()
+                    join cre in db.Credenciados on cha.CredenciadoID equals cre.CredenciadoID into CRE
+                    from cre in CRE.DefaultIfEmpty()
                     join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
                     join uni in db.Unidades on new { CondominioID = cha.CondominioID, EdificacaoID = cha.EdificacaoID.Value, UnidadeID = cha.UnidadeID.Value } equals new { uni.CondominioID, uni.EdificacaoID, uni.UnidadeID } into UNI
@@ -618,6 +621,7 @@ namespace DWM.Models.Persistence
                         CondominoID = cha.CondominoID,
                         CredenciadoID = cha.CredenciadoID,
                         NomeCondomino = con != null ? con.Nome : "",
+                        NomeCredenciado = cre != null ? cre.Nome : "",
                         EdificacaoID = cha.EdificacaoID,
                         DescricaoEdificacao = edi.Descricao,
                         UnidadeID = cha.UnidadeID,
@@ -696,6 +700,8 @@ namespace DWM.Models.Persistence
                     join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
                     join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
                     from con in CON.DefaultIfEmpty()
+                    join cre in db.Credenciados on cha.CredenciadoID equals cre.CredenciadoID into CRE
+                    from cre in CRE.DefaultIfEmpty()
                     join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
                     from edi in EDI.DefaultIfEmpty()
                     join uni in db.Unidades on new { CondominioID = cha.CondominioID, EdificacaoID = cha.EdificacaoID.Value, UnidadeID = cha.UnidadeID.Value } equals new { uni.CondominioID, uni.EdificacaoID, uni.UnidadeID } into UNI
@@ -727,6 +733,7 @@ namespace DWM.Models.Persistence
                         CondominoID = cha.CondominoID,
                         CredenciadoID = cha.CredenciadoID,
                         NomeCondomino = con != null ? con.Nome : "",
+                        NomeCredenciado = cre != null ? cre.Nome : "",
                         EdificacaoID = cha.EdificacaoID,
                         DescricaoEdificacao = edi.Descricao,
                         UnidadeID = cha.UnidadeID,

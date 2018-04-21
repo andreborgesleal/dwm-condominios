@@ -662,6 +662,33 @@ namespace DWM.Controllers
 
         #endregion
 
+        #region Ativar condômino e notificar por e-mail a ativação
+        [AuthorizeFilter]
+        public ActionResult Ativar(int CondominioID, int EdificacaoID, int UnidadeID, int CondominoID)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getBreadCrumbText("Condômino", null));
+                FactoryLocalhost<CondominoUnidadeViewModel, ApplicationContext> factory = new FactoryLocalhost<CondominoUnidadeViewModel, ApplicationContext>();
+
+                CondominoUnidadeViewModel value = new CondominoUnidadeViewModel()
+                {
+                    CondominioID = CondominioID,
+                    CondominoID = CondominoID,
+                    EdificacaoID = EdificacaoID,
+                    UnidadeID = UnidadeID,
+                    uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString()
+                };
+
+                CondominoUnidadeViewModel cu = factory.Execute(new CondominoAtivarBI(), value);
+
+                return RedirectToAction("ListInativos");
+            }
+            return View();
+        }
+
+        #endregion
+
         #region Desativar Condômino da Unidade 
         [AuthorizeFilter]
         public ActionResult Desativar(int CondominioID, int EdificacaoID, int UnidadeID, int CondominoID)

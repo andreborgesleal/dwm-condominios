@@ -15,6 +15,7 @@
 }
 <link href="~/Content/vendors/summernote/css/summernote.css" rel="stylesheet">
 <div class="container-cadastro">
+    @Html.Partial("_alerts")
     @if (!Model.IsFornecedor)
     {
         <div class="row" id="panel-condomino">
@@ -36,13 +37,23 @@
                 <input type="hidden" id="__EdificacaoID" name="__EdificacaoID" />
                 <input type="hidden" id="__UnidadeID" name="__UnidadeID" />
                 <input type="hidden" id="__CondominoID" name="__CondominoID" />
+                <input type="hidden" id="__CredenciadoID" name="__CredenciadoID" />
                 <div class="row">
                     <div class="col-md-12 col-sm-12 col-lg-12 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Assunto</label>
                             @if (Model.Condominos.Count > 0)
                             {
-                                <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
+                                int CredenciadoID = 0;
+                                if (Model.Condominos[0].CredenciadoViewModel != null)
+                                {
+                                    CredenciadoID = Model.Condominos[0].CredenciadoViewModel.CredenciadoID;
+                                }
+                                else
+                                {
+                                    CredenciadoID = 0;
+                                }
+                                <input type="text" class="form-control" name="Assunto" id="Assunto" value="@Model.Assunto" maxlength="60" onblur="setTotalCount('@Model.Condominos.Count()', '@Model.Condominos[0].CondominoID', '@CredenciadoID', '@Model.Condominos[0].EdificacaoID', '@Model.Condominos[0].UnidadeID', '0');" />
                             }
                             else
                             {
@@ -212,6 +223,7 @@
 <script>
     var _indice = -1;
     var _CondominoID;
+    var _CredenciadoID;
     var _EdificacaoID;
     var _UnidadeID;
     var _FilaCondominoID = '@Model.FilaCondominoID';
@@ -243,6 +255,7 @@
         $('#__EdificacaoID').val(_EdificacaoID);
         $('#__UnidadeID').val(_UnidadeID);
         $('#__CondominoID').val(_CondominoID);
+        $('#__CredenciadoID').val(_CredenciadoID);
 
         if ($('#Assunto').val() == "")
         {
@@ -275,12 +288,12 @@
             return false;
         }
 
-        if ($('#FilaAtendimentoID').val() == _FilaCondominoID && (_EdificacaoID == '' || _UnidadeID == '' || _CondominoID == '')) {
+        if ($('#FilaAtendimentoID').val() == _FilaCondominoID && (_EdificacaoID == '' || _UnidadeID == '' || (_CondominoID == '' && _CredenciadoID == ''))) {
             ShowMessageAjaxAlert('O condômino/unidade deve ser informado', 'warning');
             return false;
         }
 
-        if ($('#FilaSolicitanteID').val() == _FilaCondominoID && (_EdificacaoID == '' || _UnidadeID == '' || _CondominoID == '')) {
+        if ($('#FilaSolicitanteID').val() == _FilaCondominoID && (_EdificacaoID == '' || _UnidadeID == '' || (_CondominoID == '' && _CredenciadoID == ''))) {
             ShowMessageAjaxAlert('O condômino/unidade deve ser informado', 'warning');
             return false;
         }

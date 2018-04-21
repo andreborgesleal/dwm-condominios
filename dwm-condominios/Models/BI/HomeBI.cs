@@ -116,7 +116,9 @@ namespace dwm_condominios.Models.BI
                 #endregion
 
                 #region Condominos
-                ListViewCondominoUnidade listViewCondominos = new ListViewCondominoUnidade(this.db, this.seguranca_db);
+                //ListViewCondominoUnidade listViewCondominos = new ListViewCondominoUnidade(this.db, this.seguranca_db);
+                //home.Condominos = listViewCondominos.Bind(0, 10000, 0, 0, null).ToList();
+                ListViewCondominos listViewCondominos = new ListViewCondominos(this.db, this.seguranca_db);
                 home.Condominos = listViewCondominos.Bind(0, 10000, 0, 0, null).ToList();
                 #endregion
 

@@ -256,6 +256,9 @@ namespace DWM.Models.Persistence
                 v.UnidadeID = entity.VisitanteAcessoUnidade.UnidadeID;
                 v.DescricaoEdificacao = db.Edificacaos.Where(info => info.EdificacaoID == v.EdificacaoID && info.CondominioID == v.CondominioID).FirstOrDefault().Descricao;
 
+                if (entity.VisitanteAcessoUnidade.CredenciadoID.HasValue)
+                    v.Visitante.NomeCondomino = db.Credenciados.Find(entity.VisitanteAcessoUnidade.CredenciadoID).Nome;
+
                 v.VisitanteAcessoUnidadeViewModel = new VisitanteAcessoUnidadeViewModel()
                 {
                     AcessoID = entity.VisitanteAcessoUnidade.AcessoID,

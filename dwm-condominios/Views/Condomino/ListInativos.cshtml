@@ -47,7 +47,7 @@
                                         <td>@value.CondominoViewModel.Email</td>
                                         <td>@value.CondominoViewModel.DataCadastro.ToString("dd/MM/yyyy")</td>
                                         <td class="text-center">
-                                            <a href="~/Condomino/Index?id=@(value.CondominoID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&TipoPessoa=@(TipoPessoa)" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                            <a href="~/Condomino/Ativar?CondominioID=@(value.CondominioID)&EdificacaoID=@(value.EdificacaoID)&UnidadeID=@(value.UnidadeID)&CondominoID=@(value.CondominoID)" title="Ativar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
                                         </td>
                                     </tr>
                                 }

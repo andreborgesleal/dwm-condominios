@@ -11,7 +11,7 @@ using System;
 using System.Web.Mvc;
 
 
-namespace dwm_condominios.Controllers
+namespace DWM.Controllers
 {
     public class EnviarEmailController : DwmRootController<EmailLogViewModel, EmailLogModel, DWM.Models.Entidades.ApplicationContext>
     {

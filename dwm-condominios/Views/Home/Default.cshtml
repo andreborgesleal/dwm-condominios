@@ -170,6 +170,7 @@
                             <th class="column-title text-center">Unidade</th>
                             <th class="column-title">Nome</th>
                             <th class="column-title text-center">Sexo</th>
+                            <th class="column-title text-left">Tipo</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -189,30 +190,13 @@
                                     @value.UnidadeID
                                 </td>
                                 <td>
-                                    @value.CondominoViewModel.Nome
+                                    @value.Nome
                                 </td>
                                 <td align="center">
-                                    @(((CondominoPFViewModel)value.CondominoViewModel).Sexo)
-                                </td>
-                            </tr>
-                        }
-                        @foreach (CredenciadoViewModel cred in Model.Credenciados)
-                        {
-                            <tr class="even pointer">
-                                @*<td>
-                                    Lupa
-                                </td>*@
-                                <td align="center">
-                                    @cred.DescricaoEdificacao
-                                </td>
-                                <td align="center">
-                                    @cred.UnidadeID
+                                    @value.Sexo
                                 </td>
                                 <td>
-                                    @cred.Nome
-                                </td>
-                                <td align="center">
-                                    @cred.Sexo
+                                    @value.DescricaoTipoCondomino
                                 </td>
                             </tr>
                         }

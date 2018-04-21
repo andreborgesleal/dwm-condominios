@@ -258,7 +258,7 @@ namespace DWM.Models.Persistence
         {
             string _nomeCondomino = (from con in db.Condominos
                                      join vis in db.VisitanteUnidades on con.CondominoID equals vis.CondominoID
-                                     where vis.CondominoID == con.CondominoID
+                                     where vis.VisitanteID == entity.VisitanteID
                                      select con.Nome).FirstOrDefault();
 
             string _descricaoPrestador = (from tp in db.PrestadorTipos where tp.PrestadorTipoID == entity.PrestadorTipoID select tp.Descricao).FirstOrDefault();

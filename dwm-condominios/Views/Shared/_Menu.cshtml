@@ -8,7 +8,7 @@
 @if (menuList != null)
 {
     <ul class="nav side-menu">
-        @foreach (TransacaoRepository t in menuList.Where(info => info.transacaoId_pai == null && info.referencia == "Barra de Menu"))
+        @foreach (TransacaoRepository t in menuList.Where(info => info.transacaoId_pai == null && info.referencia == "Barra de Menu" && info.exibir=="S"))
         {
             <li>
                 <a><i class="fa @t.glyph"></i> @t.nomeCurto <span class="fa fa-chevron-down"></span></a>

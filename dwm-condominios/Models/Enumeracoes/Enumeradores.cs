@@ -22,7 +22,8 @@ namespace DWM.Models.Enumeracoes
             GRUPO_PORTARIA = 10,
             EMAIL_TEMPLATE_PORTARIA = 11,
             HABILITA_SMS = 12,
-            CHAVE_SMS = 13
+            CHAVE_SMS = 13,
+            EMAIL_TEMPLATE_ATIVACAO_CONDOMINO = 14
         }
 
         public enum EmailTipo
@@ -63,6 +64,9 @@ namespace DWM.Models.Enumeracoes
             [StringValue("9")]
             OUTROS = 9,
 
+            [StringDescription("Ativação Condômino")]
+            [StringValue("10")]
+            ATIVACAO_CONDOMINO = 10,
         }
 
     }

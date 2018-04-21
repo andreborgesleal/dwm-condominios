@@ -44,6 +44,7 @@ namespace DWM.Models.Repositories
         public System.Nullable<int> CredenciadoID { get; set; }
 
         public string NomeCondomino { get; set; }
+        public string NomeCredenciado { get; set; }
 
         [DisplayName("Edificação")]
         public System.Nullable<int> EdificacaoID { get; set; }

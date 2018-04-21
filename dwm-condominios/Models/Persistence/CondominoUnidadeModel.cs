@@ -565,7 +565,7 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
-    public class ListViewCondominoUnidadeChamado : ListViewCondominoUnidade
+    public class ListViewCondominoUnidadeChamado : ListViewCondominosCredenciados //ListViewCondominoUnidade
     {
         public ListViewCondominoUnidadeChamado() { }
         public ListViewCondominoUnidadeChamado(ApplicationContext _db, SecurityContext _seguranca_db)
@@ -644,5 +644,285 @@ namespace DWM.Models.Persistence
         #endregion
     }
 
+    public class ListViewCondominos : ListViewModelLocal<CondominoUnidadeViewModel>
+    {
+        #region Constructor
+        public ListViewCondominos() { }
+        public ListViewCondominos(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
 
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
+        {
+            int? _CondominoID = null;
+            int _EdificacaoID = 0;
+            int _UnidadeID = 0;
+            string _nome = null;
+
+            if (param.Count() == 1)
+                _CondominoID = (int)param[0];
+            else
+            {
+                _EdificacaoID = (int)param[0];
+                _UnidadeID = (int)param[1];
+                _nome = param != null && param[2] != null && param[2].ToString() != "" ? param[2].ToString() : null;
+            }
+
+            IEnumerable<CondominoUnidadeViewModel> query1 = null;
+            IEnumerable<CondominoUnidadeViewModel> query2 = null;
+            IEnumerable<CondominoUnidadeViewModel> query3 = null;
+
+            query1 = (from c in db.CondominoUnidades
+                      join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                      join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                      where c.CondominioID == sessaoCorrente.empresaId
+                            && c.Condomino.IndSituacao == "A"
+                            && (
+                                  (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome))) ||
+                                  (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
+                                  (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome)) ||
+                                  (_EdificacaoID == 0 && (_nome == null || _nome == ""))
+                               )
+                            && c.DataFim == null
+                      select new CondominoUnidadeViewModel()
+                      {
+                          CondominioID = c.CondominioID,
+                          EdificacaoID = c.EdificacaoID,
+                          UnidadeID = c.UnidadeID,
+                          Codigo = u.Codigo,
+                          CondominoID = c.CondominoID,
+                          DataInicio = c.DataInicio,
+                          EdificacaoDescricao = e.Descricao,
+                          CondominoViewModel = new CondominoPFViewModel()
+                          {
+                              Nome = c.Condomino.Nome,
+                              IndFiscal = c.Condomino.IndFiscal,
+                              IndProprietario = c.Condomino.IndProprietario,
+                              TelParticular1 = c.Condomino.TelParticular1,
+                              TelParticular2 = c.Condomino.TelParticular2,
+                              Email = c.Condomino.Email,
+                              UsuarioID = c.Condomino.UsuarioID,
+                              DataCadastro = c.Condomino.DataCadastro,
+                              Avatar = c.Condomino.Avatar,
+                              Sexo = (from sex in db.CondominoPFs where sex.CondominoID == c.Condomino.CondominoID select sex.Sexo).FirstOrDefault()
+                          }
+                      }).ToList();
+                     
+          query2 = (from f in db.Funcionarios
+                    join cu in db.CondominoUnidades on new { f.CondominioID, f.EdificacaoID, f.UnidadeID } equals new { cu.CondominioID, cu.EdificacaoID, cu.UnidadeID }
+                    join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                    join u in db.Unidades on new { cu.CondominioID, cu.EdificacaoID, cu.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                    join e in db.Edificacaos on cu.EdificacaoID equals e.EdificacaoID
+                    where f.CondominioID == sessaoCorrente.empresaId && cu.DataFim == null
+                    select new CondominoUnidadeViewModel()
+                    {
+                        CondominioID = cu.CondominioID,
+                        EdificacaoID = cu.EdificacaoID,
+                        UnidadeID = cu.UnidadeID,
+                        Codigo = u.Codigo,
+                        CondominoID = f.CondominoID,
+                        DataInicio = cu.DataInicio,
+                        EdificacaoDescricao = e.Descricao,
+                        FuncionarioViewModel = new FuncionarioViewModel()
+                        {
+                            empresaId = sessaoCorrente.empresaId,
+                            FuncionarioID = f.FuncionarioID,
+                            CondominioID = f.CondominioID,
+                            EdificacaoID = f.EdificacaoID,
+                            UnidadeID = f.UnidadeID,
+                            CondominoID = f.CondominoID,
+                            Nome = f.Nome,
+                            Funcao = f.Funcao,
+                            Sexo = f.Sexo,
+                            Dia = f.Dia,
+                            HoraInicial = f.HoraInicial,
+                            HoraFinal = f.HoraFinal,
+                            RG = f.RG
+                        }
+                    }).ToList();
+
+            query3 = (from c in db.Credenciados
+                      join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
+                      join con in db.Condominos on c.CondominoID equals con.CondominoID
+                      join cu in db.CondominoUnidades on con.CondominoID equals cu.CondominoID
+                      join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                      join u in db.Unidades on new { cu.CondominioID, cu.EdificacaoID, cu.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                      join e in db.Edificacaos on cu.EdificacaoID equals e.EdificacaoID
+                      where con.CondominioID == sessaoCorrente.empresaId && cu.DataFim == null && con.IndSituacao == "A"
+                      select new CondominoUnidadeViewModel()
+                      {
+                          CondominioID = cu.CondominioID,
+                          EdificacaoID = cu.EdificacaoID,
+                          UnidadeID = cu.UnidadeID,
+                          Codigo = u.Codigo,
+                          CondominoID = c.CondominoID,
+                          DataInicio = cu.DataInicio,
+                          EdificacaoDescricao = e.Descricao,
+                          CredenciadoViewModel = new CredenciadoViewModel()
+                          {
+                              empresaId = sessaoCorrente.empresaId,
+                              CredenciadoID = c.CredenciadoID,
+                              CondominoID = c.CondominoID,
+                              Nome = c.Nome,
+                              Email = c.Email,
+                              TipoCredenciadoID = c.TipoCredenciadoID,
+                              DescricaoTipoCredenciado = t.Descricao,
+                              Sexo = c.Sexo,
+                              Observacao = c.Observacao,
+                              UsuarioID = c.UsuarioID,
+                              IndVisitantePermanente = c.IndVisitantePermanente,
+                              DescricaoEdificacao = ed.Descricao,
+                              UnidadeID = cu.UnidadeID,
+                          }
+                      }).ToList();
+
+
+            return query1.Union(query2).Union(query3).ToList();
+            //return query1.Union(query2).Union(query3).OrderBy(info => new { info.EdificacaoDescricao, info.UnidadeID }).ToList();
+        }
+
+        public override string action()
+        {
+            return "../Condomino/ListParam";
+        }
+
+        public override string DivId()
+        {
+            return "div-condomino-pf";
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new CondominoPFModel().getObject((CondominoPFViewModel)id);
+        }
+        #endregion
+    }
+
+    public class ListViewCondominosCredenciados : ListViewModelLocal<CondominoUnidadeViewModel>
+    {
+        #region Constructor
+        public ListViewCondominosCredenciados() { }
+        public ListViewCondominosCredenciados(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<CondominoUnidadeViewModel> Bind(int? index, int pageSize = 20, params object[] param)
+        {
+            int? _CondominoID = null;
+            int _EdificacaoID = 0;
+            int _UnidadeID = 0;
+            string _nome = null;
+
+            if (param.Count() == 1)
+                _CondominoID = (int)param[0];
+            else
+            {
+                _EdificacaoID = (int)param[0];
+                _UnidadeID = (int)param[1];
+                _nome = param != null && param[2] != null && param[2].ToString() != "" ? param[2].ToString() : null;
+            }
+
+            IEnumerable<CondominoUnidadeViewModel> query1 = null;
+            IEnumerable<CondominoUnidadeViewModel> query2 = null;
+
+            query1 = (from c in db.CondominoUnidades
+                      join e in db.Edificacaos on c.EdificacaoID equals e.EdificacaoID
+                      join u in db.Unidades on new { c.CondominioID, c.EdificacaoID, c.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                      where c.CondominioID == sessaoCorrente.empresaId
+                            && c.Condomino.IndSituacao == "A"
+                            && (!_CondominoID.HasValue || c.CondominoID == _CondominoID)
+                            && (
+                                  (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome))) ||
+                                  (_EdificacaoID > 0 && (c.CondominioID == sessaoCorrente.empresaId && c.EdificacaoID == _EdificacaoID) && (_nome == null || _nome == "")) ||
+                                  (_nome != null && _nome != "" && (c.Condomino.Nome.StartsWith(_nome) || c.Condomino.IndFiscal == _nome || c.Condomino.Email == _nome)) ||
+                                  (_EdificacaoID == 0 && (_nome == null || _nome == ""))
+                               )
+                            && c.DataFim == null
+                      select new CondominoUnidadeViewModel()
+                      {
+                          CondominioID = c.CondominioID,
+                          EdificacaoID = c.EdificacaoID,
+                          UnidadeID = c.UnidadeID,
+                          Codigo = u.Codigo,
+                          CondominoID = c.CondominoID,
+                          DataInicio = c.DataInicio,
+                          EdificacaoDescricao = e.Descricao,
+                          CondominoViewModel = new CondominoPFViewModel()
+                          {
+                              Nome = c.Condomino.Nome,
+                              IndFiscal = c.Condomino.IndFiscal,
+                              IndProprietario = c.Condomino.IndProprietario,
+                              TelParticular1 = c.Condomino.TelParticular1,
+                              TelParticular2 = c.Condomino.TelParticular2,
+                              Email = c.Condomino.Email,
+                              UsuarioID = c.Condomino.UsuarioID,
+                              DataCadastro = c.Condomino.DataCadastro,
+                              Avatar = c.Condomino.Avatar,
+                              Sexo = (from sex in db.CondominoPFs where sex.CondominoID == c.Condomino.CondominoID select sex.Sexo).FirstOrDefault()
+                          }
+                      }).ToList();
+
+            query2 = (from c in db.Credenciados
+                      join t in db.TipoCredenciados on c.TipoCredenciadoID equals t.TipoCredenciadoID
+                      join con in db.Condominos on c.CondominoID equals con.CondominoID
+                      join cu in db.CondominoUnidades on con.CondominoID equals cu.CondominoID
+                      join ed in db.Edificacaos on cu.EdificacaoID equals ed.EdificacaoID
+                      join u in db.Unidades on new { cu.CondominioID, cu.EdificacaoID, cu.UnidadeID } equals new { u.CondominioID, u.EdificacaoID, u.UnidadeID }
+                      join e in db.Edificacaos on cu.EdificacaoID equals e.EdificacaoID
+                      where con.CondominioID == sessaoCorrente.empresaId && cu.DataFim == null && con.IndSituacao == "A"
+                            && (!_CondominoID.HasValue || c.CondominoID == _CondominoID)
+                      select new CondominoUnidadeViewModel()
+                      {
+                          CondominioID = cu.CondominioID,
+                          EdificacaoID = cu.EdificacaoID,
+                          UnidadeID = cu.UnidadeID,
+                          Codigo = u.Codigo,
+                          CondominoID = c.CondominoID,
+                          DataInicio = cu.DataInicio,
+                          EdificacaoDescricao = e.Descricao,
+                          CredenciadoViewModel = new CredenciadoViewModel()
+                          {
+                              empresaId = sessaoCorrente.empresaId,
+                              CredenciadoID = c.CredenciadoID,
+                              CondominoID = c.CondominoID,
+                              Nome = c.Nome,
+                              Email = c.Email,
+                              TipoCredenciadoID = c.TipoCredenciadoID,
+                              DescricaoTipoCredenciado = t.Descricao,
+                              Sexo = c.Sexo,
+                              Observacao = c.Observacao,
+                              UsuarioID = c.UsuarioID,
+                              IndVisitantePermanente = c.IndVisitantePermanente,
+                              DescricaoEdificacao = ed.Descricao,
+                              UnidadeID = cu.UnidadeID,
+                          }
+                      }).ToList();
+
+
+            return query1.Union(query2).ToList();
+            //return query1.Union(query2).Union(query3).OrderBy(info => new { info.EdificacaoDescricao, info.UnidadeID }).ToList();
+        }
+
+        public override string action()
+        {
+            return "../Condomino/ListParam";
+        }
+
+        public override string DivId()
+        {
+            return "div-condomino-pf";
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new CondominoPFModel().getObject((CondominoPFViewModel)id);
+        }
+        #endregion
+    }
 }

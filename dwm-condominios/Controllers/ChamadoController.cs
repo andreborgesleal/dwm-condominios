@@ -84,6 +84,7 @@ namespace DWM.Controllers
                 value.EdificacaoID = int.Parse(collection["__EdificacaoID"]);
                 value.UnidadeID = int.Parse(collection["__UnidadeID"]);
                 value.CondominoID = int.Parse(collection["__CondominoID"]);
+                value.CredenciadoID = int.Parse(collection["__CredenciadoID"]);
             }
             #endregion
 
@@ -123,7 +124,6 @@ namespace DWM.Controllers
             try
             {
                 FactoryLocalhost<AlertaRepository, ApplicationContext> factory = new FactoryLocalhost<AlertaRepository, ApplicationContext>();
-                AlertaBI bi = new AlertaBI();
                 value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
                 AlertaRepository a = factory.Execute(new AlertaBI(), value);
                 if (a.mensagem.Code > 0)

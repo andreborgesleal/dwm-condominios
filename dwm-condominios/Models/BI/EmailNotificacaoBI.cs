@@ -1,4 +1,4 @@
-﻿    using System;
+﻿using System;
 using System.Collections.Generic;
 using App_Dominio.Contratos;
 using App_Dominio.Entidades;
@@ -7,7 +7,6 @@ using DWM.Models.Entidades;
 using System.Web.Mvc;
 using App_Dominio.Enumeracoes;
 using App_Dominio.Security;
-using App_Dominio.Models;
 using System.Net.Mail;
 using DWM.Models.Repositories;
 using System.Linq;
@@ -82,6 +81,17 @@ namespace DWM.Models.BI
                         CarbonCopy = null;
                     }
                         
+                    if (log.EdificacaoID.HasValue && log.UnidadeID.HasValue && String.IsNullOrEmpty(log.Nome))
+                    {
+                        log.Nome = (from cu in db.CondominoUnidades
+                                    join con in db.Condominos on cu.CondominoID equals con.CondominoID
+                                    where cu.CondominioID == sessaoCorrente.empresaId && cu.DataFim == null && cu.EdificacaoID == log.EdificacaoID && cu.UnidadeID == log.UnidadeID
+                                    select con.Nome).FirstOrDefault().ToUpper();
+
+                        log.Email = EmailLogPessoas.FirstOrDefault().Email;
+                        log.Descricao_Edificacao = db.Edificacaos.Find(log.EdificacaoID).Descricao;
+                    }
+
                     log.EmailMensagem = log.EmailMensagem.Replace("@condominio", condominio.RazaoSocial).Replace("@nome", log.Nome).Replace("@unidade", CodigoUnidade).Replace("@edificacao", log.Descricao_Edificacao).Replace("@grupo", log.Descricao_GrupoCondomino).Replace("@sistema", sistema.descricao).Replace("@email", log.Email);
 
                     string Subject = "[" + condominio.PathInfo + "] " + log.Assunto.Replace("@condominio", "");
@@ -95,11 +105,15 @@ namespace DWM.Models.BI
                     }
 
                     #region Incluir o Log do e-mail enviado
+                    string Email = log.Email;
+                    int? usuarioId = log.UsuarioID;
                     log = Model.Insert(log);
                     if (log.mensagem.Code > 0)
                         throw new App_DominioException(log.mensagem);
                     #endregion
 
+                    log.Email = Email;
+                    log.UsuarioID = usuarioId;
                     log.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString(), MessageType = MsgType.SUCCESS };
                 }
                 catch (ArgumentException ex)
@@ -181,7 +195,7 @@ namespace DWM.Models.BI
                           from gru in GRU.DefaultIfEmpty()
                           where con.CondominioID == sessaoCorrente.empresaId
                                 && und.CondominioID == sessaoCorrente.empresaId
-                                && und.DataFim == null && (!log.EdificacaoID.HasValue || (und.EdificacaoID == log.EdificacaoID))
+                                && und.DataFim == null && (!log.EdificacaoID.HasValue || (und.EdificacaoID == log.EdificacaoID)) && (!log.UnidadeID.HasValue || und.UnidadeID == log.UnidadeID)
                                 && (!log.GrupoCondominoID.HasValue || gru.GrupoCondominoID == log.GrupoCondominoID)
                           select new EmailLogViewModel()
                           {
@@ -194,7 +208,7 @@ namespace DWM.Models.BI
                                    from gru in GRU.DefaultIfEmpty()
                                    where con.CondominioID == sessaoCorrente.empresaId
                                          && und.CondominioID == sessaoCorrente.empresaId
-                                         && und.DataFim == null && (!log.EdificacaoID.HasValue || (und.EdificacaoID == log.EdificacaoID))
+                                         && und.DataFim == null && (!log.EdificacaoID.HasValue || und.EdificacaoID == log.EdificacaoID) && (!log.UnidadeID.HasValue || und.UnidadeID == log.UnidadeID)
                                          && cre.Email != null && cre.Email.Trim() != ""
                                          && (!log.GrupoCondominoID.HasValue || gru.GrupoCondominoID == log.GrupoCondominoID)
                                    select new EmailLogViewModel()
@@ -204,7 +218,8 @@ namespace DWM.Models.BI
                                    }).ToList();
             }
             else if(log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.CADASTRO_CREDENCIADO ||
-                    log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT)
+                    log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.FORGOT ||
+                    log.EmailTipoID == (int)Enumeracoes.Enumeradores.EmailTipo.ATIVACAO_CONDOMINO)
             {
                 result.Add(log);
             }
@@ -253,6 +268,20 @@ namespace DWM.Models.BI
                     };
 
                     result.Add(condomino);
+
+                    // Encaminhar para o credenciado
+                    if (r.CredenciadoID.HasValue)
+                    {
+                        Credenciado cred = db.Credenciados.Find(r.CredenciadoID);
+                        EmailLogViewModel credenciado = new EmailLogViewModel()
+                        {
+                            UsuarioID = cred.UsuarioID,
+                            Nome = cred.Nome,
+                            Email = cred.Email
+                        };
+
+                        result.Add(credenciado);
+                    }
                 }
 
                 result.Add(l);

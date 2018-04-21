@@ -49,6 +49,17 @@
                                 </div>
                             </li>
                         }
+                        @if (Model.CredenciadoID.HasValue)
+                        {
+                            <li class="list-group-item">
+                                <h4><strong>Dependente</strong></h4>
+                                <div class="row clearfix">
+                                    <div class="col-md-10 col-lg-10 col-xs-12col-sm-12">
+                                        @Model.NomeCredenciado<br />
+                                    </div>
+                                </div>
+                            </li>
+                        }
                         <li class="list-group-item">
                             <h4><strong>Motivo</strong></h4>
                             @Model.DescricaoChamadoMotivo

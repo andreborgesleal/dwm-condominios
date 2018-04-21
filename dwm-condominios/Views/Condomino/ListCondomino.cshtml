@@ -21,6 +21,7 @@
                             <th class="column-title">Unidade </th>
                             <th class="column-title">Telefone </th>
                             <th class="column-title">E-mail </th>
+                            <th class="column-title">Tipo </th>
                             <th class="column-title no-link last text-center">
                                 <span class="nobr">Selecionar</span>
                             </th>
@@ -32,17 +33,26 @@
                     <tbody>
                         @{
                             int idx = 0;
-                            foreach (CondominoUnidadeViewModel value in Model)
+                            int CredenciadoID = 0;
+                            foreach (CondominoUnidadeViewModel value in Model.Where(info => info.Email != null && info.Email.Trim().Length > 0))
                             {
-                                TipoPessoa = (value.CondominoViewModel.discriminator == "CondominoPF") ? "PF" : "PJ";
+                                if (value.CredenciadoViewModel != null)
+                                {
+                                    CredenciadoID = value.CredenciadoViewModel.CredenciadoID;
+                                }
+                                else
+                                {
+                                    CredenciadoID = 0;
+                                }
                                 <tr class="even pointer" id="line_@idx">
-                                    <td class="">@value.CondominoViewModel.Nome</td>
+                                    <td class="">@value.Nome</td>
                                     <td class="">@value.EdificacaoDescricao </td>
                                     <td class="">@value.UnidadeID</td>
-                                    <td class="">@App_Dominio.Models.Funcoes.FormataTelefone(value.CondominoViewModel.TelParticular1)</td>
-                                    <td class="">@value.CondominoViewModel.Email</td>
+                                    <td class="">@value.Telefone</td>
+                                    <td class="">@value.Email</td>
+                                    <td class="">@value.DescricaoTipoCondomino</td>
                                     <td class="text-center">
-                                        <input type="checkbox" name="check_@idx" id="check_@idx" class="icheckbox_flat-green" onclick="Seleciona('@value.CondominoID','@value.EdificacaoID', '@value.UnidadeID','@idx', this)" />
+                                        <input type="checkbox" name="check_@idx" id="check_@idx" class="icheckbox_flat-green" onclick="Seleciona('@value.CondominoID', '@CredenciadoID','@value.EdificacaoID', '@value.UnidadeID','@idx', this)" />
                                     </td>
                                 </tr>
                                 idx++;
@@ -77,7 +87,7 @@ else
 <!-- /Datatables -->
 
 <script>
-    function Seleciona(CondominoID,EdificacaoID, UnidadeID, indice, obj)
+    function Seleciona(CondominoID, CredenciadoID, EdificacaoID, UnidadeID, indice, obj)
     {
         if (obj.checked == true)
             $('#line_' + indice).css('background-color', 'cornsilk');
@@ -95,9 +105,10 @@ else
         _EdificacaoID = EdificacaoID;
         _UnidadeID = UnidadeID;
         _CondominoID = CondominoID;
+        _CredenciadoID = CredenciadoID;
     }
 
-    function setTotalCount(total, CondominoID, EdificacaoID, UnidadeID, indice) {
+    function setTotalCount(total, CondominoID, CredenciadoID, EdificacaoID, UnidadeID, indice) {
         if (total == 1)
         {
             $('#check_0').prop("checked", true);
@@ -111,6 +122,7 @@ else
             _EdificacaoID = EdificacaoID;
             _UnidadeID = UnidadeID;
             _CondominoID = CondominoID;
+            _CredenciadoID = CredenciadoID;
         }
             
     }

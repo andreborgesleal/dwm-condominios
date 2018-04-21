@@ -53,7 +53,7 @@
     </Reference>
     <Reference Include="App_Dominio, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
+      <HintPath>..\..\..\app_dominio\App_Dominio\App_Dominio\bin\Debug\App_Dominio.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=2.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.7\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
@@ -265,6 +265,7 @@
     <Compile Include="Models\BI\ChamadoAnotacaoBI.cs" />
     <Compile Include="Models\BI\ChamadoEditBI.cs" />
     <Compile Include="Models\BI\CodigoAtivacaoBI.cs" />
+    <Compile Include="Models\BI\CondominoAtivarBI.cs" />
     <Compile Include="Models\BI\EditarCondominoBI.cs" />
     <Compile Include="Models\BI\EditarCredenciadoBI.cs" />
     <Compile Include="Models\BI\EditarFuncionarioBI.cs" />
@@ -4350,7 +4351,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>51041</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:51042/</IISUrl>
+          <IISUrl>http://localhost:51043/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
