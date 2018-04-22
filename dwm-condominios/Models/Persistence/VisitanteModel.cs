@@ -245,7 +245,7 @@ namespace DWM.Models.Persistence
                         EdificacaoID = value.EdificacaoID.Value,
                         UnidadeID = value.UnidadeID.Value,
                         CondominoID = DWMSessaoLocal.GetSessaoLocal(value.sessionId).CondominoID,
-                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal(value.sessionId).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal().CredenciadoID
+                        CredenciadoID = DWMSessaoLocal.GetSessaoLocal(value.sessionId).CredenciadoID == 0 ? null : DWMSessaoLocal.GetSessaoLocal(value.sessionId).CredenciadoID
                     });
                 }
             }
