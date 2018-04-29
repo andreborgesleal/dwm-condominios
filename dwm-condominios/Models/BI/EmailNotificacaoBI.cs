@@ -270,7 +270,7 @@ namespace DWM.Models.BI
                     result.Add(condomino);
 
                     // Encaminhar para o credenciado
-                    if (r.CredenciadoID.HasValue)
+                    if (r.CredenciadoID.HasValue && r.CredenciadoID > 0)
                     {
                         Credenciado cred = db.Credenciados.Find(r.CredenciadoID);
                         EmailLogViewModel credenciado = new EmailLogViewModel()
