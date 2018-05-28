@@ -48,5 +48,15 @@ namespace DWM.Models.Entidades
         public DbSet<Proprietario> Proprietarios { get; set; }
         public DbSet<ProprietarioUnidade> ProprietarioUnidades { get; set; }
         public DbSet<Cidade> Cidades { get; set; }
+        public DbSet<Empregado> Empregados { get; set; }
+        public DbSet<Cargo> Cargos { get; set; }
+        public DbSet<Credor> Credores { get; set; }
+        public DbSet<GrupoCredor> GrupoCredores { get; set; }
+        public DbSet<Patrimonio> Patrimonios { get; set; }
+        public DbSet<PatrimonioClassificacao> PatrimonioClassificacaos { get; set; }
+        public DbSet<PatrimonioLocalizacao> PatrimonioLocalizacaos { get; set; }
+        public DbSet<LimpezaInspecao> LimpezaInspecaos { get; set; }
+        public DbSet<LimpezaRequisito> LimpezaRequisitos { get; set; }
+        public DbSet<LimpezaInspecaoItem> LimpezaInspecaoItem { get; set; }
     }
 }

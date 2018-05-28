@@ -1,0 +1,202 @@
+﻿@using App_Dominio.Repositories
+@model DWM.Models.Repositories.CredorViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Fornecedores/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fornecedores", Descricao = "Excluir fornecedor", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Delete", "Fornecedores", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.dt_inclusao)
+                @Html.HiddenFor(info => info.credorId)
+                @Html.HiddenFor(info => info.nome)
+                @Html.HiddenFor(info => info.ind_tipo_pessoa)
+                <div class="well well-sm">Atenção: Não será permitido excluir um fornecedor se houver pagamentos vinculados a ele.</div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="nome">Nome</label>
+                            @Html.TextBoxFor(info => info.nome, new { @class = "form-control", @maxlength = "60", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="control-label" for="historicoId">Grupo</label>
+                                    <div class="input-group col-md-12">
+                                        @Html.DropDownListFor(m => m.grupoCredorId, new DWM.Models.Enumeracoes.BindDropDownList().GrupoFornecedores("Selecione...", Model.grupoCredorId.ToString()), new { @class = "form-control", @disabled = "disable" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="ind_tipo_pessoa">Tipo</label>
+                                    <div class="input-group col-md-12">
+                                        @Html.DropDownListFor(m => m.ind_tipo_pessoa, App_Dominio.Enumeracoes.DropDownListEnum.TipoPessoa(), new { @class = "form-control", @onchange = "MudaPessoa()", @disabled = "disable" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="email">E-mail</label>
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control", @style = "text-transform: lowercase;", @maxlength = "100", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="control-label" for="cpf_cnpj">CPF/CNPJ</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.cpf_cnpj, new { @class = "form-control", @disabled = "disable" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary" disabled title="Buscar CNPJ" id="buscar-btn"><i class="glyphicon glyphicon-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="">CEP</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.cep, new { @class = "form-control", @disabled = "disable" })
+                                        <span class="input-group-btn">
+                                            <a href="#" class="btn btn-primary link-default" onclick="BuscaCep2('cep', 'endereco', 'bairro', 'cidade', 'uf')"><span class="link-default">Busca Cep</span></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="endereco">Endereço</label>
+                            @Html.TextBoxFor(m => m.endereco, new { @class = "form-control", @maxlength = "50", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="complemento">Complemento</label>
+                            @Html.TextBoxFor(m => m.complemento, new { @class = "form-control", @maxlength = "30", @disabled = "disable" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="control-label" for="cidade">Cidade</label>
+                                    @Html.TextBoxFor(m => m.cidade, new { @class = "form-control", @maxlength = "25", @disabled = "disable" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="uf">UF</label>
+                                    @Html.TextBoxFor(m => m.uf, new { @class = "form-control", @maxlength = "2", @disabled = "disable" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="bairro">Bairro</label>
+                            @Html.TextBoxFor(m => m.bairro, new { @class = "form-control", @maxlength = "25", @disabled = "disable" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone1">Telefone Celular</label>
+                            @Html.TextBoxFor(m => m.fone1, new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone2">Telefone Celular 2</label>
+                            @Html.TextBoxFor(m => m.fone2, new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone3">Telefone Fixo</label>
+                            @Html.TextBoxFor(m => m.fone3, new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="div-sexo">
+                        <div class="form-group">
+                            <label class="control-label" for="sexo">Sexo</label>
+                            @Html.DropDownListFor(m => m.sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(), new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="div-nascimento">
+                        <div class="form-group">
+                            <label class="control-label" for="dt_nascimento">Nascimento</label>
+                            @Html.EditorFor(info => info.dt_nascimento, "DATE", new { identificador = "dt_nascimento", readOnly = "false", @disabled = "disable" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="observacao">Obsrvação</label>
+                            @Html.TextAreaFor(m => m.observacao, 4, 1, new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-danger" value="Excluir" name="btn-delete" id="btn-delete" />
+                            <input type="button" onclick="window.location = '../Fornecedores/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $("#cep").mask("99999-999");
+    $("#cpf_cnpj").mask("999.999.999-99");
+    $("#fone1").mask("99 99999-9999");
+    $("#fone2").mask("99 99999-9999");
+    $("#fone3").mask("99 9999-9999");
+    MudaPessoa();
+
+    function MudaPessoa() {
+        if ($("#ind_tipo_pessoa").val() == "PF")
+        {
+            $("#div-sexo").show();
+            $("#div-nascimento").show();
+            $("#cpf_cnpj").mask("999.999.999-99");
+        }
+        else
+        {
+            $("#div-sexo").hide();
+            $("#div-nascimento").hide();
+            $("#cpf_cnpj").mask("99.999.999/9999-99");
+        }
+
+    }
+</script>
+
+
+

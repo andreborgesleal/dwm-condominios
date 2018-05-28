@@ -46,9 +46,12 @@ namespace dwm_condominios.Controllers.API
 
             // Listar
             // Parametros
-            PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
-            DateTime Data1 = Funcoes.Brasilia().AddMonths(-6);
-            DateTime Data2 = Funcoes.Brasilia().Date;
+            //PageSize = PageSize == null || PageSize == "" ? "8" : PageSize;
+            //DateTime Data1 = Funcoes.Brasilia().AddMonths(-6);
+            //DateTime Data2 = Funcoes.Brasilia().Date;
+
+            DateTime _data1 = Funcoes.Brasilia().AddMonths(-3);
+            DateTime _data2 = Funcoes.Brasilia().Date.AddDays(1).AddMinutes(-1);
 
             SessaoLocal s = DWMSessaoLocal.GetSessaoLocal(a.Token);
             var _EdificacaoID = s.Unidades.FirstOrDefault().EdificacaoID;
@@ -58,7 +61,7 @@ namespace dwm_condominios.Controllers.API
             var _Nome = "";
 
             Facade<ArquivoViewModel, ArquivoModel, ApplicationContext> facade = new Facade<ArquivoViewModel, ArquivoModel, ApplicationContext>();
-            IEnumerable<ArquivoViewModel> list = facade.List(new ListViewArquivo(), 0, int.Parse(PageSize), value.Token, Data1, Data2, _EdificacaoID, _UnidadeID, _CondominoID, 0, null);
+            IEnumerable<ArquivoViewModel> list = facade.List(new ListViewArquivo(), 0, 500, value.Token, _data1, _data2, _EdificacaoID, _UnidadeID, _CondominoID, 0, null);
 
             return list;
         }

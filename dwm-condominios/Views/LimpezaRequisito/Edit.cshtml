@@ -1,0 +1,52 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.LimpezaRequisitoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../LimpezaRequisito/Edit";
+    t[0].nomeCurto = "Editar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Ítem de Limpeza", Descricao = "Edição de Ítem de Limpeza", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Edit", "LimpezaRequisito", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.LimpezaRequisitoID)
+                @Html.HiddenFor(info => info.empresaId)
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Descrição *</label>
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="60" required />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Área *</label>
+                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().Espacos("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <input type="button" onclick="window.location = '../LimpezaRequisito/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,39 @@
+﻿@using App_Dominio.Repositories
+@model DWM.Models.Repositories.GrupoCredorViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../GrupoFornecedores/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupo de Fornecedores", Descricao = "Incluir Grupo de Fornecedor. Ex: Concecionárias, Bancos, Prestadores, Funcionários", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Create", "GrupoFornecedores", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                <div class="row">
+                    <div class="col-md-4 col-xs-12 col-sm-12 col-lg-4">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.nome, new { @class = "control-label" })
+                            <input type="text" class="form-control" name="nome" id="nome" value="@Model.nome" maxlength="30" />
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" />
+                            <input type="button" onclick="window.location = '../GrupoFornecedores/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

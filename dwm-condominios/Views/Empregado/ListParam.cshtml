@@ -1,0 +1,83 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.EmpregadoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        @if (ViewBag.unidades == null)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    Clique nos botões de <code>Ação</code> para executar a ação desejada
+                </div>
+            </div>
+            <p>&nbsp;</p>
+        }
+
+        <div class="table-responsive hidden-xs">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Nome</th>
+                        <th class="column-title">Matrícula</th>
+                        <th class="column-title">Data de Admissao</th>
+                        <th class="column-title">Data de Desativação</th>
+                        <th class="column-title">Hora Inicial</th>
+                        <th class="column-title">Hora Final</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.EmpregadoViewModel vis in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?empregadoID=@vis.EmpregadoID'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?empregadoID=@vis.EmpregadoID'"></button>
+                            </td>
+                            <td>
+                                <span>@vis.Nome</span><br />
+                            </td>
+                            <td>
+                                <span>@vis.Matricula</span>
+                            </td>
+                            <td>
+                                <span>@vis.DataAdmissao</span>
+                            </td>
+                            <td>
+                                <span>@vis.DataDesativacao</span>
+                            </td>
+                            <td>
+                                <span>@vis.HoraInicial</span>
+                            </td>
+                            <td>
+                                <span>@vis.HoraFinal</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+

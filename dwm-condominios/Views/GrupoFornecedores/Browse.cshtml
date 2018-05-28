@@ -1,0 +1,27 @@
+﻿@using App_Dominio.Repositories
+@model PagedList<DWM.Models.Repositories.GrupoCredorViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../GrupoFornecedores/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<!-- Datatables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Grupo de Fornecedores", Descricao = "Listagem de Grupos de Fornecedores", Transacao = t })
+        <div class="x_content">
+            <div id="div-list">
+                @Html.Partial("List", Model)
+            </div>
+            <div class="altura-35">
+                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "GrupoFornecedores", buttonType = "link" } })
+            </div>
+        </div>
+    </div>
+</div>

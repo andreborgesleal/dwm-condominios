@@ -1,0 +1,126 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.PatrimonioViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Patrimonio/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Patrimônio", Descricao = "Inclusão de Patrimônio", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Create", "Patrimonio", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">TombamentoID *</label>
+                            <input type="text" class="form-control" name="TombamentoID" id="TombamentoID" value="@Model.TombamentoID" maxlength="25" required />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Classificação *</label>
+                            @Html.DropDownList("PatrimonioClassificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().PatrimonioClassificacao("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Localização *</label>
+                            @Html.DropDownList("PatrimonioLocalizacaoID", new DWM.Models.Enumeracoes.BindDropDownList().PatrimonioLocalizacao("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Credor *</label>
+                            @Html.DropDownList("credorId", new DWM.Models.Enumeracoes.BindDropDownList().CredorID("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Descrição</label>
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" maxlength="200" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Observação</label>
+                            <textarea class="form-control" name="Observacao" id="Observacao" value="@Model.Observacao" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Valor da Compra</label>
+                            <input type="number" class="form-control" name="ValorCompra" id="ValorCompra" value="@Model.ValorCompra" />
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Valor Atual</label>
+                            <input type="number" class="form-control" name="ValorAtual" id="ValorAtual" value="@Model.ValorAtual" maxlength="12" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Tombeamento</label>
+                            <input type="date" class="form-control" name="DataTombamento" id="DataTombamento" value="@Model.DataTombamento" />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Baixa</label>
+                            <input type="date" class="form-control" name="DataBaixa" id="DataBaixa" value="@Model.DataBaixa" />
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <input type="button" onclick="window.location = '../Patrimonio/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Telefone").mask("(99)9999?9-9999");
+        $("#CPF").mask("999.999.999-99");
+        $("#CEP").mask("99999-999");
+        $("#HoraInicial").mask("99:99");
+        $("#HoraFinal").mask("99:99");
+    });
+</script>

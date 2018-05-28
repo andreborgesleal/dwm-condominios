@@ -1,0 +1,51 @@
+﻿@using DWM.Models.Repositories;
+@model System.Web.Mvc.PagedList<GrupoCredorViewModel>
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    <table class="table table-striped jambo_table bulk_action" style="width: 100%" id="datatableGCRE">
+        <thead>
+            <tr class="headings">
+                <th class="col-md-2 column-title text-center nobr">Ação</th>
+                <th class="column-title">Nome do grupo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GrupoCredorViewModel gcre in Model)
+            {
+                <tr class="even pointer">
+                    <td class="col-md-2 text-center">
+                        <button type="button" class="fa fa-check" title="Selecionar" onclick="Move('@gcre.grupoCredorId', '@gcre.nome')"></button>
+                    </td>
+                    <td>
+                        <small>@gcre.nome</small>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatableGCRE').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+

@@ -11,6 +11,163 @@ namespace DWM.Models.Enumeracoes
 {
     public class BindDropDownList
     {
+        public IEnumerable<SelectListItem> Espacos(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.EspacoComums.AsEnumerable()
+                            where e.CondominioID == sessao.empresaId
+                            orderby e.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = e.EspacoID.ToString(),
+                                Text = e.Descricao,
+                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> GrupoFornecedores(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.GrupoCredores.AsEnumerable()
+                            where e.CondominioID == sessao.empresaId
+                            orderby e.nome
+                            select new SelectListItem()
+                            {
+                                Value = e.grupoCredorId.ToString(),
+                                Text = e.nome,
+                                Selected = (selectedValue != "" ? e.nome.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> PatrimonioLocalizacao(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.PatrimonioLocalizacaos.AsEnumerable()
+                            orderby e.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = e.PatrimonioLocalizacaoID.ToString(),
+                                Text = e.Descricao,
+                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> PatrimonioClassificacao(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.PatrimonioClassificacaos.AsEnumerable()
+                            orderby e.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = e.PatrimonioClassificacaoID.ToString(),
+                                Text = e.Descricao,
+                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
+        public IEnumerable<SelectListItem> CredorID(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.Credores.AsEnumerable()
+                            orderby e.nome
+                            select new SelectListItem()
+                            {
+                                Value = e.credorId.ToString(),
+                                Text = e.nome,
+                                Selected = (selectedValue != "" ? e.nome.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> TiposPrestadores(params object[] param)
         {
             string cabecalho = param[0].ToString();
@@ -63,6 +220,41 @@ namespace DWM.Models.Enumeracoes
                             {
                                 Value = ec.EspacoID.ToString(),
                                 Text = ec.Descricao.ToString()
+                            }).ToList();
+                return q;
+            }
+        }
+
+
+        public IEnumerable<SelectListItem> Cargos(params object[] param)
+        {
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            int _CondominioID = 0;
+
+            if (param.Count() > 2)
+                _CondominioID = (int)param[2];
+            else
+            {
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                _CondominioID = security.getSessaoCorrente().empresaId;
+            }
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != null)
+                    q.Add(new SelectListItem() { Text = cabecalho, Value = "" });
+
+                q = q.Union(from c in db.Cargos.AsEnumerable()
+                            where c.CondominioID == _CondominioID && c.Situacao == "A"
+                            orderby c.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = c.CargoID.ToString(),
+                                Text = c.Descricao.ToString()
                             }).ToList();
                 return q;
             }

@@ -1,0 +1,180 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.EmpregadoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Empregado/Delete";
+    t[0].nomeCurto = "Deletar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Empregado", Descricao = "Exclusão de Empregado", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Delete", "Empregado", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.EmpregadoID)
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Nome *</label>
+                            <input type="text" class="form-control" name="Nome" id="Nome" value="@Model.Nome" maxlength="60" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Cargo *</label>
+                            @Html.DropDownList("CargoID", new DWM.Models.Enumeracoes.BindDropDownList().Cargos("Selecione...", ""), new { @class = "form-control", @disabled = "disable" })
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Matrícula *</label>
+                            <input type="number" maxlength="12" class="form-control" name="Matricula" id="Matricula" value="@Model.Matricula" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">CPF</label>
+                            <input type="text" class="form-control" name="CPF" id="CPF" value="@Model.CPF" maxlength="60" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Email</label>
+                            <input type="email" class="form-control" name="Email" id="Email" value="@Model.Email" maxlength="100" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">RG</label>
+                            <input type="number" maxlength="12" class="form-control" name="RG" id="RG" value="@Model.RG" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Órgão Emissor</label>
+                            <input type="text" class="form-control" name="OrgaoEmissor" id="OrgaoEmissor" value="@Model.OrgaoEmissor" maxlength="60" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" class="form-control" name="Telefone" id="Telefone" value="@Model.Telefone" maxlength="60" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Endereço</label>
+                            <input type="text" class="form-control" name="Email" id="Endereco" value="@Model.Endereco" maxlength="100" disabled />
+                        </div>
+                    </div>
+
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">CEP</label>
+                            <input type="text" class="form-control" name="Email" id="CEP" value="@Model.CEP" maxlength="12" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">UF</label>
+                            <input type="text" class="form-control" name="Email" id="UF" value="@Model.UF" maxlength="2" style="text-transform: uppercase" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-8 col-lg-8 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Complemento</label>
+                            <input type="text" class="form-control" name="Email" id="ComplementoEnd" value="@Model.ComplementoEnd" maxlength="100" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Cidade</label>
+                            <input type="text" class="form-control" name="Email" id="Cidade" value="@Model.Cidade" maxlength="100" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Admissão</label>
+                            <input type="date" class="form-control" name="Email" id="DataAdmissao" value="@Model.DataAdmissao" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Desativação</label>
+                            <input type="date" class="form-control" name="Email" id="DataDesativacao" value="@Model.DataDesativacao" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Hora Inicial</label>
+                            <input type="text" class="form-control" name="Email" id="HoraInicial" value="@Model.HoraInicial" maxlength="5" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Hora Final</label>
+                            <input type="text" class="form-control" name="Email" id="HoraFinal" value="@Model.HoraFinal" maxlength="5" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Dia</label>
+                            <input type="text" class="form-control" name="Email" id="Dia" value="@Model.Dia" maxlength="100" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Excluir" class="btn btn-danger" />
+                        <input type="button" onclick="window.location = '../Empregado/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $("#Telefone").mask("(99)9999?9-9999");
+        $("#CPF").mask("999.999.999-99");
+        $("#CEP").mask("99999-999");
+        $("#HoraInicial").mask("99:99");
+        $("#HoraFinal").mask("99:99");
+    });
+</script>
+

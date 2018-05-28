@@ -1,0 +1,398 @@
+﻿@using App_Dominio.Repositories
+@model DWM.Models.Repositories.CredorViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Fornecedores/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Fornecedores", Descricao = "Editar fornecedor", Transacao = t })
+        <div class="x_content">
+            @using (Html.BeginForm("Edit", "Fornecedores", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                @Html.ValidationSummary("", new { @class = "text-danger" })
+                @Html.HiddenFor(info => info.dt_inclusao)
+                @Html.HiddenFor(info => info.credorId)
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="nome">Nome</label>
+                            @Html.TextBoxFor(info => info.nome, new { @class = "form-control", @maxlength = "60" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="control-label" for="historicoId">Grupo</label>
+                                    <div class="input-group col-md-12">
+                                        @Html.DropDownListFor(m => m.grupoCredorId, new DWM.Models.Enumeracoes.BindDropDownList().GrupoFornecedores("Selecione...", Model.grupoCredorId.ToString()), new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="ind_tipo_pessoa">Tipo</label>
+                                    <div class="input-group col-md-12">
+                                        @Html.DropDownListFor(m => m.ind_tipo_pessoa, App_Dominio.Enumeracoes.DropDownListEnum.TipoPessoa(), new { @class = "form-control", @onchange = "MudaPessoa()" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="email">E-mail</label>
+                            @Html.TextBoxFor(m => m.email, new { @class = "form-control", @style = "text-transform: lowercase;", @maxlength = "100" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="form-group">
+                                    <label class="control-label" for="cpf_cnpj">CPF/CNPJ</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.cpf_cnpj, new { @class = "form-control" })
+                                        <span class="input-group-btn">
+                                            <button type="button" class="btn btn-primary" title="Buscar CNPJ" id="buscar-btn"><i class="glyphicon glyphicon-search"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="form-group">
+                                    <label class="control-label" for="">CEP</label>
+                                    <div class="input-group">
+                                        @Html.TextBoxFor(m => m.cep, new { @class = "form-control" })
+                                        <span class="input-group-btn">
+                                            <a href="#" class="btn btn-primary link-default" onclick="BuscaCep2('cep', 'endereco', 'bairro', 'cidade', 'uf')"><span class="link-default">Busca Cep</span></a>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="endereco">Endereço</label>
+                            @Html.TextBoxFor(m => m.endereco, new { @class = "form-control", @maxlength = "50" })
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="complemento">Complemento</label>
+                            @Html.TextBoxFor(m => m.complemento, new { @class = "form-control", @maxlength = "30" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label class="control-label" for="cidade">Cidade</label>
+                                    @Html.TextBoxFor(m => m.cidade, new { @class = "form-control", @maxlength = "25" })
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label class="control-label" for="uf">UF</label>
+                                    @Html.TextBoxFor(m => m.uf, new { @class = "form-control", @maxlength = "2" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="control-label" for="bairro">Bairro</label>
+                            @Html.TextBoxFor(m => m.bairro, new { @class = "form-control", @maxlength = "25" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone1">Telefone Celular</label>
+                            @Html.TextBoxFor(m => m.fone1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone2">Telefone Celular 2</label>
+                            @Html.TextBoxFor(m => m.fone2, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="control-label" for="fone3">Telefone Fixo</label>
+                            @Html.TextBoxFor(m => m.fone3, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="div-sexo">
+                        <div class="form-group">
+                            <label class="control-label" for="sexo">Sexo</label>
+                            @Html.DropDownListFor(m => m.sexo, App_Dominio.Enumeracoes.DropDownListEnum.Sexo(), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="div-nascimento">
+                        <div class="form-group">
+                            <label class="control-label" for="dt_nascimento">Nascimento</label>
+                            @Html.EditorFor(info => info.dt_nascimento, "DATE", new { identificador = "dt_nascimento", readOnly = "false" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label class="control-label" for="observacao">Obsrvação</label>
+                            @Html.TextAreaFor(m => m.observacao, 4, 1, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <div class="row clearfix">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-success" value="Salvar" name="btn-salvar" id="btn-salvar" />
+                            <input type="button" onclick="window.location = '../Fornecedores/Browse'" class="btn btn-default" value="Cancelar" />
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="buscar-modal" tabindex="-1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Buscar CNPJ</h4>
+            </div>
+            <div class="modal-body" style="height:250px;">
+                <p>Preencha com o texto da imagem</p>
+                <br />
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="control-label col-md-2">Texto</label>
+                        <div class="col-md-5">
+                            <input type="text" id="img-input" value="" class="form-controlcaixa-grande" />
+                        </div>
+                    </div>
+                    <div class="form-group img-captcha">
+                        <div class="col-md-offset-2 col-md-6">
+                            <div style="float:left;">
+                                <img id="captcha-img" title="Informe o texto da imagem" class="hidden" />
+                            </div>
+                            <div style="float:right;">
+                                <a href="#" id="buscar-captcha-btn" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-refresh"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="height:80px;">
+                <p class="bg-danger pull-left hidden msg" style="padding:10px 20px;">
+                    <i class="glyphicon glyphicon-warning-sign"></i>&nbsp;<strong><span id="msgErro-span"></span></strong>
+                </p>
+                <button type="button" id="fechar-button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" id="buscarDados-btn" class="btn btn-primary">Buscar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../../Scripts/jquery.mask.js"></script>
+<link href="../../../Content/SiteRF.css" rel="stylesheet">
+<script>
+        $("#buscar-btn").on("click", function () {
+            $("#buscar-modal").modal({ show: true });
+        });
+
+        $("#buscar-modal").on("show.bs.modal", function () {
+            BuscarCaptcha();
+        });
+
+        $("#buscar-modal").on("shown.bs.modal", function () {
+            $("#img-input").focus();
+        });
+
+        $("#buscar-modal").on("hidden.bs.modal", function () {
+            $("#img-input").val("");
+        });
+
+        $("#buscar-captcha-btn").on("click", function () {
+            $("#captcha-img").fadeOut(1000, function () {
+                $(this).attr('src', "");
+                BuscarCaptcha();
+            });
+
+        });
+
+        $("#buscarDados-btn").on("click", function () {
+            ObterDados();
+        });
+
+        var pathLoader = "@Url.Content("~/Content/images/ajax-loader-facebook.gif ")";
+        var $loader = $('<img class="loader-facebook" src="' + pathLoader + '"/> <em>Buscando ...</em>');
+
+        var BuscarCaptcha = function () {
+            var strUrl = '@Url.Action("GetCaptcha")';
+            $.ajax({
+                type: 'get',
+                url: strUrl,
+                dataType: 'json',
+                cache: false,
+                async: true,
+                beforeSend: function () {
+                    $loader.insertAfter($("#captcha-img"));
+                },
+                success: function (data) {
+                    $("#captcha-img").removeClass("hidden").attr('src', data);
+                    $("#captcha-img").fadeIn(1000);
+                },
+                complete: function () {
+                    $loader.remove();
+                    $("#img-input").focus();
+                },
+                error: function () {
+                    alert("erro na tentativa de obter o captcha");
+                }
+            });
+        };
+
+        var ObterDados = function () {
+            var strUrl = '@Url.Action("ConsultarDados")';
+            $.ajax({
+                type: 'post',
+                url: strUrl,
+                cache: false,
+                async: true,
+                data: { cnpj: $("#cpf_cnpj").val(), captcha: $("#img-input").val() },
+                beforeSend: function () {
+                    $loader.insertBefore($("#fechar-button"));
+                },
+                success: function (data) {
+                    $loader.remove();
+                    if (data.erro.length > 0) {
+                        $("#msgErro-span").text(data.erro).closest("p").removeClass("hidden");
+                        $("#captcha-img").fadeOut(1000, function () {
+                            $(this).attr('src', "");
+                            BuscarCaptcha();
+                            $("#img-input").focus();
+                        });
+                        setTimeout(function () {
+                            $("#msgErro-span").closest("p").addClass("hidden");
+                        }, 2000);
+                    } else {
+                        if (data.dados != null) {
+                            PreencheDados(data.dados, false);
+                            $("#buscar-modal").modal("hide");
+                        } else {
+                            $("#msgErro-span").text("erro de comunicação com a receita.").closest("p").removeClass("hidden");
+                            $("#captcha-img").fadeOut(1000, function () {
+                                $(this).attr('src', "");
+                                BuscarCaptcha();
+                                $("#img-input").focus();
+                            });
+                            setTimeout(function () {
+                                $("#msgErro-span").closest("p").addClass("hidden");
+                            }, 2000);
+                        }
+
+                    }
+                },
+                error: function (data) {
+                    $loader.remove();
+                    alert("erro de comunicação.");
+                },
+            });
+        };
+
+        var PreencheDados = function (dados, clear) {
+            if (clear) {
+                $(".caixa-grande").val("");
+            } else {
+                $("#nome").val(dados.Razaosocial);
+                //$("#fantasia-input").val(dados.NomeFantasia);
+                //$("#cnae-input").val(dados.Cnae);
+                $("#endereco").val(dados.Endereco);
+                $("#bairro").val(dados.Bairro);
+                $("#cep").val(dados.Cep);
+                $("#cidade").val(dados.Cidade);
+                $("#uf").val(dados.Estado);
+            }
+        };
+</script>
+
+<script type="text/javascript">
+        var _cpf;
+        var _cnpj;
+        $("#cep").mask("99999-999");
+        //$("#cpf_cnpj").mask("999.999.999-99");
+        $("#fone1").mask("99 99999-9999");
+        $("#fone2").mask("99 99999-9999");
+        $("#fone3").mask("99 9999-9999");
+        if ($("#ind_tipo_pessoa").val() == "PJ")
+        {
+            $("#cpf_cnpj").mask("99.999.999/9999-99", {
+                onComplete: function (texto) {
+                    $("#buscar-btn").removeAttr("disabled");
+                },
+                onKeyPress: function (cep, event, currentField, options) {
+                    //$("#buscar-btn").attr("disabled", "disabled");
+                    PreencheDados(null, true)
+                }
+            });
+
+            _cpf = "";
+            _cnpj = $("#cpf_cnpj").val();
+            $("#buscar-btn").removeAttr('disabled');
+        }
+        else
+        {
+            $("#cpf_cnpj").mask("999.999.999-99");
+            _cnpj = "";
+            _cpf = $("#cpf_cnpj").val();
+        }
+        MudaPessoa();
+
+        function MudaPessoa() {
+            _cpf_cnpj = $("#cpf_cnpj").val();
+            if ($("#ind_tipo_pessoa").val() == "PF") {
+                _cnpj = $("#cpf_cnpj").val();
+                $("#cpf_cnpj").val(_cpf);
+                $("#div-sexo").show();
+                $("#div-nascimento").show();
+                $("#cpf_cnpj").mask("999.999.999-99");
+                $("#buscar-btn").hide();
+            }
+            else {
+                _cpf = $("#cpf_cnpj").val();
+                $("#cpf_cnpj").val(_cnpj);
+                $("#div-sexo").hide();
+                $("#div-nascimento").hide();
+                //$("#cpf_cnpj").mask("99.999.999/9999-99");
+                $("#buscar-btn").show();
+                $("#cpf_cnpj").mask("99.999.999/9999-99", {
+                    onComplete: function (texto) {
+                        $("#buscar-btn").removeAttr("disabled");
+                    },
+                    onKeyPress: function (cep, event, currentField, options) {
+                        //$("#buscar-btn").attr("disabled", "disabled");
+                        PreencheDados(null, true)
+                    }
+                });
+            }
+
+        }
+</script>
+

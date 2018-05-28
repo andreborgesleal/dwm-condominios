@@ -1,0 +1,21 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.CredorViewModel>
+@{
+    Layout = null;
+    Model.action = "../Fornecedores/_ListCredorModal";
+}
+<p><h4>Centro de Custo</h4></p>
+<hr />
+<div id="div-cre">
+    @Html.Partial("../Fornecedores/_ListCredorModal", Model)
+</div>
+
+<script type="text/javascript">
+
+    function Move(id, descricao) {
+        $("#credorId").val(id);
+        $("#nome_credor").val(descricao);
+        $("#nome_credor1").val(descricao);
+        $("#btnModal").click();
+    }
+
+</script>

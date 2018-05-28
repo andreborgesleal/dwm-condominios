@@ -1,0 +1,59 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.GrupoCredorViewModel>
+
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="col-md-9">
+            Clique nos botões de <code>Ação</code> para executar a ação desejada
+        </div>
+        <div class="col-md-1 pull-right">
+            <a href="../GrupoFornecedores/Create" class="text-primary">Incluir</a>
+        </div>
+        <p>&nbsp;</p>
+        <br />
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Nome</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.GrupoCredorViewModel gru in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="col-md-2 text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?grupoCredorId=@gru.grupoCredorId'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?grupoCredorId=@gru.grupoCredorId'"></button>
+                            </td>
+                            <td>
+                                <span>@gru.nome</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>

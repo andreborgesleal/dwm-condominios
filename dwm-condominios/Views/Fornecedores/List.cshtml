@@ -1,0 +1,81 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.CredorViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>CPF/CNPJ</code> ou <code>Grupo</code> para buscar o credor
+            </div>
+            <div class="col-md-1">
+                <a href="../Fornecedores/Create" class="text-primary">Incluir</a>
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Nome</th>
+                        <th class="column-title">CPF/CNPJ</th>
+                        <th class="column-title">Endereço</th>
+                        <th class="column-title">Celular</th>
+                        <th class="column-title">Grupo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.CredorViewModel cre in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?credorId=@cre.credorId'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?credorId=@cre.credorId'"></button>
+                            </td>
+                            <td>
+                                <span>@cre.nome</span><br />
+                                <small>@cre.email</small>
+                            </td>
+                            <td>
+                                <span>@App_Dominio.Models.Funcoes.FormataCPFCNPJ(cre.cpf_cnpj)</span>
+                            </td>
+                            <td>
+                                <span>@cre.endereco</span><br />
+                                <small>@cre.complemento</small>
+                            </td>
+                            <td>
+                                <span>@App_Dominio.Models.Funcoes.FormataTelefone(cre.fone1)</span>
+                            </td>
+                            <td>
+                                <span>@cre.nome_grupo</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+

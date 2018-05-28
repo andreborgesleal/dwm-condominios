@@ -1,0 +1,60 @@
+﻿@using DWM.Models.Repositories;
+@model System.Web.Mvc.PagedList<CredorViewModel>
+@{
+    Layout = null;
+}
+
+@if (Model != null)
+{
+    <table class="table table-striped jambo_table bulk_action" style="width: 100%" id="datatableCRE">
+        <thead>
+            <tr class="headings">
+                <th class="col-md-2 column-title text-center nobr">Ação</th>
+                <th>Fornecedor</th>
+                <th>CPF/CNPJ</th>
+                <th>Telefone</th>
+                <th>Grupo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (CredorViewModel cre in Model)
+            {
+                <tr class="even pointer">
+                    <td class="col-md-2 text-center">
+                        <button type="button" class="fa fa-check" title="Selecionar" onclick="Move('@cre.credorId', '@cre.nome')"></button>
+                    </td>
+                    <td class="col-md-6 col-lg-6 col-sm-4">
+                        <small>@cre.nome</small><br />
+                        <small>@cre.email</small>
+                    </td>
+                    <td class="col-md-2 col-lg-2 col-sm-2">
+                        <small>@App_Dominio.Models.Funcoes.FormataCPFCNPJ(cre.cpf_cnpj)</small>
+                    </td>
+                    <td class="col-md-2 col-lg-2 col-sm-2">
+                        <small>@App_Dominio.Models.Funcoes.FormataTelefone(cre.fone1)</small>
+                    </td>
+                    <td class="col-md-2 col-lg-2 col-sm-3">
+                        <small>@cre.nome_grupo</small>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatableCRE').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
