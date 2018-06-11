@@ -43,6 +43,34 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> Notas(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q.Add(new SelectListItem() { Value = "0", Text = "Sem rendimento" });
+                q.Add(new SelectListItem() { Value = "1", Text = "Insuficiente" });
+                q.Add(new SelectListItem() { Value = "2", Text = "Ruim" });
+                q.Add(new SelectListItem() { Value = "3", Text = "Regular" });
+                q.Add(new SelectListItem() { Value = "4", Text = "Ótimo" });
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> GrupoFornecedores(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)

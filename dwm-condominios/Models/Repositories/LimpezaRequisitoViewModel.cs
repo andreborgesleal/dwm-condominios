@@ -22,6 +22,15 @@ namespace DWM.Models.Repositories
         [DisplayName("Descricao")]
         public string Descricao { get; set; }
 
+        [Required]
+        [DisplayName("CondominioID")]
+        public int CondominioID { get; set; }
+
+        [Required]
+        [StringLength(1)]
+        [DisplayName("Situacao")]
+        public string Situacao { get; set; }
+
         public virtual EspacoComum EspacoComum { get; set; }
     }
 }

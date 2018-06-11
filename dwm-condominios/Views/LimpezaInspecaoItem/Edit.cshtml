@@ -1,0 +1,78 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.LimpezaInspecaoItemViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../LimpezaRequisito/Create";
+    t[0].nomeCurto = "Planejar Inspeção";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Planejar Inspeção", Descricao = "", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Edit", "LimpezaInspecaoItem", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.LimpezaInspecaoID)
+                @Html.HiddenFor(info => info.LimpezaRequisitoID)
+                @Html.HiddenFor(info => info.empresaId)
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Fornecedor</label>
+                            <input type="text" class="form-control" name="FornecedorDescricao" id="FornecedorDescricao" value="@Model.FornecedorDescricao" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Espaço Comum</label>
+                            <input type="text" class="form-control" name="EspacoDescricao" id="EspacoDescricao" value="@Model.EspacoDescricao" disabled />
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Inspeção</label>
+                            <input type="text" class="form-control" name="DataInspecao" id="DataInspecao" value="@Model.DataInspecao.ToString("dd/MM/yyyy")" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12">
+                        <label class="control-label">Requisito de Limpeza *</label>
+                        <input type="text" class="form-control" name="EspacoDescricao" id="EspacoDescricao" value="@Model.ItemDescricao" disabled />
+                    </div>
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <label class="control-label">Nota *</label>
+                        @Html.DropDownList("Nota", new DWM.Models.Enumeracoes.BindDropDownList().Notas("Selecione...", ""), new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 col-lg-6 col-xs-12">
+                        <label class="control-label">Justificativa</label>
+                        <textarea value="@Model.Justificativa" name="Justificativa" id="Justificativa" class="form-control" rows="5">@Model.Justificativa</textarea>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <input type="button" onclick="window.location = '../LimpezaInspecao/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+

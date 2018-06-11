@@ -22,6 +22,7 @@
                         <th class="col-md-2 column-title text-center nobr">Ação</th>
                         <th class="column-title">Descrição</th>
                         <th class="column-title">Área</th>
+                        <th class="column-title">Situação</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,16 @@
                             </td>
                             <td>
                                 <span>@vis.EspacoComum.Descricao</span>
+                            </td>
+                            <td>
+                                @if (vis.Situacao == "A")
+                                {
+                                    <span>Ativo</span>
+                                }
+                                else
+                                {
+                                    <span>Desativado</span>
+                                }
                             </td>
                         </tr>
                     }

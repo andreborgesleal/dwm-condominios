@@ -21,6 +21,7 @@
                 @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.LimpezaRequisitoID)
                 @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.CondominioID)
 
                 <div class="row">
                     <div class="col-md-5 col-lg-5 col-xs-12">
@@ -33,6 +34,15 @@
                         <div class="form-group">
                             <label class="control-label">Área *</label>
                             @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().Espacos("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Situação *</label>
+                            @Html.DropDownList("Situacao", new DWM.Models.Enumeracoes.BindDropDownList().SituacaoVisitante("Selecione...", ""), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>

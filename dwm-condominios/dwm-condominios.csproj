@@ -251,6 +251,8 @@
     <Compile Include="Controllers\GrupoFornecedoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InformativoController.cs" />
+    <Compile Include="Controllers\LimpezaInspecaoController.cs" />
+    <Compile Include="Controllers\LimpezaInspecaoItemController.cs" />
     <Compile Include="Controllers\LimpezaRequisitoController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\PatrimonioClassificacaoController.cs" />
@@ -388,6 +390,8 @@
     <Compile Include="Models\Persistence\InformativoComentarioModel.cs" />
     <Compile Include="Models\Persistence\InformativoModel.cs" />
     <Compile Include="Models\Persistence\CredenciadoModel.cs" />
+    <Compile Include="Models\Persistence\LimpezaInspecaoItemModel.cs" />
+    <Compile Include="Models\Persistence\LimpezaInspecaoModel.cs" />
     <Compile Include="Models\Persistence\LimpezaRequisitoModel.cs" />
     <Compile Include="Models\Persistence\PatrimonioClassificacaoModel.cs" />
     <Compile Include="Models\Persistence\PatrimonioLocalizacaoModel.cs" />
@@ -4383,6 +4387,11 @@
     <Content Include="Views\PatrimonioClassificacao\Create.cshtml" />
     <Content Include="Views\PatrimonioClassificacao\Edit.cshtml" />
     <Content Include="Views\PatrimonioClassificacao\Delete.cshtml" />
+    <Content Include="Views\LimpezaInspecao\Create.cshtml" />
+    <Content Include="Views\LimpezaInspecao\Browse.cshtml" />
+    <Content Include="Views\LimpezaInspecao\ListParam.cshtml" />
+    <Content Include="Views\LimpezaInspecao\Edit.cshtml" />
+    <Content Include="Views\LimpezaInspecaoItem\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

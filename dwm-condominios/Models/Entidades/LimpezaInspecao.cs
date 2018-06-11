@@ -23,16 +23,20 @@ namespace DWM.Models.Entidades
         public DateTime DataInspecao { get; set; }
 
         [DisplayName("NotaFinal")]
-        public int NotaFinal { get; set; }
+        public int? NotaFinal { get; set; }
 
         [StringLength(4000)]
         [DisplayName("Laudo")]
         public string Laudo { get; set; }
 
+        [Required]
+        [DisplayName("CondominioID")]
+        public int CondominioID { get; set; }
+
         //public virtual Credor Credor { get; set; }
 
         //public virtual EspacoComum EspacoComum { get; set; }
 
-        //public virtual LimpezaInspecaoItem LimpezaInspecaoItem { get; set; }
+        public ICollection<LimpezaInspecaoItem> LimpezaInspecaoItem { get; set; }
     }
 }

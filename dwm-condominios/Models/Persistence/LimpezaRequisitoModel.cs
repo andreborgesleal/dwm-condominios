@@ -36,6 +36,9 @@ namespace DWM.Models.Persistence
             entity.Descricao = value.Descricao;
             entity.EspacoID = value.EspacoID;
             entity.LimpezaRequisitoID = value.LimpezaRequisitoID;
+            entity.CondominioID = value.CondominioID;
+            entity.Situacao = value.Situacao;
+
 
             return entity;
         }
@@ -47,6 +50,8 @@ namespace DWM.Models.Persistence
                 LimpezaRequisitoID = entity.LimpezaRequisitoID,
                 Descricao = entity.Descricao,
                 EspacoID = entity.EspacoID,
+                CondominioID = entity.CondominioID,
+                Situacao = entity.Situacao,
                 sessionId = SessaoLocal.sessaoId,
                 mensagem = new Validate() { Code = 0, Message = "Registro processado com sucesso", MessageBase = "Registro processado com sucesso", MessageType = MsgType.SUCCESS }
             };
@@ -81,11 +86,29 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+            if (value.CondominioID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(35).ToString();
+                value.mensagem.MessageBase = "O Condomínio deve ser informado";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
             if (string.IsNullOrEmpty(value.Descricao))
             {
                 value.mensagem.Code = 5;
                 value.mensagem.Message = MensagemPadrao.Message(4, "Descrição").ToString();
                 value.mensagem.MessageBase = "Descrição deve ser informada";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            if (string.IsNullOrEmpty(value.Situacao))
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(4, "Descrição").ToString();
+                value.mensagem.MessageBase = "Situação deve ser informada";
                 value.mensagem.MessageType = MsgType.WARNING;
                 return value.mensagem;
             }
@@ -109,7 +132,7 @@ namespace DWM.Models.Persistence
         {
             LimpezaRequisitoViewModel u = base.CreateRepository(Request);
             EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
-            u.LimpezaRequisitoID = security.getSessaoCorrente().empresaId;
+            u.CondominioID = security.getSessaoCorrente().empresaId;
             return u;
         }
         #endregion
@@ -137,6 +160,8 @@ namespace DWM.Models.Persistence
                          empresaId = sessaoCorrente.empresaId,
                          Descricao = value.Descricao,
                          LimpezaRequisitoID = value.LimpezaRequisitoID,
+                         CondominioID = value.CondominioID,
+                         Situacao = value.Situacao,
                          EspacoID = value.EspacoID,
                          EspacoComum = value.EspacoComum,
                          sessionId = sessaoCorrente.sessaoId,
