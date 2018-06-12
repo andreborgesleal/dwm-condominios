@@ -43,6 +43,13 @@ namespace DWM.Models.Persistence
             return base.BeforeInsert(value);
         }
 
+        public override LimpezaInspecaoViewModel BeforeUpdate(LimpezaInspecaoViewModel value)
+        {
+            value.mensagem = new Validate() { Code = 0, Message = MensagemPadrao.Message(0).ToString() };
+
+            return base.BeforeUpdate(value);
+        }
+
         public override LimpezaInspecao MapToEntity(LimpezaInspecaoViewModel value)
         {
 
@@ -237,35 +244,41 @@ namespace DWM.Models.Persistence
         {
             int _CondominioID = sessaoCorrente.empresaId;
 
-            var q = (from value in db.LimpezaInspecaos
-                     join esp in db.EspacoComums on value.EspacoID equals esp.EspacoID
-                     orderby value.DataInspecao
-                     select new LimpezaInspecaoViewModel
-                     {
-                         empresaId = sessaoCorrente.empresaId,
-                         LimpezaInspecaoID = value.LimpezaInspecaoID,
-                         CondominioID = value.CondominioID,
-                         credorId = value.credorId,
-                         FornecedorDescricao = (from z in db.Credores where z.credorId == value.credorId select z).FirstOrDefault().nome,
-                         DataInspecao = value.DataInspecao,
-                         EspacoID = value.EspacoID,
-                         Laudo = value.Laudo,
-                         NotaFinal = value.NotaFinal,
-                         EspacoDescricao = esp.Descricao,
-                         LimpezaInspecaoItem = (from x in db.LimpezaInspecaoItem
-                                                where x.LimpezaInspecaoID == value.LimpezaInspecaoID
-                                                select new LimpezaInspecaoItemViewModel
-                                                {
-                                                    ItemDescricao = (from y in db.LimpezaRequisitos where y.LimpezaRequisitoID == x.LimpezaRequisitoID select y).FirstOrDefault().Descricao,
-                                                    Justificativa = x.Justificativa,
-                                                    LimpezaInspecaoID = x.LimpezaInspecaoID,
-                                                    Nota = x.Nota,
-                                                    LimpezaRequisitoID = x.LimpezaRequisitoID,
-                                                }).ToList(),
-                         sessionId = sessaoCorrente.sessaoId,
-                     }).ToList();
+            List<LimpezaInspecaoViewModel> ListInspecoesViewModel = new List<LimpezaInspecaoViewModel>();
+            int count = 0;
+            int size = 0;
 
-            return q;
+            foreach (var inspecao in db.LimpezaInspecaos)
+            {
+                size = 0;
+                foreach(var inspecaoItem in db.LimpezaInspecaoItem)
+                {
+                    size++;
+                    if (inspecaoItem.Nota >= 0)
+                    {
+                        count++;
+                    }
+                }
+                if (count == size && inspecao.Laudo == null)
+                {
+                    ListInspecoesViewModel.Add(new LimpezaInspecaoViewModel()
+                    {
+                        sessionId = sessaoCorrente.sessaoId,
+                        empresaId = sessaoCorrente.empresaId,
+                        CondominioID = inspecao.CondominioID,
+                        credorId = inspecao.credorId,
+                        DataInspecao = inspecao.DataInspecao,
+                        EspacoID = inspecao.EspacoID,
+                        EspacoDescricao = (db.EspacoComums.Find(inspecao.EspacoID).Descricao),
+                        Laudo = inspecao.Laudo,
+                        LimpezaInspecaoID = inspecao.LimpezaInspecaoID,
+                    });
+                }
+
+                count = 0;
+            }
+
+            return ListInspecoesViewModel;
         }
 
         public override Repository getRepository(Object id)

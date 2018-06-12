@@ -26,10 +26,32 @@ namespace DWM.Controllers
 
         #region List
         [AuthorizeFilter]
-        public ActionResult ListLaudo(int? index, int? pagesize = 50, string descricao = null)
+        public ActionResult BrowseLaudo(int? index, int? pageSize = 50, string descricao = "")
         {
+            BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
 
-            return View();
+            if (ViewBag.ValidateRequest)
+            {
+                if (descricao != null)
+                    return ListParamLaudo(index, pageSize, descricao);
+                else
+                    return ListParamLaudo(index, pageSize);
+            }
+            else
+                return View();
+        }
+
+        [AuthorizeFilter]
+        public ActionResult ListParamLaudo(int? index, int? pageSize = 50, string descricao = null)
+        {
+            ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
+            if (ViewBag.ValidateRequest)
+            {
+                ListViewLimpezaInspecaoLaudo l = new ListViewLimpezaInspecaoLaudo();
+                return this._List(index, pageSize, "BrowseLaudo", l, null);
+            }
+            else
+                return View();
         }
 
 
@@ -51,7 +73,6 @@ namespace DWM.Controllers
         public ActionResult ListParam(int? index, int? pageSize = 50, string descricao = null)
         {
             ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
-            ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
             if (ViewBag.ValidateRequest)
             {
                 ListViewLimpezaInspecao l = new ListViewLimpezaInspecao();
@@ -68,6 +89,13 @@ namespace DWM.Controllers
         {
             return RedirectToAction("Edit", "LimpezaInspecaoItem", new { LimpezaInspecaoID = limpezaInspecaoID, LimpezaRequisitoID = limpezaRequisitoID });
             //return _Edit(new LimpezaInspecaoViewModel() { LimpezaInspecaoID = limpezaInspecaoID });
+        }
+
+        [AuthorizeFilter]
+        public ActionResult EditLaudo(int limpezaInspecaoID)
+        {
+            
+            return _Edit(new LimpezaInspecaoViewModel() { LimpezaInspecaoID = limpezaInspecaoID }, "Editar Inspeção");
         }
         #endregion
 

@@ -4392,6 +4392,9 @@
     <Content Include="Views\LimpezaInspecao\ListParam.cshtml" />
     <Content Include="Views\LimpezaInspecao\Edit.cshtml" />
     <Content Include="Views\LimpezaInspecaoItem\Edit.cshtml" />
+    <Content Include="Views\LimpezaInspecao\BrowseLaudo.cshtml" />
+    <Content Include="Views\LimpezaInspecao\ListParamLaudo.cshtml" />
+    <Content Include="Views\LimpezaInspecao\EditLaudo.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

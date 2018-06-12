@@ -1,0 +1,72 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.LimpezaInspecaoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada
+            </div>
+        </div>
+        <p>&nbsp;</p>
+
+        <div class="table-responsive hidden-xs">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">#ID</th>
+                        <th class="column-title">Espaço Comum</th>
+                        <th class="column-title">Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.LimpezaInspecaoViewModel value in Model)
+                    {
+
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Laudo" onclick="window.location='EditLaudo?limpezaInspecaoID=@value.LimpezaInspecaoID'"></button>
+                                @*<button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?limpezaInspecaoID=@value.LimpezaInspecaoID'"></button>*@
+                            </td>
+                            <td>
+                                <span>@value.LimpezaInspecaoID</span><br />
+                            </td>
+                            <td>
+                                <span>@value.EspacoDescricao</span>
+                            </td>
+                            <td>
+                                <span>@value.DataInspecao.ToString("dd/MM/yyyy")</span>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+
+
+
