@@ -27,6 +27,12 @@ namespace dwm_condominios.Controllers
         #endregion
 
         #region List
+
+        public override bool mustListOnLoad()
+        {
+            ViewBag.CondominioID = DWMSessaoLocal.GetSessaoLocal().empresaId;
+            return false;
+        }
         [AuthorizeFilter]
         public override ActionResult List(int? index, int? pageSize = 50, string descricao = null)
         {
@@ -46,8 +52,57 @@ namespace dwm_condominios.Controllers
         {
             ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
             ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
+            ViewBag.CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID;
             if (ViewBag.ValidateRequest)
             {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
+                ListViewAluguelEspaco l = new ListViewAluguelEspaco();
+                return this._List(index, pageSize, "Browse", l, descricao);
+            }
+            else
+                return View();
+        }
+
+        #region Minhas Reservas
+        [AuthorizeFilter]
+        public ActionResult MinhasReservas(int? index = 0, int pageSize = 50, string descricao = null)
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
+
+                TempData.Remove("Controller");
+                TempData.Add("Controller", this.ControllerContext.RouteData.Values["controller"].ToString());
+
+                return ListMinhasReservas(index, this.PageSize, descricao);
+            }
+            else
+                return null;
+        }
+
+        public ActionResult ListMinhasReservas(int? index, int? pageSize = 50, string descricao = null)
+        {
+            ViewBag.ValidateRequest = true;
+            if (ViewBag.ValidateRequest)
+            {
+                if (descricao != null)
+                    return ListReservas(index, pageSize, descricao);
+                else
+                    return ListReservas(index, pageSize);
+            }
+            else
+                return View();
+        }
+
+        [AuthorizeFilter]
+        public ActionResult ListReservas(int? index, int? pageSize = 50, string descricao = null)
+        {
+            ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
+            ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
+            ViewBag.CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID;
+            if (ViewBag.ValidateRequest)
+            {
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 ListViewAluguelEspaco l = new ListViewAluguelEspaco();
                 return this._List(index, pageSize, "Browse", l, null);
             }
@@ -56,6 +111,56 @@ namespace dwm_condominios.Controllers
         }
         #endregion
 
+        #endregion
+
+        [AuthorizeFilter]
+        public override ActionResult Create()
+        {
+            ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
+            ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
+            ViewBag.op = (Request["op"] != null && "IU".Contains(Request["op"])) ? Request["op"] : "";
+
+            if (ViewBag.ValidateRequest)
+            {
+                Facade<AluguelEspacoViewModel, AluguelEspacoModel, ApplicationContext> facade = new Facade<AluguelEspacoViewModel, AluguelEspacoModel, ApplicationContext>();
+                GetCreate();
+                return View(facade.CreateRepository(Request));
+            }
+            else
+                return null;
+        }
+
+        #region Edit
+        [AuthorizeFilter]
+        public ActionResult Edit(int AluguelID)
+        {
+            // Se o usuário logado for um condômino, verifica se o VisitanteID é do respectivo Condômimo (se for portaria ou administração, pode editar)
+            //FactoryLocalhost<VisitanteViewModel, ApplicationContext> factory = new FactoryLocalhost<VisitanteViewModel, ApplicationContext>();
+            //VisitanteViewModel value = factory.Execute(new VisitanteChecarEdicaoBI(), new VisitanteViewModel() { VisitanteID = visitanteID });
+            //if (value.mensagem.Code == -2)
+            //{
+            //    Error("Visitante não autorizado para edição");
+            //    return RedirectToAction("Browse");
+            //}
+
+            //ViewBag.op = (Request["op"] != null && Request["op"] == "I") ? Request["op"] : "";
+            return _Edit(new AluguelEspacoViewModel() { AluguelID = AluguelID });
+        }
+
+        public override void BeforeEdit(ref AluguelEspacoViewModel value, FormCollection collection)
+        {
+            value.uri = this.ControllerContext.Controller.GetType().Name.Replace("Controller", "") + "/" + this.ControllerContext.RouteData.Values["action"].ToString();
+            base.BeforeEdit(ref value, collection);
+        }
+        #endregion
+
+        #region Delete
+        [AuthorizeFilter]
+        public ActionResult Delete(int AluguelID)
+        {
+            return Edit(AluguelID);
+        }
+        #endregion
 
         #region Retorno as Unidades de uma dada Edificação
         [AllowAnonymous]

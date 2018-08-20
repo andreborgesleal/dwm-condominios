@@ -7,6 +7,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DWM.Models.Repositories
 {
+    public class Calendar
+    {
+        public string title { get; set; }
+        public DateTime start { get; set; }
+        public DateTime? end { get; set; }
+        public bool allDay { get; set; }
+    }
+
     public class AluguelEspacoViewModel : Repository
     {
         [DisplayName("AluguelID")]
@@ -44,6 +52,12 @@ namespace DWM.Models.Repositories
         [DisplayName("DataAutorizacao")]
         public System.Nullable<DateTime> DataAutorizacao { get; set; }
 
+        [DisplayName("Data Revogação")]
+        public System.Nullable<DateTime> DataRevogacao { get; set; }
+
+        [DisplayName("Data Cancelamento")]
+        public System.Nullable<DateTime> DataCancelamento { get; set; }
+
         [DisplayName("Valor")]
         [Required(ErrorMessage = "Valor do aluguel deve ser informado")]
         public decimal Valor { get; set; }
@@ -60,6 +74,35 @@ namespace DWM.Models.Repositories
         public string NomeCondomino { get; set; }
 
         public string NomeCredenciado { get; set; }
+
+        public string Situacao { get; set; }
+
+        public string Status
+        {
+            get
+            {
+                if (DataAutorizacao == null && !DataCancelamento.HasValue && !DataRevogacao.HasValue)
+                {
+                    return "Reservado";
+                }
+                else if (DataAutorizacao.HasValue && !DataCancelamento.HasValue && !DataRevogacao.HasValue)
+                {
+                    return "Confirmado";
+                }
+                else if (DataCancelamento.HasValue)
+                {
+                    return "Cancelado";
+                }
+                else if (DataRevogacao.HasValue)
+                {
+                    return "Revogado";
+                }
+                else
+                    return "";
+            }
+        }
+
+        public Calendar calendar { get; set; }
         #endregion
     }
 }

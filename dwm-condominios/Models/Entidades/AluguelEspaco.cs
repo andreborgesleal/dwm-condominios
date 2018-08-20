@@ -47,6 +47,12 @@ namespace DWM.Models.Entidades
         [DisplayName("DataAutorizacao")]
         public System.Nullable<DateTime> DataAutorizacao { get; set; }
 
+        [DisplayName("DataRevogacao")]
+        public System.Nullable<DateTime> DataRevogacao { get; set; }
+
+        [DisplayName("DataCancelamento")]
+        public System.Nullable<DateTime> DataCancelamento { get; set; }
+
         [DisplayName("Valor")]
         public decimal Valor { get; set; }
 

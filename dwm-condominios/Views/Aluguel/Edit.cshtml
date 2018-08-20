@@ -17,11 +17,12 @@
         @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Aluguel", Descricao = "Inclusão de Aluguel de Espaço", Transacao = t })
         <div class="x_content">
             <!-- Smart Wizard -->
-            @using (Html.BeginForm("Create", "Aluguel", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            @using (Html.BeginForm("Edit", "Aluguel", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
             {
                 @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
                 @Html.HiddenFor(info => info.CondominioID)
                 @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.AluguelID)
 
                 if (ViewBag.unidades == null)
                 {
@@ -36,13 +37,28 @@
                     <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
                         <div class="form-group">
                             <label class="control-label">Edificação</label>
-                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes2("Selecione...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes2("Selecione...", Model.DescricaoEdificacao, Model.CondominioID), new { @class = "form-control", @disabled = "Disabled", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Unidades</label>
-                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades2("Selecione...", Model.UnidadeID, Model.EdificacaoID, Model.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades2("Selecione...", Model.UnidadeID, Model.EdificacaoID, Model.CondominioID), new { @class = "form-control", @disabled = "Disabled" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Condômino</label>
+                            <input type="text" disabled class="form-control" name="NomeCondomino" id="NomeCondomino" value="@Model.NomeCondomino" />
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Dependente</label>
+                            <input type="text" disabled class="form-control" name="NomeCredenciado" id="NomeCredenciado" value="@Model.NomeCredenciado" />
                         </div>
                     </div>
                 </div>
@@ -51,13 +67,13 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Espaço Comum</label>
-                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("Selecione...", "", Model.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("Selecione...", Model.DescricaoEspaco, Model.CondominioID), new { @class = "form-control", @disabled = "Disabled" })
                         </div>
                     </div>
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Data do Evento</label>
-                            <input type="date" class="form-control" name="DataEvento" id="DataEvento" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
+                            <input type="date" disabled class="form-control" name="DataEvento" id="DataEvento" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" min="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />
                         </div>
                     </div>
                 </div>
@@ -66,7 +82,16 @@
                     <div class="col-md-8 col-lg-8 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Observação</label>
-                            <input type="text" class="form-control" name="Observacao" id="Observacao" value="@Model.Observacao" maxlength="60" />
+                            <input type="text" class="form-control" disabled name="Observacao" id="Observacao" value="@Model.Observacao" maxlength="60" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                        <div class="form-group">
+                            <label class="control-label">Situação</label>
+                            @Html.DropDownList("Situacao", new BindDropDownList().SituacaoAluguel(), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
@@ -85,7 +110,6 @@
 
 
 <script>
-
     $('#form1').submit(function (ev) {
         ev.preventDefault(); // to stop the form from submitting
 
@@ -127,6 +151,7 @@
         return true;
     }
 </script>
+
 
 
 

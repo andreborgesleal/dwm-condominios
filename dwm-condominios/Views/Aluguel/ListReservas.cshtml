@@ -1,0 +1,109 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.AluguelEspacoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        @if (ViewBag.unidades == null)
+        {
+            <div class="row">
+                <div class="col-md-8">
+                    Clique nos botões de <code>Ação</code> para executar a ação desejada
+                </div>
+            </div>
+            <p>&nbsp;</p>
+        }
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Data do Evento</th>
+                        <th class="column-title">Espaço</th>
+                        <th class="column-title">@ViewBag.TipoEdificacao</th>
+                        <th class="column-title">Unidade</th>
+                        <th class="column-title">Nome do Condômino</th>
+                        <th class="column-title">Dependente</th>
+                        <th class="column-title">Valor</th>
+                        <th class="column-title">Situação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.AluguelEspacoViewModel ae in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                @if (ViewBag.CondominoID == 0) // administração
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AluguelID=@ae.AluguelID'"></button>
+                                }
+                                else // morador
+                                {
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Cancelar" onclick="window.location='Delete?AluguelID=@ae.AluguelID'"></button>
+                                }
+                            </td>
+                            <td>
+                                <span>@ae.DataEvento.ToString("dd/MM/yyyy")</span>
+                            </td>
+                            <td>
+                                <span>@ae.DescricaoEspaco</span><br />
+                            </td>
+                            <td>
+                                <span>@ae.EdificacaoID</span>
+                            </td>
+                            <td>
+                                <span>@ae.UnidadeID</span><br />
+                            </td>
+                            <td>
+                                <span>@ae.NomeCondomino</span>
+                            </td>
+                            <td>
+                                <span>@ae.NomeCredenciado</span>
+                            </td>
+                            <td>
+                                <span>@ae.Valor</span>
+                            </td>
+                            <td>
+                                @if (ae.DataAutorizacao == null && !ae.DataCancelamento.HasValue && !ae.DataRevogacao.HasValue)
+                                {
+                                    <span>Reservado</span>
+                                }
+                                else if (ae.DataAutorizacao.HasValue && !ae.DataCancelamento.HasValue && !ae.DataRevogacao.HasValue)
+                                {
+                                    <span>Confirmado</span>
+                                }
+                                else if (ae.DataCancelamento.HasValue)
+                                {
+                                    <span>Cancelado</span>
+                                }
+                                else if (ae.DataRevogacao.HasValue)
+                                {
+                                    <span class="red">Revogado</span>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>

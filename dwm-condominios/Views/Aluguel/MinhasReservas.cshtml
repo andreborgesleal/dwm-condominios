@@ -1,4 +1,5 @@
 ﻿@using App_Dominio.Repositories
+@using App_Dominio.Models
 @model PagedList<DWM.Models.Repositories.AluguelEspacoViewModel>
 @{
     TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
@@ -17,7 +18,7 @@
         <div class="x_title">
             <div class="row">
                 <div class="col-md-11">
-                    <h2>Aluguel de Espaço</h2>
+                    <h2>Minhas Reservas</h2>
                 </div>
                 <div class="col-md-1">
                     <ul class="nav navbar-right panel_toolbox pull-right">
@@ -60,21 +61,10 @@
         </div>
 
         <div class="x_content">
-            @using (Ajax.BeginForm("ListParam", "Aluguel", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-list" }, new { @role = "search", @id = "form000" }))
-            {
-                <div class="row">
-                    <div class="col-md-4 col-lg-4 col-xs-12">
-                        <div class="form-group">
-                            <label class="control-label">Espaço Comum</label>
-                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("Selecione...", "", (int)ViewBag.CondominioID), new { @class = "form-control" })
-                        </div>
-                    </div>
-                </div>
-            }
             <div id="div-list">
                 @if (Model != null)
                 {
-                    @Html.Partial("ListParam", Model)
+                    @Html.Partial("ListReservas", Model)
                 }
             </div>
             <div class="altura-35">
@@ -83,6 +73,7 @@
         </div>
     </div>
 </div>
+
 
 
 

@@ -1,90 +1,118 @@
 ﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.AluguelEspacoViewModel>
+@using Newtonsoft.Json.Converters;
 @{
     Layout = null;
+    JsonResult dataEvent = new JsonResult();
+
+    if (Model != null)
+    {
+        List<DWM.Models.Repositories.Calendar> calendaries = new List<DWM.Models.Repositories.Calendar>();
+        foreach (DWM.Models.Repositories.AluguelEspacoViewModel ae in Model)
+        {
+            if ("Reservado|Confirmado".Contains(ae.Status))
+            {
+                calendaries.Add(ae.calendar);
+            }
+        }
+        dataEvent = new JsonResult()
+        {
+            Data = calendaries,
+            JsonRequestBehavior = JsonRequestBehavior.AllowGet
+        };
+    }
 }
+<!-- FullCalendar -->
+<link href="../Content/vendors/fullcalendar/dist/fullcalendar.min.css" rel="stylesheet">
+<link href="../Content/vendors/fullcalendar/dist/fullcalendar.print.css" rel="stylesheet" media="print">
 @if (Model != null)
 {
-    <div class="dashboard-widget-content">
-        @if (ViewBag.unidades == null)
-        {
-            <div class="row">
-                <div class="col-md-8">
-                    Clique nos botões de <code>Ação</code> para executar a ação desejada
+    <div id='calendar'></div>
+    <!-- calendar modal  -->
+    <!-- Create -->
+    <div id="CalenderModalNew" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel">New Calendar Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="testmodal" style="padding: 5px 20px;">
+                        <form id="antoform" class="form-horizontal calender" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="title" name="title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" style="height:55px;" id="descr" name="descr"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary antosubmit">Save changes</button>
                 </div>
             </div>
-            <p>&nbsp;</p>
-        }
-
-        <div class="table-responsive">
-            <table class="table table-striped jambo_table bulk_action" id="datatable">
-                <thead>
-                    <tr class="headings">
-                        <th class="col-md-2 column-title text-center nobr">Ação</th>
-                        <th class="column-title">Data do Evento</th>
-                        <th class="column-title">Espaço</th>
-                        <th class="column-title">Edificação</th>
-                        <th class="column-title">Unidade</th>
-                        <th class="column-title">Nome do Condômino</th>
-                        <th class="column-title">Nome do Credenciado</th>
-                        <th class="column-title">Valor</th>
-                        <th class="column-title">Situação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (DWM.Models.Repositories.AluguelEspacoViewModel ae in Model)
-                    {
-                        <tr class="even pointer">
-                            <td class="text-center">
-                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?visitanteID=@ae.AluguelID'"></button>
-                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?visitanteID=@ae.AluguelID'"></button>
-                            </td>
-                            <td>
-                                <span>@ae.DataEvento</span>
-                            </td>
-                            <td>
-                                <span>@ae.DescricaoEspaco</span><br />
-                            </td>
-                            <td>
-                                <span>@ae.EdificacaoID</span>
-                            </td>
-                            <td>
-                                <span>@ae.UnidadeID</span><br />
-                            </td>
-                            <td>
-                                <span>@ae.NomeCondomino</span>
-                            </td>
-                            <td>
-                                <span>@ae.NomeCredenciado</span>
-                            </td>
-                            <td>
-                                <span>@ae.Valor</span>
-                            </td>
-                            <td>
-                                @if (ae.DataAutorizacao == null)
-                                {
-                                    <span>Reservado</span>
-                                }
-                                else
-                                {
-                                    <span>Confirmado</span>
-                                }
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
         </div>
     </div>
+    <!-- Edit -->
+    <div id="CalenderModalEdit" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
+                </div>
+                <div class="modal-body">
+                    <div id="testmodal2" style="padding: 5px 20px;">
+                        <form id="antoform2" class="form-horizontal calender" role="form">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Title</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" id="title2" name="title2">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
+    <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
+    <!-- /calendar modal -->
 }
-else
+@*else
 {
     @Html.Partial("_AcessoNegadoModal")
-}
-
+}*@
 
 <!-- Datatables -->
 <script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
 <script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+<!-- FastClick -->
+<script src="../Content/vendors/fastclick/lib/fastclick.js"></script>
+<!-- NProgress -->
+<script src="../Content/vendors/nprogress/nprogress.js"></script>
+<!-- FullCalendar -->
+<script src="../Content/vendors/moment/min/moment.min.js"></script>
+<script src="../Content/vendors/fullcalendar/dist/fullcalendar.min.js"></script>
 
 <script>
     $('#datatable').DataTable({
@@ -96,4 +124,135 @@ else
     });
 </script>
 
+<!-- FullCalendar -->
+<script>
 
+    $(window).load(function () {
+        var date = new Date(),
+            d = date.getDate(),
+            m = date.getMonth(),
+            y = date.getFullYear(),
+            started,
+            categoryClass;
+
+        var _events = @Html.Raw(Json.Encode(dataEvent.Data));
+
+        var events = [{
+            title: 'Teste',
+            start: new Date(1534215600000) //new Date(y, m, 1)
+        }, {
+            title: 'Long Event',
+            start: new Date(y, m, d - 5),
+            end: new Date(y, m, d - 2)
+        }, {
+            title: 'Meeting',
+            start: new Date(y, m, d, 10, 30),
+            allDay: false
+        }, {
+            title: 'Lunch',
+            start: new Date(y, m, d + 14, 12, 0),
+            end: new Date(y, m, d, 14, 0),
+            allDay: false
+        }, {
+            title: 'Birthday Party',
+            start: new Date(y, m, d + 1, 19, 0),
+            end: new Date(y, m, d + 1, 22, 30),
+            allDay: false
+        }, {
+            title: 'Click for Google',
+            start: new Date(y, m, 28),
+            end: new Date(y, m, 29),
+            url: 'http://google.com/'
+        }];
+
+        var calendar = $('#calendar').fullCalendar({
+            header: {
+                left: 'prev, next',
+                center: 'title',
+                //right: 'month,agendaWeek,agendaDay'
+            },
+            selectable: true,
+            selectHelper: true,
+            select: function (start, end, allDay) {
+                $('#fc_create').click();
+
+                started = start;
+                ended = end;
+
+                $(".antosubmit").on("click", function () {
+                    var title = $("#title").val();
+                    if (end) {
+                        ended = end;
+                    }
+
+                    categoryClass = $("#event_type").val();
+
+                    if (title) {
+                        calendar.fullCalendar('renderEvent', {
+                            title: title,
+                            start: started,
+                            end: end,
+                            allDay: allDay
+                        },
+                            true // make the event "stick"
+                        );
+                    }
+
+                    $('#title').val('');
+
+                    calendar.fullCalendar('unselect');
+
+                    $('.antoclose').click();
+
+                    return false;
+                });
+            },
+            eventClick: function (calEvent, jsEvent, view) {
+                $('#fc_edit').click();
+                $('#title2').val(calEvent.title);
+
+                categoryClass = $("#event_type").val();
+
+                $(".antosubmit2").on("click", function () {
+                    calEvent.title = $("#title2").val();
+
+                    calendar.fullCalendar('updateEvent', calEvent);
+                    $('.antoclose2').click();
+                });
+
+                calendar.fullCalendar('unselect');
+            },
+            editable: true,
+            //events: events
+            events: _events
+            //events: [{
+            //    title: 'All Day Event',
+            //    start: new Date(y, m, 1)
+            //}, {
+            //    title: 'Long Event',
+            //    start: new Date(y, m, d - 5),
+            //    end: new Date(y, m, d - 2)
+            //}, {
+            //    title: 'Meeting',
+            //    start: new Date(y, m, d, 10, 30),
+            //    allDay: false
+            //}, {
+            //    title: 'Lunch',
+            //    start: new Date(y, m, d + 14, 12, 0),
+            //    end: new Date(y, m, d, 14, 0),
+            //    allDay: false
+            //}, {
+            //    title: 'Birthday Party',
+            //    start: new Date(y, m, d + 1, 19, 0),
+            //    end: new Date(y, m, d + 1, 22, 30),
+            //    allDay: false
+            //}, {
+            //    title: 'Click for Google',
+            //    start: new Date(y, m, 28),
+            //    end: new Date(y, m, 29),
+            //    url: 'http://google.com/'
+            //}]
+        });
+    });
+</script>
+<!-- /FullCalendar -->

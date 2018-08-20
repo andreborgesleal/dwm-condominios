@@ -14,6 +14,8 @@ using dwm_condominios.Models.Persistence;
 using App_Dominio.Repositories;
 using System.Data;
 using System.Globalization;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DWM.Models.Persistence
 {
@@ -28,6 +30,40 @@ namespace DWM.Models.Persistence
         {
             this.Create(_db, _seguranca_db);
         }
+
+        public override AluguelEspacoViewModel BeforeInsert(AluguelEspacoViewModel value)
+        {
+            value.DataRevogacao = null;
+            value.DataCancelamento = null;
+            value.DataAutorizacao = null;
+            value.DataReserva = Funcoes.Brasilia();
+            value.Valor = db.EspacoComums.Find(value.EspacoID).Valor;
+
+            if (value.CondominioID > 0 && value.EdificacaoID > 0 && value.UnidadeID > 0)
+            {
+                value.CondominoID = db.CondominoUnidades.Where(info => info.CondominioID == value.CondominioID 
+                                                                && info.EdificacaoID == value.EdificacaoID 
+                                                                && info.UnidadeID == value.UnidadeID).FirstOrDefault().CondominoID;
+                if (SessaoLocal.CredenciadoID.HasValue)
+                    value.CredenciadoID = SessaoLocal.CredenciadoID;
+            }
+
+            return value;
+        }
+
+        public override AluguelEspacoViewModel BeforeUpdate(AluguelEspacoViewModel value)
+        {
+            string Situacao = value.Situacao;
+            string uri = value.uri;
+            AluguelEspacoModel model = new AluguelEspacoModel(db, seguranca_db);
+            value = model.getObject(value);
+            if (Situacao == "A")
+                value.DataAutorizacao = Funcoes.Brasilia();
+            else
+                value.DataRevogacao = Funcoes.Brasilia();
+            value.uri = uri;
+            return value;
+        }
         #endregion
 
         #region Métodos da classe CrudContext
@@ -38,22 +74,22 @@ namespace DWM.Models.Persistence
             if (entity == null)
             {
                 entity = new AluguelEspaco();
-                value.DataAutorizacao = null;
             }
 
             entity.AluguelID = value.AluguelID;
             entity.CondominioID = value.CondominioID;
             entity.EdificacaoID = value.EdificacaoID;
             entity.UnidadeID = value.UnidadeID;
-            entity.CondominoID = SessaoLocal.CondominoID; // value.CondominoID;
+            entity.CondominoID = value.CondominoID;
             entity.CredenciadoID = value.CredenciadoID;
             entity.DataAutorizacao = value.DataAutorizacao;
             entity.DataEvento = value.DataEvento;
             entity.DataReserva = value.DataReserva;
+            entity.DataRevogacao = value.DataRevogacao;
+            entity.DataCancelamento = value.DataCancelamento;
             entity.EspacoID = value.EspacoID;
             entity.Observacao = value.Observacao;
-            
-            entity.Valor = (from ec in db.EspacoComums where ec.EspacoID == value.EspacoID select ec.Valor).FirstOrDefault();
+            entity.Valor = value.Valor;
 
             return entity;
         }
@@ -62,6 +98,7 @@ namespace DWM.Models.Persistence
         {
             AluguelEspacoViewModel a = new AluguelEspacoViewModel()
             {
+                empresaId = entity.CondominioID,
                 CondominioID = entity.CondominioID,
                 AluguelID = entity.AluguelID,
                 CondominoID = entity.CondominoID,
@@ -69,8 +106,14 @@ namespace DWM.Models.Persistence
                 DataAutorizacao = entity.DataAutorizacao,
                 DataEvento = entity.DataEvento.Date,
                 DataReserva = entity.DataReserva.Date,
+                DataRevogacao = entity.DataRevogacao,
+                DataCancelamento = entity.DataCancelamento,
                 EdificacaoID = entity.EdificacaoID,
+                DescricaoEdificacao = db.Edificacaos.Find(entity.EdificacaoID).Descricao,
+                NomeCondomino = db.CondominoPFs.Find(entity.CondominoID).Nome,
+                NomeCredenciado = entity.CredenciadoID.HasValue ? db.Credenciados.Find(entity.CredenciadoID).Nome : "",
                 EspacoID = entity.EspacoID,
+                DescricaoEspaco = db.EspacoComums.Find(entity.EspacoID).Descricao,
                 Observacao = entity.Observacao,
                 UnidadeID = entity.UnidadeID,
                 Valor = entity.Valor,
@@ -101,6 +144,79 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
+            if (value.CondominioID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Identificador do Condomínio").ToString();
+                value.mensagem.MessageBase = "Identificador do condomínio deve ser informado.";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            if (value.EspacoID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Identificador do Espaço Condominial").ToString();
+                value.mensagem.MessageBase = "Identificador do espaço condominial deve ser informado.";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            if (value.EdificacaoID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Torre/Bloco").ToString();
+                value.mensagem.MessageBase = "Torre/Bloco deve ser informado.";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            if (value.UnidadeID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Unidade").ToString();
+                value.mensagem.MessageBase = "Unidade responsável pela reserva deve ser informada.";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+            if (value.CondominoID == 0)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Condômino").ToString();
+                value.mensagem.MessageBase = "Condômino deve ser informado.";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+            if (value.DataEvento < Funcoes.Brasilia().Date)
+            {
+                value.mensagem.Code = 5;
+                value.mensagem.Message = MensagemPadrao.Message(5, "Data do evento").ToString();
+                value.mensagem.MessageBase = "Data do evento deve ser informada e deve ser maior ou igual que a data atual";
+                value.mensagem.MessageType = MsgType.WARNING;
+                return value.mensagem;
+            }
+
+            #region Verifica se a unidade já não reservou algum espaço no respectivo mês
+            if (operation == Crud.INCLUIR)
+            {
+                string mmaaaa = value.DataEvento.ToString("yyyy/MM");
+                if ((from x in db.AluguelEspacos
+                     where x.CondominioID == value.CondominioID
+                             && x.EspacoID == value.EspacoID
+                             && x.EdificacaoID == value.EdificacaoID
+                             && x.UnidadeID == value.UnidadeID
+                             && System.Data.Entity.DbFunctions.DiffMonths(x.DataEvento, value.DataEvento) == 0
+                     select x.AluguelID).Count() > 0)
+                {
+                    value.mensagem.Code = 41;
+                    value.mensagem.Message = MensagemPadrao.Message(41, "Reserva já existente no mês").ToString();
+                    value.mensagem.MessageBase = "Já existe uma reserva para esta unidade no mês informado.";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+            }
+            #endregion
+
             return value.mensagem;
         }
 
@@ -129,6 +245,16 @@ namespace DWM.Models.Persistence
         {
             int _CondominioID = sessaoCorrente.empresaId;
             DateTime dataHoje = Funcoes.Brasilia();
+            JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
+            {
+                DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
+            };
+            //string microsoftJson = JsonConvert.SerializeObject(entry, microsoftDateFormatSettings);
+            //// {"Details":"Application started.","LogDate":"\/Date(1234656000000)\/"}
+
+            //string javascriptJson = JsonConvert.SerializeObject(entry, new JavaScriptDateTimeConverter());
+            //// {"Details":"Application started.","LogDate":new Date(1234656000000)}
+
 
             var q = new List<AluguelEspacoViewModel>();
 
@@ -141,6 +267,7 @@ namespace DWM.Models.Persistence
                      join cred in db.Credenciados on ae.CredenciadoID equals cred.CredenciadoID into credleft
                      from cred in credleft.DefaultIfEmpty()
                      where ae.CondominoID == SessaoLocal.CondominoID || ae.CredenciadoID == SessaoLocal.CredenciadoID
+                            && ae.DataCancelamento == null
                      orderby ae.DataReserva
                      select new AluguelEspacoViewModel
                      {
@@ -156,13 +283,20 @@ namespace DWM.Models.Persistence
                          EdificacaoID = ae.EdificacaoID,
                          EspacoID = ae.EspacoID,
                          Observacao = ae.Observacao,
-
+                         DataRevogacao = ae.DataRevogacao,
+                         DataCancelamento = ae.DataCancelamento,
                          DescricaoEdificacao = ed.Descricao,
                          UnidadeID = ae.UnidadeID,
                          DescricaoEspaco = ec.Descricao,
                          LimitePessoas = ec.LimitePessoas,
                          NomeCondomino = con.Nome,
                          NomeCredenciado = cred.Nome,
+                         calendar = new Repositories.Calendar()
+                         {
+                             title = ed.Descricao + "-" + ae.UnidadeID,
+                             start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0, 0, 0).Value,
+                             allDay = true
+                         }
                      }).ToList();
             }
             else
@@ -175,6 +309,7 @@ namespace DWM.Models.Persistence
                      from cred in credleft.DefaultIfEmpty()
                      orderby ae.DataReserva
                      where System.Data.Entity.DbFunctions.TruncateTime(ae.DataEvento) >= dataHoje.Date
+                            && ae.DataCancelamento == null
                      select new AluguelEspacoViewModel
                      {
                          empresaId = sessaoCorrente.empresaId,
@@ -189,13 +324,18 @@ namespace DWM.Models.Persistence
                          EdificacaoID = ae.EdificacaoID,
                          EspacoID = ae.EspacoID,
                          Observacao = ae.Observacao,
-
+                         DataRevogacao = ae.DataRevogacao,
+                         DataCancelamento = ae.DataCancelamento,
                          DescricaoEdificacao = ed.Descricao,
                          UnidadeID = ae.UnidadeID,
                          DescricaoEspaco = ec.Descricao,
                          LimitePessoas = ec.LimitePessoas,
                          NomeCondomino = con.Nome,
                          NomeCredenciado = cred.Nome,
+                         calendar = new Repositories.Calendar() { title = ed.Descricao + "-" + ae.UnidadeID,
+                                                                  start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0,0,0).Value,
+                                                                  end = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0, 0, 0),
+                                                                  allDay = true}
                      }).ToList();
             }
             

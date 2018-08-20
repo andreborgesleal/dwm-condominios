@@ -1101,5 +1101,13 @@ namespace DWM.Models.Enumeracoes
                 return q;
             }
         }
+
+        public IEnumerable<SelectListItem> SituacaoAluguel()
+        {
+            IList<SelectListItem> q = new List<SelectListItem>();
+            q.Add(new SelectListItem() { Value = "A", Text = "Autorizado" });
+            q.Add(new SelectListItem() { Value = "R", Text = "Revogado" });
+            return q;
+        }
     }
 }
