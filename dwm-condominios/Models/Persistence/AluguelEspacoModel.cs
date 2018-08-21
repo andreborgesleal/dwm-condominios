@@ -245,16 +245,11 @@ namespace DWM.Models.Persistence
         {
             int _CondominioID = sessaoCorrente.empresaId;
             DateTime dataHoje = Funcoes.Brasilia();
-            JsonSerializerSettings microsoftDateFormatSettings = new JsonSerializerSettings
-            {
-                DateFormatHandling = DateFormatHandling.MicrosoftDateFormat
-            };
-            //string microsoftJson = JsonConvert.SerializeObject(entry, microsoftDateFormatSettings);
-            //// {"Details":"Application started.","LogDate":"\/Date(1234656000000)\/"}
 
-            //string javascriptJson = JsonConvert.SerializeObject(entry, new JavaScriptDateTimeConverter());
-            //// {"Details":"Application started.","LogDate":new Date(1234656000000)}
+            int? _EspacoID = null;
 
+            if (param != null && param.Count() > 0)
+                _EspacoID = (int)param[0];
 
             var q = new List<AluguelEspacoViewModel>();
 
@@ -268,6 +263,7 @@ namespace DWM.Models.Persistence
                      from cred in credleft.DefaultIfEmpty()
                      where ae.CondominoID == SessaoLocal.CondominoID || ae.CredenciadoID == SessaoLocal.CredenciadoID
                             && ae.DataCancelamento == null
+                            && (!_EspacoID.HasValue || ae.EspacoID == _EspacoID)
                      orderby ae.DataReserva
                      select new AluguelEspacoViewModel
                      {
@@ -310,6 +306,7 @@ namespace DWM.Models.Persistence
                      orderby ae.DataReserva
                      where System.Data.Entity.DbFunctions.TruncateTime(ae.DataEvento) >= dataHoje.Date
                             && ae.DataCancelamento == null
+                            && (!_EspacoID.HasValue || ae.EspacoID == _EspacoID)
                      select new AluguelEspacoViewModel
                      {
                          empresaId = sessaoCorrente.empresaId,
