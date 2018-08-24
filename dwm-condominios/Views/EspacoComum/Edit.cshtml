@@ -1,0 +1,64 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@model DWM.Models.Repositories.EspacoComumViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../EspacoComum/Edit";
+    t[0].nomeCurto = "Editar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+}
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Espaço", Descricao = "Edição de Espaço", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Edit", "EspacoComum", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.EspacoID)
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Espaço *</label>
+                            <input type="text" class="form-control" name="Descricao" id="Descricao" value="@Model.Descricao" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Limite de Pessoas *</label>
+                            <input type="number" class="form-control" name="LimitePessoas" id="LimitePessoas" value="@Model.LimitePessoas" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-5 col-lg-5 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Valor *</label>
+                            <input type="number" class="form-control" name="Valor" id="Valor" value="@Model.Valor" required />
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <input type="button" onclick="window.location = '../EspacoComum/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
