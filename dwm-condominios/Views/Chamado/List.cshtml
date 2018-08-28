@@ -33,7 +33,11 @@
                         @foreach (ChamadoViewModel value in Model)
                         {
                             string WhitePaper = "";
-                            if (value.DataChamado.AddDays(7) < App_Dominio.Models.Funcoes.Brasilia().Date)
+                            if (value.ChamadoStatusID == 3)
+                            {
+                                WhitePaper = "text-prateado";
+                            }
+                            else if (value.DataChamado.AddDays(7) < App_Dominio.Models.Funcoes.Brasilia().Date)
                             {
                                 WhitePaper = "text-danger";
                             }

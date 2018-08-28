@@ -238,7 +238,7 @@ namespace DWM.Models.Enumeracoes
             {
                 IList<SelectListItem> q = new List<SelectListItem>();
 
-                if (cabecalho != null)
+                if (cabecalho != "")
                     q.Add(new SelectListItem() { Text = cabecalho, Value = "" });
 
                 q = q.Union(from ec in db.EspacoComums.AsEnumerable()

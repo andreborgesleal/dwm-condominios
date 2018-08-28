@@ -66,19 +66,19 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Espaço Comum</label>
-                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("Selecione...", "", (int)ViewBag.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("", "", (int)ViewBag.CondominioID), new { @class = "form-control" })
                         </div>
                     </div>
                 </div>
             }
+            <div class="altura-35">
+                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Aluguel", buttonType = "link" } })
+            </div>
             <div id="div-list">
                 @if (Model != null)
                 {
                     @Html.Partial("ListParam", Model)
                 }
-            </div>
-            <div class="altura-35">
-                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Aluguel", buttonType = "link" } })
             </div>
         </div>
     </div>

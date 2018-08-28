@@ -597,8 +597,9 @@ namespace DWM.Models.Persistence
                     join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
                     where  cha.CondominioID == SessaoLocal.empresaId &&
                            sta.CondominioID == SessaoLocal.empresaId &&
-                           mot.CondominioID == SessaoLocal.empresaId && 
-                           cha.ChamadoStatusID != 3 && // 3-Encerrado
+                           mot.CondominioID == SessaoLocal.empresaId &&
+                           ((cha.ChamadoStatusID == 3 && (SessaoLocal.CondominoID > 0 || SessaoLocal.CredenciadoID > 0)) ||
+                           cha.ChamadoStatusID != 3) && // 3-Encerrado
                            (cha.UsuarioID == SessaoLocal.usuarioId || cha.UsuarioFilaID == SessaoLocal.usuarioId ||
                            (cha.CondominoID.HasValue && cha.CondominoID == SessaoLocal.CondominoID && SessaoLocal.CondominoID > 0) ||
                            (from usu in db.FilaAtendimentoUsuarios

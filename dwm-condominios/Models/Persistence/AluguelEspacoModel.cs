@@ -249,7 +249,7 @@ namespace DWM.Models.Persistence
             int? _EspacoID = null;
 
             if (param != null && param.Count() > 0)
-                _EspacoID = (int)param[0];
+                _EspacoID = int.Parse(param[0].ToString());
 
             var q = new List<AluguelEspacoViewModel>();
 

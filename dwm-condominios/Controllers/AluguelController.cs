@@ -27,21 +27,20 @@ namespace dwm_condominios.Controllers
         #endregion
 
         #region List
-
-        public override bool mustListOnLoad()
-        {
-            ViewBag.CondominioID = DWMSessaoLocal.GetSessaoLocal().empresaId;
-            return false;
-        }
         [AuthorizeFilter]
         public override ActionResult List(int? index, int? pageSize = 50, string descricao = null)
         {
             if (ViewBag.ValidateRequest)
             {
-                if (descricao != null)
-                    return ListParam(index, pageSize, descricao);
-                else
-                    return ListParam(index, pageSize);
+                ViewBag.CondominioID = DWMSessaoLocal.GetSessaoLocal().empresaId;
+                if (descricao == null || String.IsNullOrEmpty(descricao))
+                {
+                    #region Recuperar o primeiro espaço
+                    var espacos = new BindDropDownList().EspacosComuns("", "", (int)ViewBag.CondominioID);
+                    descricao = espacos.FirstOrDefault().Value;
+                    #endregion
+                }
+                return ListParam(index, pageSize, descricao);
             }
             else
                 return View();
