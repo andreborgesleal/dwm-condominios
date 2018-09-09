@@ -245,6 +245,7 @@
     <Compile Include="Controllers\EmailTemplateController.cs" />
     <Compile Include="Controllers\EmpregadoController.cs" />
     <Compile Include="Controllers\EnviarEmailController.cs" />
+    <Compile Include="Controllers\EspacoComumController.cs" />
     <Compile Include="Controllers\FilaAtendimentoController.cs" />
     <Compile Include="Controllers\FornecedoresController.cs" />
     <Compile Include="Controllers\GrupoCondominoController.cs" />
@@ -381,6 +382,7 @@
     <Compile Include="Models\Persistence\EmailLogModel.cs" />
     <Compile Include="Models\Persistence\EmailTemplateModel.cs" />
     <Compile Include="Models\Persistence\EmpregadoModel.cs" />
+    <Compile Include="Models\Persistence\EspacoComumModel.cs" />
     <Compile Include="Models\Persistence\FilaAtendimentoModel.cs" />
     <Compile Include="Models\Persistence\FilaAtendimentoUsuarioModel.cs" />
     <Compile Include="Models\Persistence\FuncionarioModel.cs" />
@@ -4398,6 +4400,11 @@
     <Content Include="Views\Aluguel\Edit.cshtml" />
     <Content Include="Views\Aluguel\MinhasReservas.cshtml" />
     <Content Include="Views\Aluguel\ListReservas.cshtml" />
+    <Content Include="Views\EspacoComum\Browse.cshtml" />
+    <Content Include="Views\EspacoComum\ListParam.cshtml" />
+    <Content Include="Views\EspacoComum\Create.cshtml" />
+    <Content Include="Views\EspacoComum\Edit.cshtml" />
+    <Content Include="Views\EspacoComum\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
