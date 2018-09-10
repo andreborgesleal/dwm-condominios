@@ -43,7 +43,7 @@ namespace DWM.Models.BI
                 result = model.MapToRepository(this.db.Chamados.Find(r.ChamadoID));
 
                 #region Valida permissão do usuário para editar o chamado
-                if (!(result.CondominioID == _empresaId &&
+                if ((SessaoLocal.CondominoID > 0 || SessaoLocal.CredenciadoID > 0) && !(result.CondominioID == _empresaId &&
                       (result.CondominoID.HasValue && result.CondominoID == SessaoLocal.CondominoID || 
                        result.CredenciadoID.HasValue && result.CredenciadoID == SessaoLocal.CredenciadoID ||
                        result.UsuarioID == SessaoLocal.usuarioId ||

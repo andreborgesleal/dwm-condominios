@@ -1,0 +1,106 @@
+﻿@using App_Dominio.Repositories
+@model PagedList<DWM.Models.Repositories.ChamadoViewModel>
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Chamado/Create";
+    t[0].nomeCurto = "Incluir";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+
+    string data1 = DateTime.Today.ToString("yyyy-MM-") + "01" ;
+}
+<div class="container-cadastro">
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Chamados", Descricao = "Pesquisar atendimentos", Transacao = t })
+        <div class="x_content">
+            @using (Ajax.BeginForm("Listparam", "Chamado", new AjaxOptions { HttpMethod = "get", UpdateTargetId = "div-chamado-det" }, new { @role = "search", @id = "form000" }))
+            {
+                <input type="hidden" id="CondominioID" name="CondominioID" value = @ViewBag.CondominioID />
+                <div class="container-cadastro">
+                    <div class="row clearfix">
+                        <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label" for="data1">Período</label>
+                                <div class="row clearfix">
+                                    <div class="col-md-3">
+                                        <input type="date" id="data1" name="data1" class="form-control" value="@data1" />
+                                    </div>
+                                    <div class="col-md-1">
+                                        à
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="date" id="data2" name="data2" class="form-control" value="@Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("yyyy-MM-dd")" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Motivo</label>
+                                @Html.DropDownList("ChamadoMotivoID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoMotivos("Todos...", ""), new { @class = "form-control", @id = "ChamadoMotivoID" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">Solicitante</label>
+                                @Html.DropDownList("FilaSolicitanteID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("Todos...", ""), new { @class = "form-control", @id = "FilaSolicitanteID" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Fila atual:</label>
+                                @Html.DropDownList("FilaAtendimentoID", new DWM.Models.Enumeracoes.BindDropDownList().Filas("Todos...", ""), new { @class = "form-control", @id = "FilaAtendimentoID" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Situação</label>
+                                @Html.DropDownList("ChamadoStatusID", new DWM.Models.Enumeracoes.BindDropDownList().ChamadoStatus("Todos...", ""), new { @class = "form-control", @id = "ChamadoStatusID" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-sm-12 col-lg-4 col-xs-12">
+                            <div class="form-group">
+                                <label class="control-label">@ViewBag.TipoEdificacao</label>
+                                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes("Todas...", "", (int)ViewBag.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade:</label>
+                                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades("Todos...", "", 0, (int)ViewBag.CondominioID), new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Buscar" />
+                    @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Informativo", buttonType = "link" } })
+                </div>
+            }
+            <br />
+            <div id="div-chamado-det">
+                @Html.Partial("ListParam", Model)
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#form000').submit(function () {
+            if ($(this).valid()) {
+                $.ajax({
+                    url: this.action,
+                    type: this.method,
+                    data: $(this).serialize(),
+                    success: function (result) {
+                        $('#div-chamado-det').html(result);
+                    }
+                });
+            }
+            return false;
+        });
+    });
+</script>

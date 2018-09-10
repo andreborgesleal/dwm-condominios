@@ -1,0 +1,195 @@
+﻿@using DWM.Models.Repositories
+@model IEnumerable<ChamadoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <br />
+    <div class="row clearfix">
+        <div class="col-md-12 col-sm-12 col-xs-12 hidden-xs">
+            <p>Clique nos botões de <code>Ação</code> para executar a ação desejada</p>
+            <div class="table-responsive">
+                <table class="table table-striped jambo_table bulk_action">
+                    <thead>
+                        <tr class="headings">
+                            <th class="column-title text-center">Data </th>
+                            <th class="column-title text-center">ID </th>
+                            <th class="column-title text-left">Solicitante </th>
+                            <th class="column-title text-left">Bloco </th>
+                            <th class="column-title text-center">Unidade </th>
+                            <th class="column-title text-left">Condômino </th>
+                            <th class="column-title text-left">Assunto </th>
+                            <th class="column-title text-center">Última Anotação </th>
+                            <th class="column-title text-center">Na fila desde</th>
+                            <th class="column-title text-left">Fila de atendimento </th>
+                            <th class="column-title text-left">Responsável </th>
+                            <th class="column-title no-link last text-center">
+                                <span class="nobr">Ação</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ChamadoViewModel value in Model)
+                        {
+                            string WhitePaper = "";
+                            if (value.ChamadoStatusID == 3)
+                            {
+                                WhitePaper = "text-prateado";
+                            }
+                            else if (value.DataChamado.AddDays(7) < App_Dominio.Models.Funcoes.Brasilia().Date)
+                            {
+                                WhitePaper = "text-danger";
+                            }
+                            else if (value.ChamadoStatusID == 0)
+                            {
+                                WhitePaper = "bg bg-warning";
+                            }
+                            string _solicitante = "";
+                            if (value.FilaSolicitanteID == value.FilaCondominoID)
+                            {
+                                _solicitante = value.NomeUsuario;
+                            }
+                            else
+                            {
+                                _solicitante = value.DescricaoFilaSolicitante;
+                            }
+                            <tr class="even pointer">
+                                @{
+                                    string[] n = _solicitante.Split(' ');
+                                    int contador = n.Count();
+                                    string _n = n[0];
+                                    if (contador > 1)
+                                    {
+                                        _n += " " + n[contador - 1];
+                                    }
+                                    string _resp = "";
+                                    if (value.NomeUsuarioFila != null && value.NomeUsuarioFila != "")
+                                    {
+                                        string[] resp = value.NomeUsuarioFila.Split(' ');
+                                        contador = resp.Count();
+                                        _resp = resp[0];
+                                        if (contador > 1)
+                                        {
+                                            _resp += " " + resp[contador - 1];
+                                        }
+
+                                    }
+
+                                }
+                                <td class="text-center @WhitePaper">@value.DataChamado.ToString("dd/MM/yyyy")</td>
+                                <td class="text-center @WhitePaper">@value.ChamadoID </td>
+                                <td class="text-left @WhitePaper">@_n</td>
+                                <td class="text-left @WhitePaper">@value.DescricaoEdificacao</td>
+                                <td class="text-center @WhitePaper">@value.Codigo</td>
+                                <td class="text-left @WhitePaper">
+                                    @if (value.NomeCredenciado.Trim() == "")
+                                    {
+                                        @value.NomeCondomino
+                                    }
+                                    else
+                                    {
+                                        @value.NomeCredenciado
+                                    }
+                                </td>
+                                <td class="text-left @WhitePaper">@value.Assunto</td>
+                                <td class="text-center @WhitePaper">@(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")</td>
+                                <td class="text-center @WhitePaper">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</td>
+                                <td class="text-left @WhitePaper">@value.DescricaoFilaAtendimento</td>
+                                <td class="text-left @WhitePaper">@_resp</td>
+                                <td class="text-center @WhitePaper">
+                                    <a href="~/Chamado/Index?id=@value.ChamadoID" title="Editar"><i class="fa fa-edit"></i></a>&nbsp;
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @Html.Partial("Paginacao", Model)
+        </div>
+        <!-- Mobile -->
+        <div class="col-xs-12 hidden-lg hidden-md hidden-sm">
+            <table class="table table-striped jambo_table bulk_action">
+                <tbody>
+                    @foreach (ChamadoViewModel value in Model)
+                    {
+                        string WhitePaper = "";
+                        if (value.DataChamado.AddDays(7) < App_Dominio.Models.Funcoes.Brasilia().Date)
+                        {
+                            WhitePaper = "text-danger";
+                        }
+                        else if (value.ChamadoStatusID == 0)
+                        {
+                            WhitePaper = "bg bg-warning";
+                        }
+                        string _solicitante = "";
+                        if (value.FilaSolicitanteID == value.FilaCondominoID)
+                        {
+                            _solicitante = value.NomeUsuario;
+                        }
+                        else
+                        {
+                            _solicitante = value.DescricaoFilaSolicitante;
+                        }
+                        <tr class="even pointer">
+                            @{
+                                string[] n = _solicitante.Split(' ');
+                                int contador = n.Count();
+                                string _n = n[0];
+                                if (contador > 1)
+                                {
+                                    _n += " " + n[contador - 1];
+                                }
+                            }
+                            <td>
+                                <p>
+                                    <span class="h4">@value.DataChamado.ToString("dd/MM/yyyy")</span>
+                                    <span class="small pull-right">
+                                        @value.DescricaoEdificacao
+                                        @value.UnidadeID
+                                    </span>
+                                </p>
+                                <div class="well well-sm text-center">
+                                    <strong>
+                                        @if (value.NomeCredenciado.Trim() == "")
+                                        {
+                                            @value.NomeCondomino
+                                        }
+                                        else
+                                        {
+                                            @value.NomeCredenciado
+                                        }
+                                    </strong>
+                                </div>
+                                <p>
+                                    <span class="text-mama-africa">@value.Assunto</span>
+                                </p>
+                                <p>Solicitante: <strong>@_n</strong></p>
+                                <p>
+                                    @(value.DataUltimaAnotacao.HasValue ? value.DataUltimaAnotacao.Value.ToString("dd/MM/yyyy") : "")
+                                    <span class="pull-right">@(value.DataRedirecionamento.ToString("dd/MM/yyyy"))</span>
+                                </p>
+                                <p>
+                                    @value.DescricaoFilaAtendimento <span class="text-prateado">(fila de atendimento)</span>
+                                </p>
+                                <p>
+                                    <a href="~/Chamado/Index?id=@value.ChamadoID" title="Editar"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                </p>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.Partial("Paginacao", Model)
+        </div>
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+
+
+

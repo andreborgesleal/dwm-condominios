@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using App_Dominio.Models;
 using App_Dominio.Contratos;
 using App_Dominio.Repositories;
+using App_Dominio.Entidades;
 
 namespace DWM.Controllers
 {
@@ -37,6 +38,68 @@ namespace DWM.Controllers
             else
                 return View();
         }
+
+        [AuthorizeFilter]
+        public virtual ActionResult Filtrar(int? index = 0, int pageSize = 50, string data1 = "", string data2 = "", string ChamadoMotivoID = "", string ChamadoStatusID = "", string FilaSolicitanteID = "", string FilaAtendimentoID = "", string EdificacaoID = "", string UnidadeID = "")
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                BindBreadCrumb(getListName(), ClearBreadCrumbOnBrowse());
+
+                TempData.Remove("Controller");
+                TempData.Add("Controller", this.ControllerContext.RouteData.Values["controller"].ToString());
+                
+                EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+                SessaoLocal SessaoLocal = DWMSessaoLocal.GetSessaoLocal();
+                ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
+                ViewBag.CondominioID = SessaoLocal.empresaId;
+                ViewBag.unidades = SessaoLocal.Unidades;
+
+                return ListParam(index, this.PageSize, data1, data2, ChamadoMotivoID, ChamadoStatusID, FilaSolicitanteID, FilaAtendimentoID, EdificacaoID, UnidadeID);
+            }
+            else
+                return null;
+        }
+
+        [AuthorizeFilter]
+        public ActionResult ListParam(int? index, int? pageSize = 50, string data1 = "", string data2 = "", string ChamadoMotivoID = "", string ChamadoStatusID = "", string FilaSolicitanteID = "", string FilaAtendimentoID = "", string EdificacaoID = "", string UnidadeID = "")
+        {
+            if (ViewBag.ValidateRequest)
+            {
+                if (data1 == null || data1 == "")
+                {
+                    data1 = "01" + DateTime.Today.ToString("/MM/yyyy");
+                    data2 = Convert.ToDateTime(DateTime.Today.AddMonths(1).ToString("yyyy-MM-") + "01").AddDays(-1).ToString("dd/MM/yyyy");
+                }
+                ListViewChamadoAdmin list = new ListViewChamadoAdmin();
+                int? _ChamadoMotivoID = null;
+                int? _ChamadoStatusID = null;
+                int? _FilaSolicitanteID = null;
+                int? _FilaAtendimentoID = null;
+                int? _EdificacaoID = null;
+                int? _UnidadeID = null;
+
+                _ChamadoMotivoID = (!String.IsNullOrEmpty(ChamadoMotivoID) ? int.Parse(ChamadoMotivoID) : _ChamadoMotivoID);
+                _ChamadoStatusID = (!String.IsNullOrEmpty(ChamadoStatusID) ? int.Parse(ChamadoStatusID) : _ChamadoStatusID);
+                _FilaSolicitanteID = (!String.IsNullOrEmpty(FilaSolicitanteID) ? int.Parse(FilaSolicitanteID) : _FilaSolicitanteID);
+                _FilaAtendimentoID = (!String.IsNullOrEmpty(FilaAtendimentoID) ? int.Parse(FilaAtendimentoID) : _FilaAtendimentoID);
+                _EdificacaoID = (!String.IsNullOrEmpty(EdificacaoID) ? int.Parse(EdificacaoID) : _EdificacaoID);
+                _UnidadeID = (!String.IsNullOrEmpty(UnidadeID) ? int.Parse(UnidadeID) : _UnidadeID);
+
+                return this._List(index, pageSize, "Filtrar", list, Funcoes.StringToDate(data1).Value, 
+                    Funcoes.StringToDate(data2).Value,
+                    _ChamadoMotivoID, 
+                    _ChamadoStatusID, 
+                    _FilaSolicitanteID, 
+                    _FilaAtendimentoID, 
+                    _EdificacaoID, 
+                    _UnidadeID);
+            }
+            else
+                return View();
+        }
+
+
         #endregion
         #endregion
 

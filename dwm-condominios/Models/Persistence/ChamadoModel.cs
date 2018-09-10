@@ -764,4 +764,109 @@ namespace DWM.Models.Persistence
             return "div-chamado-det";
         }
     }
+
+    public class ListViewChamadoAdmin : ListViewModelLocal<ChamadoViewModel>
+    {
+        #region Constructor
+        public ListViewChamadoAdmin() { }
+
+        public ListViewChamadoAdmin(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<ChamadoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            #region parâmetros
+            /* 0. Data1
+             * 1. Data2
+             * 2. ChamadoMotivoID
+             * 3. ChamadoStatusID
+             * 4. FilaSolicitanteID
+             * 5. FilaAtendimentoID
+             * 6. EdificacaoID
+             * 7. UnidadeID             
+             */
+
+            DateTime _data1 = (DateTime)param[0];
+            DateTime _data2 = (DateTime)param[1];
+            int? _ChamadoMotivoID = (int?)param[2];
+            int? _ChamadoStatusID = (int?)param[3];
+            int? _FilaSolicitanteID = (int?)param[4];
+            int? _FilaAtendimentoID = (int?)param[5];
+            int? _EdificacaoID = (int?)param[6];
+            int? _UnidadeID = (int?)param[7];
+            #endregion
+
+            var x = (from cha in db.Chamados
+                    join FilaAtual in db.FilaAtendimentos on cha.FilaAtendimentoID equals FilaAtual.FilaAtendimentoID
+                    join con in db.Condominos on cha.CondominoID equals con.CondominoID into CON
+                    from con in CON.DefaultIfEmpty()
+                    join cre in db.Credenciados on cha.CredenciadoID equals cre.CredenciadoID into CRE
+                    from cre in CRE.DefaultIfEmpty()
+                    join edi in db.Edificacaos on cha.EdificacaoID equals edi.EdificacaoID into EDI
+                    from edi in EDI.DefaultIfEmpty()
+                    join uni in db.Unidades on new { CondominioID = cha.CondominioID, EdificacaoID = cha.EdificacaoID.Value, UnidadeID = cha.UnidadeID.Value } equals new { uni.CondominioID, uni.EdificacaoID, uni.UnidadeID } into UNI
+                    from uni in UNI.DefaultIfEmpty()
+                    join sta in db.ChamadoStatuss on cha.ChamadoStatusID equals sta.ChamadoStatusID
+                    join mot in db.ChamadoMotivos on cha.ChamadoMotivoID equals mot.ChamadoMotivoID
+                    where cha.CondominioID == SessaoLocal.empresaId &&
+                          cha.DataChamado >= _data1 && cha.DataChamado <= _data2 &&
+                          sta.CondominioID == SessaoLocal.empresaId &&
+                          mot.CondominioID == SessaoLocal.empresaId &&
+                          (!_EdificacaoID.HasValue || (cha.EdificacaoID == _EdificacaoID && cha.UnidadeID == _UnidadeID)) &&
+                          (!_FilaAtendimentoID.HasValue || cha.FilaAtendimentoID == _FilaAtendimentoID) &&
+                          (!_FilaSolicitanteID.HasValue || cha.FilaSolicitanteID == _FilaSolicitanteID) &&
+                          (!_ChamadoMotivoID.HasValue || cha.ChamadoMotivoID == _ChamadoMotivoID) &&
+                          (!_ChamadoStatusID.HasValue || cha.ChamadoStatusID == _ChamadoStatusID)
+                    orderby cha.DataChamado descending
+                    select new ChamadoViewModel
+                    {
+                        empresaId = SessaoLocal.empresaId,
+                        ChamadoID = cha.ChamadoID,
+                        ChamadoMotivoID = cha.ChamadoMotivoID,
+                        DescricaoChamadoMotivo = mot.Descricao,
+                        ChamadoStatusID = cha.ChamadoStatusID,
+                        DescricaoChamadoStatus = sta.Descricao,
+                        FilaSolicitanteID = cha.FilaSolicitanteID,
+                        DescricaoFilaSolicitante = (from fil in db.FilaAtendimentos where fil.CondominioID == SessaoLocal.empresaId && fil.FilaAtendimentoID == cha.FilaSolicitanteID select fil.Descricao).FirstOrDefault(),
+                        FilaAtendimentoID = cha.FilaAtendimentoID,
+                        DescricaoFilaAtendimento = FilaAtual.Descricao,
+                        CondominoID = cha.CondominoID,
+                        CredenciadoID = cha.CredenciadoID,
+                        NomeCondomino = con != null ? con.Nome : "",
+                        NomeCredenciado = cre != null ? cre.Nome : "",
+                        EdificacaoID = cha.EdificacaoID,
+                        DescricaoEdificacao = edi.Descricao,
+                        UnidadeID = cha.UnidadeID,
+                        Codigo = uni.Codigo,
+                        DataChamado = cha.DataChamado,
+                        Assunto = cha.Assunto,
+                        UsuarioID = cha.UsuarioID,
+                        NomeUsuario = cha.NomeUsuario,
+                        LoginUsuario = cha.LoginUsuario,
+                        Prioridade = cha.Prioridade,
+                        DataUltimaAnotacao = cha.DataUltimaAnotacao,
+                        DataRedirecionamento = cha.DataRedirecionamento,
+                        UsuarioFilaID = cha.UsuarioFilaID,
+                        NomeUsuarioFila = cha.NomeUsuarioFila,
+                        LoginUsuarioFila = cha.LoginUsuarioFila
+                    }).ToList();
+            return x;
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new ChamadoModel().getObject((ChamadoViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-chamado-det";
+        }
+    }
 }

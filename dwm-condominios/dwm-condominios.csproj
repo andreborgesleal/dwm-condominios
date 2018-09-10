@@ -4405,6 +4405,8 @@
     <Content Include="Views\EspacoComum\Create.cshtml" />
     <Content Include="Views\EspacoComum\Edit.cshtml" />
     <Content Include="Views\EspacoComum\Delete.cshtml" />
+    <Content Include="Views\Chamado\Filtrar.cshtml" />
+    <Content Include="Views\Chamado\ListParam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
