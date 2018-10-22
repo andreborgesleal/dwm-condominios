@@ -66,14 +66,14 @@
                     <div class="col-md-4 col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label class="control-label">Espaço Comum</label>
-                            @Html.DropDownList("EspacoID", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("", "", (int)ViewBag.CondominioID), new { @class = "form-control" })
+                            @Html.DropDownList("EspacoID1", new DWM.Models.Enumeracoes.BindDropDownList().EspacosComuns("", "", (int)ViewBag.CondominioID), new { @class = "form-control", @onchange = "getAluguel()" })
                         </div>
+                    </div>
+                    <div class="col-md-8 col-lg-8 col-xs-12 altura-35">
+                        <a href="Create" class="text-primary pull-right"><h4>Incluir</h4></a>
                     </div>
                 </div>
             }
-            <div class="altura-35">
-                @Html.Partial("_defaultListButtons", new List<ButtonRepository> { new ButtonRepository() { linkText = "Incluir", actionName = "Create", controllerName = "Aluguel", buttonType = "link" } })
-            </div>
             <div id="div-list">
                 @if (Model != null)
                 {
@@ -84,5 +84,12 @@
     </div>
 </div>
 
+<script>
+    function getAluguel() {
+        var _EspacoID = $('#EspacoID1').val();
+        var link = encodeURI('ListParam?index=0&pageSize=50&descricao=' + _EspacoID + '&noCahce=' + new Date());
+        $('#div-list').load(link);
+    }
 
+</script>
 
