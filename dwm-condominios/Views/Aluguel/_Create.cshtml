@@ -1,0 +1,86 @@
+﻿@using App_Dominio.Repositories
+@using DWM.Models.Enumeracoes
+@using App_Dominio.Models
+@model DWM.Models.Repositories.AluguelEspacoViewModel
+@Html.Partial("_alerts")
+@Html.Partial("_AjaxAlert", "panel-top")
+@using (Html.BeginForm("Create", "Aluguel", FormMethod.Post, new { @class = "form-horizontal", @id = "form1" }))
+{
+    @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+    @Html.HiddenFor(info => info.CondominioID)
+    @Html.HiddenFor(info => info.empresaId)
+
+    if (ViewBag.unidades == null)
+    {
+        @Html.Hidden("Unidades", "")
+    }
+    else
+    {
+        @Html.Hidden("Unidades", "n")
+    }
+    @Html.Hidden("EspacoID", "");
+    @Html.HiddenFor(info => info.DataEvento)
+    <div class="row">
+        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+            <div class="form-group">
+                <label class="control-label">Edificação</label>
+                @Html.DropDownList("EdificacaoID", new DWM.Models.Enumeracoes.BindDropDownList().Edificacoes2("Selecione...", "", Model.CondominioID), new { @class = "form-control", @onchange = "GetSelectListOnCascade('EdificacaoID','UnidadeID', 'CondominioID')" })
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-6 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">Unidades</label>
+                @Html.DropDownList("UnidadeID", new DWM.Models.Enumeracoes.BindDropDownList().Unidades2("Selecione...", Model.UnidadeID, Model.EdificacaoID, Model.CondominioID), new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-12 col-xs-12">
+            <div class="form-group">
+                <label class="control-label">Observação</label>
+                <input type="text" class="form-control" name="Observacao" id="Observacao" value="@Model.Observacao" maxlength="60" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Salvar" class="btn btn-success" />
+            <button type="button" class="btn btn-default antoclose" data-dismiss="modal">Fechar</button>
+        </div>
+    </div>
+}
+
+<script>
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting 
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function Valida() {
+        if ($('#Unidades').val() == null || $('#Unidades').val() == '') {
+            var edificacao = $('#EdificacaoID').val();
+            var unidade = $('#UnidadeID').val();
+            if (edificacao == null || edificacao == "") {
+                alert('Teste False 1');
+                ShowMessageAjaxAlert('É preciso informar a Edificação para salvar o Aluguel', 'warning');
+                return false;
+            }
+
+            if (unidade == null || unidade == "") {
+                alert('Teste False 2');
+                ShowMessageAjaxAlert('É preciso informar a Unidade para salvar o Aluguel', 'warning');
+                return false;
+            }
+            return true;
+        }
+        return true;
+    }
+</script>
+
+
+
+

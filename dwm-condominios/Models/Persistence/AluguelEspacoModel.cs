@@ -196,16 +196,17 @@ namespace DWM.Models.Persistence
                 return value.mensagem;
             }
 
-            #region Verifica se a unidade já não reservou algum espaço no respectivo mês
             if (operation == Crud.INCLUIR)
             {
-                string mmaaaa = value.DataEvento.ToString("yyyy/MM");
+                #region Verifica se a unidade já não reservou algum espaço no respectivo mês
                 if ((from x in db.AluguelEspacos
                      where x.CondominioID == value.CondominioID
                              && x.EspacoID == value.EspacoID
                              && x.EdificacaoID == value.EdificacaoID
                              && x.UnidadeID == value.UnidadeID
                              && System.Data.Entity.DbFunctions.DiffMonths(x.DataEvento, value.DataEvento) == 0
+                             && x.DataCancelamento == null
+                             && x.DataRevogacao == null
                      select x.AluguelID).Count() > 0)
                 {
                     value.mensagem.Code = 41;
@@ -214,9 +215,25 @@ namespace DWM.Models.Persistence
                     value.mensagem.MessageType = MsgType.WARNING;
                     return value.mensagem;
                 }
-            }
-            #endregion
+                #endregion
 
+                #region Verifica se já não existe reserva para o referido espaço na respectiva data
+                if ((from x in db.AluguelEspacos
+                     where x.CondominioID == value.CondominioID
+                             && x.EspacoID == value.EspacoID
+                             && System.Data.Entity.DbFunctions.DiffDays(x.DataEvento, value.DataEvento) == 0
+                             && x.DataCancelamento == null
+                             && x.DataRevogacao == null
+                     select x.AluguelID).Count() > 0)
+                {
+                    value.mensagem.Code = 41;
+                    value.mensagem.Message = MensagemPadrao.Message(41, "Espaço já reservado nesta data").ToString();
+                    value.mensagem.MessageBase = "Já existe uma reserva na data informada. Favor escolher outra data.";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                #endregion
+            }
             return value.mensagem;
         }
 
@@ -235,6 +252,86 @@ namespace DWM.Models.Persistence
         #region Constructor
         public ListViewAluguelEspaco() { }
         public ListViewAluguelEspaco(ApplicationContext _db, SecurityContext _seguranca_db)
+        {
+            this.Create(_db, _seguranca_db);
+        }
+        #endregion
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<AluguelEspacoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            int _CondominioID = sessaoCorrente.empresaId;
+            DateTime dataHoje = Funcoes.Brasilia();
+
+            int? _EspacoID = null;
+
+            if (param != null && param.Count() > 0)
+                _EspacoID = int.Parse(param[0].ToString());
+
+            var q = new List<AluguelEspacoViewModel>();
+
+            q = (from ae in db.AluguelEspacos
+                 join ed in db.Edificacaos on ae.EdificacaoID equals ed.EdificacaoID
+                 join ec in db.EspacoComums on ae.EspacoID equals ec.EspacoID
+                 join con in db.Condominos on ae.CondominoID equals con.CondominoID
+                 join cred in db.Credenciados on ae.CredenciadoID equals cred.CredenciadoID into credleft
+                 from cred in credleft.DefaultIfEmpty()
+                 orderby ae.DataReserva
+                 where System.Data.Entity.DbFunctions.TruncateTime(ae.DataEvento) >= dataHoje.Date
+                        && ae.DataCancelamento == null
+                        && ae.DataRevogacao == null
+                        && (!_EspacoID.HasValue || ae.EspacoID == _EspacoID)
+                 select new AluguelEspacoViewModel
+                 {
+                     empresaId = sessaoCorrente.empresaId,
+                     CondominioID = ae.CondominioID,
+                     DataEvento = ae.DataEvento,
+                     AluguelID = ae.AluguelID,
+                     CredenciadoID = ae.CredenciadoID,
+                     Valor = ae.Valor,
+                     CondominoID = ae.CondominoID,
+                     DataAutorizacao = ae.DataAutorizacao,
+                     DataReserva = ae.DataReserva,
+                     EdificacaoID = ae.EdificacaoID,
+                     EspacoID = ae.EspacoID,
+                     Observacao = ae.Observacao,
+                     DataRevogacao = ae.DataRevogacao,
+                     DataCancelamento = ae.DataCancelamento,
+                     DescricaoEdificacao = ed.Descricao,
+                     UnidadeID = ae.UnidadeID,
+                     DescricaoEspaco = ec.Descricao,
+                     LimitePessoas = ec.LimitePessoas,
+                     NomeCondomino = con.Nome,
+                     NomeCredenciado = cred.Nome,
+                     calendar = new Repositories.Calendar()
+                     {
+                         title = ((SessaoLocal.CondominoID == 0 && !SessaoLocal.CredenciadoID.HasValue) || ae.CondominoID == SessaoLocal.CondominoID || ae.CredenciadoID == SessaoLocal.CredenciadoID) ? ed.Descricao + "-" + ae.UnidadeID : "Reservado",
+                         start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0).Value,
+                         end = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0),
+                         allDay = true
+                     }
+                 }).ToList();
+
+            return q;
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new FuncionarioModel().getObject((FuncionarioViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-AluguelEspacos";
+        }
+    }
+
+    public class ListViewMinhasReservas : ListViewModelLocal<AluguelEspacoViewModel>
+    {
+        #region Constructor
+        public ListViewMinhasReservas() { }
+        public ListViewMinhasReservas(ApplicationContext _db, SecurityContext _seguranca_db)
         {
             this.Create(_db, _seguranca_db);
         }
@@ -289,8 +386,9 @@ namespace DWM.Models.Persistence
                          NomeCredenciado = cred.Nome,
                          calendar = new Repositories.Calendar()
                          {
-                             title = ed.Descricao + "-" + ae.UnidadeID,
-                             start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0, 0, 0).Value,
+                             title = (ae.CondominoID == SessaoLocal.CondominoID || ae.CredenciadoID == SessaoLocal.CredenciadoID) ? ed.Descricao + "-" + ae.UnidadeID : "Reservado",
+                             start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0).Value,
+                             end = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0),
                              allDay = true
                          }
                      }).ToList();
@@ -329,13 +427,16 @@ namespace DWM.Models.Persistence
                          LimitePessoas = ec.LimitePessoas,
                          NomeCondomino = con.Nome,
                          NomeCredenciado = cred.Nome,
-                         calendar = new Repositories.Calendar() { title = ed.Descricao + "-" + ae.UnidadeID,
-                                                                  start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0,0,0).Value,
-                                                                  end = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataReserva.Year, ae.DataReserva.Month, ae.DataReserva.Day, 0, 0, 0),
-                                                                  allDay = true}
+                         calendar = new Repositories.Calendar()
+                         {
+                             title = ed.Descricao + "-" + ae.UnidadeID,
+                             start = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0).Value,
+                             end = System.Data.Entity.DbFunctions.CreateDateTime(ae.DataEvento.Year, ae.DataEvento.Month, ae.DataEvento.Day, 0, 0, 0),
+                             allDay = true
+                         }
                      }).ToList();
             }
-            
+
             return q;
         }
 

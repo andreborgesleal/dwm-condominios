@@ -13,6 +13,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+// 
+
 namespace dwm_condominios.Controllers
 {
     public class AluguelController : DwmRootController<AluguelEspacoViewModel, AluguelEspacoModel, ApplicationContext>
@@ -52,8 +54,11 @@ namespace dwm_condominios.Controllers
             ViewBag.empresaId = DWMSessaoLocal.GetSessaoLocal().empresaId;
             ViewBag.unidades = DWMSessaoLocal.GetSessaoLocal().Unidades;
             ViewBag.CondominoID = DWMSessaoLocal.GetSessaoLocal().CondominoID;
+
             if (ViewBag.ValidateRequest)
             {
+                Facade<AluguelEspacoViewModel, AluguelEspacoModel, ApplicationContext> facade = new Facade<AluguelEspacoViewModel, AluguelEspacoModel, ApplicationContext>();
+                ViewBag.AluguelEspacoViewModel =  facade.CreateRepository(Request);
                 ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
                 ListViewAluguelEspaco l = new ListViewAluguelEspaco();
                 return this._List(index, pageSize, "Browse", l, descricao);
@@ -102,7 +107,7 @@ namespace dwm_condominios.Controllers
             if (ViewBag.ValidateRequest)
             {
                 ViewBag.TipoEdificacao = DWMSessaoLocal.GetTipoEdificacao(null).Descricao;
-                ListViewAluguelEspaco l = new ListViewAluguelEspaco();
+                ListViewMinhasReservas l = new ListViewMinhasReservas();
                 return this._List(index, pageSize, "Browse", l, null);
             }
             else
