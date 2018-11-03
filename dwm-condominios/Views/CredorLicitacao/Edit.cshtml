@@ -1,0 +1,82 @@
+﻿@using App_Dominio.Repositories
+@using App_Dominio.Models
+@model DWM.Models.Repositories.CredorLicitacaoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../CredorLicitacao/Edit";
+    t[0].nomeCurto = "Editar";
+    t[0].referencia = "";
+
+    t[1].url = "../Home/Default";
+
+    var _DataEdital = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    _DataEdital = Model.DataEdital.ToString("yyyy-MM-dd");
+
+    var _DataEncerramento = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    if (Model.DataEncerramento.HasValue)
+    {
+        _DataEncerramento = Model.DataEncerramento.Value.ToString("yyyy-MM-dd");
+    }
+}
+
+<div class="container-cadastro">
+    @Html.Partial("_alerts")
+    @Html.Partial("_AjaxAlert", "panel-top")
+    <div class="x_panel">
+        @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Abertura Edital", Descricao = "Edição de Licitação", Transacao = t })
+        <div class="x_content">
+            <!-- Smart Wizard -->
+            @using (Html.BeginForm("Edit", "CredorLicitacao", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1" }))
+            {
+                @*@Html.ValidationSummary("", new { @class = "text-danger" })*@                          
+                @Html.HiddenFor(info => info.CondominioID)
+                @Html.HiddenFor(info => info.empresaId)
+                @Html.HiddenFor(info => info.LicitacaoID)
+
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-lg-4 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Histórico</label>
+                            <input type="text" name="Historico" id="Historico" value="@Model.Historico" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data do Edital *</label>
+                            <input type="date" class="form-control" name="DataEdital" id="DataEdital" value="@_DataEdital" required />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-2 col-lg-2 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Data de Encerramento</label>
+                            <input type="date" class="form-control" name="DataEncerramento" id="DataEncerramento" value="@_DataEncerramento" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-3 col-lg-3 col-xs-12">
+                        <div class="form-group">
+                            <label class="control-label">Tipo de Serviço *</label>
+                            @Html.DropDownList("TipoServicoID", new DWM.Models.Enumeracoes.BindDropDownList().TiposServicos("Selecione...", ""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="submit" value="Salvar" class="btn btn-success" />
+                        <input type="button" onclick="window.location = '../CredorLicitacao/Browse'" class="btn btn-default" value="Cancelar" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

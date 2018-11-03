@@ -241,6 +241,7 @@
     <Compile Include="Controllers\BalanceteController.cs" />
     <Compile Include="Controllers\ChamadoController.cs" />
     <Compile Include="Controllers\CondominoController.cs" />
+    <Compile Include="Controllers\CredorLicitacaoController.cs" />
     <Compile Include="Controllers\CredorTipoServicoController.cs" />
     <Compile Include="Controllers\DocumentosController.cs" />
     <Compile Include="Controllers\EmailTemplateController.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="Models\Entidades\ChamadoStatus.cs" />
     <Compile Include="Models\Entidades\Cidade.cs" />
     <Compile Include="Models\Entidades\Credor.cs" />
+    <Compile Include="Models\Entidades\CredorLicitacao.cs" />
     <Compile Include="Models\Entidades\CredorTipoServico.cs" />
     <Compile Include="Models\Entidades\Empregado.cs" />
     <Compile Include="Models\Entidades\EspacoComum.cs" />
@@ -379,6 +381,7 @@
     <Compile Include="Models\Persistence\CondominoPFModel.cs" />
     <Compile Include="Models\Persistence\CondominoPJModel.cs" />
     <Compile Include="Models\Persistence\CondominoUnidadeModel.cs" />
+    <Compile Include="Models\Persistence\CredorLicitacaoModel.cs" />
     <Compile Include="Models\Persistence\CredorModel.cs" />
     <Compile Include="Models\Persistence\CredorTipoServicoModel.cs" />
     <Compile Include="Models\Persistence\EdificacaoModel.cs" />
@@ -425,6 +428,7 @@
     <Compile Include="Models\Repositories\CondominoUnidadeViewModel.cs" />
     <Compile Include="Models\Repositories\CondominoViewModel.cs" />
     <Compile Include="Models\Repositories\CredenciadoViewModel.cs" />
+    <Compile Include="Models\Repositories\CredorLicitacaoViewModel.cs" />
     <Compile Include="Models\Repositories\CredorTipoServicoViewModel.cs" />
     <Compile Include="Models\Repositories\CredorViewModel.cs" />
     <Compile Include="Models\Repositories\EdificacaoViewModel.cs" />
@@ -4416,6 +4420,11 @@
     <Content Include="Views\CredorTipoServico\Delete.cshtml" />
     <Content Include="Views\CredorTipoServico\Edit.cshtml" />
     <Content Include="Views\CredorTipoServico\ListParam.cshtml" />
+    <Content Include="Views\CredorLicitacao\Browse.cshtml" />
+    <Content Include="Views\CredorLicitacao\Edit.cshtml" />
+    <Content Include="Views\CredorLicitacao\Create.cshtml" />
+    <Content Include="Views\CredorLicitacao\Delete.cshtml" />
+    <Content Include="Views\CredorLicitacao\ListParam.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

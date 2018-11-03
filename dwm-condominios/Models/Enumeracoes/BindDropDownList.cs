@@ -43,6 +43,38 @@ namespace DWM.Models.Enumeracoes
             }
         }
 
+        public IEnumerable<SelectListItem> TiposServicos(params object[] param)
+        {
+            // params[0] -> cabeçalho (Selecione..., Todos...)
+            // params[1] -> SelectedValue
+            string cabecalho = param[0].ToString();
+            string selectedValue = param[1].ToString();
+
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+
+            using (ApplicationContext db = new ApplicationContext())
+            {
+                Sessao sessao = security.getSessaoCorrente();
+
+                IList<SelectListItem> q = new List<SelectListItem>();
+
+                if (cabecalho != "")
+                    q.Add(new SelectListItem() { Value = "", Text = cabecalho });
+
+                q = q.Union(from e in db.CredorTipoServicos.AsEnumerable()
+                            where e.CondominioID == sessao.empresaId
+                            orderby e.Descricao
+                            select new SelectListItem()
+                            {
+                                Value = e.TipoServicoID.ToString(),
+                                Text = e.Descricao,
+                                Selected = (selectedValue != "" ? e.Descricao.Equals(selectedValue) : false)
+                            }).ToList();
+
+                return q;
+            }
+        }
+
         public IEnumerable<SelectListItem> Notas(params object[] param)
         {
             // params[0] -> cabeçalho (Selecione..., Todos...)
