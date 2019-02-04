@@ -624,4 +624,97 @@ namespace DWM.Models.Persistence
             return "div-visitantes";
         }
     }
+
+    public class ListViewVisitanteAcessoEspaco : ListViewModelLocal<VisitanteAcessoViewModel>
+    {
+        #region Constructor
+        public ListViewVisitanteAcessoEspaco() { }
+        public ListViewVisitanteAcessoEspaco(ApplicationContext _db, SecurityContext _seguranca_db, string Token = null)
+        {
+            this.Create(_db, _seguranca_db, Token);
+        }
+        #endregion
+
+        private bool IsPortaria()
+        {
+            string grupo_portaria = db.Parametros.Find(SessaoLocal.empresaId, (int)Enumeracoes.Enumeradores.Param.GRUPO_PORTARIA).Valor;
+            EmpresaSecurity<SecurityContext> security = new EmpresaSecurity<SecurityContext>();
+            IEnumerable<GrupoRepository> grp = security.getGrupoUsuario(SessaoLocal.usuarioId, SessaoLocal.sessaoId).AsEnumerable();
+
+            return (from g in grp where g.grupoId == int.Parse(grupo_portaria) select g).Count() > 0;
+        }
+
+
+        #region Métodos da classe ListViewRepository
+        public override IEnumerable<VisitanteAcessoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
+        {
+            int _CondominioID = sessaoCorrente.empresaId;
+            int _EdificacaoID = (int)param[0];
+            int _UnidadeID = (int)param[1];
+            DateTime dataHoje = Funcoes.Brasilia().Date;
+
+            var q = (from v in db.Visitantes
+                     join vu in db.VisitanteUnidades on v.VisitanteID equals vu.VisitanteID into vleft
+                     from vu in vleft.DefaultIfEmpty()
+                     join ed in db.Edificacaos on vu.EdificacaoID equals ed.EdificacaoID into vuleft
+                     from ed in vuleft.DefaultIfEmpty()
+                     join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
+                     join con in db.Condominos on vu.CondominoID equals con.CondominoID into conleft
+                     from con in conleft.DefaultIfEmpty()
+                     where v.CondominioID == _CondominioID
+                           && (vu.EdificacaoID == _EdificacaoID)
+                           && (vu.UnidadeID == _UnidadeID)
+                           && v.Situacao == "A"
+                     orderby v.Nome
+                     select new VisitanteAcessoViewModel
+                     {
+                         empresaId = sessaoCorrente.empresaId,
+                         CondominioID = v.CondominioID,
+                         AcessoID = vac.AcessoID,
+                         HoraInicio = vac.HoraInicio,
+                         HoraLimite = vac.HoraLimite,
+                         DataInclusao = vac.DataInclusao,
+                         DataAcesso = vac.DataAcesso,
+                         DataAutorizacao = vac.DataAutorizacao,
+                         Interfona = vac.Interfona,
+                         IsPortaria = false,
+                         Visitante = new VisitanteViewModel()
+                         {
+                             Nome = v.Nome,
+                             Sexo = v.Sexo == "M" ? "Masculino" : "Feminino",
+                             RG = v.RG,
+                             CPF = v.CPF,
+                             DataInclusao = v.DataInclusao,
+                             Fotografia = v.Fotografia,
+                             OrgaoEmissor = v.OrgaoEmissor,
+                             VisitanteID = v.VisitanteID,
+                             PrestadorCondominio = v.PrestadorCondominio,
+                             PrestadorTipoID = v.PrestadorTipoID,
+                             Situacao = v.Situacao,
+                             Telefone = v.Telefone,
+                             UnidadeID = vu.UnidadeID,
+                             DescricaoEdificacao = ed.Descricao,
+                             NomeCondomino = con.Nome,
+                             Placa = v.Placa,
+                             Cor = v.Cor,
+                             Descricao = v.Descricao,
+                             Marca = v.Marca,
+                             sessionId = sessaoCorrente.sessaoId,
+                         }
+                     }).ToList();
+
+            return q;
+        }
+
+        public override Repository getRepository(Object id)
+        {
+            return new FuncionarioModel().getObject((FuncionarioViewModel)id);
+        }
+        #endregion
+
+        public override string DivId()
+        {
+            return "div-visitantes";
+        }
+    }
 }

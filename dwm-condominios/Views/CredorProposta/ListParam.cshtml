@@ -1,0 +1,71 @@
+﻿@model System.Web.Mvc.PagedList<DWM.Models.Repositories.CredorLicitacaoViewModel>
+@{
+    Layout = null;
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada
+            </div>
+        </div>
+        <p>&nbsp;</p>
+
+        <div class="table-responsive hidden-xs">
+            <table class="table table-striped jambo_table bulk_action" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="col-md-2 column-title text-center nobr">Ação</th>
+                        <th class="column-title">Código da Proposta</th>
+                        <th class="column-title">Data da Proposta</th>
+                        <th class="column-title">Valor</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (DWM.Models.Repositories.CredorLicitacaoViewModel cl in Model)
+                    {
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                <button type="button" class="btn btn-success btn-sm glyphicon glyphicon-ok" title="Publicação Resultado" onclick="window.location='Edit?LicitacaoID=@cl.LicitacaoID'"></button>
+                                <button type="button" class="btn btn-info btn-sm glyphicon glyphicon-plus" title="Proposta" onclick="window.location='Edit?LicitacaoID=@cl.LicitacaoID'"></button>
+                                <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?LicitacaoID=@cl.LicitacaoID'"></button>
+                                <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?LicitacaoID=@cl.LicitacaoID'"></button>
+                            </td>
+                            <td>
+                                <span>@cl.LicitacaoID</span><br />
+                            </td>
+                            <td>
+                                <span>@cl.DataEdital.ToShortDateString()</span><br />
+                            </td>
+                            <td>
+                                <span>@cl.DescricaoTipoServico</span><br />
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+

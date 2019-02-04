@@ -60,5 +60,6 @@ namespace DWM.Models.Entidades
         public DbSet<LimpezaInspecaoItem> LimpezaInspecaoItem { get; set; }
         public DbSet<CredorTipoServico> CredorTipoServicos { get; set; }
         public DbSet<CredorLicitacao> CredorLicitacaos { get; set; }
+        public DbSet<CredorProposta> CredorPropostas { get; set; }
     }
 }
