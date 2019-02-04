@@ -134,6 +134,27 @@ namespace dwm_condominios.Controllers
                 return null;
         }
 
+        public override ActionResult AfterCreate(AluguelEspacoViewModel value, FormCollection collection)
+        {
+            
+            if (collection ["IsCalendar"] == "S")
+            {
+                base.AfterCreate(value, collection);
+                return RedirectToAction("Browse");
+            }
+            else
+                return base.AfterCreate(value, collection);
+        }
+
+        public override ActionResult ViewForm(AluguelEspacoViewModel value, FormCollection collection)
+        {
+            if (collection["IsCalendar"] == "S")
+            {
+                return RedirectToAction("Browse");
+            }
+            else
+                return base.ViewForm(value, collection);
+        }
         #region Edit
         [AuthorizeFilter]
         public ActionResult Edit(int AluguelID)
