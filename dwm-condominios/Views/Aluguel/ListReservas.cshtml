@@ -34,6 +34,15 @@
                     {
                         <tr class="even pointer">
                             <td class="text-center">
+                                @if (ae.Status != "Confirmado")
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='Edit?AluguelID=@ae.AluguelID'" disabled></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='Edit?AluguelID=@ae.AluguelID'"></button>
+                                }
+
                                 @if (ViewBag.CondominoID == 0) // administração
                                 {
                                     <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AluguelID=@ae.AluguelID'"></button>
@@ -50,7 +59,7 @@
                                 <span>@ae.DescricaoEspaco</span><br />
                             </td>
                             <td>
-                                <span>@ae.EdificacaoID</span>
+                                <span>@ae.DescricaoEdificacao</span>
                             </td>
                             <td>
                                 <span>@ae.UnidadeID</span><br />
