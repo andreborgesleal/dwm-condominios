@@ -1,0 +1,300 @@
+﻿@using App_Dominio.Repositories
+@using App_Dominio.Models
+@using DWM.Models.Repositories
+@model DWM.Models.Repositories.VisitanteAcessoViewModel
+@{
+    TransacaoRepository[] t = { new TransacaoRepository(), new TransacaoRepository() };
+    t[0].url = "../Visitante/Create?op=I";
+    t[0].nomeCurto = "Incluir Convidado";
+    t[0].referencia = "";
+    t[0].exibir = "S";
+
+    t[1].url = "../Home/Default";
+
+    var _max = "";
+
+    if (Model.IsPortaria)
+    {
+        _max = Funcoes.Brasilia().Date.ToString("yyyy-MM-dd");
+    }
+}
+
+<!-- DataTables -->
+<link href="../Content/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+
+@Html.Partial("_alerts")
+@Html.Partial("_AjaxAlert", "panel-top")
+<div class="x_panel">
+    @Html.EditorFor(info => Model, "FORMULARIO", new { Brand = "Acesso do Convidado", Descricao = "Inclusão de Convidado", Transacao = t })
+    <div class="x_content">
+        <!-- Smart Wizard -->
+        @using (Html.BeginForm("Create", "Convidados", FormMethod.Post, new { @class = "form-horizontal margem-topo-20", @id = "form1", AluguelID = ViewBag.AluguelID, DataEvento = ViewBag.DataEvento }))
+        {
+            @*@Html.ValidationSummary("", new { @class = "text-danger" })*@
+            @Html.HiddenFor(info => info.CondominioID)
+            @Html.HiddenFor(info => info.empresaId)
+            @Html.HiddenFor(info => info.EdificacaoID)
+            @Html.HiddenFor(info => info.UnidadeID)
+            @Html.HiddenFor(info => info.VisitanteID)
+            @Html.HiddenFor(info => info.IsPortaria)
+            @Html.Hidden("Interfona", Model.Interfona)
+
+            <div class="hidden-xs">
+                <p><h4>Selecione o Convidado desejado</h4></p><br />
+            </div>
+            <div class="row hidden-xs">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <table class="table table-striped jambo_table bulk_action table-responsive display">
+                        <thead>
+                            <tr class="headings">
+                                <th class="column-title">Ação</th>
+                                <th class="column-title">Convidado</th>
+                                <th class="column-title">Sexo</th>
+                                <th class="column-title">RG</th>
+                                <th class="column-title">O.E</th>
+                                <th class="column-title">CPF</th>
+                                <th class="column-title">Unidade</th>
+                                <th class="column-title">Condômino</th>
+                                <th class="column-title">Profissão</th>
+                                <th class="column-title">Placa</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (VisitanteViewModel value in Model.Visitantes)
+                            {
+                                <tr class="even pointer">
+                                    <td>
+                                        <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Convidado"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                                        <a href="#div-detail" title="Selecionar Convidado"><i class="fa fa-2x fa-check" title="Selecionar Convidado para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino', '@value.RG', '@value.OrgaoEmissor', '@value.CPF', '@value.Telefone', '@value.Placa', '@value.Marca', '@value.Avatar("200")')"></i>&nbsp;</a>
+                                    </td>
+                                    <td>
+                                        <small>@value.Nome</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.Sexo.Substring(0, 1)</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.RG</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.OrgaoEmissor</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.CPF</small>
+                                    </td>
+                                    <td>
+                                        <small>@(value.DescricaoEdificacao + "-" + value.UnidadeID.ToString())</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.NomeCondomino</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.DescricaoTipoPrestador</small>
+                                    </td>
+                                    <td>
+                                        <small>@value.Placa</small>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- SmartPhone -->
+            <div class="hidden-lg hidden-md hidden-sm">
+                @foreach (VisitanteViewModel value in Model.Visitantes)
+                {
+                    <div class="row">
+                        <div class="col-xs-4 text-center">
+                            <img src="@value.Avatar("90")" width="90" class="img-thumbnail img-responsive" />
+                            <small>@value.DescricaoEdificacao</small>
+                            <small>@value.UnidadeID</small>
+                        </div>
+                        <div class="col-xs-8">
+                            <h5>@value.Nome</h5>
+                            <small>@value.Sexo</small><br />
+                            @if (!String.IsNullOrEmpty(value.RG))
+                            {
+                                <small>RG: <strong>@(value.RG + " " + value.OrgaoEmissor)</strong></small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Telefone))
+                            {
+                                <small>Telefone: @value.Telefone</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Email))
+                            {
+                                <small>E-mail: @value.Email</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.DescricaoTipoPrestador))
+                            {
+                                <small>@value.DescricaoTipoPrestador</small><br />
+                            }
+                            <div class="text-left">
+                                <a href="#div-detail" title="Selecionar Convidado"><i class="fa fa-2x fa-check" title="Selecionar Convidado para acesso ao condomínio" onclick="CheckVisitante('@value.VisitanteID', '@value.EdificacaoID', '@value.UnidadeID', '@value.Nome', '@value.DescricaoEdificacao', '@value.NomeCondomino', '@value.RG', '@value.OrgaoEmissor', '@value.CPF', '@value.Telefone', '@value.Placa', '@value.Marca', '@value.Avatar("200")')"></i>&nbsp;</a>
+                                <a href="~/Visitante/Edit?VisitanteID=@(value.VisitanteID)" title="Editar Cadastro do Convidado"><i class="fa fa-2x fa-edit"></i></a>&nbsp;
+                            </div>
+                        </div>
+                    </div>
+                    <hr />
+                }
+            </div>
+            <div class="hidden-lg hidden-md hidden-sm text-center">
+                <p><h4>Autorizar acesso</h4></p><br />
+            </div>
+            <div class="row" id="div-detail">
+                <div class="col-md-2 col-lg-2 col-sm-12 col-xs-12 text-center">
+                    <img src="http://api.ning.com/files/XDvieCk-6Hj1PFXyHT13r7Et-ybLOKWFR9fYd15dBrqFQHv6gCVuGdr4GYjaO0u*h2E0p*c5ZVHE-H41wNz4uAGNfcH8LLZS/top_8_silhouette_male_120.jpg?width=200" width="200" class="img-thumbnail img-responsive" id="img-avatar" />
+                </div>
+                <div class="col-md-6 col-lg-6 col-sm-12 col-xs-12">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Convidado</label>
+                                <input type="text" disabled class="form-control" name="div-visitante" id="div-visitante" value="Nenhum Convidado selecionado" />
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-6 col-xs-12 col-sm-12">
+                            <div class="form-group">
+                                <label class="control-label">Unidade</label>
+                                <input type="text" disabled class="form-control" name="div-unidade" id="div-unidade" value="Nenhum Condômino selecionado" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">RG</label>
+                            <input type="text" disabled class="form-control" name="div-rg" id="div-rg" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">CPF</label>
+                            <input type="text" disabled class="form-control" name="div-cpf" id="div-cpf" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Telefone</label>
+                            <input type="text" disabled class="form-control" name="div-fone" id="div-fone" value="" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Placa</label>
+                            <input type="text" disabled class="form-control" name="div-placa" id="div-placa" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <label class="control-label">Marca</label>
+                            <input type="text" disabled class="form-control" name="div-marca" id="div-marca" value="" />
+                        </div>
+                        <div class="col-md-4 col-lg-4 col-sm-12 col-xs-12">
+                            <p>
+                                <br />
+                                <br />
+                                <a href="#" class="text-prateado" id="lnk-visitante">Editar</a>
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row">
+                <h1>@ViewBag.AlguelID</h1>
+                <input type="hidden" class="form-control" name="AluguelID" id="AluguelID" value="@ViewBag.AluguelID" />
+
+                <div class="col-md-2 col-lg-2 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label">Data</label>
+                        @*<input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Funcoes.Brasilia().Date.ToString("yyyy-MM-dd")" />*@
+                        <input type="date" class="form-control" name="DataAutorizacao" id="DataAutorizacao" value="@Convert.ToDateTime(ViewBag.DataEvento).ToString("yyyy-MM-dd")" readonly />
+                    </div>
+                </div>
+                <div class="col-md-2 col-lg-2 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" title="Informar a hora inicial de acesso (preenchimento opcional)">Início</label>
+                        <input type="text" class="form-control" name="HoraInicio" id="HoraInicio" value="@Model.HoraInicio" />
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-4 col-xs-12">
+                    <div class="form-group">
+                        <label class="control-label" title="Informar a hora Limite de acesso (preenchimento opcional)">Limite</label>
+                        <input type="text" class="form-control" name="HoraLimite" id="HoraLimite" value="@Model.HoraLimite" />
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12 col-xs-12 col-sm-12">
+                    <div class="form-group">
+                        <label class="control-label">Observação</label>
+                        <textarea rows="3" name="Observacao" id="Observacao" class="form-control" maxlength="300">@Model.Observacao</textarea>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="submit" value="Salvar" class="btn btn-success" onclick="return Valida();" />
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('table.display').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 15,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+        autoWidth: false,
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#HoraInicio").mask("99:99");
+        $("#HoraLimite").mask("99:99");
+    });
+
+    $('#form1').submit(function (ev) {
+        ev.preventDefault(); // to stop the form from submitting
+
+        if (Valida())
+            /* Validations go here */
+            this.submit(); // If all the validations succeeded
+    });
+
+    function CheckVisitante(VisitanteID, EdificacaoID, UnidadeID, Nome, DescricaoEdificacao, NomeCondomino, RG, OrgaoEmissor, CPF, Telefone, Placa, Marca, Fotografia) {
+        $('#VisitanteID').val(VisitanteID);
+        $('#EdificacaoID').val(EdificacaoID);
+        $('#UnidadeID').val(UnidadeID);
+        $('#div-visitante').val(VisitanteID + '-' + Nome);
+        if (DescricaoEdificacao === '')
+            $('#div-unidade').val('Prestador de serviço do condomínio');
+        else
+            $('#div-unidade').val(DescricaoEdificacao + '-' + UnidadeID + ' ' + NomeCondomino);
+        $('#div-rg').val(RG + ' ' + OrgaoEmissor);
+        $('#div-cpf').val(CPF);
+        $('#div-fone').val(Telefone);
+        $('#div-placa').val(Placa);
+        $('#div-marca').val(Marca);
+        $('#img-avatar').attr("src", Fotografia);
+        $('#lnk-visitante').attr("href", "../Visitante/Edit?VisitanteID=" + VisitanteID);
+    }
+
+    function Valida() {
+        var visitante = $('#VisitanteID').val();
+
+        if ((visitante == null || visitante == "")) {
+            ShowMessageAjaxAlert('Favor selecionar o visitante para registrar o acesso', 'warning');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+
+
+

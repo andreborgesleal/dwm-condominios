@@ -4438,13 +4438,16 @@
     <Content Include="Views\CredorProposta\Create.cshtml" />
     <Content Include="Views\CredorProposta\Edit.cshtml" />
     <Content Include="Views\CredorProposta\Delete.cshtml" />
+    <Content Include="Views\Convidados\Browse.cshtml" />
+    <Content Include="Views\Convidados\ListParam.cshtml" />
+    <Content Include="Views\Convidados\Create.cshtml" />
+    <Content Include="Views\Convidados\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
     <Folder Include="Database\" />
     <Folder Include="Users_Data\Empresas\3\Fornecedores\" />
     <Folder Include="Users_Data\Empresas\9\Visitante\" />
-    <Folder Include="Views\Convidados\" />
     <Folder Include="Views\Profile\" />
   </ItemGroup>
   <ItemGroup>

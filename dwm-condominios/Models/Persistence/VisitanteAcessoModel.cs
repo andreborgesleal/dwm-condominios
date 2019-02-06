@@ -107,6 +107,7 @@ namespace DWM.Models.Persistence
             if (IsPortaria())
                 value.DataAcesso = Funcoes.Brasilia();
             value.Interfona = "S";
+
             return base.BeforeInsert(value);
         }
 
@@ -407,7 +408,28 @@ namespace DWM.Models.Persistence
 
                 #endregion
 
-                #region valida quantidade de visitantes => aluguel de espaço
+                #region valida se convidado já foi adicionado
+                var qtd_visitantex_aluguel = (from v in db.Visitantes
+                                              join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
+                                              join ae in db.AluguelEspacos on vac.AluguelID equals ae.AluguelID
+                                              where ae.AluguelID == value.AluguelID
+                                              && v.VisitanteID == value.VisitanteID
+                                              select new VisitanteViewModel()
+                                              {
+                                                  VisitanteID = v.VisitanteID
+                                              }).Count();
+
+                if (qtd_visitantex_aluguel > 0)
+                {
+                    value.mensagem.Code = 5;
+                    value.mensagem.Message = MensagemPadrao.Message(53, "").ToString();
+                    value.mensagem.MessageBase = "Convidado já cadastrado";
+                    value.mensagem.MessageType = MsgType.WARNING;
+                    return value.mensagem;
+                }
+                #endregion
+
+                                                                #region valida quantidade de visitantes => aluguel de espaço
                 var _DataAtual = Funcoes.Brasilia();
                 var _qte_acessos = 0;
                 IEnumerable<AluguelEspacoViewModel> alugueis = (from a in db.AluguelEspacos
@@ -649,8 +671,7 @@ namespace DWM.Models.Persistence
         public override IEnumerable<VisitanteAcessoViewModel> Bind(int? index, int pageSize = 50, params object[] param)
         {
             int _CondominioID = sessaoCorrente.empresaId;
-            int _EdificacaoID = (int)param[0];
-            int _UnidadeID = (int)param[1];
+            int _AlguelID = int.Parse(param[0].ToString());
             DateTime dataHoje = Funcoes.Brasilia().Date;
 
             var q = (from v in db.Visitantes
@@ -661,10 +682,11 @@ namespace DWM.Models.Persistence
                      join vac in db.VisitanteAcessos on v.VisitanteID equals vac.VisitanteID
                      join con in db.Condominos on vu.CondominoID equals con.CondominoID into conleft
                      from con in conleft.DefaultIfEmpty()
+                     join ae in db.AluguelEspacos on vac.AluguelID equals ae.AluguelID
                      where v.CondominioID == _CondominioID
-                           && (vu.EdificacaoID == _EdificacaoID)
-                           && (vu.UnidadeID == _UnidadeID)
                            && v.Situacao == "A"
+                           && ae.AluguelID == _AlguelID
+                           && v.PrestadorTipoID == null
                      orderby v.Nome
                      select new VisitanteAcessoViewModel
                      {
@@ -678,6 +700,7 @@ namespace DWM.Models.Persistence
                          DataAutorizacao = vac.DataAutorizacao,
                          Interfona = vac.Interfona,
                          IsPortaria = false,
+                         AluguelID = ae.AluguelID,
                          Visitante = new VisitanteViewModel()
                          {
                              Nome = v.Nome,

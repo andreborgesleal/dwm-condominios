@@ -36,20 +36,20 @@
                             <td class="text-center">
                                 @if (ae.Status != "Confirmado")
                                 {
-                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='Edit?AluguelID=@ae.AluguelID'" disabled></button>
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='Edit?AluguelID=@ae.AluguelID&DataEvento=@ae.DataEvento'" disabled></button>
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='Edit?AluguelID=@ae.AluguelID'"></button>
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-user" title="Lista de Convidados" onclick="window.location='../Convidados/Browse?edificacaoId=@ae.EdificacaoID&unidadeId=@ae.UnidadeID&AluguelID=@ae.AluguelID&DataEvento=@ae.DataEvento'"></button>
                                 }
 
                                 @if (ViewBag.CondominoID == 0) // administração
                                 {
-                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AluguelID=@ae.AluguelID'"></button>
+                                    <button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AluguelID=@ae.AluguelID&DataEvento=@ae.DataEvento'"></button>
                                 }
                                 else // morador
                                 {
-                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Cancelar" onclick="window.location='Delete?AluguelID=@ae.AluguelID'"></button>
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Cancelar" onclick="window.location='Delete?AluguelID=@ae.AluguelID&DataEvento=@ae.DataEvento'"></button>
                                 }
                             </td>
                             <td>

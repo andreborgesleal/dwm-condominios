@@ -1,0 +1,197 @@
+﻿@using DWM.Models.Repositories
+@using DWM.Models.Entidades
+@model System.Web.Mvc.PagedList<DWM.Models.Repositories.VisitanteAcessoViewModel>
+@{
+    Layout = null;
+    SessaoLocal s = (SessaoLocal)ViewBag.SessaoLocal;
+    var riscado = "";
+}
+@if (Model != null)
+{
+    <div class="dashboard-widget-content hidden-xs">
+        <div class="row">
+            <div class="col-md-8">
+                Clique nos botões de <code>Ação</code> para executar a ação desejada ou informe o <code>Nome</code>, <code>RG/CPF</code> para buscar o Visitante
+            </div>
+        </div>
+        <p>&nbsp;</p>
+        <div class="table-responsive">
+            <table class="table table-striped jambo_table bulk_action table-responsive display" id="datatable">
+                <thead>
+                    <tr class="headings">
+                        <th class="column-title text-center">Ação</th>
+                        <th class="column-title text-center">#ID</th>
+                        <th class="column-title">Visitante</th>
+                        <th class="column-title">Edificação</th>
+                        <th class="column-title text-left">Unidade</th>
+                        @if (s.CondominoID > 0)
+                        {
+                            <th class="column-title">Data</th>
+                        }
+                        else
+                        {
+                            <th class="column-title">Condômino</th>
+                        }
+                        <th class="column-title">Placa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (VisitanteAcessoViewModel value in Model)
+                    {
+                        if (value.DataAcesso != null)
+                        {
+                            riscado = "line-through";
+                        }
+                        else
+                        {
+                            riscado = "";
+                        }
+                        <tr class="even pointer">
+                            <td class="text-center">
+                                @if (value.DataAcesso == null)
+                                {
+                                    @*<button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Editar" onclick="window.location='Edit?AcessoID=@value.AcessoID'"></button>*@
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
+                                }
+                                else
+                                {
+                                    @*<button type="button" class="btn btn-primary btn-sm glyphicon glyphicon-edit" title="Visitante já acessou o condomínio. Edição não permitida"></button>*@
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Visitante já acessou o condomínio. Exclusão não permitida"></button>
+                                }
+                            </td>
+                            <td class="center">
+                                <h3 style="text-decoration: @riscado">@value.AcessoID</h3>
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-4 col-lg-4 col-sm-4 col-xs-4">
+                                        <img src="@value.Visitante.Avatar("100")" width="100" class="img-thumbnail img-responsive" />
+                                    </div>
+                                    <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
+                                        <div class="row">
+                                            <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
+                                                <h4 style="text-decoration: @riscado">@value.Visitante.Nome</h4>
+                                                <small>@value.Visitante.Sexo</small><br />
+                                                <small>RG: <strong>@(value.Visitante.RG + " " + value.Visitante.OrgaoEmissor)</strong></small><br />
+                                                <small>CPF: @value.Visitante.CPF</small><br />
+                                                @if (value.DataAcesso.HasValue)
+                                                {
+                                                    <small>Hora de Acesso: @value.DataAcesso.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <small>@value.Visitante.DescricaoEdificacao</small>
+                            </td>
+                            <td class="text-left">
+                                <small>@value.Visitante.UnidadeID</small>
+                            </td>
+                            @if (s.CondominoID > 0)
+                            {
+                                <td>
+                                    <small>@value.DataAutorizacao.ToString("dd/MM/yyyy")</small>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <small>@value.Visitante.NomeCondomino</small>
+                                </td>
+                            }
+                            <td>
+                                <small>@value.Visitante.Placa</small>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- SmartPhone-->
+    <div class="hidden-lg hidden-md hidden-sm">
+        @foreach (VisitanteAcessoViewModel value in Model)
+        {
+            if (value.DataAcesso != null)
+            {
+                riscado = "line-through";
+            }
+            else
+            {
+                riscado = "";
+            }
+            <div class="row">
+                <div class="col-xs-4 text-center">
+                    <img src="@value.Visitante.Avatar("90")" width="90" class="img-thumbnail img-responsive" />
+                    <small>@value.Visitante.DescricaoEdificacao</small>
+                    <small>@value.Visitante.UnidadeID</small>
+                </div>
+                <div class="col-xs-8">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h5 style="text-decoration: @riscado">@value.Visitante.Nome</h5>
+                            <small>@value.Visitante.Sexo</small><br />
+                            @if (!String.IsNullOrEmpty(value.Visitante.RG))
+                            {
+                                <small>RG: <strong>@(value.Visitante.RG + " " + value.Visitante.OrgaoEmissor)</strong></small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.Telefone))
+                            {
+                                <small>Telefone: @value.Visitante.Telefone</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.Email))
+                            {
+                                <small>E-mail: @value.Visitante.Email</small><br />
+                            }
+                            @if (!String.IsNullOrEmpty(value.Visitante.DescricaoTipoPrestador))
+                            {
+                                <small>@value.Visitante.DescricaoTipoPrestador</small><br />
+                            }
+                            @if (value.DataAcesso.HasValue)
+                            {
+                                <small>Hora de Acesso: @value.DataAcesso.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                            }
+                            <div class="text-left">
+                                @if (value.DataAcesso == null)
+                                {
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Excluir" onclick="window.location='Delete?AcessoID=@value.AcessoID'"></button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-danger btn-sm glyphicon glyphicon-trash" title="Visitante já acessou o condomínio. Exclusão não permitida"></button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+        }
+    </div>
+}
+else
+{
+    @Html.Partial("_AcessoNegadoModal")
+}
+
+
+<!-- Datatables -->
+<script src="../Content/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
+<script src="../Content/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+<script>
+    $('#datatable').DataTable({
+        lengthMenu: [[15, 25, 50, 100, -1], [15, 25, 50, 100, "Todos"]],
+        iDisplayLength: 50,
+        language: {
+            "url": "../Scripts/DataTablePtBr.txt"
+        },
+    });
+</script>
+
+
+
+
