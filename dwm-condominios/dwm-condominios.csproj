@@ -4438,6 +4438,7 @@
     <Content Include="Views\CredorProposta\Create.cshtml" />
     <Content Include="Views\CredorProposta\Edit.cshtml" />
     <Content Include="Views\CredorProposta\Delete.cshtml" />
+    <Content Include="Views\Aluguel\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />

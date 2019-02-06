@@ -40,7 +40,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel">Aluguel de espaço</h4>
+                    <h4 class="modal-title" id="myModalLabel">Incluir aluguel de espaço - Incluir</h4>
                 </div>
                 <div class="modal-body">
                     @Html.Partial("_Create", (AluguelEspacoViewModel)ViewBag.AluguelEspacoViewModel)
@@ -54,29 +54,10 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h4 class="modal-title" id="myModalLabel2">Edit Calendar Entry</h4>
+                    <h4 class="modal-title" id="myModalLabel2">Aluguel de espaços - Editar</h4>
                 </div>
                 <div class="modal-body">
-                    <div id="testmodal2" style="padding: 5px 20px;">
-                        <form id="antoform2" class="form-horizontal calender" role="form">
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Title</label>
-                                <div class="col-sm-9">
-                                    <input type="text" class="form-control" id="title2" name="title2">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-3 control-label">Description</label>
-                                <div class="col-sm-9">
-                                    <textarea class="form-control" style="height:55px;" id="descr2" name="descr"></textarea>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default antoclose2" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary antosubmit2">Save changes</button>
+                    @Html.Partial("_Edit", (AluguelEspacoViewModel)ViewBag.AluguelEspacoViewModel)
                 </div>
             </div>
         </div>
@@ -152,7 +133,7 @@
             select: function (start, end, allDay) {
                 $('#DataEvento').val(new Date(end).toLocaleString());
                 $('#EspacoID').val(document.getElementById("EspacoID1").value);
-                $('#myModalLabel').html("Aluguel de Espaços - " + new Date(end).toLocaleString().substr(0,10));
+                $('#myModalLabel').html("Aluguel de Espaços (Incluir) - " + new Date(end).toLocaleString().substr(0,10));
                 $('#fc_create').click();
 
                 started = start;
@@ -187,8 +168,18 @@
                 });
             },
             eventClick: function (calEvent, jsEvent, view) {
+                //alert('Event: ' + new Date(calEvent.start).toLocaleString());
+                //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+                //alert('View: ' + view.name);
+                alert(events);
+                var x = new Date(calEvent.start);
+                x = x.setDate(x.getDate() + 1);
+                var y = new Date(x);
+
+                $('#DescricaoEdificacao').val(calEvent.title);
+                $('#DataEventoEdit').val(y.toLocaleString().substr(0, 10));
                 $('#fc_edit').click();
-                $('#title2').val(calEvent.title);
+                $('#myModalLabel2').html("Aluguel de Espaços (Alterar) - " + new Date(end).toLocaleString().substr(0, 10));
 
                 categoryClass = $("#event_type").val();
 
@@ -201,7 +192,7 @@
 
                 calendar.fullCalendar('unselect');
             },
-            editable: true,
+            editable: false,
             //events: events,
             events: _events
             //events: [{
