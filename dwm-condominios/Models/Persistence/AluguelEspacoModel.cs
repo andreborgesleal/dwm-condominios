@@ -41,9 +41,15 @@ namespace DWM.Models.Persistence
 
             if (value.CondominioID > 0 && value.EdificacaoID > 0 && value.UnidadeID > 0)
             {
-                value.CondominoID = db.CondominoUnidades.Where(info => info.CondominioID == value.CondominioID 
-                                                                && info.EdificacaoID == value.EdificacaoID 
-                                                                && info.UnidadeID == value.UnidadeID).FirstOrDefault().CondominoID;
+                if (db.CondominoUnidades.Where(info => info.CondominioID == value.CondominioID
+                                                                && info.EdificacaoID == value.EdificacaoID
+                                                                && info.UnidadeID == value.UnidadeID).Count() > 0)
+                    value.CondominoID = db.CondominoUnidades.Where(info => info.CondominioID == value.CondominioID
+                                                                    && info.EdificacaoID == value.EdificacaoID
+                                                                    && info.UnidadeID == value.UnidadeID).FirstOrDefault().CondominoID;
+                else
+                    throw new ArgumentNullException("Não existe condômino cadastrado na Unidade " + value.UnidadeID.ToString(), new Exception());
+
                 if (SessaoLocal.CredenciadoID.HasValue)
                     value.CredenciadoID = SessaoLocal.CredenciadoID;
             }

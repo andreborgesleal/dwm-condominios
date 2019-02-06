@@ -4442,6 +4442,7 @@
     <Content Include="Views\Convidados\ListParam.cshtml" />
     <Content Include="Views\Convidados\Create.cshtml" />
     <Content Include="Views\Convidados\Delete.cshtml" />
+    <Content Include="Views\Aluguel\_Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\fonts\font-awesome\" />
