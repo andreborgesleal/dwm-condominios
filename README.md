@@ -98,16 +98,76 @@ Emissão de boletos de cobrança de taxa condominial, aluguéis, etc.
 
 Baixa de pagamento de títulos de cobrança, pelo arquivo de retorno do Banco ou baixa manual pela administração.
 
-# Informações Técnicas
+# Visão arquitetural
 
-**Class Library**
+O texto a seguir tem o objetivo de apresentar a arquitetura que será utilizada na construção do sistema, identificando cada componente e suas ligações com os demais objetos que compõe a estrutura da aplicação. 
 
-App_Dominio: utilizada em todos os sistemas. Descreve a arquitetura usando generics para as camadass de controller e model. Contém as interfaces, controle de sessão e demais bibliotecas necessárias para os demais sistemas.
+A ideia central do projeto é construir toda a aplicação usando a tecnologia MVC5 da Microsoft onde é possível isolar bem as camadas de dados, negócios e apresentação. 
 
-**Banco de dados**
+O projeto será basicamente construído em camadas. A camada de apresentação (View) utilizará a tecnologia HTML com javascript/Ajax (JQuery). 
 
-SQL Server
+Haverão as camadas de acesso aos dados e camada com as regras de negócio que regem as ações da aplicação. 
 
-**Arquitetura**
+Haverão também o consumo de componentes internos para a integração com o Sistema de Segurança e com as camadas de negócio da própria aplicação, além de outras integrações que possam ser necessárias para disponibilização de informações determinas pelos gestores de negócio. 
 
-MVC
+A seguir será feito um detalhamento arquitetural de todo sistema. Serão mostrados os principais componentes, pacotes e camadas que irão compor o sistema. 
+
+Serão demonstrados alguns diagramas com as interligações entre as funcionalidades de cada módulo e seus respectivos componentes. 
+
+Será descrito como o sistema fará o controle de segurança dos usuários aos recursos da aplicação, bem como o registro de auditoria (LOGs) das ações desempenhadas pelos usuários, além do tratamento dado ao comportamento da aplicação devido à ocorrência de possíveis ou eventuais erros que venham a surgir. 
+
+Será explanado o mecanismo para manuseio dos dados que se farão através de instruções LINQ ou Stored Procedures. 
+
+– Interfaces Internas e/ou Externas 
+
+Tanto o Sistema de Condomínios quanto o Sistema de Segurança dependem do componente “App_Dominio”. 
+
+O componente **App_Dominio** constitui um conjunto de objetos usados como interfaces nas camadas de controle e de acesso a dados na construção dos sistemas. Eles regem os modelos de padronização da arquitetura. 
+
+O componente **“App_Dominio”** contém os objetos responsáveis em estabelecer a comunicação da aplicação com o ambiente de segurança, estabelecer a conexão com o banco de dados e propor de forma organizada e padronizada os modelos de classes e objetos - distribuídos em camadas - que serão desenvolvidos no Sistema. 
+
+**Padrões de Projeto**
+
+- Codificação e Nomenclatura 
+
+Todo o código-fonte foi escrito sob o encoding UTF-8. Quando possível, o mesmo deve ficar explícito (exemplo: arquivos JSon); 
+
+A Instanciação dos objetos sempre ficará a cargo da infraestrutura do framework. De forma a não violar a inversão de controle nesses casos; 
+
+As exceções deverão ser tratadas por camada, ou seja, se uma exceção for levantada na camada Model, ela deverá ser tratada primeiro antes de ser relançada para a camada superior.  
+
+Relatórios foram feitos em HTML, com a lógica toda interna no código fonte. Não foi utilizado nenhum gerador de relatório. 
+
+Todo a acesso aos dados ocorre através do Entityframework, instruções LINQ ou Stored Procedures. 
+
+- Organização de Artefatos Gerados 
+
+A arquitetura ou Solução web do sistema está organizada conforme mostrada abaixo: 
+
+No diretório WEB haverá uma pasta raiz chamada Sindemed que contém os objetos e a implementação das funcionalidades do Sistema de Cadastro de Associados, tomando como referência os contratos e modelos descritos no componente App_Dominio. 
+
+Estrutura de implementação: 
+
+**App_Code**: diretório que armazenará as funções “@htmlhelpers” com as “partialpages”, tais como as “ListofValues - LOV” (tela modal com a lista de valores de uma determinada entidade para pesquisa e seleção dentro de um grid.  
+
+**App_Data**: diretório que armazenará arquivos JSon, XML, TXT e Logs de erro manipulados pela aplicação. 
+
+**Content**: diretório que armazenará as imagens e folhas de estilo do sistema. 
+
+**Controllers**: diretório que armazenará as classes de controle (facade) que acionarão os componentes de negócio. 
+
+**Models**: diretório que armazenará as classes de entidade, o mapeamento para o modelo relacional, as classes de negócio e as classes “repositories” (ViewModels) utilizadas nos modelos de entrada de dados e filtros de consulta dos formulários da camada de apresentação. 
+
+**Scripts**: diretório que contém os arquivos javascript utilizados pela aplicação, incluindo o bootstrap. Nele também ficarão armazenados os arquivos javascript da ferramenta JQuery. 
+ 
+**Views**: diretório que armazenará os arquivos razor “cshtml” da camada de apresentação. 
+
+**Bin**: diretório que armazenará o código compilado da aplicação. 
+
+ 
+ 
+
+
+
+
+
