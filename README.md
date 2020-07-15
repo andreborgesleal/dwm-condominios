@@ -47,6 +47,56 @@ Cada condômino terá um acesso restrito no sistema (usuário e senha) que lhe p
 
 Cada espaço passível de reserva será cadastrado previamente pela administração do condomínio com os valores das taxas, limite de convidados para aquele espaço e os dias e horários disponíveis para que o morador possa fazer a sua reserva. 
 
+- LISTA DE CONVIDADOS
+
+**Área Comum**: Salão de festas, Churrasqueira central, Quiosques, Salão Gourmet
+
+Quando um condômino realizar uma reserva de espaço o mesmo deverá cadastrar a lista dos convidados, respeitando o limite estabelecido pela administração. 
+
+A lista dos convidados ficará disponível no site para que o porteiro possa identificar e dar baixa nos convidados quando chegarem ou poderá ser impressa e entregue na portaria (caso não tenha computador na portaria) 
+
+**Área privativa**: Unidade do morador
+
+Para eventos particulares cada morador poderá relacionar o horário (início e fim) e o nome das pessoas que estão autorizadas por ele a ter acesso ao condomínio para se dirigirem a sua unidade.
+
+- ACESSO AO CONDOMÍNIO - PRESTADORES DE SERVIÇOS
+
+**Prestadores da administração**: 
+
+A administração poderá relacionar as empresas autorizadas a entrarem no condomínio e especificar a atividade que será desempenhada, bem como o horário (início e fim).
+
+**Prestadores do morador**: 
+
+O morador também poderá cadastrar os prestadores de serviços que terão acesso a sua área privativa e o horário de acesso (início e fim). Se o prestador chegar fora deste limite a portaria poderá impedir o acesso do mesmo. Poderá inclusive fazer uso de senhas que serão enviadas por SMS ou E-mail. Esta senha precisará ser apresentada na portaria para a autorização de entrada do prestador
+
+- INTERAÇÃO ENTRE SÍNDICO E MORADOR (Subsistema de mensagens): Conta de e-mail, troca de mensagens 
+
+- Subsistema de Chamados: Livro de ocorrências
+
+No dia a dia de um condomínio uma série de reclamações e solicitações são feitas diariamente pelos condôminos. Este módulo realiza o controle destas ocorrências para que haja um registro efetivo de todos os pedidos feitos pelo morador e o andamento destas solicitações. O sistema permite a geração de relatórios com as ocorrências agrupadas por período, por unidade solicitante, por tipo de ocorrência, por grau de urgência e também pesquisas por texto.
+
+- PATRIMÔNIO: Bens Patrimoniais 
+
+ALMOXARIFADO )Controle de Estoque): Entrada e Saída (perdas, consumo, etc.)
+
+- MANUTENÇÕES (Gestão Preventiva e Corretiva): Este módulo tem o objetivo de auxiliar o síndico ou administrador na tarefa de planejar e gerir todas as manutenções preventivas e corretivas de um condomínio
+
+- SEGUROS (Itens segurados, Vigência)
+
+- ANUNCIANTES (Compra Online): Publicidade, divulgação, pedidos, pagamento etc.
+
+Será disponibilizado uma área no site para empresas (OLX, pizzarias, farmácias, lanchonetes, academias) e profissionais liberais (dentista, médico, advogado, arquiteto, etc) divulgarem seus serviços ou produtos.
+
+Neste espaço os anunciantes poderão publicar imagens e textos publicitários, bem como cadastrar sua lista de produtos e serviços com os respectivos preços para que os condôminos possam consultar e fazer pedidos.
+
+- FINANCEIRO
+Contas a pagar, Cobrança, Contabilidade
+
+Totalmente integrado com o DWM-Finanças, a administração do condomínio poderá registrar os eventos de todos os pagamentos de despesas realizadas, com digitalização dos recibos e notas fiscais, com seus respectivos vencimentos. Todos os lançamentos de despesas irão gerar automaticamente o registro contábil para a emissão do balancete e prestação de contas.
+
+Emissão de boletos de cobrança de taxa condominial, aluguéis, etc.
+
+Baixa de pagamento de títulos de cobrança, pelo arquivo de retorno do Banco ou baixa manual pela administração.
 
 # Informações Técnicas
 
