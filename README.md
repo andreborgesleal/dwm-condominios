@@ -243,3 +243,38 @@ Exemplo:
    em App_Dominio.Component.ListViewRepository`2.getPagedList(Nullable`1 index, Int32 pageSize, Object[] param) na c:\Users\André\Source\Repos\App_Dominio\App_Dominio\App_Dominio\Component\ListViewRepository.cs:linha 30</StackTrace> 
 
 </LOG> 
+
+# Segurança 
+
+Todas as funcionalidades do sistema estão cadastradas no banco de dados do sistema de segurança. Cada funcionalidade está vinculada a um ou muitos grupos de usuários. Somente o usuário que pertencer ao grupo poderá visualizar e acessar a respectiva funcionalidade. 
+
+Quando o usuário efetua o seu LOGIN, a aplicação verifica a qual grupo ele pertence e recupera todas as funcionalidades do respectivo grupo para exibir o menu de opções do site. 
+
+**Tempo de Sessão**
+
+Existe um relógio interno que cronometra o tempo que o usuário permanece estático em uma dada página. Sempre que o usuário muda de tela, o sistema checa esse tempo e caso tenha atingido um limite de 15 minutos (esse tempo é parametrizado), o sistema encerra a sessão do usuário e redireciona para a tela de LOGIN para que ele faça uma nova autenticação. 
+
+**Acesso sem autenticação**
+
+Se algum usuário não credenciado tentar acessar qualquer formulário do sistema diretamente pela URL sem proceder a autenticação, o sistema também irá redirecioná-lo para a tela de LOGIN.  
+
+Acesso a uma página não autorizada, mesmo estando autenticado: 
+
+Outro cenário que pode ocorrer é o usuário estar autenticado e tentar acessar uma página que não está autorizada para o grupo a que pertence.  
+
+Por exemplo, um determinado cliente, uma vez “logado”, pode tentar acessar o cadastro de outro cliente ou tentar acessar o relatório com a relação geral de todos os clientes.  
+
+Esta funcionalidade só é disponibilizada para quem pertencer ao grupo “Administração”.  
+
+O grupo “Cliente” não tem acesso a esse recurso. Porém, se o cliente tentar fazer o acesso, o sistema irá apresentar uma mensagem informando que ele não está autorizado a executar tal operação. 
+
+# Sistema de Segurança 
+
+O Sistema de Segurança faz parte do contexto do projeto. É um recurso apartado e tem como objetivo administrar as contas de usuários que farão acesso ao Sistema e também ao Sistema Financeiro/Contábil. 
+
+Todas as funcionalidades de cada sistema ficarão gravadas em banco de dados. Haverá um ou mais de um usuário administrador que terá acesso ao Sistema de Segurança para executar a gestão das contas dos usuários. 
+
+Os usuários estarão sempre vinculados a um grupo. Cada grupo terá suas funcionalidades específicas. Os usuários só conseguirão visualizar e acessar as funcionalidades atribuídas ao seu grupo. 
+
+No Sistema de segurança também é possível consultar o Log de Auditoria de todas as operações realizadas no sistema. 
+
