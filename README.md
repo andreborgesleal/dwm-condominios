@@ -8,12 +8,15 @@ O projeto tem como objetivo possibilitar ao síndico uma gestão transparente pa
 # Principais funções:
 
 - Cadastro de Proprietários, Inquilinos e Moradores
+
 Cadastro de todos os proprietários do condomínio, por unidade, com a identificação dos moradores ou locatários residentes em cada apartamento e grau de parentesco com o morador.
 
 - Área Comum (Inventário)
+
 Cadastro do espaço condominial e de todos os materiais e equipamentos que fazem parte do referido espaço.
 
 - Cadastro de Documentos
+
 Regimento Interno, Atas de Reuniões, Assembleias, Convocações, Observações técnicas
 
 
