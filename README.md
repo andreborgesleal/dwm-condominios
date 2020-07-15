@@ -17,13 +17,16 @@ Cadastro do espaço condominial e de todos os materiais e equipamentos que fazem
 Regimento Interno, Atas de Reuniões, Assembleias, Convocações, Observações técnicas
 
 
+# Informações Técnicas
 
-Class Library:
+**Class Library**
 
 App_Dominio: utilizada em todos os sistemas. Descreve a arquitetura usando generics para as camadass de controller e model. Contém as interfaces, controle de sessão e demais bibliotecas necessárias para os demais sistemas.
-Banco de dados:
+
+**Banco de dados**
 
 SQL Server
-Arquitetura:
+
+**Arquitetura**
 
 MVC
