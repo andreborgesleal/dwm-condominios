@@ -277,4 +277,3 @@ Todas as funcionalidades de cada sistema ficarão gravadas em banco de dados. Ha
 Os usuários estarão sempre vinculados a um grupo. Cada grupo terá suas funcionalidades específicas. Os usuários só conseguirão visualizar e acessar as funcionalidades atribuídas ao seu grupo. 
 
 No Sistema de segurança também é possível consultar o Log de Auditoria de todas as operações realizadas no sistema. 
-
